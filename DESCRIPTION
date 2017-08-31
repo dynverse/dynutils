@@ -1,0 +1,22 @@
+Package: dynutils
+Type: Package
+Title: Common functions for the dyn packages
+Version: 0.1.0
+Authors@R: c(
+  person("Robrecht", "Cannoodt", email = "robrecht.cannoodt@ugent.be", role = c("aut", "cre")),
+  person("Wouter", "Saelens", email = "wouter.saelens@ugent.be", role = c("aut")))
+Description: Providing a common library with helper functions eliminates many inbetween dependencies between the dyn packages.
+License: TBD
+LazyData: TRUE
+RoxygenNote: 6.0.1
+Depends:
+  R (>= 3.0.0)
+Imports: 
+  dplyr,
+  magrittr,
+  methods,
+  purrr,
+  testthat,
+  tibble,
+  tidyr
+  
