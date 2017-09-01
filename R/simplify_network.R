@@ -3,8 +3,8 @@
 #' @export
 #' @examples
 #' net <- dplyr::tibble(from=1:2, to=2:3, length=1)
-#' simplify_net(net)
-simplify_net = function(net) {
+#' simplify_network(net)
+simplify_network = function(net) {
   for (node in unique(c(net$from, net$to))) {
     froms = net %>% filter(from == node)
     tos = net %>% filter(to == node)
