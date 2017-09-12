@@ -9,7 +9,7 @@ simplify_network = function(net) {
     froms = net %>% filter(from == node)
     tos = net %>% filter(to == node)
 
-    if ((nrow(froms) == 1) && (nrow(tos) == 1) && froms$to != node) {
+    if ((nrow(froms) == 1) && (nrow(tos) == 1)) {
       newfrom = tos$from
       newto = froms$to
       last = node
