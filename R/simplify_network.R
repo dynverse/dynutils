@@ -2,7 +2,7 @@
 #' @param net A network in data.frame format containing at least the columns from, to and length
 #' @export
 #' @examples
-#' net <- dplyr::tibble(from=1:2, to=2:3, length=1)
+#' net <- dplyr::tibble(from=1:2, to=2:3, length=1, directed=TRUE)
 #' simplify_network(net)
 simplify_network = function(net) {
   for (node in unique(c(net$from, net$to))) {
