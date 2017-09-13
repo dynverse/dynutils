@@ -1,7 +1,7 @@
 context("Simplify network")
 
 test_that("Testing simplify_network", {
-  net <- dplyr::tibble(from=1:2, to=2:3, length=1)
+  net <- dplyr::tibble(from=1:2, to=2:3, length=1, directed=TRUE)
 
   newnet <- simplify_network(net)
   expect_equal(nrow(newnet), 1)
