@@ -4,17 +4,17 @@
 \alias{apply_uniform_scale}
 \title{Apply a uniform scale}
 \usage{
-apply_uniform_scale(x, center, scale)
+apply_uniform_scale(x, addend, multiplier)
 }
 \arguments{
 \item{x}{A numeric matrix or data frame.}
 
-\item{center}{A centering vector for each column}
+\item{addend}{A centering vector for each column}
 
-\item{scale}{A scaling vector for each column}
+\item{multiplier}{A scaling vector for each column}
 }
 \value{
-The centered and scaled matrix. The numeric centering and scalings used are returned as attributes.
+The centered, scaled matrix. The numeric centering and scalings used are returned as attributes.
 }
 \description{
 Apply a uniform scale
