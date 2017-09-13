@@ -1,12 +1,12 @@
 context("Scaling")
 
-test_that("Testing scale_uniformily", {
+test_that("Testing scale_uniform", {
   # generate some random data
   num_samples <- 40
   num_dims <- 10
   data <- matrix(runif(num_samples * num_dims), nrow = num_samples)
 
-  data_sc <- scale_uniformily(data, center = 0, max_range = 1)
+  data_sc <- scale_uniform(data, center = 0, max_range = 1)
   ranges <- apply(data_sc, 2, range)
 
   expect_is( data_sc, "matrix" )
@@ -20,7 +20,7 @@ test_that("Testing scale_uniformily", {
   expect_equal(data_sc, data_sc2)
 
   # try with a different center and max_range
-  data_sc <- scale_uniformily(data, center = 10, max_range = 1000)
+  data_sc <- scale_uniform(data, center = 10, max_range = 1000)
   ranges <- apply(data_sc, 2, range)
 
   expect_is( data_sc, "matrix" )
@@ -30,13 +30,13 @@ test_that("Testing scale_uniformily", {
   expect_equal(colMeans(ranges), rep(10, num_dims))
 })
 
-test_that("Testing scale_uniformily with edge case", {
+test_that("Testing scale_uniform with edge case", {
   # generate some random data
   num_samples <- 1
   num_dims <- 10
   data <- matrix(runif(num_samples * num_dims), nrow = num_samples)
 
-  data_sc <- scale_uniformily(data, center = 0, max_range = 1)
+  data_sc <- scale_uniform(data, center = 0, max_range = 1)
   ranges <- apply(data_sc, 2, range)
 
   expect_is( data_sc, "matrix" )
@@ -50,7 +50,7 @@ test_that("Testing scale_uniformily with edge case", {
   expect_equal(data_sc, data_sc2)
 
   # try with a different center and max_range
-  data_sc <- scale_uniformily(data, center = 10, max_range = 1000)
+  data_sc <- scale_uniform(data, center = 10, max_range = 1000)
   ranges <- apply(data_sc, 2, range)
 
   expect_is( data_sc, "matrix" )
@@ -60,13 +60,13 @@ test_that("Testing scale_uniformily with edge case", {
   expect_equal(colMeans(ranges), rep(10, num_dims))
 })
 
-test_that("Testing scale_uniformily with another edge case", {
+test_that("Testing scale_uniform with another edge case", {
   # generate some random data
   num_samples <- 10
   num_dims <- 1
   data <- matrix(runif(num_samples * num_dims), nrow = num_samples)
 
-  data_sc <- scale_uniformily(data, center = 0, max_range = 1)
+  data_sc <- scale_uniform(data, center = 0, max_range = 1)
   ranges <- apply(data_sc, 2, range)
 
   expect_is( data_sc, "matrix" )
@@ -80,7 +80,7 @@ test_that("Testing scale_uniformily with another edge case", {
   expect_equal(data_sc, data_sc2)
 
   # try with a different center and max_range
-  data_sc <- scale_uniformily(data, center = 10, max_range = 1000)
+  data_sc <- scale_uniform(data, center = 10, max_range = 1000)
   ranges <- apply(data_sc, 2, range)
 
   expect_is( data_sc, "matrix" )
@@ -110,7 +110,7 @@ test_that("Testing scale_quantile", {
   expect_equal( ranges, matrix(rep(c(0, 1), num_dims), ncol = num_dims) )
 
   # reapply
-  data_sc2 <- apply_scale_quantile(data, attr(data_sc, "addend"), attr(data_sc, "multiplier"))
+  data_sc2 <- apply_quantile_scale(data, attr(data_sc, "addend"), attr(data_sc, "multiplier"))
   expect_equal(data_sc, data_sc2)
 
   # try with a different center and max_range
@@ -138,7 +138,7 @@ test_that("Testing scale_quantile with edge case", {
   expect_equal( ranges, matrix(rep(c(0, 0), num_dims), ncol = num_dims) )
 
   # reapply
-  data_sc2 <- apply_scale_quantile(data, attr(data_sc, "addend"), attr(data_sc, "multiplier"))
+  data_sc2 <- apply_quantile_scale(data, attr(data_sc, "addend"), attr(data_sc, "multiplier"))
   expect_equal(data_sc, data_sc2)
 
   # try with a different center and max_range
@@ -166,7 +166,7 @@ test_that("Testing scale_quantile with another edge case", {
   expect_equal( ranges, matrix(rep(c(0, 1), num_dims), ncol = num_dims) )
 
   # reapply
-  data_sc2 <- apply_scale_quantile(data, attr(data_sc, "addend"), attr(data_sc, "multiplier"))
+  data_sc2 <- apply_quantile_scale(data, attr(data_sc, "addend"), attr(data_sc, "multiplier"))
   expect_equal(data_sc, data_sc2)
 
   # try with a different center and max_range

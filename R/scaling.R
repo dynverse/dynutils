@@ -1,6 +1,6 @@
 #' @title Scaling and centering of matrix-like objects
 #'
-#' @description \code{scale_uniformily} uniformily scales a given matrix such that
+#' @description \code{scale_uniform} uniformily scales a given matrix such that
 #' the returned space is centered on \code{center}, and each column was scaled equally
 #' such that the range of each column is at most \code{max_range}.
 #'
@@ -18,14 +18,14 @@
 #' x <- matrix(rnorm(200*2, sd = 10, mean = 5), ncol=2)
 #'
 #' ## Center the dataset at c(0, 0) with a minimum of c(-.5, -.5) and a maximum of c(.5, .5)
-#' x_scaled <- scale_uniformily(x, center=0, max_range=1)
+#' x_scaled <- scale_uniform(x, center=0, max_range=1)
 #'
 #' ## Plot rescaled data
 #' plot(x_scaled)
 #'
 #' ## Show ranges of each column
 #' apply(x_scaled, 2, range)
-scale_uniformily <- function(x, center = 0, max_range = 1) {
+scale_uniform <- function(x, center = 0, max_range = 1) {
   ranges <- apply(x, 2, range)
   cur_range <- max(apply(ranges, 2, diff))
 
@@ -89,7 +89,7 @@ scale_quantile <- function(x, outlier_cutoff = .05) {
   divisor <- apply(quants, 2, diff)
   divisor[divisor == 0] <- 1
 
-  apply_scale_quantile(x, addend, 1 / divisor)
+  apply_quantile_scale(x, addend, 1 / divisor)
 }
 
 #' Apply a quantile scale.
@@ -102,7 +102,7 @@ scale_quantile <- function(x, outlier_cutoff = .05) {
 #'
 #' @return The scaled matrix. The numeric centering and scalings used are returned as attributes.
 #' @export
-apply_scale_quantile <- function(x, addend, multiplier) {
+apply_quantile_scale <- function(x, addend, multiplier) {
   y <- apply_uniform_scale(x, addend, multiplier)
   y[y > 1] <- 1
   y[y < 0] <- 0

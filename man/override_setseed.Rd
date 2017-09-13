@@ -10,6 +10,6 @@ override_setseed(value)
 \item{value}{an R object.}
 }
 \description{
-This funciton was adapted from \code{\link[utils]{assignInNamespace}}, but
-modified to only allow overwriting \code{\link[base]{set.seed}}.
+This function was adapted from \code{assignInNamespace}, but
+modified to only allow overwriting \code{set.seed}.
 }
