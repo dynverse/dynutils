@@ -15,6 +15,7 @@
 #' @param ... extra arguments to be passed to the \code{\link[future]{future}} call.
 #'
 #' @importFrom future future plan resolved value
+#' @export
 #'
 #' @examples
 #' dry_run <- dyneval:::wait_or_kill({1}, wait_time = 5, function(x) x, 1)
