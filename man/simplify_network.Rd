@@ -13,6 +13,6 @@ simplify_network(net)
 Simplify a network, so that consecutive linear edges are merged
 }
 \examples{
-net <- dplyr::tibble(from=1:2, to=2:3, length=1)
+net <- dplyr::tibble(from=1:2, to=2:3, length=1, directed=TRUE)
 simplify_network(net)
 }

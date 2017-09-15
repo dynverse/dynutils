@@ -18,5 +18,7 @@ Imports:
   purrr,
   testthat,
   tibble,
-  tidyr
-  
+  tidyr,
+  reshape2,
+  igraph,
+  transport
