@@ -73,6 +73,8 @@ wrap_ti_prediction <- function(
 #' @param milestone_percentages what percentage of milestone is each cell
 #' @param progressions what progression does a cell have
 #' @param ... extra information to be stored in the wrapper
+#'
+#' @export
 abstract_data_wrapper <- function(
   type,
   ti_type,
