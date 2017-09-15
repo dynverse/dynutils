@@ -23,3 +23,5 @@ Imports:
   reshape2,
   igraph,
   transport
+Suggests:
+  parallelMap

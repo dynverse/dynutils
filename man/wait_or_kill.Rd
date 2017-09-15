@@ -30,8 +30,8 @@ Note: You might have to make a dry run of this function before really
 using it. See the examples.
 }
 \examples{
-dry_run <- dyneval:::wait_or_kill({1}, wait_time = 5, function(x) x, 1)
-dyneval:::wait_or_kill(
+dry_run <- wait_or_kill({1}, wait_time = 5, function(x) x, 1)
+wait_or_kill(
   expr = {
     Sys.sleep(100) # really long function
     data.frame(result = "finished", time = sleeper_time)
