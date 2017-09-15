@@ -2,6 +2,7 @@
 
 export(apply_quantile_scale)
 export(apply_uniform_scale)
+export(compute_emlike_dist)
 export(convert_milestone_percentages_to_progressions)
 export(convert_progressions_to_milestone_percentages)
 export(extract_row_to_list)

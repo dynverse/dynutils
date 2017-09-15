@@ -6,6 +6,7 @@
 #' @importFrom transport transport
 #' @import dplyr
 #' @importFrom purrr %>% map map_df map_lgl
+#' @export
 compute_emlike_dist <- function(traj) {
   cell_ids <- traj$cell_ids
   milestone_network <- traj$milestone_network
