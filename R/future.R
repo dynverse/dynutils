@@ -51,7 +51,6 @@ wait_or_kill <- function(expr, wait_time, cancel_output_fun, check_interval = 1,
     if (verbose) cat("Time waited: ", time_waited, "\n", sep = "")
   }
 
-
   if (resolved(future_handle)) {
     value(future_handle)
   } else {
