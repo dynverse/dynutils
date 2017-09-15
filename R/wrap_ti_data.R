@@ -20,7 +20,7 @@ wrap_ti_task_data <- function(
   ...
 ) {
   abstract_data_wrapper(
-    "ti",
+    "ti_task",
     ti_type,
     id,
     cell_ids,
@@ -65,6 +65,7 @@ wrap_ti_prediction <- function(
 
 #' An abstract data wrapper
 #'
+#' @param type the type of data (e.g. ti_task, ti_toy, ti_pred)
 #' @param ti_type a descriptor specifying the TI type
 #' @param id a unique identifier for the task
 #' @param cell_ids the ids of the cells in the trajectory and counts
