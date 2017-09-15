@@ -24,8 +24,8 @@ test_that("Future helper works correctly", {
 
   # Also in parallel settings
   library(parallelMap)
-  sleeper_times <- sample(c(seq(1,5), seq(15,20)), 20, replace = T)
-  wait_time <- 10
+  sleeper_times <- sample(c(runif(5, .5, 3), runif(4, 7, 10)))
+  wait_time <- 4
   parallelStartMulticore(cpus = 2, show.info = TRUE)
   outp <- bind_rows(parallelMap(test_fun, sleeper_times, more.args = list(wait_time = wait_time)))
   parallelStop()
