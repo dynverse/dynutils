@@ -87,7 +87,7 @@ compute_emlike_dist <- function(traj) {
         } else {
           suppressWarnings({
             transport::transport(a, b, costm = dist_milestones) %>%
-              mutate(dist = dist_milestones[cbind(from,to)], mult = mass * dist) %>%
+              mutate(distm = dist_milestones[cbind(from,to)], mult = mass * distm) %>%
               .$mult %>%
               sum
           })
