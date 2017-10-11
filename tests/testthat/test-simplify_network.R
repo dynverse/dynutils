@@ -16,6 +16,22 @@ test_that("Testing simplify_milestone_network", {
   expect_true( newnet %>% filter(from == 3, to == 5, length == 1, directed) %>% nrow == 1 )
   expect_true( newnet %>% filter(from == 4, to == 5, length == 1, directed) %>% nrow == 1 )
   expect_true( newnet %>% filter(from == 1, to == 3, length == 2, directed) %>% nrow == 1 )
+
+  net <- tibble::tribble(
+    ~from, ~to, ~length, ~directed,
+    1, 2, 1, T,
+    2, 3, 1, T,
+    3, 4, 1, T,
+    3, 5, 1, T,
+    5, 4, 1, T
+  )
+  newnet <- simplify_milestone_network(net)
+  expect_equal(nrow(newnet), 4)
+  expect_equal(ncol(newnet), 4)
+  expect_true( newnet %>% filter(from == 3, to == 4, length == 1, directed) %>% nrow == 1 )
+  expect_true( newnet %>% filter(from == 3, to == 5, length == 1, directed) %>% nrow == 1 )
+  expect_true( newnet %>% filter(from == 4, to == 5, length == 1, directed) %>% nrow == 1 )
+  expect_true( newnet %>% filter(from == 1, to == 3, length == 2, directed) %>% nrow == 1 )
 })
 
 test_that("Testing simplify_igraph_network", {
