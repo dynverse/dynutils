@@ -30,7 +30,7 @@ test_that("Testing simplify_milestone_network", {
   expect_equal(ncol(newnet), 4)
   expect_true( newnet %>% filter(from == 3, to == 4, length == 1, directed) %>% nrow == 1 )
   expect_true( newnet %>% filter(from == 3, to == 5, length == 1, directed) %>% nrow == 1 )
-  expect_true( newnet %>% filter(from == 4, to == 5, length == 1, directed) %>% nrow == 1 )
+  expect_true( newnet %>% filter(from == 5, to == 4, length == 1, directed) %>% nrow == 1 )
   expect_true( newnet %>% filter(from == 1, to == 3, length == 2, directed) %>% nrow == 1 )
 })
 
