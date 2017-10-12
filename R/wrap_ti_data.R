@@ -100,9 +100,19 @@ abstract_data_wrapper <- function(
   }
 
   if (is.null(progressions)) {
-    progressions <- convert_milestone_percentages_to_progressions(cell_ids, milestone_ids, milestone_network, milestone_percentages)
+    progressions <- convert_milestone_percentages_to_progressions(
+      cell_ids,
+      milestone_ids,
+      milestone_network,
+      milestone_percentages
+    )
   } else if (is.null(milestone_percentages)) {
-    milestone_percentages <- convert_progressions_to_milestone_percentages(cell_ids, milestone_ids, milestone_network, progressions)
+    milestone_percentages <- convert_progressions_to_milestone_percentages(
+      cell_ids,
+      milestone_ids,
+      milestone_network,
+      progressions
+    )
   }
 
   if (!is.data.frame(milestone_percentages) || ncol(milestone_percentages) != 3 || any(colnames(milestone_percentages) != c("cell_id", "milestone_id", "percentage"))) {
@@ -117,18 +127,25 @@ abstract_data_wrapper <- function(
   ## create a separate state if some cells have been filtered out
   na_ids <- setdiff(cell_ids, unique(milestone_percentages$cell_id))
   if (length(na_ids) != 0) {
+    directed <- any(milestone_network$directed)
     new_mid <- "FILTERED_CELLS"
-    milestone_percentages <- bind_rows(
-      milestone_percentages,
-      data_frame(cell_id = na_ids, milestone_id = new_mid, percentage = 1)
+
+    milestone_percentages <- milestone_percentages %>% add_row(
+      cell_id = na_ids,
+      milestone_id = new_mid,
+      percentage = 1
     )
-    progressions <- bind_rows(
-      progressions,
-      data_frame(cell_id = na_ids, from = new_mid, to = new_mid, percentage = 1)
+    progressions <-  progressions %>% add_row(
+      cell_id = na_ids,
+      from = new_mid,
+      to = new_mid,
+      percentage = 1
     )
-    milestone_network <- dplyr::bind_rows(
-      milestone_network,
-      data_frame(from = milestone_ids, to = new_mid, length = max(milestone_network$length)*5)
+    milestone_network <- milestone_network %>% add_row(
+      from = milestone_ids,
+      to = new_mid,
+      length = max(milestone_network$length)*5,
+      directed = directed
     )
     milestone_ids <- c(milestone_ids, new_mid)
   }
