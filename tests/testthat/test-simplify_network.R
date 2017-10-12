@@ -54,31 +54,34 @@ test_that("Testing simplify_sample_graph", {
 
   out <- simplify_sample_graph(edges, is_trajectory, is_directed)
 
+  expect_equal(length(out$milestone_ids), 4)
   expect_equal(nrow(out$milestone_network), 3)
   expect_equal(nrow(out$progressions), length(is_trajectory))
 
+  expect_equal(out$milestone_ids, paste0("milestone_", c("A", "D", "E", "F")))
+
   test_strs <- out$milestone_network %>% {paste(.$from, .$to, .$length, .$directed, sep = "|")} %>% sort
   expected_strs <- c(
-    "A|D|1.8|FALSE",
-    "D|E|0.8|FALSE",
-    "D|F|0.9|FALSE"
+    "milestone_A|milestone_D|1.8|FALSE",
+    "milestone_D|milestone_E|0.8|FALSE",
+    "milestone_D|milestone_F|0.9|FALSE"
   ) %>% sort
   expect_equal(test_strs, expected_strs)
 
   test_strs <- out$progressions %>% {paste(.$name, .$from, .$to, round(.$percentage, 2), sep = "|")} %>% sort
   expected_strs <- c(
-    "A|A|D|0",
-    "B|A|D|0.28",
-    "C|A|D|0.61",
-    "D|A|D|1",
-    "E|D|E|1",
-    "F|D|F|1",
-    "a|A|D|0",
-    "b|A|D|0.28",
-    "bb|A|D|0.28",
-    "c|A|D|0.61",
-    "cc|A|D|0.61",
-    "d|A|D|1"
+    "A|milestone_A|milestone_D|0",
+    "B|milestone_A|milestone_D|0.28",
+    "C|milestone_A|milestone_D|0.61",
+    "D|milestone_A|milestone_D|1",
+    "E|milestone_D|milestone_E|1",
+    "F|milestone_D|milestone_F|1",
+    "a|milestone_A|milestone_D|0",
+    "b|milestone_A|milestone_D|0.28",
+    "bb|milestone_A|milestone_D|0.28",
+    "c|milestone_A|milestone_D|0.61",
+    "cc|milestone_A|milestone_D|0.61",
+    "d|milestone_A|milestone_D|1"
   ) %>% sort
   expect_equal(test_strs, expected_strs)
 
