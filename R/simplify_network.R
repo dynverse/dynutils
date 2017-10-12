@@ -161,11 +161,16 @@ simplify_sample_graph <- function(edges, is_trajectory, is_directed) {
     }
   }
 
-  milestone_network <- igraph::as_data_frame(bgr, "edges")
-  progressions <- igraph::as_data_frame(bgr, "vertices") %>%
-    select(-is_trajectory)
+  milestone_network <- igraph::as_data_frame(bgr, "edges") %>%
+    mutate(from = paste0("milestone_", from), to = paste0("milestone_", to))
 
-  lst(milestone_network, progressions)
+  milestone_ids <- sort(unique(c(milestone_network$from, milestone_network$to)))
+
+  progressions <- igraph::as_data_frame(bgr, "vertices") %>%
+    select(-is_trajectory) %>%
+    mutate(from = paste0("milestone_", from), to = paste0("milestone_", to))
+
+  lst(milestone_ids, milestone_network, progressions)
 }
 
 #' Simplify an igraph network such that consecutive linear edges are removed
