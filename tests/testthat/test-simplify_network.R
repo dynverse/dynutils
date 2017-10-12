@@ -68,7 +68,7 @@ test_that("Testing simplify_sample_graph", {
   ) %>% sort
   expect_equal(test_strs, expected_strs)
 
-  test_strs <- out$progressions %>% {paste(.$name, .$from, .$to, round(.$percentage, 2), sep = "|")} %>% sort
+  test_strs <- out$progressions %>% {paste(.$cell_id, .$from, .$to, round(.$percentage, 2), sep = "|")} %>% sort
   expected_strs <- c(
     "A|milestone_A|milestone_D|0",
     "B|milestone_A|milestone_D|0.28",

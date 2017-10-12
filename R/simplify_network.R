@@ -168,7 +168,8 @@ simplify_sample_graph <- function(edges, is_trajectory, is_directed) {
 
   progressions <- igraph::as_data_frame(bgr, "vertices") %>%
     select(-is_trajectory) %>%
-    mutate(from = paste0("milestone_", from), to = paste0("milestone_", to))
+    mutate(from = paste0("milestone_", from), to = paste0("milestone_", to)) %>%
+    rename(cell_id = name)
 
   lst(milestone_ids, milestone_network, progressions)
 }
