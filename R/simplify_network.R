@@ -32,152 +32,106 @@ simplify_milestone_network = function(net) {
   net
 }
 
+# edges <- tibble::tribble(
+#   ~from, ~to, ~length, ~directed,
+#   "A", "B", 1, F,
+#   "C", "B", 2, F,
+#   "C", "D", 3, F,
+#   "E", "D", 4, F,
+#   "E", "F", 5, F,
+#   "D", "G", 6, F,
+#   "a", "A", .1, F,
+#   "b", "B", .2, F,
+#   "bb", "b", .3, F,
+#   "c", "C", .5, F,
+#   "cc", "C", .1, F
+# )
+# sams <- unique(c(edges$from, edges$to))
+# to_keep <- setNames(toupper(sams) == sams, sams)
+# is_directed <- F
+
 #' Simplify a graph of samples
 #'
 #' @param edges The edges between samples. Should contain columns "from", "to", "length", and "directed"
-#' @param is_trajectory A \strong{named} vector containing booleans fo whether or not a sample is to be kept.
+#' @param to_keep A \strong{named} vector containing booleans containing
+#'   whether or not a sample is part of the trajectory that is to be kept.
 #' @param is_directed Whether or not the graph is directed.
 #' @export
-simplify_sample_graph <- function(edges, is_trajectory, is_directed) {
+simplify_sample_graph <- function(edges, to_keep, is_directed) {
   requireNamespace("igraph")
 
-  ids <- names(is_trajectory)
-  verts <- data_frame(cell_id = ids, from = ids, to = ids, percentage = 1, is_trajectory = is_trajectory)
-  gr <- igraph::graph_from_data_frame(edges, directed = is_directed, vertices = verts)
+  ids <- names(to_keep)
+  # progressions <- data_frame(cell_id = ids, from = ids, to = ids, percentage = 1)
+  gr <- igraph::graph_from_data_frame(edges %>% rename(weight = length), directed = is_directed, vertices = ids)
 
-  # remove vertices that are not part of the trajectory
-  vs <- igraph::V(gr)
-  vs_non_trajs <- vs[!vs$is_trajectory]
-  vs_trajs <- vs[vs$is_trajectory]
+  # STEP 1: for each cell, find closest milestone
+  v_keeps <- names(to_keep)[to_keep]
 
   # find closest traj-node to non-traj-nodes
-  dists <- igraph::distances(gr, vs_non_trajs, vs_trajs)
-  corresponding_vs <- names(vs_trajs[apply(dists, 1, which.min)])
+  dists <- igraph::distances(gr, to = v_keeps)
+  closest_trajpoint <- v_keeps[apply(dists, 1, which.min)]
 
-  # set from and to for non-traj-nodes to their closest traj-node
-  igraph::V(gr)[!vs$is_trajectory]$from <- corresponding_vs
-  igraph::V(gr)[!vs$is_trajectory]$to <- corresponding_vs
+  # STEP 2: simplify backbone
+  gr <- gr %>%
+    igraph::induced.subgraph(v_keeps)
 
-  # remove edges connecting non-traj-nodes, resulting in the backbone
-  ends <- igraph::ends(gr, igraph::E(gr))
-  bgr <- igraph::delete.edges(gr, which(ends[,1] %in% names(vs_non_trajs) | ends[,2] %in% names(vs_non_trajs)))
+  sgr <- simplify_igraph_network(gr)
+  milestone_ids <- igraph::V(sgr)$name
 
-  # simplifying trajectory
-  bvs <- igraph::V(bgr)
-  bvs <- names(bvs[bvs$is_trajectory])
+  milestone_network_proto <-
+    gr %>%
+    simplify_igraph_network() %>%
+    igraph::as_data_frame() %>%
+    as_tibble() %>%
+    rowwise() %>%
+    mutate(
+      path = igraph::shortest_paths(gr, from, to, mode = "out")$vpath %>% map(names)
+    ) %>%
+    ungroup()
 
-  # for each node in backbone
-  for (id in bvs) {
-    # does the node have degree 2 (i.e. should it be removed)
-    if (igraph::degree(bgr, id) == 2 && (!is_directed || (igraph::degree(bgr, id, "in") == 1 && igraph::degree(bgr, id, "out") == 1))) {
-      # detect the new from and new to
-      if (is_directed) {
-        newfrom <- igraph::neighbors(bgr, id, mode = "in") %>% names
-        newto <- igraph::neighbors(bgr, id, mode = "out") %>% names
-      } else {
-        neighs <- igraph::neighbors(bgr, id)
-        newfrom <- neighs[1] %>% names
-        newto <- neighs[2] %>% names
-      }
-      # if newfrom and newto are already connected, do not remove edges for current node
-      if (!igraph::are_adjacent(bgr, newfrom, newto)) {
+  # STEP 3: Calculate progressions of cell_ids
+  progressions <-
+    milestone_network_proto %>%
+    rowwise() %>%
+    do(with(., data_frame(from, to, weight, path))) %>%
+    ungroup %>%
+    group_by(path) %>%
+    slice(1) %>%
+    mutate(
+      percentage = igraph::distances(gr, from, path) / weight
+    ) %>%
+    ungroup() %>%
+    right_join(
+      data_frame(cell_id = ids, path = closest_trajpoint),
+      by = "path"
+    ) %>%
+    select(cell_id, from, to, percentage)
 
-        # take the relevant part of the backbone. should be exactly two edges
-        relevant_bgr <- igraph::as_data_frame(igraph::induced_subgraph(bgr, c(id, newfrom, newto)))
+  # create output
+  milestone_network <- milestone_network_proto %>%
+    select(from, to, length = weight) %>%
+    mutate(directed = is_directed)
 
-        # find the length of the first and the second edge
-        newfrom_length <- relevant_bgr %>% filter(from == newfrom | to == newfrom) %>% .$length
-        newto_length <- relevant_bgr %>% filter(from == newto | to == newto) %>% .$length
+  # rename milestones
+  renamefun <- function(x) paste0("milestone_", x)
+  milestone_network <- milestone_network %>%
+    mutate_at(c("from", "to"), renamefun)
+  milestone_ids <- renamefun(milestone_ids)
+  progressions <- progressions %>%
+    mutate_at(c("from", "to"), renamefun)
 
-        # calculate the length of the new edge
-        comb_length <- newfrom_length + newto_length
-
-        # add new edge
-        new_edge <- igraph::edge(newfrom, newto)
-        new_edge$length <- comb_length
-        new_edge$directed <- is_directed
-        bgr <- (bgr + new_edge)
-
-        # remove old edge
-        ends <- igraph::ends(bgr, igraph::E(bgr))
-        bgr <- bgr %>% igraph::delete.edges(which(ends[,1] == id | ends[,2] == id))
-
-        # adjust vertex attributes
-        vfrom <- igraph::V(bgr)$from
-        vto <- igraph::V(bgr)$to
-        vpct <- igraph::V(bgr)$percentage
-        vs_to_update <- which(vfrom == id | vto == id)
-
-        for (vi in vs_to_update) {
-          prevfrom <- vfrom[[vi]]
-          prevto <- vto[[vi]]
-          vpct_vi <- vpct[[vi]]
-
-          # calculate new percentage depending on
-          # what its previous from and to is
-          new_pct <-
-            if (prevfrom == id && prevto == id) {
-              newfrom_length
-            } else if (newfrom == prevfrom) {
-              vpct_vi * newfrom_length
-            } else if (newfrom == prevto) {
-              (1 - vpct_vi) * newfrom_length
-            } else if (newto == prevfrom) {
-              newfrom_length + newto_length * vpct_vi
-            } else if (newto == prevto) {
-              newfrom_length + newto_length * (1 - vpct_vi)
-            } else {
-              stop("This should never occur")
-            }
-          igraph::V(bgr)$from[[vi]] <- newfrom
-          igraph::V(bgr)$to[[vi]] <- newto
-          igraph::V(bgr)$percentage[[vi]] <- new_pct / comb_length
-        }
-      }
-    }
-  }
-
-  # check whether nodes are still assigned to itself.
-  # if so, assign it to one of the edges in E(bgr)
-  for (v in igraph::V(bgr)) {
-    vfrom <- igraph::V(bgr)$from[[v]]
-    vto <- igraph::V(bgr)$to[[v]]
-    if (vfrom == vto) {
-      ends <- igraph::ends(bgr, igraph::E(bgr))
-      ei <- which(ends[,2] == vfrom)
-
-      if (length(ei) != 0) {
-        ei <- ei[[1]]
-        igraph::V(bgr)$from[[v]] <- ends[ei,1]
-        igraph::V(bgr)$to[[v]] <- ends[ei,2]
-        igraph::V(bgr)$percentage[[v]] <- 1
-      } else {
-        ei <- which(ends[,1] == vfrom)[[1]]
-        igraph::V(bgr)$from[[v]] <- ends[ei,1]
-        igraph::V(bgr)$to[[v]] <- ends[ei,2]
-        igraph::V(bgr)$percentage[[v]] <- 0
-      }
-
-    }
-  }
-
-  milestone_network <- igraph::as_data_frame(bgr, "edges") %>%
-    mutate(from = paste0("milestone_", from), to = paste0("milestone_", to))
-
-  milestone_ids <- sort(unique(c(milestone_network$from, milestone_network$to)))
-
-  progressions <- igraph::as_data_frame(bgr, "vertices") %>%
-    select(-is_trajectory) %>%
-    mutate(from = paste0("milestone_", from), to = paste0("milestone_", to)) %>%
-    rename(cell_id = name)
-
-  lst(milestone_ids, milestone_network, progressions)
+  lst(
+    milestone_ids,
+    milestone_network,
+    progressions
+  )
 }
 
 #' Simplify an igraph network such that consecutive linear edges are removed
 #'
 #' @param gr an igraph object
-#' @importFrom igraph degree V are_adjacent neighbors delete.vertices add.edges
+#'
+#' @importFrom V are_adjacent is.directed degree graph_from_data_frame distances
 #'
 #' @export
 #'
@@ -186,23 +140,46 @@ simplify_sample_graph <- function(edges, is_trajectory, is_directed) {
 #' gr <- igraph::graph_from_data_frame(net)
 #' simplify_igraph_network(gr)
 simplify_igraph_network <- function(gr) {
-  degr_in <- igraph::degree(gr, mode = "in")
-  degr_out <- igraph::degree(gr, mode = "out")
-  is_loop <- sapply(igraph::V(gr), function(n) igraph::are_adjacent(gr, n, n))
+  is_loop <- igraph::V(gr) %>%
+    map_lgl(~ igraph::are_adjacent(gr, ., .))
 
-  is_simple <- degr_in == 1 & degr_out == 1 & !is_loop
-  while (any(is_simple)) {
-    node <- first(which(is_simple))
-    in_nodes <- igraph::neighbors(gr, node, mode = "in") %>% names
-    out_nodes <- igraph::neighbors(gr, node, mode = "out") %>% names
-    gr <- gr %>% igraph::delete.vertices(node) %>% igraph::add.edges(c(in_nodes, out_nodes))
-
-    degr_in <- igraph::degree(gr, mode = "in")
-    degr_out <- igraph::degree(gr, mode = "out")
-    is_loop <- sapply(igraph::V(gr), function(n) igraph::are_adjacent(gr, n, n))
-
-    is_simple <- degr_in == 1 & degr_out == 1 & !is_loop
+  # add weight attribute if not already present
+  if (!"weight" %in% names(igraph::edge.attributes(gr))) {
+    igraph::E(gr)$weight <- 1
   }
 
-  gr
+  # figure out which nodes to keep
+  keep <-
+    if (igraph::is.directed(gr)) {
+      degr_in <- igraph::degree(gr, mode = "in")
+      degr_out <- igraph::degree(gr, mode = "out")
+      which(degr_in != 1 | degr_out != 1 | is_loop) %>% names
+    } else {
+      degr <- igraph::degree(gr)
+      which(degr != 2 | is_loop) %>% names
+    }
+
+  # determine the paths to keep
+  network <-
+    crossing(from = keep, to = keep) %>%
+    as_tibble() %>%
+    rowwise() %>%
+    do(with(., tibble(
+        from,
+        to,
+        path = igraph::all_simple_paths(gr, from, to) %>% map(names)
+      ))) %>%
+    mutate(num_keepers = sum(path %in% keep)) %>%
+    filter(num_keepers == 2 | (from == to & is_loop[from])) %>%
+    mutate(
+      weight = sum(igraph::E(gr, path = path)$weight)
+    ) %>%
+    select(from, to, weight)
+
+  # remove double edges if network was undirected
+  if (!igraph::is.directed(gr)) {
+    network <- network %>% filter(from <= to)
+  }
+
+  igraph::graph_from_data_frame(network, directed = igraph::is.directed(gr))
 }
