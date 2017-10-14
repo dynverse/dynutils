@@ -4,12 +4,13 @@
 \alias{simplify_sample_graph}
 \title{Simplify a graph of samples}
 \usage{
-simplify_sample_graph(edges, is_trajectory, is_directed)
+simplify_sample_graph(edges, to_keep, is_directed)
 }
 \arguments{
 \item{edges}{The edges between samples. Should contain columns "from", "to", "length", and "directed"}
 
-\item{is_trajectory}{A \strong{named} vector containing booleans fo whether or not a sample is to be kept.}
+\item{to_keep}{A \strong{named} vector containing booleans containing
+whether or not a sample is part of the trajectory that is to be kept.}
 
 \item{is_directed}{Whether or not the graph is directed.}
 }

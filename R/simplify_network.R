@@ -131,7 +131,7 @@ simplify_sample_graph <- function(edges, to_keep, is_directed) {
 #'
 #' @param gr an igraph object
 #'
-#' @importFrom V are_adjacent is.directed degree graph_from_data_frame distances
+#' @importFrom igraph V are_adjacent is.directed degree graph_from_data_frame distances
 #'
 #' @export
 #'
