@@ -66,8 +66,6 @@ simplify_sample_graph <- function(edges, to_keep, is_directed) {
 
   # STEP 1: for each cell, find closest milestone
   v_keeps <- names(to_keep)[to_keep]
-
-  # find closest traj-node to non-traj-nodes
   dists <- igraph::distances(gr, to = v_keeps)
   closest_trajpoint <- v_keeps[apply(dists, 1, which.min)]
 
@@ -75,12 +73,16 @@ simplify_sample_graph <- function(edges, to_keep, is_directed) {
   gr <- gr %>%
     igraph::induced.subgraph(v_keeps)
 
+  # remove nodes with degree with degree 2, if undirected,
+  # or in degree 1 and out degree 1, if directed
   sgr <- simplify_igraph_network(gr)
   milestone_ids <- igraph::V(sgr)$name
 
+  # STEP 3: Calculate progressions of cell_ids
+
+  # determine which nodes were on each path
   milestone_network_proto <-
-    gr %>%
-    simplify_igraph_network() %>%
+    sgr %>%
     igraph::as_data_frame() %>%
     as_tibble() %>%
     rowwise() %>%
@@ -89,21 +91,22 @@ simplify_sample_graph <- function(edges, to_keep, is_directed) {
     ) %>%
     ungroup()
 
-  # STEP 3: Calculate progressions of cell_ids
+  # for each node, find an edge which contains the node and
+  # calculate its progression along that edge
   progressions <-
     milestone_network_proto %>%
     rowwise() %>%
-    do(with(., data_frame(from, to, weight, path))) %>%
+    do(with(., data_frame(from, to, weight, node = path))) %>%
     ungroup %>%
-    group_by(path) %>%
+    group_by(node) %>%
     slice(1) %>%
     mutate(
-      percentage = igraph::distances(gr, from, path) / weight
+      percentage = igraph::distances(gr, from, node) / weight
     ) %>%
     ungroup() %>%
     right_join(
-      data_frame(cell_id = ids, path = closest_trajpoint),
-      by = "path"
+      data_frame(cell_id = ids, node = closest_trajpoint),
+      by = "node"
     ) %>%
     select(cell_id, from, to, percentage)
 
@@ -112,7 +115,8 @@ simplify_sample_graph <- function(edges, to_keep, is_directed) {
     select(from, to, length = weight) %>%
     mutate(directed = is_directed)
 
-  # rename milestones
+  # rename milestones so the milestones don't have the
+  # same names as the nodes
   renamefun <- function(x) paste0("milestone_", x)
   milestone_network <- milestone_network %>%
     mutate_at(c("from", "to"), renamefun)
