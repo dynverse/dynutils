@@ -77,6 +77,7 @@ wrap_linear_ti_prediction <- function(
   pseudotimes,
   ...
 ) {
+  pseudotimes <- scale_minmax(pseudotimes)
   milestone_ids <- c("milestone_A", "milestone_B")
   milestone_network <- data_frame(
     from = milestone_ids[[1]],
@@ -88,7 +89,7 @@ wrap_linear_ti_prediction <- function(
     cell_id = rownames(counts),
     from = milestone_ids[[1]],
     to = milestone_ids[[2]],
-    percentage = scale_minmax(pseudotimes)
+    percentage = pseudotimes
   )
 
   wrap_ti_prediction(
@@ -98,6 +99,7 @@ wrap_linear_ti_prediction <- function(
     milestone_ids = milestone_ids,
     milestone_network = milestone_network,
     progressions = progressions,
+    pseudotimes = pseudotimes,
     ...
   )
 }
