@@ -63,6 +63,45 @@ wrap_ti_prediction <- function(
   )
 }
 
+#' Wrap a linear TI prediction
+#'
+#' This function will generate the milestone_network and progressions.
+#'
+#' @param pseudotimes The pseudotimes of the \code{cell_ids}
+#' @inheritParams abstract_data_wrapper
+#'
+#' @export
+wrap_linear_ti_prediction <- function(
+  id,
+  cell_ids,
+  pseudotimes,
+  ...
+) {
+  milestone_ids <- c("milestone_A", "milestone_B")
+  milestone_network <- data_frame(
+    from = milestone_ids[[1]],
+    to = milestone_ids[[2]],
+    length = 1,
+    directed = FALSE
+  )
+  progressions <- data_frame(
+    cell_id = rownames(counts),
+    from = milestone_ids[[1]],
+    to = milestone_ids[[2]],
+    percentage = scale_minmax(pseudotimes)
+  )
+
+  wrap_ti_prediction(
+    ti_type = "linear",
+    id = id,
+    cell_ids = cell_ids,
+    milestone_ids = milestone_ids,
+    milestone_network = milestone_network,
+    progressions = progressions,
+    ...
+  )
+}
+
 #' An abstract data wrapper
 #'
 #' @param type the type of data (e.g. ti_task, ti_toy, ti_pred)
