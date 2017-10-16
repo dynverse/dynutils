@@ -7,7 +7,7 @@
 scale_uniform(x, center = 0, max_range = 1)
 }
 \arguments{
-\item{x}{A numeric matrix or data frame.}
+\item{x}{A numeric vector matrix or data frame.}
 
 \item{center}{The new center point of the data.}
 

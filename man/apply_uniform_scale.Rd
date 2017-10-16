@@ -7,7 +7,7 @@
 apply_uniform_scale(x, addend, multiplier)
 }
 \arguments{
-\item{x}{A numeric matrix or data frame.}
+\item{x}{A numeric vector, matrix or data frame.}
 
 \item{addend}{A centering vector for each column}
 
