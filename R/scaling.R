@@ -29,6 +29,7 @@ scale_uniform <- function(x, center = 0, max_range = 1) {
   if (is.null(dim(x))) {
     sc <- scale_uniform(matrix(x, ncol = 1), center = center, max_range = max_range)
     out <- sc[,1]
+    names(out) <- names(x)
     attr(out, "addend") <- attr(sc, "addend")
     attr(out, "multiplier") <- attr(sc, "multiplier")
     out
@@ -61,6 +62,7 @@ apply_uniform_scale <- function(x, addend, multiplier) {
   if (is.null(dim(x))) {
     sc <- apply_uniform_scale(matrix(x, ncol = 1), addend = addend, multiplier = multiplier)
     out <- sc[,1]
+    names(out) <- names(x)
     attr(out, "addend") <- attr(sc, "addend")
     attr(out, "multiplier") <- attr(sc, "multiplier")
     out
@@ -102,6 +104,7 @@ scale_quantile <- function(x, outlier_cutoff = .05) {
   if (is.null(dim(x))) {
     sc <- scale_quantile(matrix(x, ncol = 1), outlier_cutoff = outlier_cutoff)
     out <- sc[,1]
+    names(out) <- names(x)
     attr(out, "addend") <- attr(sc, "addend")
     attr(out, "multiplier") <- attr(sc, "multiplier")
     out
@@ -130,6 +133,7 @@ apply_quantile_scale <- function(x, addend, multiplier) {
   if (is.null(dim(x))) {
     sc <- apply_quantile_scale(matrix(x, ncol = 1), addend = addend, multiplier = multiplier)
     out <- sc[,1]
+    names(out) <- names(x)
     attr(out, "addend") <- attr(sc, "addend")
     attr(out, "multiplier") <- attr(sc, "multiplier")
     out
