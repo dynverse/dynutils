@@ -86,7 +86,7 @@ wrap_linear_ti_prediction <- function(
     directed = FALSE
   )
   progressions <- data_frame(
-    cell_id = rownames(counts),
+    cell_id = cell_ids,
     from = milestone_ids[[1]],
     to = milestone_ids[[2]],
     percentage = pseudotimes
