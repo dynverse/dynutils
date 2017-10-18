@@ -96,7 +96,9 @@ compute_emlike_dist <- function(traj) {
 
       bind_rows(closest_to_nodes, closest_to_samples)
     }
-  }))
+  })) %>% mutate(
+    length = ifelse(length >= 0, length, 0)
+  )
 
   gr2 <- igraph::graph_from_data_frame(closest, directed = FALSE, vertices = c(milestone_ids, cell_ids))
   gr2 %>% igraph::distances(v = cell_ids, to = cell_ids, weights = igraph::E(gr2)$length)
