@@ -60,8 +60,7 @@ simplify_milestone_network = function(net) {
 simplify_sample_graph <- function(edges, to_keep, is_directed) {
   requireNamespace("igraph")
 
-  ids <- names(to_keep)
-  # progressions <- data_frame(cell_id = ids, from = ids, to = ids, percentage = 1)
+  ids <- intersect(names(to_keep), unique(c(edges$from, edges$to)))
   gr <- igraph::graph_from_data_frame(edges %>% rename(weight = length), directed = is_directed, vertices = ids)
 
   # STEP 1: for each cell, find closest milestone
