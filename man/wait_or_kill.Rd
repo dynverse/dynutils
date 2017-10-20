@@ -22,12 +22,7 @@ has exceeded the \code{wait_time}.}
 \item{...}{extra arguments to be passed to the \code{\link[future]{future}} call.}
 }
 \description{
-This method assumes that the handle in \code{future_handle} has only just
-been started, and that it uses a multisession plan.
-}
-\details{
-Note: You might have to make a dry run of this function before really
-using it. See the examples.
+Wait for a handle to finish or kill it
 }
 \examples{
 dry_run <- wait_or_kill({1}, wait_time = 5, function(x) x, 1)

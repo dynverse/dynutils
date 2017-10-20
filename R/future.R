@@ -1,11 +1,5 @@
 #' Wait for a handle to finish or kill it
 #'
-#' This method assumes that the handle in \code{future_handle} has only just
-#' been started, and that it uses a multisession plan.
-#'
-#' Note: You might have to make a dry run of this function before really
-#' using it. See the examples.
-#'
 #' @param expr An R \code{\link[base]{expression}} to be evaluated.
 #' @param wait_time How long to wait before killing it.
 #' @param cancel_output_fun A function \code{function(time_elapsed){...}} to call when the total time
