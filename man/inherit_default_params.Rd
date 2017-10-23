@@ -2,7 +2,7 @@
 % Please edit documentation in R/stop_boilerplate.R
 \name{inherit_default_params}
 \alias{inherit_default_params}
-\title{Allow Wouter to write less boilerplate}
+\title{Inherit default parameters from a list of super functions}
 \usage{
 inherit_default_params(super_functions, fun)
 }
@@ -15,7 +15,7 @@ inherit_default_params(super_functions, fun)
 Function \code{fun}, but with the default parameters of the \code{super_functions}
 }
 \description{
-A function to stop Wouter from crying.
+Inherit default parameters from a list of super functions
 }
 \examples{
 

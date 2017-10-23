@@ -1,6 +1,4 @@
-#' Allow Wouter to write less boilerplate
-#'
-#' A function to stop Wouter from crying.
+#' Inherit default parameters from a list of super functions
 #'
 #' @param super_functions A list of super functions of which \code{fun} needs to inherit the default parameters
 #' @param fun The function whose default parameters need to be overridden
