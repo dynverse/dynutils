@@ -20,15 +20,11 @@ eval_with_timeout(expr, envir = parent.frame(), timeout,
 Wait for a handle to finish or kill it
 }
 \examples{
-dry_run <- wait_or_kill({1}, wait_time = 5, function(x) x, 1)
-wait_or_kill(
+eval_with_timeout(
   expr = {
     Sys.sleep(100) # really long function
     data.frame(result = "finished", time = sleeper_time)
   },
-  wait_time = 10,
-  cancel_output_fun = function(t) data.frame(result = "killed", time = t),
-  check_interval = 1,
-  verbose = TRUE
+  timeout = 10,
 )
 }
