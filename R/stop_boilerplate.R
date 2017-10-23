@@ -30,7 +30,7 @@
 inherit_default_params <- function(super_functions, fun) {
   for (sup in super_functions) {
     argsup <- intersect(formalArgs(fun), formalArgs(sup))
-    formals(fun)[argsup] <- formals(s)[argsup]
+    formals(fun)[argsup] <- formals(sup)[argsup]
   }
   fun
 }
