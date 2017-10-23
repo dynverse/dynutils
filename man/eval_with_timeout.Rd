@@ -20,6 +20,7 @@ eval_with_timeout(expr, envir = parent.frame(), timeout,
 Wait for a handle to finish or kill it
 }
 \examples{
+\dontrun{
 eval_with_timeout(
   expr = {
     Sys.sleep(100) # really long function
@@ -27,4 +28,5 @@ eval_with_timeout(
   },
   timeout = 10,
 )
+}
 }

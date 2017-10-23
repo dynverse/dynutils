@@ -10,6 +10,7 @@
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' eval_with_timeout(
 #'   expr = {
 #'     Sys.sleep(100) # really long function
@@ -17,6 +18,7 @@
 #'   },
 #'   timeout = 10,
 #' )
+#' }
 eval_with_timeout <- function(expr, envir = parent.frame(), timeout, on_timeout = c("error", "warning", "silent")) {
   # substitute expression so it is not executed as soon it is used
   expr <- substitute(expr)
@@ -29,18 +31,14 @@ eval_with_timeout <- function(expr, envir = parent.frame(), timeout, on_timeout 
     eval(expr, envir = envir)
   }, silent = FALSE)
 
-  if (!is.infinite(timeout)) {
-    # wait max n seconds for a result.
-    myresult <- parallel::mccollect(myfork, wait = FALSE, timeout = timeout)
-    # kill fork after collect has returned
-    tools::pskill(myfork$pid, tools::SIGKILL)
-    tools::pskill(-1 * myfork$pid, tools::SIGKILL)
+  # wait max n seconds for a result.
+  myresult <- parallel::mccollect(myfork, wait = FALSE, timeout = timeout)
+  # kill fork after collect has returned
+  tools::pskill(myfork$pid, tools::SIGKILL)
+  tools::pskill(-1 * myfork$pid, tools::SIGKILL)
 
-    # clean up:
-    parallel::mccollect(myfork, wait = FALSE)
-  } else {
-    myresult <- parallel::mccollect(myfork, wait = TRUE)
-  }
+  # clean up:
+  parallel::mccollect(myfork, wait = FALSE)
 
   # timeout?
   if (is.null(myresult)) {

@@ -6,9 +6,6 @@ test_that("Timeouts work in simple use cases", {
 
   # expect correct result when no timeout
   expect_equal(eval_with_timeout({Sys.sleep(1); 5.5}, timeout = 5), 5.5)
-
-  # support practically infinite timeouts
-  expect_equal(eval_with_timeout({Sys.sleep(1); 5.5}, timeout = Inf), 5.5)
 })
 
 test_that("Timeouts work in parallel usecases", {
