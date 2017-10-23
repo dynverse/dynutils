@@ -15,12 +15,14 @@ Imports:
   dplyr,
   magrittr,
   methods,
+  parallel,
   purrr,
   testthat,
   tibble,
   tidyr,
   reshape2,
   igraph,
+  tools,
   transport
 Suggests:
   parallelMap
