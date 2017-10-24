@@ -165,6 +165,24 @@ abstract_data_wrapper <- function(
          ", ", sQuote("from"), ", ", sQuote("to"), " and ", sQuote("percentage"), ".")
   }
 
+  if (any(progressions$percentage < 0 | progressions$percentage > 1)) {
+    stop(sQuote("progressions"), " percentages should lie between [0,1]")
+  }
+
+  if (any(milestone_percentages$percentage < 0 | milestone_percentages$percentage > 1)) {
+    stop(sQuote("milestone_percentages"), " percentages should lie between [0,1]")
+  }
+
+  pr_check <- progressions %>% group_by(cell_id) %>% summarise(sum = sum(percentage))
+  if (any(pr_check$sum < 0 | pr_check$sum > 1)) {
+    stop("The sum of ", sQuote("progressions"), " percentages per cell should lie between [0,1]")
+  }
+
+  mp_check <- milestone_percentages %>% group_by(cell_id) %>% summarise(sum = sum(percentage))
+  if (any(abs(mp_check$sum - 1) < 1e-4)) {
+    stop("The sum of ", sQuote("milestone_percentages"), " percentages per cell should be exactly 1")
+  }
+
   ## create a separate state if some cells have been filtered out
   na_ids <- setdiff(cell_ids, unique(milestone_percentages$cell_id))
   if (length(na_ids) != 0) {
