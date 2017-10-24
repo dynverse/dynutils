@@ -54,6 +54,10 @@ eval_with_timeout <- function(expr, envir = parent.frame(), timeout, on_timeout 
   # move this to distinguish between timeout and NULL returns
   myresult <- myresult[[1]]
 
+  if ("try-error" %in% class(myresult)) {
+    stop(attr(myresult, "condition"))
+  }
+
   # send the buffered response
   return(myresult)
 }

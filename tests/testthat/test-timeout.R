@@ -67,3 +67,8 @@ test_that("Timeouts work in system calls", {
   # expect correct result when no timeout
   expect_equal(eval_with_timeout({system("sleep 1"); 5.5}, timeout = 5), 5.5)
 })
+
+
+test_that("eval_with_timeout returns errors correctly", {
+  expect_error(eval_with_timeout(stop("Stop"), timeout = 10))
+})
