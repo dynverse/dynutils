@@ -6,8 +6,7 @@
 #' @param y List to update `x` with
 #' @return Update list
 #' @export
-update_list <- function(x, y) {
-  x[names(x) %in% names(y)] <- y[names(y) %in% names(x)]
-  x <- c(x, y[!(names(y) %in% names(x))])
+merge_lists <- function(x, y) {
+  x[names(y)] <- y
   x
 }
