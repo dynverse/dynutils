@@ -179,7 +179,7 @@ abstract_data_wrapper <- function(
   }
 
   mp_check <- milestone_percentages %>% group_by(cell_id) %>% summarise(sum = sum(percentage))
-  if (any(abs(mp_check$sum - 1) < 1e-4)) {
+  if (any(abs(mp_check$sum - 1) > 1e-4)) {
     stop("The sum of ", sQuote("milestone_percentages"), " percentages per cell should be exactly 1")
   }
 
