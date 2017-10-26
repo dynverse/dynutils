@@ -155,6 +155,7 @@ abstract_data_wrapper <- function(
       progressions
     )
   }
+  eps <- 1e-8
 
   if (!is.data.frame(milestone_percentages) || ncol(milestone_percentages) != 3 || any(colnames(milestone_percentages) != c("cell_id", "milestone_id", "percentage"))) {
     stop(sQuote("milestone_percentages"), " should be a data frame with exactly four columns named ", sQuote("cell_id"),
@@ -165,21 +166,21 @@ abstract_data_wrapper <- function(
          ", ", sQuote("from"), ", ", sQuote("to"), " and ", sQuote("percentage"), ".")
   }
 
-  if (any(progressions$percentage < 0 | progressions$percentage > 1)) {
+  if (any(progressions$percentage < (0 - eps) | progressions$percentage > (1 + eps))) {
     stop(sQuote("progressions"), " percentages should lie between [0,1]")
   }
 
-  if (any(milestone_percentages$percentage < 0 | milestone_percentages$percentage > 1)) {
+  if (any(milestone_percentages$percentage < (0 - eps) | milestone_percentages$percentage > (1 + eps))) {
     stop(sQuote("milestone_percentages"), " percentages should lie between [0,1]")
   }
 
   pr_check <- progressions %>% group_by(cell_id) %>% summarise(sum = sum(percentage))
-  if (any(pr_check$sum < 0 | pr_check$sum > 1)) {
+  if (any(pr_check$sum < (0 - eps) | pr_check$sum > (1 + eps))) {
     stop("The sum of ", sQuote("progressions"), " percentages per cell should lie between [0,1]")
   }
 
   mp_check <- milestone_percentages %>% group_by(cell_id) %>% summarise(sum = sum(percentage))
-  if (any(abs(mp_check$sum - 1) > 1e-4)) {
+  if (any(abs(mp_check$sum - 1) > eps)) {
     stop("The sum of ", sQuote("milestone_percentages"), " percentages per cell should be exactly 1")
   }
 
