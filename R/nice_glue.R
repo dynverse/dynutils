@@ -18,5 +18,5 @@
 #'
 #' @export
 pritt <- function(..., .sep = "", .envir = parent.frame(), .open = "{", .close = "}") {
-  as.character(glue::glue(...))
+  as.character(glue::glue(..., .sep = .sep, .envir = .envir, .open = .open, .close = .close))
 }
