@@ -14,11 +14,6 @@
 #' tib
 list_as_tibble <- function(list_of_rows) {
   object_classes <- list_of_rows %>% map(class)
-  object_class <- object_classes[[1]]
-
-  for (objcl in object_classes) {
-    testthat::expect_equal(objcl, object_class)
-  }
 
   list_names <- names(list_of_rows[[1]])
 
@@ -30,9 +25,11 @@ list_as_tibble <- function(list_of_rows) {
     } else {
       list
     }
-  }) %>% setNames(list_names) %>% as_tibble()
+  }) %>%
+    setNames(list_names) %>%
+    as_tibble()
 
-  attr(tib, ".object_class") <- object_class
+  tib[[".object_class"]] <- object_classes
   tib
 }
 
@@ -50,16 +47,21 @@ list_as_tibble <- function(list_of_rows) {
 #'
 #' extract_row_to_list(tib, 2)
 extract_row_to_list <- function(tib, row_id) {
-  object <- tib[row_id, ] %>% as.list %>% map(function(x) {
-    if (is.null(x) | !is.list(x)) {
-      x
-    } else {
-      x[[1]]
-    }
-  })
+  object <- tib %>%
+    slice(row_id) %>%
+    select(-.object_class) %>%
+    as.list %>%
+    map(function(x) {
+      if (is.null(x) | !is.list(x)) {
+        x
+      } else {
+        x[[1]]
+      }
+    })
 
-  if (!is.null(attr(tib, ".object_class"))) {
-    class(object) <- attr(tib, ".object_class")
+  if (".object_class" %in% colnames(tib)) {
+    class(object) <- tib[[".object_class"]][[row_id]]
+    object[[".object_class"]] <- NULL
   }
 
   object
