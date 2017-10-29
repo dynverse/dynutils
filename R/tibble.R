@@ -49,7 +49,6 @@ list_as_tibble <- function(list_of_rows) {
 extract_row_to_list <- function(tib, row_id) {
   object <- tib %>%
     slice(row_id) %>%
-    select(-.object_class) %>%
     as.list %>%
     map(function(x) {
       if (is.null(x) | !is.list(x)) {
@@ -60,7 +59,7 @@ extract_row_to_list <- function(tib, row_id) {
     })
 
   if (".object_class" %in% colnames(tib)) {
-    class(object) <- tib[[".object_class"]][[row_id]]
+    class(object) <- object[[".object_class"]]
     object[[".object_class"]] <- NULL
   }
 
