@@ -47,21 +47,25 @@ list_as_tibble <- function(list_of_rows) {
 #'
 #' extract_row_to_list(tib, 2)
 extract_row_to_list <- function(tib, row_id) {
-  object <- tib %>%
-    slice(row_id) %>%
-    as.list %>%
-    map(function(x) {
-      if (is.null(x) | !is.list(x)) {
-        x
-      } else {
-        x[[1]]
-      }
-    })
+  if (!is.null(tib)) {
+    object <- tib %>%
+      slice(row_id) %>%
+      as.list %>%
+      map(function(x) {
+        if (is.null(x) | !is.list(x)) {
+          x
+        } else {
+          x[[1]]
+        }
+      })
 
-  if (".object_class" %in% colnames(tib)) {
-    class(object) <- object[[".object_class"]]
-    object[[".object_class"]] <- NULL
+    if (".object_class" %in% colnames(tib)) {
+      class(object) <- object[[".object_class"]]
+      object[[".object_class"]] <- NULL
+    }
+
+    object
+  } else {
+    NULL
   }
-
-  object
 }
