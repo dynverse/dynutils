@@ -10,7 +10,7 @@ test_that("Tibble helpers", {
   second_row <- extract_row_to_list(tib, 2)
 
   expect_equal( nrow(tib), 2 )
-  expect_equal( ncol(tib), 3 )
+  expect_equal( ncol(tib), 4 )
 
   for (i in seq_len(nrow(tib))) {
     expect_equal( extract_row_to_list(tib, i), l[[i]] )
