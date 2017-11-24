@@ -2,6 +2,7 @@
 #'
 #' @inheritParams abstract_data_wrapper
 #' @param counts the counts
+#' @param expression the normalised expression
 #' @param cell_info extra information about the cells
 #' @param feature_info extra information about the genes
 #'
@@ -10,6 +11,7 @@ wrap_ti_task_data <- function(
   ti_type,
   id,
   counts,
+  expression,
   cell_ids,
   milestone_ids,
   milestone_network,
@@ -19,6 +21,17 @@ wrap_ti_task_data <- function(
   feature_info = NULL,
   ...
 ) {
+  testthat::expect_equal(rownames(counts), cell_ids)
+  testthat::expect_equal(rownames(expression), cell_ids)
+
+  if (!is.null(cell_info)) {
+    testthat::expect_equal(cell_info$cell_id, cell_ids)
+  }
+  if (!is.null(gene_info)) {
+    testthat::expect_equal(colnames(counts), feature_info$feature_id)
+    testthat::expect_equal(colnames(expression), feature_info$feature_id)
+  }
+
   abstract_data_wrapper(
     "ti_task",
     ti_type,
@@ -29,6 +42,7 @@ wrap_ti_task_data <- function(
     milestone_percentages,
     progressions,
     counts = counts,
+    expression = expression,
     cell_info = cell_info,
     feature_info = feature_info,
     ...
