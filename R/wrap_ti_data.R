@@ -22,7 +22,7 @@ wrap_ti_task_data <- function(
   ...
 ) {
   testthat::expect_equal(rownames(counts), cell_ids)
-  testthat::expect_equal(rownames(counts), expression)
+  testthat::expect_equal(rownames(expression), cell_ids)
 
   if (!is.null(cell_info)) {
     testthat::expect_equal(cell_info$id, cell_ids)
