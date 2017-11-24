@@ -4,7 +4,7 @@
 \alias{wrap_ti_task_data}
 \title{Wrapping a TI task dataset}
 \usage{
-wrap_ti_task_data(ti_type, id, counts, cell_ids, milestone_ids,
+wrap_ti_task_data(ti_type, id, counts, expression, cell_ids, milestone_ids,
   milestone_network, milestone_percentages = NULL, progressions = NULL,
   cell_info = NULL, feature_info = NULL, ...)
 }
@@ -14,6 +14,8 @@ wrap_ti_task_data(ti_type, id, counts, cell_ids, milestone_ids,
 \item{id}{a unique identifier for the task}
 
 \item{counts}{the counts}
+
+\item{expression}{the normalised expression}
 
 \item{cell_ids}{the ids of the cells in the trajectory and counts}
 
