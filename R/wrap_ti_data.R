@@ -2,7 +2,7 @@
 #'
 #' @inheritParams abstract_data_wrapper
 #' @param counts the counts
-#' @param sample_info extra information about the cells
+#' @param cell_info extra information about the cells
 #' @param feature_info extra information about the genes
 #'
 #' @export
@@ -15,7 +15,7 @@ wrap_ti_task_data <- function(
   milestone_network,
   milestone_percentages = NULL,
   progressions = NULL,
-  sample_info = NULL,
+  cell_info = NULL,
   feature_info = NULL,
   ...
 ) {
@@ -29,7 +29,7 @@ wrap_ti_task_data <- function(
     milestone_percentages,
     progressions,
     counts = counts,
-    sample_info = sample_info,
+    cell_info = cell_info,
     feature_info = feature_info,
     ...
   )

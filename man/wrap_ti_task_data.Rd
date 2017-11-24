@@ -6,7 +6,7 @@
 \usage{
 wrap_ti_task_data(ti_type, id, counts, cell_ids, milestone_ids,
   milestone_network, milestone_percentages = NULL, progressions = NULL,
-  sample_info = NULL, feature_info = NULL, ...)
+  cell_info = NULL, feature_info = NULL, ...)
 }
 \arguments{
 \item{ti_type}{a descriptor specifying the TI type}
@@ -25,7 +25,7 @@ wrap_ti_task_data(ti_type, id, counts, cell_ids, milestone_ids,
 
 \item{progressions}{what progression does a cell have}
 
-\item{sample_info}{extra information about the cells}
+\item{cell_info}{extra information about the cells}
 
 \item{feature_info}{extra information about the genes}
 
