@@ -12,6 +12,7 @@ RoxygenNote: 6.0.1
 Depends:
   R (>= 3.0.0)
 Imports: 
+  Biobase,
   dplyr,
   glue,
   magrittr,
@@ -24,6 +25,13 @@ Imports:
   reshape2,
   igraph,
   tools,
-  transport
+  transport,
+  scater,
+  scran
 Suggests:
-  parallelMap
+  parallelMap,
+  ggplot2
+Remotes:
+  bioc::Biobase,
+  bioc::scater,
+  bioc::scran

@@ -2,8 +2,13 @@
 #' @param counts The counts matrix, with genes in columns
 #' @param has_spike Does this contain spike-ins, for which the gene names are preseded by ERCC
 #' @param verbose Whether to add plots
-normalize_filter_counts <- function(counts, has_spike=any(colnames(counts) %>% grepl("^ERCC", .)), verbose=TRUE) {
+#' @importFrom scater newSCESet calculateQCMetrics isSpike isOutlier sizeFactors normalize plotExplanatoryVariables plotExpression get_exprs plotPCA counts plotQC nexprs
+#' @importFrom Biobase pData
+#' @importFrom scran computeSumFactors computeSpikeFactors trendVar decomposeVar
+#' @export
+normalize_filter_counts <- function(counts, has_spike=any(grepl("^ERCC", colnames(counts))), verbose=TRUE) {
   normalization_plots <- list()
+  requireNamespace("ggplot2")
 
   filter <- dplyr::filter;mutate <- dplyr::mutate;arrange <- dplyr::arrange
   sce <- newSCESet(countData=t(counts))
@@ -58,7 +63,7 @@ normalize_filter_counts <- function(counts, has_spike=any(colnames(counts) %>% g
   ########################################
 
   if (verbose) {
-    fontsize <- theme(axis.text=element_text(size=12), axis.title=element_text(size=16))
+    fontsize <- ggplot2::theme(axis.text=ggplot2::element_text(size=12), axis.title=ggplot2::element_text(size=16))
     normalization_plots$pca <- plotPCA(sce, pca_data_input="pdata") + fontsize
   }
 
@@ -142,13 +147,8 @@ normalize_filter_counts <- function(counts, has_spike=any(colnames(counts) %>% g
     normalization_plots$top_genes <- plotExpression(sce, rownames(hvg.out)[1:10]) + fontsize
   }
 
-  expression_normalized_filtered <- exprs(sce[rownames(hvg.out),]) %>% t()
+  expression_normalized_filtered <- get_exprs(sce[rownames(hvg.out),], "exprs") %>% t()
   counts_filtered <- counts[rownames(expression_normalized_filtered),colnames(expression_normalized_filtered)]
-
-  if (verbose) {
-    exprs(sce)[rownames(hvg.out), ] %>% pheatmap::pheatmap()
-    normalization_plots$top_heatmap <- recordPlot()
-  }
 
   graphics.off()
 
