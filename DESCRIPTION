@@ -13,12 +13,14 @@ Depends:
   R (>= 3.0.0)
 Imports: 
   Biobase,
+  BiocGenerics,
   dplyr,
   glue,
   magrittr,
   methods,
   parallel,
   purrr,
+  SingleCellExperiment,
   testthat,
   tibble,
   tidyr,
@@ -33,5 +35,7 @@ Suggests:
   ggplot2
 Remotes:
   bioc::Biobase,
+  bioc::BiocGenerics,
   bioc::scater,
-  bioc::scran
+  bioc::scran,
+  SingleCellExperiment
