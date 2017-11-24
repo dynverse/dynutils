@@ -27,7 +27,7 @@ wrap_ti_task_data <- function(
   if (!is.null(cell_info)) {
     testthat::expect_equal(cell_info$cell_id, cell_ids)
   }
-  if (!is.null(gene_info)) {
+  if (!is.null(feature_info)) {
     testthat::expect_equal(colnames(counts), feature_info$feature_id)
     testthat::expect_equal(colnames(expression), feature_info$feature_id)
   }
