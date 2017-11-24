@@ -19,11 +19,13 @@ convert_milestone_percentages_to_progressions <- function(cell_ids, milestone_id
       }
     } else if (nrow(relevant_pct) == 1) {
       relevant_net <- milestone_network %>% filter(to %in% relevant_pct$milestone_id)
+      pct <- 0
       if (nrow(relevant_net) == 0) {
         relevant_net <- milestone_network %>% filter(from %in% relevant_pct$milestone_id)
+        pct <- 1 / nrow(relevant_net)
       }
       relevant_progr <- relevant_net %>%
-        mutate(cell_id = cid, percentage = 1) %>%
+        mutate(cell_id = cid, percentage = pct) %>%
         select(cell_id, from, to, percentage)
     } else {
       relevant_progr <- NULL
