@@ -118,7 +118,13 @@ normalize_filter_counts <- function(counts, has_spike=any(grepl("^ERCC", colname
   # Normalize
   ########################################
 
-  sce_cellgene_filtered <- scran::computeSumFactors(sce_cellgene_filtered, sizes=c(20, 40, 60, 80))
+  if (ncol(sce_cellgene_filtered) >= 100) {
+    sizes <- c(20, 40, 60, 80)
+  } else {
+    sizes <- ncol(sce_cellgene_filtered)
+  }
+
+  sce_cellgene_filtered <- scran::computeSumFactors(sce_cellgene_filtered, sizes=sizes)
 
   if (verbose) {
     plot(sizeFactors(sce_cellgene_filtered), sce_cellgene_filtered$total_counts/1e6, log="xy",
