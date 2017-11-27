@@ -5,7 +5,7 @@
 \title{State-of-the-art preprocessing and normalization from https://f1000research.com/articles/5-2122/v2}
 \usage{
 normalize_filter_counts(counts, has_spike = any(grepl("^ERCC",
-  colnames(counts))), verbose = TRUE)
+  colnames(counts))), verbose = TRUE, nmads = 3)
 }
 \arguments{
 \item{counts}{The counts matrix, with genes in columns}
@@ -13,6 +13,8 @@ normalize_filter_counts(counts, has_spike = any(grepl("^ERCC",
 \item{has_spike}{Does this contain spike-ins, for which the gene names are preseded by ERCC}
 
 \item{verbose}{Whether to add plots}
+
+\item{nmads}{Number of median deviations for filtering outlier cells}
 }
 \description{
 State-of-the-art preprocessing and normalization from https://f1000research.com/articles/5-2122/v2

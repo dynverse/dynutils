@@ -2,6 +2,7 @@
 #' @param counts The counts matrix, with genes in columns
 #' @param has_spike Does this contain spike-ins, for which the gene names are preseded by ERCC
 #' @param verbose Whether to add plots
+#' @param nmads Number of median deviations for filtering outlier cells
 #' @importFrom scater newSCESet calculateQCMetrics isOutlier normalize plotExplanatoryVariables plotExpression plotPCA plotQC nexprs
 #' @importFrom SingleCellExperiment isSpike SingleCellExperiment
 #' @importFrom BiocGenerics counts sizeFactors
@@ -9,7 +10,7 @@
 #' @importFrom scran computeSumFactors computeSpikeFactors trendVar decomposeVar
 #' @importFrom grDevices recordPlot graphics.off
 #' @export
-normalize_filter_counts <- function(counts, has_spike=any(grepl("^ERCC", colnames(counts))), verbose = TRUE) {
+normalize_filter_counts <- function(counts, has_spike=any(grepl("^ERCC", colnames(counts))), verbose = TRUE, nmads = 3) {
   normalization_plots <- list()
   requireNamespace("ggplot2")
 
@@ -53,15 +54,13 @@ normalize_filter_counts <- function(counts, has_spike=any(grepl("^ERCC", colname
                        ylab="Number of cells", breaks=20, main="", col="grey80")
     par(mfrow=c(1, 1))
     normalization_plots$cell_quality <- grDevices::recordPlot()
+
+    print(pritt("Original: Genes - {dim(sce)[[1]]} Cells - {dim(sce)[[2]]}"))
   }
 
   ########################################
   # Filter cells
   ########################################
-
-  head(colnames(colData(sce)))
-
-  nmads <- 3
   mito_drop <- rep(FALSE, length(sce$total_counts))
   spike_drop <- rep(FALSE, length(sce$total_counts))
 
@@ -72,18 +71,9 @@ normalize_filter_counts <- function(counts, has_spike=any(grepl("^ERCC", colname
 
   sce_cell_filtered <- sce[,!(libsize_drop | feature_drop | mito_drop | spike_drop)]
 
-  # plot PCA
   if (verbose) {
-    fontsize <- theme(
-      axis.text = element_text(size=12),
-      axis.title = element_text(size=16)
-    )
-
-    normalization_plots$pca <-
-      BiocGenerics::plotPCA(sce, pca_data_input="pdata") +
-      fontsize
+    print(pritt("Cell filter: Genes - {dim(sce_cell_filtered)[[1]]} Cells - {dim(sce_cell_filtered)[[2]]}"))
   }
-
   ########################################
   # Filter genes
   ########################################
@@ -92,6 +82,11 @@ normalize_filter_counts <- function(counts, has_spike=any(grepl("^ERCC", colname
   keep <- ave_counts >= 1
 
   if (verbose) {
+    fontsize <- theme(
+      axis.text = element_text(size=12),
+      axis.title = element_text(size=16)
+    )
+
     hist(log10(ave_counts), breaks=100, main="", col="grey80",
          xlab=expression(Log[10]~"average count"))
     abline(v=log10(1), col="blue", lwd=2, lty=2)
@@ -116,6 +111,8 @@ normalize_filter_counts <- function(counts, has_spike=any(grepl("^ERCC", colname
 
   sce_cellgene_filtered <- sce_cell_filtered[keep,]
 
+  if (verbose)print(pritt("Gene filter: Genes - {dim(sce_cellgene_filtered)[[1]]} Cells - {dim(sce_cellgene_filtered)[[2]]}"))
+
   ########################################
   # Normalize
   ########################################
@@ -133,6 +130,8 @@ normalize_filter_counts <- function(counts, has_spike=any(grepl("^ERCC", colname
   }
 
   sce_normalized <- scater::normalize(sce_cellgene_filtered)
+
+  if (verbose)print(pritt("Normalized: Genes - {dim(sce_normalized)[[1]]} Cells - {dim(sce_normalized)[[2]]}"))
 
   ########################################
   # Select highly variable genes
@@ -175,9 +174,11 @@ normalize_filter_counts <- function(counts, has_spike=any(grepl("^ERCC", colname
   expression_normalized_filtered <- Biobase::exprs(sce_normalized[rownames(hvg_out),]) %>% t()
   counts_filtered <- counts[rownames(expression_normalized_filtered),colnames(expression_normalized_filtered)]
 
+  if (verbose)print(pritt("Variable genes filtered: Genes - {dim(sce_normalized[rownames(hvg_out),])[[1]]} Cells - {dim(sce_normalized[rownames(hvg_out),])[[2]]}"))
+
   lst(
-    expression,
-    counts,
+    expression = expression_normalized_filtered,
+    counts = counts_filtered,
     normalization_plots,
     has_spike = has_spike,
     has_mito = has_mito
