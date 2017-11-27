@@ -3,7 +3,7 @@
 #' @param has_spike Does this contain spike-ins, for which the gene names are preseded by ERCC
 #' @param verbose Whether to add plots
 #' @importFrom scater newSCESet calculateQCMetrics isOutlier normalize plotExplanatoryVariables plotExpression plotPCA plotQC nexprs
-#' @importFrom SingleCellExperiment isSpike
+#' @importFrom SingleCellExperiment isSpike SingleCellExperiment
 #' @importFrom BiocGenerics counts sizeFactors
 #' @importFrom Biobase pData
 #' @importFrom scran computeSumFactors computeSpikeFactors trendVar decomposeVar
@@ -13,12 +13,17 @@ normalize_filter_counts <- function(counts, has_spike=any(grepl("^ERCC", colname
   normalization_plots <- list()
   requireNamespace("ggplot2")
 
-  sce <- scater::newSCESet(countData=t(counts))
+  ########################################
+  # Create data object
+  ########################################
 
-  feature_controls <- list(Mt = grepl("^mt-", rownames(sce)))
-  if (has_spike) {
-    feature_controls$ERCC <- grepl("^ERCC", rownames(sce))
-  }
+  sce <- SingleCellExperiment::SingleCellExperiment(list(counts=t(counts)))
+
+  mitochondrial <- grepl("^mt-", rownames(sce))
+  has_mito <- any(mitochondrial)
+  feature_controls <- list()
+  if (has_mito) feature_controls$Mt <- grepl("^mt-", rownames(sce))
+  if (has_spike) feature_controls$ERCC <- grepl("^ERCC", rownames(sce))
 
   sce <- scater::calculateQCMetrics(sce, feature_controls = feature_controls)
 
@@ -36,31 +41,38 @@ normalize_filter_counts <- function(counts, has_spike=any(grepl("^ERCC", colname
     normalization_plots$library <- grDevices::recordPlot()
   }
 
-  libsize_drop <- scater::isOutlier(sce$total_counts, nmads=3, type="lower", log=TRUE)
-  feature_drop <- scater::isOutlier(sce$total_features, nmads=3, type="lower", log=TRUE)
-
   if (verbose) {
-    par(mfrow=c(1,2))
-    hist(sce$pct_counts_feature_controls_Mt, xlab="Mitochondrial proportion (%)",
-         ylab="Number of cells", breaks=20, main="", col="grey80")
-    if (has_spike) hist(sce$pct_counts_feature_controls_ERCC, xlab="ERCC proportion (%)",
+    par(mfrow=c(2,2), mar=c(5.1, 4.1, 0.1, 0.1))
+    hist(sce$total_counts/1e6, xlab="Library sizes (millions)", main="",
+         breaks=20, col="grey80", ylab="Number of cells")
+    hist(sce$total_features, xlab="Number of expressed genes", main="",
+         breaks=20, col="grey80", ylab="Number of cells")
+    if (has_spike) hist(sce$pct_counts_ERCC, xlab="ERCC proportion (%)",
                         ylab="Number of cells", breaks=20, main="", col="grey80")
+    if (has_mito) hist(sce$pct_counts_Mt, xlab="Mitochondrial proportion (%)",
+                       ylab="Number of cells", breaks=20, main="", col="grey80")
     par(mfrow=c(1, 1))
     normalization_plots$cell_quality <- grDevices::recordPlot()
   }
 
+  ########################################
+  # Filter cells
+  ########################################
+
+  head(colnames(colData(sce)))
+
   nmads <- 3
-  mito_drop <- scater::isOutlier(sce$pct_counts_feature_controls_Mt, nmads=nmads, type="higher")
-  spike_drop <- rep(FALSE, length(mito_drop))
-  if (has_spike) {
-    spike_drop <- scater::isOutlier(sce$pct_counts_feature_controls_ERCC, nmads=nmads, type="higher")
-  }
+  mito_drop <- rep(FALSE, length(sce$total_counts))
+  spike_drop <- rep(FALSE, length(sce$total_counts))
+
+  libsize_drop <- scater::isOutlier(sce$total_counts, nmads=nmads, type="lower", log=TRUE)
+  feature_drop <- scater::isOutlier(sce$total_features, nmads=nmads, type="lower", log=TRUE)
+  if (has_mito) mito_drop <- scater::isOutlier(sce$pct_counts_feature_controls_Mt, nmads=nmads, type="higher")
+  if (has_spike) spike_drop <- scater::isOutlier(sce$pct_counts_feature_controls_ERCC, nmads=nmads, type="higher")
 
   sce_cell_filtered <- sce[,!(libsize_drop | feature_drop | mito_drop | spike_drop)]
 
-
-  ########################################
-
+  # plot PCA
   if (verbose) {
     fontsize <- theme(
       axis.text = element_text(size=12),
@@ -71,6 +83,10 @@ normalize_filter_counts <- function(counts, has_spike=any(grepl("^ERCC", colname
       BiocGenerics::plotPCA(sce, pca_data_input="pdata") +
       fontsize
   }
+
+  ########################################
+  # Filter genes
+  ########################################
 
   ave_counts <- rowMeans(BiocGenerics::counts(sce_cell_filtered))
   keep <- ave_counts >= 1
@@ -99,6 +115,9 @@ normalize_filter_counts <- function(counts, has_spike=any(grepl("^ERCC", colname
   }
 
   sce_cellgene_filtered <- sce_cell_filtered[keep,]
+
+  ########################################
+  # Normalize
   ########################################
 
   sce_cellgene_filtered <- scran::computeSumFactors(sce_cellgene_filtered, sizes=c(20, 40, 60, 80))
@@ -115,6 +134,10 @@ normalize_filter_counts <- function(counts, has_spike=any(grepl("^ERCC", colname
 
   sce_normalized <- scater::normalize(sce_cellgene_filtered)
 
+  ########################################
+  # Select highly variable genes
+  ########################################
+
   if (verbose) {
     if(has_spike) {
       normalization_plots$ercc <-
@@ -123,7 +146,7 @@ normalize_filter_counts <- function(counts, has_spike=any(grepl("^ERCC", colname
     }
   }
 
-  var_fit <- scran::trendVar(sce_normalized, trend="loess", use.spikes=FALSE, span=0.2)
+  var_fit <- scran::trendVar(sce_normalized, method="loess", use.spikes=FALSE, span=0.2)
   var_out <- scran::decomposeVar(sce_normalized, var_fit)
 
   if (verbose) {
@@ -144,17 +167,19 @@ normalize_filter_counts <- function(counts, has_spike=any(grepl("^ERCC", colname
   hvg_out <- hvg_out[order(hvg_out$bio, decreasing=TRUE),]
 
   if (verbose) {
-    normalization_plots$top_genes <- scater::plotExpression(sce, rownames(hvg_out)[1:10]) + fontsize
-    grDevices::graphics.off()
+    normalization_plots$top_genes <- scater::plotExpression(sce_normalized, rownames(hvg_out)[1:10]) + fontsize
+    normalization_plots$bottom_genes <- scater::plotExpression(sce_normalized, rownames(hvg_out)[nrow(hvg_out)-10:nrow(hvg_out)]) + fontsize
   }
 
   requireNamespace("scater")
-  expression_normalized_filtered <- scater::exprs(sce[rownames(hvg_out),], "exprs") %>% t()
+  expression_normalized_filtered <- Biobase::exprs(sce_normalized[rownames(hvg_out),]) %>% t()
   counts_filtered <- counts[rownames(expression_normalized_filtered),colnames(expression_normalized_filtered)]
 
   lst(
     expression,
     counts,
-    normalization_plots
+    normalization_plots,
+    has_spike = has_spike,
+    has_mito = has_mito
   )
 }
