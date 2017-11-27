@@ -5,7 +5,7 @@
 \title{State-of-the-art preprocessing and normalization from https://f1000research.com/articles/5-2122/v2}
 \usage{
 normalize_filter_counts(counts, has_spike = any(grepl("^ERCC",
-  colnames(counts))), verbose = TRUE, nmads = 3, filter_hvg = TRUE)
+  colnames(counts))), verbose = FALSE, nmads = 3, filter_hvg = TRUE)
 }
 \arguments{
 \item{counts}{The counts matrix, with genes in columns}
