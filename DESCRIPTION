@@ -29,7 +29,8 @@ Imports:
   tools,
   transport,
   scater,
-  scran
+  scran,
+  Seurat
 Suggests:
   parallelMap,
   ggplot2
@@ -38,4 +39,5 @@ Remotes:
   bioc::BiocGenerics,
   bioc::scater,
   bioc::scran,
-  bioc::SingleCellExperiment
+  bioc::SingleCellExperiment,
+  bioc::Seurat

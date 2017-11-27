@@ -6,9 +6,13 @@
 #' @param milestone_network The milestone network
 #' @param progressions The progressions
 #' @param milestone_percentages The milestone percentages
+#' @param counts The counts matrix
+#' @param feature_info The feature info
+#' @param cell_info The cell info
 #'
+#' @importFrom Seurat CreateSeuratObject FindAllMarkers
 #' @export
-generate_prior_information <- function(milestone_ids, milestone_network, progressions, milestone_percentages) {
+generate_prior_information <- function(milestone_ids, milestone_network, progressions, milestone_percentages, counts, feature_info, cell_info) {
   # start cells
   # check if there are one or more starting milestones
   start_milestones <- setdiff(milestone_ids, milestone_network$to)
@@ -40,5 +44,27 @@ generate_prior_information <- function(milestone_ids, milestone_network, progres
   grouping_assignment <- get_cell_grouping(milestone_percentages)
   grouping_network <- milestone_network %>% select(from, to)
 
-  tibble::lst(start_milestones, start_cells, end_milestones, end_cells, grouping_assignment, grouping_network)
+  # marker genes
+  if ("housekeeping" %in% colnames(feature_info)) {
+    marker_feature_ids <- feature_info %>% filter(!housekeeping) %>% pull(feature_id)
+  } else {
+    seurat <- Seurat::CreateSeuratObject(t(counts))
+    seurat@ident <- grouping_assignment %>% slice(match(rownames(counts), cell_id)) %>% pull(group_id) %>% factor() %>% setNames(rownames(counts))
+    changing <- Seurat::FindAllMarkers(seurat, logfc.treshold = 1, min.pct=0.4)
+    marker_feature_ids <- changing %>% filter(abs(avg_logFC) >= 1) %>% rownames()
+  }
+
+  # number of branches
+  n_branches <- nrow(milestone_network)
+
+  # time information
+  if ("simulationtime" %in% colnames(cell_info)) {
+    time <- setNames(cell_info$simulationtime, cell_info$cell_id)
+  } else {time <- NULL}
+
+  if ("timepoint" %in% colnames(cell_info)) {
+    timecourse <- setNames(cell_info$timepoint, cell_info$cell_id)
+  } else {timecourse <- NULL}
+
+  tibble::lst(start_milestones, start_cells, end_milestones, end_cells, grouping_assignment, grouping_network, marker_feature_ids, n_branches, time, timecourse)
 }

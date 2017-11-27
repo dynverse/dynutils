@@ -5,7 +5,7 @@
 \title{Extract the prior information from the milestone network}
 \usage{
 generate_prior_information(milestone_ids, milestone_network, progressions,
-  milestone_percentages)
+  milestone_percentages, counts, feature_info, cell_info)
 }
 \arguments{
 \item{milestone_ids}{The milestone ids}
@@ -15,6 +15,12 @@ generate_prior_information(milestone_ids, milestone_network, progressions,
 \item{progressions}{The progressions}
 
 \item{milestone_percentages}{The milestone percentages}
+
+\item{counts}{The counts matrix}
+
+\item{feature_info}{The feature info}
+
+\item{cell_info}{The cell info}
 }
 \description{
 For example, what are the start cells, the end cells, to which milestone does each cell belong to.
