@@ -67,8 +67,8 @@ normalize_filter_counts <- function(counts, has_spike=any(grepl("^ERCC", colname
 
   libsize_drop <- scater::isOutlier(sce$total_counts, nmads=nmads, type="lower", log=TRUE)
   feature_drop <- scater::isOutlier(sce$total_features, nmads=nmads, type="lower", log=TRUE)
-  if (has_mito) mito_drop <- scater::isOutlier(sce$pct_counts_feature_controls_Mt, nmads=nmads, type="higher")
-  if (has_spike) spike_drop <- scater::isOutlier(sce$pct_counts_feature_controls_ERCC, nmads=nmads, type="higher")
+  if (has_mito) mito_drop <- scater::isOutlier(sce$pct_counts_Mt, nmads=nmads, type="higher")
+  if (has_spike) spike_drop <- scater::isOutlier(sce$pct_counts_ERCC, nmads=nmads, type="higher")
 
   sce_cell_filtered <- sce[,!(libsize_drop | feature_drop | mito_drop | spike_drop)]
 
