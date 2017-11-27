@@ -3,6 +3,7 @@
 #' @param has_spike Does this contain spike-ins, for which the gene names are preseded by ERCC
 #' @param verbose Whether to add plots
 #' @param nmads Number of median deviations for filtering outlier cells
+#' @param filter_hvg Whether to filter out highly variable genes
 #' @importFrom scater newSCESet calculateQCMetrics isOutlier normalize plotExplanatoryVariables plotExpression plotPCA plotQC nexprs
 #' @importFrom SingleCellExperiment isSpike SingleCellExperiment
 #' @importFrom BiocGenerics counts sizeFactors
@@ -10,7 +11,7 @@
 #' @importFrom scran computeSumFactors computeSpikeFactors trendVar decomposeVar
 #' @importFrom grDevices recordPlot graphics.off
 #' @export
-normalize_filter_counts <- function(counts, has_spike=any(grepl("^ERCC", colnames(counts))), verbose = TRUE, nmads = 3) {
+normalize_filter_counts <- function(counts, has_spike=any(grepl("^ERCC", colnames(counts))), verbose = FALSE, nmads = 3, filter_hvg = TRUE) {
   normalization_plots <- list()
   requireNamespace("ggplot2")
 
@@ -82,9 +83,9 @@ normalize_filter_counts <- function(counts, has_spike=any(grepl("^ERCC", colname
   keep <- ave_counts >= 1
 
   if (verbose) {
-    fontsize <- theme(
-      axis.text = element_text(size=12),
-      axis.title = element_text(size=16)
+    fontsize <- ggplot2::theme(
+      axis.text = ggplot2::element_text(size=12),
+      axis.title = ggplot2::element_text(size=16)
     )
 
     hist(log10(ave_counts), breaks=100, main="", col="grey80",
@@ -137,44 +138,48 @@ normalize_filter_counts <- function(counts, has_spike=any(grepl("^ERCC", colname
   # Select highly variable genes
   ########################################
 
-  if (verbose) {
-    if(has_spike) {
-      normalization_plots$ercc <-
-        plotExplanatoryVariables(sce_normalized, variables=c("counts_feature_controls_ERCC", "log10_counts_feature_controls_ERCC")) +
-        fontsize
-    }
-  }
-
-  var_fit <- scran::trendVar(sce_normalized, method="loess", use.spikes=FALSE, span=0.2)
-  var_out <- scran::decomposeVar(sce_normalized, var_fit)
-
-  if (verbose) {
-    plot(var_out$mean, var_out$total, pch=16, cex=0.6, xlab="Mean log-expression",
-         ylab="Variance of log-expression")
-    o <- order(var_out$mean)
-    lines(var_out$mean[o], var_out$tech[o], col="dodgerblue", lwd=2)
-
-    if (has_spike) {
-      cur_spike <- SingleCellExperiment::isSpike(sce)
-      points(var_out$mean[cur_spike], var_out$total[cur_spike], col="red", pch=16)
+  if (filter_hvg) {
+    if (verbose) {
+      if(has_spike) {
+        normalization_plots$ercc <-
+          plotExplanatoryVariables(sce_normalized, variables=c("counts_feature_controls_ERCC", "log10_counts_feature_controls_ERCC")) +
+          fontsize
+      }
     }
 
-    normalization_plots$gene_variance <- grDevices::recordPlot()
+    var_fit <- scran::trendVar(sce_normalized, method="loess", use.spikes=FALSE, span=0.2)
+    var_out <- scran::decomposeVar(sce_normalized, var_fit)
+
+    if (verbose) {
+      plot(var_out$mean, var_out$total, pch=16, cex=0.6, xlab="Mean log-expression",
+           ylab="Variance of log-expression")
+      o <- order(var_out$mean)
+      lines(var_out$mean[o], var_out$tech[o], col="dodgerblue", lwd=2)
+
+      if (has_spike) {
+        cur_spike <- SingleCellExperiment::isSpike(sce)
+        points(var_out$mean[cur_spike], var_out$total[cur_spike], col="red", pch=16)
+      }
+
+      normalization_plots$gene_variance <- grDevices::recordPlot()
+    }
+
+    hvg_out <- var_out[which(var_out$FDR <= 0.05 & var_out$bio >= 0.5),]
+    hvg_out <- hvg_out[order(hvg_out$bio, decreasing=TRUE),]
+
+    if (verbose & nrow(hvg_out) >= 10) {
+      normalization_plots$top_genes <- scater::plotExpression(sce_normalized, rownames(hvg_out)[1:10]) + fontsize
+      normalization_plots$bottom_genes <- scater::plotExpression(sce_normalized, rownames(hvg_out)[nrow(hvg_out)-10:nrow(hvg_out)]) + fontsize
+    }
+    sce_normalized_filtered <- sce_normalized[rownames(hvg_out),]
+
+    if (verbose) print(pritt("Variable genes filtered: Genes - {dim(sce_normalized_filtered)[[1]]} Cells - {dim(sce_normalized_filtered)[[2]]}"))
+  } else {
+    sce_normalized_filtered <- sce_normalized
   }
 
-  hvg_out <- var_out[which(var_out$FDR <= 0.05 & var_out$bio >= 0.5),]
-  hvg_out <- hvg_out[order(hvg_out$bio, decreasing=TRUE),]
-
-  if (verbose) {
-    normalization_plots$top_genes <- scater::plotExpression(sce_normalized, rownames(hvg_out)[1:10]) + fontsize
-    normalization_plots$bottom_genes <- scater::plotExpression(sce_normalized, rownames(hvg_out)[nrow(hvg_out)-10:nrow(hvg_out)]) + fontsize
-  }
-
-  requireNamespace("scater")
-  expression_normalized_filtered <- Biobase::exprs(sce_normalized[rownames(hvg_out),]) %>% t()
+  expression_normalized_filtered <- Biobase::exprs(sce_normalized_filtered) %>% t()
   counts_filtered <- counts[rownames(expression_normalized_filtered),colnames(expression_normalized_filtered)]
-
-  if (verbose)print(pritt("Variable genes filtered: Genes - {dim(sce_normalized[rownames(hvg_out),])[[1]]} Cells - {dim(sce_normalized[rownames(hvg_out),])[[2]]}"))
 
   lst(
     expression = expression_normalized_filtered,

@@ -5,7 +5,7 @@
 \title{State-of-the-art preprocessing and normalization from https://f1000research.com/articles/5-2122/v2}
 \usage{
 normalize_filter_counts(counts, has_spike = any(grepl("^ERCC",
-  colnames(counts))), verbose = TRUE, nmads = 3)
+  colnames(counts))), verbose = TRUE, nmads = 3, filter_hvg = TRUE)
 }
 \arguments{
 \item{counts}{The counts matrix, with genes in columns}
@@ -15,6 +15,8 @@ normalize_filter_counts(counts, has_spike = any(grepl("^ERCC",
 \item{verbose}{Whether to add plots}
 
 \item{nmads}{Number of median deviations for filtering outlier cells}
+
+\item{filter_hvg}{Whether to filter out highly variable genes}
 }
 \description{
 State-of-the-art preprocessing and normalization from https://f1000research.com/articles/5-2122/v2
