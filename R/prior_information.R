@@ -69,5 +69,5 @@ generate_prior_information <- function(milestone_ids, milestone_network, progres
     timecourse <- setNames(cell_info$timepoint, cell_info$cell_id)
   } else {timecourse <- NULL}
 
-  tibble::lst(start_milestones, start_cells, end_milestones, end_cells, grouping_assignment, grouping_network, marker_feature_ids, n_branches, time, timecourse, n_end_states = n_end_states)
+  tibble::lst(start_milestones, start_cells, end_milestones, end_cells, grouping_assignment, grouping_network, marker_feature_ids, n_branches, time, timecourse, n_end_states)
 }
