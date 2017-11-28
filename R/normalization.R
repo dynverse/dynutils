@@ -4,6 +4,7 @@
 #' @param verbose Whether to add plots
 #' @param nmads Number of median deviations for filtering outlier cells
 #' @param expressed_in_n_cells Percentage of minimal number of cells a gene has to be expressed
+#' @param min_ave_expression Minimal average expression of a gene
 #' @param filter_hvg Whether to filter out highly variable genes
 #' @param hvg_fdr FDR gene filtering cutoff
 #' @param hvg_bio Biological gene filtering cutoff
@@ -20,6 +21,7 @@ normalize_filter_counts <- function(
   verbose = FALSE,
   nmads = 3,
   expressed_in_n_cells = 0.05,
+  min_ave_expression = 0.01,
   filter_hvg = TRUE,
   hvg_fdr = 0.05,
   hvg_bio = 0.5
@@ -101,7 +103,7 @@ normalize_filter_counts <- function(
   ########################################
 
   ave_counts <- rowMeans(BiocGenerics::counts(sce_cell_filtered))
-  keep <- ave_counts >= 1
+  keep <- ave_counts >= min_ave_expression
 
   if (verbose) {
     fontsize <- ggplot2::theme(
@@ -111,7 +113,7 @@ normalize_filter_counts <- function(
 
     hist(log10(ave_counts), breaks=100, main="", col="grey80",
          xlab=expression(Log[10]~"average count"))
-    abline(v=log10(1), col="blue", lwd=2, lty=2)
+    abline(v=log10(min_ave_expression), col="blue", lwd=2, lty=2)
     normalization_plots$initial_gene_filter <- grDevices::recordPlot()
 
     print(scater::plotQC(sce_cell_filtered, type = "highest-expression", n=50) + fontsize)
@@ -145,7 +147,8 @@ normalize_filter_counts <- function(
     sizes <- ncol(sce_cellgene_filtered)
   }
 
-  sce_cellgene_filtered <- scran::computeSumFactors(sce_cellgene_filtered, sizes=sizes)
+  sce_cellgene_filtered <- scran::computeSumFactors(sce_cellgene_filtered, sizes=sizes, positive=TRUE)
+  sce_cellgene_filtered <- sce_cellgene_filtered[, sizeFactors(sce_cellgene_filtered) > 0] # as mentioned in the scran documentation, ensure that size factors are higher than 0
 
   if (verbose) {
     plot(sizeFactors(sce_cellgene_filtered), sce_cellgene_filtered$total_counts/1e6, log="xy",
