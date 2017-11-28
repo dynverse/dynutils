@@ -39,5 +39,4 @@ Remotes:
   bioc::BiocGenerics,
   bioc::scater,
   bioc::scran,
-  bioc::SingleCellExperiment,
-  bioc::Seurat
+  bioc::SingleCellExperiment
