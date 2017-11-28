@@ -6,5 +6,6 @@ cache: packages
 env:
   - R_MAX_NUM_DLLS=250
 install:
- - R -e 'install.packages("devtools", repos = "http://cran.rstudio.com")'
+ - R -e 'install.packages("devtools")'
+ - R -e 'devtools::install_github("dynverse/devtools")'
  - R -e 'devtools::install(dependencies = TRUE, upgrade_dependencies = TRUE)'
