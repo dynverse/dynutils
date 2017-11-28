@@ -30,7 +30,9 @@ normalize_filter_counts <- function(counts, has_spike=any(grepl("^ERCC", colname
   sce <- scater::calculateQCMetrics(sce, feature_controls = feature_controls)
 
   if (has_spike) {
-    SingleCellExperiment::isSpike(sce) <- "ERCC"
+    is_spike <- grepl("^ERCC", rownames(sce))
+    SingleCellExperiment::isSpike(sce, "ERCC") <- is_spike
+    summary(is_spike)
   }
 
   if (verbose) {
