@@ -11,7 +11,16 @@
 #' @importFrom scran computeSumFactors computeSpikeFactors trendVar decomposeVar
 #' @importFrom grDevices recordPlot graphics.off
 #' @export
-normalize_filter_counts <- function(counts, has_spike=any(grepl("^ERCC", colnames(counts))), verbose = FALSE, nmads = 3, filter_hvg = TRUE) {
+normalize_filter_counts <- function(
+  counts,
+  has_spike=any(grepl("^ERCC", colnames(counts))),
+  verbose = FALSE,
+  nmads = 3,
+  expressed_in_n_cells = 0.05,
+  filter_hvg = TRUE,
+  hvg_fdr = 0.05,
+  hvg_bio = 0.5
+  ) {
   normalization_plots <- list()
   requireNamespace("ggplot2")
 
@@ -21,10 +30,10 @@ normalize_filter_counts <- function(counts, has_spike=any(grepl("^ERCC", colname
 
   sce <- SingleCellExperiment::SingleCellExperiment(list(counts=t(counts)))
 
-  mitochondrial <- grepl("^mt-", rownames(sce))
+  mitochondrial <- grepl("^(mt|MT|mt)-", rownames(sce))
   has_mito <- any(mitochondrial)
   feature_controls <- list()
-  if (has_mito) feature_controls$Mt <- grepl("^mt-", rownames(sce))
+  if (has_mito) feature_controls$Mt <- mitochondrial
   if (has_spike) feature_controls$ERCC <- grepl("^ERCC", rownames(sce))
 
   sce <- scater::calculateQCMetrics(sce, feature_controls = feature_controls)
@@ -94,13 +103,13 @@ normalize_filter_counts <- function(counts, has_spike=any(grepl("^ERCC", colname
          xlab=expression(Log[10]~"average count"))
     abline(v=log10(1), col="blue", lwd=2, lty=2)
     normalization_plots$initial_gene_filter <- grDevices::recordPlot()
-    print(scater::plotQC(sce_cell_filtered, type = "highest-expression", n=50) + fontsize)
 
+    print(scater::plotQC(sce_cell_filtered, type = "highest-expression", n=50) + fontsize)
     normalization_plots$top_genes_qc <- grDevices::recordPlot()
   }
 
   numcells <- scater::nexprs(sce_cell_filtered, byrow=TRUE)
-  alt_keep <- numcells >= 10
+  alt_keep <- numcells >= ncol(sce_cell_filtered) * expressed_in_n_cells
 
   if (verbose) {
     smoothScatter(log10(ave_counts), numcells, xlab=expression(Log[10]~"average count"), ylab="Number of expressing cells")
@@ -150,7 +159,7 @@ normalize_filter_counts <- function(counts, has_spike=any(grepl("^ERCC", colname
     if (verbose) {
       if(has_spike) {
         normalization_plots$ercc <-
-          plotExplanatoryVariables(sce_normalized, variables=c("counts_feature_controls_ERCC", "log10_counts_feature_controls_ERCC")) +
+          scater::plotExplanatoryVariables(sce_normalized, variables=c("total_counts_ERCC", "log10_total_counts_ERCC")) +
           fontsize
       }
     }
@@ -172,7 +181,7 @@ normalize_filter_counts <- function(counts, has_spike=any(grepl("^ERCC", colname
       normalization_plots$gene_variance <- grDevices::recordPlot()
     }
 
-    hvg_out <- var_out[which(var_out$FDR <= 0.05 & var_out$bio >= 0.5),]
+    hvg_out <- var_out[which(var_out$FDR <= hvg_fdr & var_out$bio >= hvg_bio),]
     hvg_out <- hvg_out[order(hvg_out$bio, decreasing=TRUE),]
 
     if (verbose & nrow(hvg_out) >= 10) {
