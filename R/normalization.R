@@ -1,9 +1,12 @@
-#' State-of-the-art preprocessing and normalization from https://f1000research.com/articles/5-2122/v2
+#' State-of-the-art preprocessing and normalization from https://f1000research.com/articles/5-2122/v2 and https://www.bioconductor.org/help/workflows/simpleSingleCell/
 #' @param counts The counts matrix, with genes in columns
 #' @param has_spike Does this contain spike-ins, for which the gene names are preseded by ERCC
 #' @param verbose Whether to add plots
 #' @param nmads Number of median deviations for filtering outlier cells
+#' @param expressed_in_n_cells Percentage of minimal number of cells a gene has to be expressed
 #' @param filter_hvg Whether to filter out highly variable genes
+#' @param hvg_fdr FDR gene filtering cutoff
+#' @param hvg_bio Biological gene filtering cutoff
 #' @importFrom scater newSCESet calculateQCMetrics isOutlier normalize plotExplanatoryVariables plotExpression plotPCA plotQC nexprs
 #' @importFrom SingleCellExperiment isSpike SingleCellExperiment
 #' @importFrom BiocGenerics counts sizeFactors
@@ -27,6 +30,8 @@ normalize_filter_counts <- function(
   ########################################
   # Create data object
   ########################################
+
+  counts <- round(counts)
 
   sce <- SingleCellExperiment::SingleCellExperiment(list(counts=t(counts)))
 
@@ -81,11 +86,16 @@ normalize_filter_counts <- function(
   if (has_mito) mito_drop <- scater::isOutlier(sce$pct_counts_Mt, nmads=nmads, type="higher")
   if (has_spike) spike_drop <- scater::isOutlier(sce$pct_counts_ERCC, nmads=nmads, type="higher")
 
+  if (verbose) {
+    tibble(sum(mito_drop), sum(spike_drop), sum(libsize_drop), sum(feature_drop)) %>% print()
+  }
+
   sce_cell_filtered <- sce[,!(libsize_drop | feature_drop | mito_drop | spike_drop)]
 
   if (verbose) {
     print(pritt("Cell filter: Genes - {dim(sce_cell_filtered)[[1]]} Cells - {dim(sce_cell_filtered)[[2]]}"))
   }
+
   ########################################
   # Filter genes
   ########################################
@@ -145,6 +155,9 @@ normalize_filter_counts <- function(
 
   if(has_spike) {
     sce_cellgene_filtered <- scran::computeSpikeFactors(sce_cellgene_filtered, type="ERCC", general.use=FALSE)
+    if(any(is.na(sizeFactors(sce_cellgene_filtered, type="ERCC")))) {
+      warning("Some cells do not have any spike-ins, this will cause an error further away. Remove spike-ins.")
+    }
   }
 
   sce_normalized <- scater::normalize(sce_cellgene_filtered)
@@ -164,7 +177,7 @@ normalize_filter_counts <- function(
       }
     }
 
-    var_fit <- scran::trendVar(sce_normalized, method="loess", use.spikes=FALSE, span=0.2)
+    var_fit <- scran::trendVar(sce_normalized, method="loess", use.spikes=has_spike, span=0.2)
     var_out <- scran::decomposeVar(sce_normalized, var_fit)
 
     if (verbose) {
@@ -179,6 +192,12 @@ normalize_filter_counts <- function(
       }
 
       normalization_plots$gene_variance <- grDevices::recordPlot()
+
+      normalization_plots$gene_selection <- var_out %>%
+        ggplot() +
+        geom_point(aes(FDR, bio)) +
+        geom_hline(yintercept = hvg_bio) +
+        geom_vline(xintercept = hvg_fdr)
     }
 
     hvg_out <- var_out[which(var_out$FDR <= hvg_fdr & var_out$bio >= hvg_bio),]
@@ -186,7 +205,7 @@ normalize_filter_counts <- function(
 
     if (verbose & nrow(hvg_out) >= 10) {
       normalization_plots$top_genes <- scater::plotExpression(sce_normalized, rownames(hvg_out)[1:10]) + fontsize
-      normalization_plots$bottom_genes <- scater::plotExpression(sce_normalized, rownames(hvg_out)[nrow(hvg_out)-10:nrow(hvg_out)]) + fontsize
+      normalization_plots$bottom_genes <- scater::plotExpression(sce_normalized, rownames(hvg_out)[(nrow(hvg_out)-10):nrow(hvg_out)]) + fontsize
     }
     sce_normalized_filtered <- sce_normalized[rownames(hvg_out),]
 
@@ -198,11 +217,31 @@ normalize_filter_counts <- function(
   expression_normalized_filtered <- Biobase::exprs(sce_normalized_filtered) %>% t()
   counts_filtered <- counts[rownames(expression_normalized_filtered),colnames(expression_normalized_filtered)]
 
+  if(verbose) {
+    normalization_steps <-tribble(
+      ~type, ~ngenes, ~ncells,
+      "original", dim(sce)[1], dim(sce)[2],
+      "cell_quality_filtering", dim(sce_cell_filtered)[1], dim(sce_cell_filtered)[2],
+      "gene_expression_filtering", dim(sce_cellgene_filtered)[1], dim(sce_cellgene_filtered)[2],
+      "normalization", dim(sce_normalized)[1], dim(sce_normalized)[2],
+      "gene_variability_filtering", dim(sce_normalized_filtered)[1], dim(sce_normalized_filtered)[2]
+    )
+    normalization_plots$n_retained <- normalization_steps %>%
+      mutate(type = factor(type, levels=rev(type))) %>%
+      gather("dimension", "n", -type) %>%
+      ggplot() +
+        geom_bar(aes(type, n, fill=dimension), position = "dodge", stat = "identity") + facet_wrap(~dimension, scales = "free_x") +
+      coord_flip()
+  }
+
   lst(
     expression = expression_normalized_filtered,
     counts = counts_filtered,
     normalization_plots,
-    has_spike = has_spike,
-    has_mito = has_mito
+    info = lst(
+      has_spike,
+      has_mito,
+      normalization_steps
+    )
   )
 }
