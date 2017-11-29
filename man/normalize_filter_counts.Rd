@@ -2,7 +2,7 @@
 % Please edit documentation in R/normalization.R
 \name{normalize_filter_counts}
 \alias{normalize_filter_counts}
-\title{State-of-the-art preprocessing and normalization from https://f1000research.com/articles/5-2122/v2}
+\title{State-of-the-art preprocessing and normalization from https://f1000research.com/articles/5-2122/v2 and https://www.bioconductor.org/help/workflows/simpleSingleCell/}
 \usage{
 normalize_filter_counts(counts, has_spike = any(grepl("^ERCC",
   colnames(counts))), verbose = FALSE, nmads = 3,
@@ -18,8 +18,14 @@ normalize_filter_counts(counts, has_spike = any(grepl("^ERCC",
 
 \item{nmads}{Number of median deviations for filtering outlier cells}
 
+\item{expressed_in_n_cells}{Percentage of minimal number of cells a gene has to be expressed}
+
 \item{filter_hvg}{Whether to filter out highly variable genes}
+
+\item{hvg_fdr}{FDR gene filtering cutoff}
+
+\item{hvg_bio}{Biological gene filtering cutoff}
 }
 \description{
-State-of-the-art preprocessing and normalization from https://f1000research.com/articles/5-2122/v2
+State-of-the-art preprocessing and normalization from https://f1000research.com/articles/5-2122/v2 and https://www.bioconductor.org/help/workflows/simpleSingleCell/
 }
