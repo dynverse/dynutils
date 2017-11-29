@@ -7,6 +7,5 @@ env:
   - R_MAX_NUM_DLLS=250
 install:
  - R -e 'install.packages("devtools")'
- - R -e 'devtools::install_github("r-lib/callr")'
- - R -e 'devtools::install_github("dynverse/devtools")'
+ - R -e 'devtools::install_github("dynverse/devtools", ref = "1.13.0")'
  - R -e 'devtools::install(dependencies = TRUE, upgrade_dependencies = TRUE)'
