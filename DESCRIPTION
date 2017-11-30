@@ -35,10 +35,3 @@ Imports:
 Suggests:
   parallelMap,
   ggplot2
-Remotes:
-  bioc::Biobase,
-  bioc::BiocGenerics,
-  bioc::scater,
-  bioc::scran,
-  bioc::SingleCellExperiment,
-  bioc::aroma.light
