@@ -6,8 +6,8 @@
 \usage{
 normalise_filter_counts(counts, has_spike = any(grepl("^ERCC",
   colnames(counts))), verbose = FALSE, nmads = 3,
-  expressed_in_n_cells = 0.05, filter_hvg = TRUE, hvg_fdr = 0.05,
-  hvg_bio = 0.5)
+  expressed_in_n_cells = 0.05, min_ave_expression = 0.05,
+  filter_hvg = TRUE, hvg_fdr = 0.05, hvg_bio = 0.5)
 }
 \arguments{
 \item{counts}{The counts matrix, with genes in columns}
@@ -19,6 +19,8 @@ normalise_filter_counts(counts, has_spike = any(grepl("^ERCC",
 \item{nmads}{Number of median deviations for filtering outlier cells}
 
 \item{expressed_in_n_cells}{Percentage of minimal number of cells a gene has to be expressed}
+
+\item{min_ave_expression}{Minimal average expression of a gene}
 
 \item{filter_hvg}{Whether to filter out highly variable genes}
 

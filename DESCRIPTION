@@ -30,7 +30,8 @@ Imports:
   transport,
   scater,
   scran,
-  Seurat
+  Seurat,
+  aroma.light
 Suggests:
   parallelMap,
   ggplot2
