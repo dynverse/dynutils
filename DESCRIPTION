@@ -30,7 +30,8 @@ Imports:
   transport,
   scater,
   scran,
-  Seurat
+  Seurat,
+  aroma.light
 Suggests:
   parallelMap,
   ggplot2
@@ -39,4 +40,5 @@ Remotes:
   bioc::BiocGenerics,
   bioc::scater,
   bioc::scran,
-  bioc::SingleCellExperiment
+  bioc::SingleCellExperiment,
+  bioc::aroma.light

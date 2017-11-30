@@ -21,7 +21,7 @@ normalize_filter_counts <- function(
   verbose = FALSE,
   nmads = 3,
   expressed_in_n_cells = 0.05,
-  min_ave_expression = 0.01,
+  min_ave_expression = 0.05,
   filter_hvg = TRUE,
   hvg_fdr = 0.05,
   hvg_bio = 0.5
@@ -180,7 +180,7 @@ normalize_filter_counts <- function(
       }
     }
 
-    var_fit <- scran::trendVar(sce_normalized, method="loess", use.spikes=has_spike, span=0.2)
+    var_fit <- scran::trendVar(sce_normalized, method="spline", use.spikes=has_spike) # requires aroma.light
     var_out <- scran::decomposeVar(sce_normalized, var_fit)
 
     if (verbose) {
