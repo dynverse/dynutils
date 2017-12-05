@@ -30,6 +30,9 @@ normalise_filter_counts <- function(
   hvg_fdr = 0.05,
   hvg_bio = 0.5
   ) {
+  # counts <- readRDS("../dynalysis/analysis/data/derived_data/datasets/synthetic/v5/1_experiment.rds")$counts
+
+
   normalisation_plots <- list()
   requireNamespace("ggplot2")
 

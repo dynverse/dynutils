@@ -8,7 +8,7 @@
 #'
 #' @export
 wrap_ti_task_data <- function(
-  ti_type,
+  trajectory_type,
   id,
   counts,
   expression,
@@ -34,7 +34,7 @@ wrap_ti_task_data <- function(
 
   abstract_data_wrapper(
     "ti_task",
-    ti_type,
+    trajectory_type,
     id,
     cell_ids,
     milestone_ids,
@@ -55,7 +55,7 @@ wrap_ti_task_data <- function(
 #'
 #' @export
 wrap_ti_prediction <- function(
-  ti_type,
+  trajectory_type,
   id,
   cell_ids,
   milestone_ids,
@@ -66,7 +66,7 @@ wrap_ti_prediction <- function(
 ) {
   abstract_data_wrapper(
     "ti_pred",
-    ti_type,
+    trajectory_type,
     id,
     cell_ids,
     milestone_ids,
@@ -107,7 +107,7 @@ wrap_linear_ti_prediction <- function(
   )
 
   wrap_ti_prediction(
-    ti_type = "linear",
+    trajectory_type = "linear",
     id = id,
     cell_ids = cell_ids,
     milestone_ids = milestone_ids,
@@ -121,7 +121,7 @@ wrap_linear_ti_prediction <- function(
 #' An abstract data wrapper
 #'
 #' @param type the type of data (e.g. ti_task, ti_toy, ti_pred)
-#' @param ti_type a descriptor specifying the TI type
+#' @param trajectory_type a descriptor specifying the TI type
 #' @param id a unique identifier for the task
 #' @param cell_ids the ids of the cells in the trajectory and counts
 #' @param milestone_ids the ids of the milestones in the trajectory
@@ -133,7 +133,7 @@ wrap_linear_ti_prediction <- function(
 #' @export
 abstract_data_wrapper <- function(
   type,
-  ti_type,
+  trajectory_type,
   id,
   cell_ids,
   milestone_ids,
@@ -227,7 +227,7 @@ abstract_data_wrapper <- function(
   # create output structure
   out <- list(
     type = type,
-    ti_type = ti_type,
+    trajectory_type = trajectory_type,
     id = id,
     cell_ids = cell_ids,
     milestone_ids = milestone_ids,
