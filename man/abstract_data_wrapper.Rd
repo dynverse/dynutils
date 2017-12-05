@@ -4,13 +4,13 @@
 \alias{abstract_data_wrapper}
 \title{An abstract data wrapper}
 \usage{
-abstract_data_wrapper(type, ti_type, id, cell_ids, milestone_ids,
+abstract_data_wrapper(type, trajectory_type, id, cell_ids, milestone_ids,
   milestone_network, milestone_percentages = NULL, progressions = NULL, ...)
 }
 \arguments{
 \item{type}{the type of data (e.g. ti_task, ti_toy, ti_pred)}
 
-\item{ti_type}{a descriptor specifying the TI type}
+\item{trajectory_type}{a descriptor specifying the TI type}
 
 \item{id}{a unique identifier for the task}
 

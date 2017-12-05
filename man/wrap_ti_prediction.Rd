@@ -4,11 +4,11 @@
 \alias{wrap_ti_prediction}
 \title{Wrapping TI predictions}
 \usage{
-wrap_ti_prediction(ti_type, id, cell_ids, milestone_ids, milestone_network,
-  milestone_percentages = NULL, progressions = NULL, ...)
+wrap_ti_prediction(trajectory_type, id, cell_ids, milestone_ids,
+  milestone_network, milestone_percentages = NULL, progressions = NULL, ...)
 }
 \arguments{
-\item{ti_type}{a descriptor specifying the TI type}
+\item{trajectory_type}{a descriptor specifying the TI type}
 
 \item{id}{a unique identifier for the task}
 
