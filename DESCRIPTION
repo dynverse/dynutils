@@ -12,10 +12,12 @@ RoxygenNote: 6.0.1
 Depends:
   R (>= 3.0.0)
 Imports: 
+  aroma.light,
   Biobase,
   BiocGenerics,
   dplyr,
   glue,
+  limSolve,
   magrittr,
   methods,
   parallel,
@@ -30,8 +32,7 @@ Imports:
   transport,
   scater,
   scran,
-  Seurat,
-  aroma.light
+  Seurat
 Suggests:
   parallelMap,
   ggplot2
