@@ -49,9 +49,15 @@ generate_prior_information <- function(milestone_ids, milestone_network, progres
   if ("housekeeping" %in% colnames(feature_info)) {
     marker_feature_ids <- feature_info %>% filter(!housekeeping) %>% pull(feature_id)
   } else {
-    seurat <- Seurat::CreateSeuratObject(t(counts))
-    seurat@ident <- grouping_assignment %>% slice(match(rownames(counts), cell_id)) %>% pull(group_id) %>% factor() %>% setNames(rownames(counts))
+    ident <- grouping_assignment %>% slice(match(rownames(counts), cell_id)) %>% pull(group_id) %>% factor() %>% setNames(rownames(counts))
+    seurat <- Seurat::CreateSeuratObject(t(counts[names(ident), ]))
+    seurat@ident <- ident
+
+    old_warn <- getOption("warn")
+    options(warn=2)
     changing <- Seurat::FindAllMarkers(seurat, logfc.treshold = 1, min.pct=0.4)
+    options(warn=old_warn)
+
     marker_feature_ids <- changing %>% filter(abs(avg_logFC) >= 1) %>% rownames()
   }
 
