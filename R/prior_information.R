@@ -20,7 +20,7 @@ generate_prior_information <- function(milestone_ids, milestone_network, progres
     start_cells <- progressions %>%
       filter(from %in% start_milestones) %>%
       group_by(from) %>%
-      arrange(percentage) %>%
+      filter(percentage == max(percentage)) %>%
       sample_n(1) %>%
       pull(cell_id) %>%
       unique()
@@ -35,7 +35,7 @@ generate_prior_information <- function(milestone_ids, milestone_network, progres
     filter(to %in% end_milestones) %>%
     group_by(to) %>%
     arrange(percentage) %>%
-    summarise(cell_id=percentage == max(percentage)) %>%
+    filter(percentage == max(percentage)) %>%
     sample_n(1) %>%
     pull(cell_id) %>%
     unique()
