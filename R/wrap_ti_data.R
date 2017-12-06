@@ -33,14 +33,14 @@ wrap_ti_task_data <- function(
   }
 
   abstract_data_wrapper(
-    "ti_task",
-    trajectory_type,
-    id,
-    cell_ids,
-    milestone_ids,
-    milestone_network,
-    milestone_percentages,
-    progressions,
+    type = "ti_task",
+    trajectory_type = trajectory_type,
+    id = id,
+    cell_ids = cell_ids,
+    milestone_ids = milestone_ids,
+    milestone_network = milestone_network,
+    milestone_percentages = milestone_percentages,
+    progressions = progressions,
     counts = counts,
     expression = expression,
     cell_info = cell_info,
@@ -65,14 +65,14 @@ wrap_ti_prediction <- function(
   ...
 ) {
   abstract_data_wrapper(
-    "ti_pred",
-    trajectory_type,
-    id,
-    cell_ids,
-    milestone_ids,
-    milestone_network,
-    milestone_percentages,
-    progressions,
+    type = "ti_pred",
+    trajectory_type = trajectory_type,
+    id = id,
+    cell_ids = cell_ids,
+    milestone_ids = milestone_ids,
+    milestone_network = milestone_network,
+    milestone_percentages = milestone_percentages,
+    progressions = progressions,
     ...
   )
 }
