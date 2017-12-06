@@ -21,7 +21,7 @@ generate_prior_information <- function(milestone_ids, milestone_network, progres
       filter(from %in% start_milestones) %>%
       group_by(from) %>%
       arrange(percentage) %>%
-      filter(row_number() == 1) %>%
+      sample_n(1) %>%
       pull(cell_id) %>%
       unique()
     if (length(start_cells) != length(start_milestones)) {warning("Not every start milestone has a cell")}
@@ -35,7 +35,8 @@ generate_prior_information <- function(milestone_ids, milestone_network, progres
     filter(to %in% end_milestones) %>%
     group_by(to) %>%
     arrange(percentage) %>%
-    summarise(cell_id=cell_id[which.max(percentage)]) %>%
+    summarise(cell_id=percentage == max(percentage)) %>%
+    sample_n(1) %>%
     pull(cell_id) %>%
     unique()
   if (length(end_cells) != length(end_milestones)) {warning("Not every end milestone has a cell")}
