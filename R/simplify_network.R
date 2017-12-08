@@ -7,6 +7,10 @@
 #' net <- data.frame(from=1:2, to=2:3, length=1, directed=TRUE, stringsAsFactors = F)
 #' simplify_milestone_network(net)
 simplify_milestone_network = function(net) {
+  if (any(!net$directed)) {
+    stop("Undirected networks are not supported by this function")
+  }
+
   for (node in unique(c(net$from, net$to))) {
     froms <- net %>% filter(from == node)
     tos <- net %>% filter(to == node)
