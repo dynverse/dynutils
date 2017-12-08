@@ -8,7 +8,6 @@
 #'
 #' @export
 wrap_ti_task_data <- function(
-  trajectory_type,
   id,
   counts,
   expression,
@@ -34,7 +33,6 @@ wrap_ti_task_data <- function(
 
   abstract_data_wrapper(
     type = "ti_task",
-    trajectory_type = trajectory_type,
     id = id,
     cell_ids = cell_ids,
     milestone_ids = milestone_ids,
@@ -52,7 +50,6 @@ wrap_ti_task_data <- function(
 #' An abstract data wrapper
 #'
 #' @param type the type of data (e.g. ti_task, ti_toy, ti_pred)
-#' @param trajectory_type a descriptor specifying the TI type
 #' @param id a unique identifier for the task
 #' @param cell_ids the ids of the cells in the trajectory and counts
 #' @param milestone_ids the ids of the milestones in the trajectory
@@ -64,7 +61,6 @@ wrap_ti_task_data <- function(
 #' @export
 abstract_data_wrapper <- function(
   type,
-  trajectory_type,
   id,
   cell_ids,
   milestone_ids,
@@ -128,6 +124,9 @@ abstract_data_wrapper <- function(
   if (any(abs(mp_check$sum - 1) > eps)) {
     stop("The sum of ", sQuote("milestone_percentages"), " percentages per cell should be exactly 1")
   }
+
+  ## Find out trajectory type from milestone network (before adding FILTERED_CELLS)
+  trajectory_type <- classify_milestone_network(milestone_network)
 
   ## create a separate state if some cells have been filtered out
   na_ids <- setdiff(cell_ids, unique(milestone_percentages$cell_id))

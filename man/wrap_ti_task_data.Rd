@@ -4,13 +4,11 @@
 \alias{wrap_ti_task_data}
 \title{Wrapping a TI task dataset}
 \usage{
-wrap_ti_task_data(trajectory_type, id, counts, expression, cell_ids,
-  milestone_ids, milestone_network, milestone_percentages = NULL,
-  progressions = NULL, cell_info = NULL, feature_info = NULL, ...)
+wrap_ti_task_data(id, counts, expression, cell_ids, milestone_ids,
+  milestone_network, milestone_percentages = NULL, progressions = NULL,
+  cell_info = NULL, feature_info = NULL, ...)
 }
 \arguments{
-\item{trajectory_type}{a descriptor specifying the TI type}
-
 \item{id}{a unique identifier for the task}
 
 \item{counts}{the counts}

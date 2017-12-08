@@ -2,7 +2,6 @@ context("Testing TI data wrappers")
 
 test_that("Testing abstract_data_wrapper", {
   type <- "It"
-  trajectory_type <- "is"
   id <- "a"
   cell_ids <- c("truth", "universally", "acknowledged", "that", "a", "single")
   milestone_ids <-  c("man", "in", "possession", "of", "good", "fortune", "must")
@@ -46,7 +45,6 @@ test_that("Testing abstract_data_wrapper", {
   extras2 <- "However little known the feelings or views of such a man may be on his first entering a neighbourhood."
   wr <- abstract_data_wrapper(
     type = type,
-    trajectory_type = trajectory_type,
     id = id,
     cell_ids = cell_ids,
     milestone_ids = milestone_ids,
@@ -61,7 +59,6 @@ test_that("Testing abstract_data_wrapper", {
   expect_false(is_ti_data_wrapper(list(chvehoie="jihofrewghifu")))
 
   expect_equivalent(wr$type, type)
-  expect_equivalent(wr$trajectory_type, trajectory_type)
   expect_equivalent(wr$id, id)
   expect_equivalent(wr$cell_ids, cell_ids)
   expect_equivalent(wr$milestone_ids, milestone_ids)
@@ -75,7 +72,6 @@ test_that("Testing abstract_data_wrapper", {
   # testing progressions to percentages
   wr <- abstract_data_wrapper(
     type = type,
-    trajectory_type = trajectory_type,
     id = id,
     cell_ids = cell_ids,
     milestone_ids = milestone_ids,
@@ -87,7 +83,6 @@ test_that("Testing abstract_data_wrapper", {
   expect_true(is_ti_data_wrapper(wr))
 
   expect_equivalent(wr$type, type)
-  expect_equivalent(wr$trajectory_type, trajectory_type)
   expect_equivalent(wr$id, id)
   expect_equivalent(wr$cell_ids, cell_ids)
   expect_equivalent(wr$milestone_ids, milestone_ids)
@@ -102,7 +97,6 @@ test_that("Testing abstract_data_wrapper", {
   # testing what happens when a cell was filtered
   wr <- abstract_data_wrapper(
     type = type,
-    trajectory_type = trajectory_type,
     id = id,
     cell_ids = c(cell_ids, "filtered_cell"),
     milestone_ids = milestone_ids,
@@ -117,7 +111,6 @@ test_that("Testing abstract_data_wrapper", {
   # testing cell not on edge
   expect_error(abstract_data_wrapper(
     type = type,
-    trajectory_type = trajectory_type,
     id = id,
     cell_ids = c(cell_ids, "faulty_cell"),
     milestone_ids = milestone_ids,
@@ -130,7 +123,6 @@ test_that("Testing abstract_data_wrapper", {
   # testing cell in tent but without unknown from
   expect_error(abstract_data_wrapper(
     type = type,
-    trajectory_type = trajectory_type,
     id = id,
     cell_ids = c(cell_ids, "faulty_cell"),
     milestone_ids = milestone_ids,
