@@ -9,4 +9,6 @@ test_that("Testing normalise function", {
   # todo: add mitochondrial and ercc spikeins
 
   normd <- normalise_filter_counts(counts)
+
+  expect_error(normd <- normalise_filter_counts(counts), NA)
 })
