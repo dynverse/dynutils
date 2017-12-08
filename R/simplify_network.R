@@ -166,26 +166,33 @@ simplify_igraph_network <- function(gr) {
       which(degr != 2 | is_loop) %>% names
     }
 
-  # determine the paths to keep
-  network <-
-    crossing(from = keep, to = keep) %>%
-    as_tibble() %>%
-    rowwise() %>%
-    do(with(., tibble(
-        from,
-        to,
-        path = igraph::all_simple_paths(gr, from, to) %>% map(names)
-      ))) %>%
-    mutate(num_keepers = sum(path %in% keep)) %>%
-    filter(num_keepers == 2 | (from == to & is_loop[from])) %>%
-    mutate(
-      weight = sum(igraph::E(gr, path = path)$weight)
-    ) %>%
-    select(from, to, weight)
+  if (length(keep) == 0) {
+    # if keep is character(0), gr is a simple cycle
+    keep <- names(igraph::V(gr))[[1]]
 
-  # remove double edges if network was undirected
-  if (!igraph::is.directed(gr)) {
-    network <- network %>% filter(from <= to)
+    network <- data_frame(from = keep, to = keep, weight = sum(igraph::E(gr)$weight))
+  } else {
+    # determine the paths to keep
+    network <-
+      crossing(from = keep, to = keep) %>%
+      as_tibble() %>%
+      rowwise() %>%
+      do(with(., tibble(
+          from,
+          to,
+          path = igraph::all_simple_paths(gr, from, to) %>% map(names)
+        ))) %>%
+      mutate(num_keepers = sum(path %in% keep)) %>%
+      filter(num_keepers == 2 | (from == to & is_loop[from])) %>%
+      mutate(
+        weight = sum(igraph::E(gr, path = path)$weight)
+      ) %>%
+      select(from, to, weight)
+
+    # remove double edges if network was undirected
+    if (!igraph::is.directed(gr)) {
+      network <- network %>% filter(from <= to)
+    }
   }
 
   igraph::graph_from_data_frame(network, directed = igraph::is.directed(gr))
