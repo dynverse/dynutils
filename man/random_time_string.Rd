@@ -4,7 +4,10 @@
 \alias{random_time_string}
 \title{Generate random string}
 \usage{
-random_time_string()
+random_time_string(name = NULL)
+}
+\arguments{
+\item{name}{Optional string to be added in the random_time_string}
 }
 \description{
 Generate a random string with first the current time, together with a random number
