@@ -35,7 +35,11 @@ determine_network_type <- function(props) {
             "directed_acyclic_graph"
           }
         } else {
-          "directed_acyclic_graph"
+          if (num_convergences == 0) {
+            "rooted_tree"
+          } else {
+            "directed_acyclic_graph"
+          }
         }
       } else {
         if (num_branch_nodes == 0) {
@@ -95,7 +99,7 @@ determine_milenet_props <- function(gr) {
     num_branch_nodes <- sum(is_branch)
     num_outer_nodes <- sum(is_outer)
   } else {
-    is_outer <- degr_tot == 1
+    is_outer <- degr_tot == 1 + is_self_loop
     num_outer_nodes <- sum(is_outer)
 
     is_branch <- !is_outer
@@ -104,7 +108,18 @@ determine_milenet_props <- function(gr) {
 
   num_divergences <- sum(degr_in != 0 & degr_out > 1)
   num_convergences <- sum(degr_in > 1 & degr_out != 0)
-  has_cycles <- !igraph::is.dag(gr)
+
+  has_cycles <-
+    if (any(is_self_loop)) {
+      TRUE
+    } else {
+      cross <- crossing(from = igraph::V(gr), to = igraph::V(gr)) %>%
+        rowwise() %>%
+        mutate(
+          num_paths = length(igraph::all_simple_paths(gr, from, to))
+        )
+      has_cycles <- any(cross$num_paths > 1)
+    }
 
   out <- lst(
     is_directed,
