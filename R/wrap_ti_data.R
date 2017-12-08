@@ -56,7 +56,6 @@ wrap_ti_task_data <- function(
 #' @export
 wrap_ti_prediction <- function(
   trajectory_type,
-  id,
   cell_ids,
   milestone_ids,
   milestone_network,
@@ -67,7 +66,7 @@ wrap_ti_prediction <- function(
   abstract_data_wrapper(
     type = "ti_pred",
     trajectory_type = trajectory_type,
-    id = id,
+    id = random_time_string("tipred"),
     cell_ids = cell_ids,
     milestone_ids = milestone_ids,
     milestone_network = milestone_network,
