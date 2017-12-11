@@ -73,7 +73,7 @@ test_that("Testing simplify_sample_graph", {
     "A|milestone_A|milestone_D|0",
     "B|milestone_A|milestone_D|0.28",
     "C|milestone_A|milestone_D|0.61",
-    "D|milestone_A|milestone_D|1",
+    "D|milestone_D|milestone_E|0",
     "E|milestone_D|milestone_E|1",
     "F|milestone_D|milestone_F|1",
     "a|milestone_A|milestone_D|0",
@@ -81,7 +81,7 @@ test_that("Testing simplify_sample_graph", {
     "bb|milestone_A|milestone_D|0.28",
     "c|milestone_A|milestone_D|0.61",
     "cc|milestone_A|milestone_D|0.61",
-    "d|milestone_A|milestone_D|1"
+    "d|milestone_D|milestone_E|0"
   ) %>% sort
   expect_equal(test_strs, expected_strs)
 })
