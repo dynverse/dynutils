@@ -171,29 +171,57 @@ simplify_igraph_network <- function(gr) {
     keep <- names(igraph::V(gr))[[1]]
 
     network <- data_frame(from = keep, to = keep, weight = sum(igraph::E(gr)$weight))
-  } else {
-    # determine the paths to keep
-    network <-
-      crossing(from = keep, to = keep) %>%
-      as_tibble() %>%
-      rowwise() %>%
-      do(with(., tibble(
-          from,
-          to,
-          path = igraph::all_simple_paths(gr, from, to) %>% map(names)
-        ))) %>%
-      mutate(num_keepers = sum(path %in% keep)) %>%
-      filter(num_keepers == 2 | (from == to & is_loop[from])) %>%
-      mutate(
-        weight = sum(igraph::E(gr, path = path)$weight)
-      ) %>%
-      select(from, to, weight)
 
-    # remove double edges if network was undirected
-    if (!igraph::is.directed(gr)) {
-      network <- network %>% filter(from <= to)
+    igraph::graph_from_data_frame(network, directed = igraph::is.directed(gr))
+  } else {
+    gr2 <- gr
+    notkeep <- setdiff(names(igraph::V(gr)), keep)
+    if (igraph::is.directed(gr)) {
+      for (ver in notkeep) {
+        e_in <- gr2 %>% igraph::as_adj_edge_list(mode = "in") %>% .[[ver]]
+        e_out <- gr2 %>% igraph::as_adj_edge_list(mode = "out") %>% .[[ver]]
+
+        n_in <- igraph::ends(gr2, e_in) %>% keep(~.!=ver)
+        n_out <- igraph::ends(gr2, e_out) %>% keep(~.!=ver)
+        d_in <- e_in$weight
+        d_out <- e_out$weight
+        if (length(n_in) > 0 && length(n_out) > 0) {
+          new_edges <-
+            crossing(i = seq_along(n_in), j = seq_along(n_out)) %>%
+            mutate(
+              from = n_in[i],
+              to = n_out[j],
+              dist = d_in[i] + d_out[j]
+            )
+          gr2 <- gr2 %>%
+            igraph::add_edges(new_edges %>% select(from, to) %>% as.matrix %>% t %>% as.vector(), weight = new_edges$dist) %>%
+            igraph::delete.vertices(ver)
+        }
+      }
+    } else {
+      for (ver in notkeep) {
+        edges <- gr2 %>% igraph::as_adj_edge_list() %>% .[[ver]]
+
+        neighbours <- igraph::ends(gr2, edges) %>% keep(~.!=ver)
+        distances <- edges$weight
+        if (length(neighbours) > 0) {
+          new_edges <-
+            crossing(i = seq_along(neighbours), j = seq_along(neighbours)) %>%
+            filter(i < j) %>%
+            mutate(
+              from = neighbours[i],
+              to = neighbours[j],
+              dist = distances[i] + distances[j]
+            )
+          gr2 <- gr2 %>%
+            igraph::add_edges(new_edges %>% select(from, to) %>% as.matrix %>% t %>% as.vector(), weight = new_edges$dist) %>%
+            igraph::delete.vertices(ver)
+        }
+      }
     }
+
+    gr2
   }
 
-  igraph::graph_from_data_frame(network, directed = igraph::is.directed(gr))
+
 }
