@@ -103,13 +103,49 @@ all_networks <- list(
           from = ifelse(mix, from2, to2),
           to = ifelse(mix, to2, from2)
         ) %>%
+        sample_n(nrow(.)) %>%
         select(from, to, length, directed)
     }
   ),
   "rooted_tree" = list(
-    "simple" = data_frame(from = c("A", "B", "B", "C", "C"), to = c("B", "C", "D", "E", "F"), length = 2, directed = TRUE)
+    "simple_binary" = data_frame(from = c("A", "B", "B", "C", "C"), to = c("B", "C", "D", "E", "F"), length = 2, directed = TRUE),
+    "intermediate" = data_frame(from = c(rep("root", 6), LETTERS[1:6], LETTERS[1:6]), to = c(LETTERS[1:6], LETTERS[7:12], LETTERS[13:18]), length = 1.5, directed = TRUE),
+    "shuffled" = data_frame(from = c(rep("root", 6), rep("A", 10), rep("B", 3)), to = LETTERS[1:19], length = 1, directed = TRUE) %>% sample_n(nrow(.))
+  ),
+  "unrooted_tree" = list(
+    "simple_binary" = data_frame(from = c("A", "B", "B", "C", "C"), to = c("B", "C", "D", "E", "F"), length = 2, directed = FALSE),
+    "intermediate" = data_frame(from = c(rep("root", 6), LETTERS[1:6], LETTERS[1:6]), to = c(LETTERS[1:6], LETTERS[7:12], LETTERS[13:18]), length = 1.5, directed = FALSE),
+    "shuffled" = data_frame(
+      from2 = c(rep("root", 6), rep("A", 10), rep("B", 3)),
+      to2 = LETTERS[1:19], length = 1, directed = FALSE
+    ) %>%
+      mutate(
+        mix = sample(c(T, F), n(), replace = TRUE),
+        from = ifelse(mix, from2, to2),
+        to = ifelse(mix, to2, from2)
+      ) %>%
+      sample_n(nrow(.)) %>%
+      select(from, to, length, directed)
+  ),
+  "directed_acyclic_graph" = list(
+    "simple_convergence" = data_frame(from = c("A", "B", "C"), to = c("C", "C", "D"), length = 0.4, directed = TRUE),
+    "bifur_conv" = data_frame(from = c("A", "B", "B", "C", "D", "E"), to = c("B", "C", "D", "E", "E", "F"), length = 0.4, directed = TRUE),
+    "directed_complete" = crossing(from = LETTERS, to = LETTERS, length = 1, directed = TRUE) %>% filter(from < to)
+  ),
+  "directed_graph" = list(
+    "simple" = data_frame(from = c("A", "B", "C", "A"), to = c("B", "C", "A", "D"), length = 1.1, directed = TRUE),
+    "intermediate" = data_frame(from = c("A", "B", "C", LETTERS), to = c("B", "C", "A", sample(LETTERS)), length = 4, directed = TRUE),
+    "larger" = data_frame(from = c(rep("root", 7), LETTERS[1:6], LETTERS[1:6]), to = c("root", LETTERS[1:6], LETTERS[7:12], LETTERS[13:18]), length = 1.5, directed = TRUE),
+    "spiked_triangle" = data_frame(from = c("A", "B", "C", "A", "B", "C"), to = c("B", "C", "A", "D", "E", "F"), length = 1, directed = TRUE)
+  ),
+  "undirected_graph" = list(
+    "bifur_conv_undirected" = data_frame(from = c("A", "B", "B", "C", "D", "E"), to = c("B", "C", "D", "E", "E", "F"), length = 0.4, directed = FALSE),
+    "complete" = crossing(from = LETTERS, to = LETTERS, length = 1, directed = FALSE) %>% filter(from < to),
+    "simple" = data_frame(from = c("A", "B", "C", "A"), to = c("B", "C", "A", "D"), length = 1.1, directed = FALSE),
+    "intermediate" = data_frame(from = c("A", "B", "C", LETTERS), to = c("B", "C", "A", sample(LETTERS)), length = 4, directed = FALSE),
+    "larger" = data_frame(from = c(rep("root", 7), LETTERS[1:6], LETTERS[1:6]), to = c("root", LETTERS[1:6], LETTERS[7:12], LETTERS[13:18]), length = 1.5, directed = FALSE),
+    "spiked_triangle" = data_frame(from = c("A", "B", "C", "A", "B", "C"), to = c("B", "C", "A", "D", "E", "F"), length = 1, directed = FALSE)
   )
-  # TODO: other network types
 )
 
 for (network_type in names(all_networks)) {
@@ -117,15 +153,45 @@ for (network_type in names(all_networks)) {
 
   for (network_name in names(networks)) {
     test_that(pritt("test whether {network_name} is detected as {network_type}"), {
+      cat(pritt("test whether {network_name} is detected as {network_type}"), "\n", sep = "")
       network <- networks[[network_name]]
 
       detected_network_type <- classify_milestone_network(network)$network_type
 
-      if (detected_network_type != network_type) {
-        gr <- igraph::graph_from_data_frame(network, directed = any(network$directed))
-        plot(gr)
-      }
       expect_equal(detected_network_type, network_type)
     })
   }
 }
+
+# all_nets <- map_df(names(all_networks), function(network_type) {
+#   network_names <- names(all_networks[[network_type]])
+#   map_df(network_names, function(network_name) {
+#     tibble(
+#       network_type,
+#       network_name,
+#       milestone_network = list(all_networks[[network_type]][[network_name]])
+#     )
+#   })
+# }) %>%
+#   rowwise() %>%
+#   mutate(
+#     pl2 = list({
+#       cat(network_name, " -- ", network_type, "\n", sep = "")
+#       cell_ids <- paste0("Cell", seq_len(nrow(milestone_network)))
+#       data <- dynutils::abstract_data_wrapper(
+#         "one",
+#         paste0(network_name, " is a ", network_type),
+#         cell_ids = cell_ids,
+#         milestone_ids = unique(c(milestone_network$from, milestone_network$to)),
+#         milestone_network = milestone_network,
+#         progressions = data_frame(cell_id = cell_ids, from = milestone_network$from, to = milestone_network$to, percentage = .5))
+#       dynplot::plot_default(data)
+#     })
+#   ) %>%
+#   ungroup()
+# cowplot::plot_grid(plotlist = all_nets$pl2)
+#
+# pdf("~/testplots.pdf", 6, 6)
+# for (pl in all_nets$pl2)
+#   print(pl)
+# dev.off()
