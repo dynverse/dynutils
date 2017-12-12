@@ -126,7 +126,7 @@ abstract_data_wrapper <- function(
   }
 
   ## Find out trajectory type from milestone network (before adding FILTERED_CELLS)
-  trajectory_type <- classify_milestone_network(milestone_network)
+  trajectory_type <- classify_milestone_network(milestone_network)$network_type
 
   ## create a separate state if some cells have been filtered out
   na_ids <- setdiff(cell_ids, unique(milestone_percentages$cell_id))
