@@ -227,7 +227,6 @@ normalise_filter_counts <- function(
   expression_normalised_filtered <- Biobase::exprs(sce_normalised_filtered) %>% t()
   counts_filtered <- counts[rownames(expression_normalised_filtered),colnames(expression_normalised_filtered)]
 
-
   ########################################
   # Final filter on variability
   ########################################
@@ -240,7 +239,7 @@ normalise_filter_counts <- function(
     expression_normalised_filtered <- expression_normalised_filtered[cells_filtered, genes_filtered]
     counts_filtered <- counts_filtered[cells_filtered, genes_filtered]
 
-    if(min(gene_sds) > 0 && min(cell_sds) > 0){
+    if((min(c(gene_sds, 1)) > 0) && (min(c(cell_sds, 1)) > 0)){
       break
     }
   }
@@ -257,7 +256,7 @@ normalise_filter_counts <- function(
       "gene_expression_filtering", dim(sce_cellgene_filtered)[1], dim(sce_cellgene_filtered)[2],
       "normalisation", dim(sce_normalised)[1], dim(sce_normalised)[2],
       "gene_variability_filtering", dim(sce_normalised_filtered)[1], dim(sce_normalised_filtered)[2],
-      "final_filtering", dim(expression_normalised_filtered)[1], dim(expression_normalised_filtered)[2]
+      "final_filtering", dim(expression_normalised_filtered)[2], dim(expression_normalised_filtered)[1]
     )
     normalisation_plots$n_retained <- normalisation_steps %>%
       mutate(type = factor(type, levels=rev(type))) %>%
