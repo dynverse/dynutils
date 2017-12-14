@@ -239,7 +239,7 @@ normalise_filter_counts <- function(
     expression_normalised_filtered <- expression_normalised_filtered[cells_filtered, genes_filtered]
     counts_filtered <- counts_filtered[cells_filtered, genes_filtered]
 
-    if((min(c(gene_sds, 1)) > 0) && (min(c(cell_sds, 1)) > 0)){
+    if((min(c(gene_sds, 1), na.rm=TRUE) > 0) && (min(c(cell_sds, 1), na.rm=TRUE) > 0)){
       break
     }
   }
