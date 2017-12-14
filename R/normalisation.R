@@ -145,7 +145,7 @@ normalise_filter_counts <- function(
   if (verbose)print(pritt("Gene filter: Genes - {dim(sce_cellgene_filtered)[[1]]} Cells - {dim(sce_cellgene_filtered)[[2]]}"))
 
   ########################################
-  # normalise
+  # Normalise
   ########################################
 
   if (ncol(sce_cellgene_filtered) >= 100) {
@@ -227,6 +227,28 @@ normalise_filter_counts <- function(
   expression_normalised_filtered <- Biobase::exprs(sce_normalised_filtered) %>% t()
   counts_filtered <- counts[rownames(expression_normalised_filtered),colnames(expression_normalised_filtered)]
 
+
+  ########################################
+  # Final filter on variability
+  ########################################
+  repeat{
+    gene_sds <- counts_filtered %>% apply(2, sd)
+    cell_sds <- counts_filtered %>% apply(1, sd)
+
+    genes_filtered <- which(gene_sds > 0, useNames=TRUE)
+    cells_filtered <- which(cell_sds > 0, useNames=TRUE)
+    expression_normalised_filtered <- expression_normalised_filtered[cells_filtered, genes_filtered]
+    counts_filtered <- counts_filtered[cells_filtered, genes_filtered]
+
+    if(min(gene_sds) > 0 && min(cell_sds) > 0){
+      break
+    }
+  }
+
+  ########################################
+  # Output
+  ########################################
+
   if(verbose) {
     normalisation_steps <-tribble(
       ~type, ~ngenes, ~ncells,
@@ -234,7 +256,8 @@ normalise_filter_counts <- function(
       "cell_quality_filtering", dim(sce_cell_filtered)[1], dim(sce_cell_filtered)[2],
       "gene_expression_filtering", dim(sce_cellgene_filtered)[1], dim(sce_cellgene_filtered)[2],
       "normalisation", dim(sce_normalised)[1], dim(sce_normalised)[2],
-      "gene_variability_filtering", dim(sce_normalised_filtered)[1], dim(sce_normalised_filtered)[2]
+      "gene_variability_filtering", dim(sce_normalised_filtered)[1], dim(sce_normalised_filtered)[2],
+      "final_filtering", dim(expression_normalised_filtered)[1], dim(expression_normalised_filtered)[2]
     )
     normalisation_plots$n_retained <- normalisation_steps %>%
       mutate(type = factor(type, levels=rev(type))) %>%
