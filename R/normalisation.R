@@ -230,7 +230,7 @@ normalise_filter_counts <- function(
   ########################################
   # Final filter on variability
   ########################################
-  repeat{
+  repeat {
     gene_sds <- counts_filtered %>% apply(2, sd)
     cell_sds <- counts_filtered %>% apply(1, sd)
 
