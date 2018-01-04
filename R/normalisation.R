@@ -204,10 +204,10 @@ normalise_filter_counts <- function(
       normalisation_plots$gene_variance <- grDevices::recordPlot()
 
       normalisation_plots$gene_selection <- var_out %>%
-        ggplot() +
-        geom_point(aes(FDR, bio)) +
-        geom_hline(yintercept = hvg_bio) +
-        geom_vline(xintercept = hvg_fdr)
+        ggplot2::ggplot() +
+        ggplot2::geom_point(aes(FDR, bio)) +
+        ggplot2::geom_hline(yintercept = hvg_bio) +
+        ggplot2::geom_vline(xintercept = hvg_fdr)
     }
 
     hvg_out <- var_out[which(var_out$FDR <= hvg_fdr & var_out$bio >= hvg_bio),]
@@ -261,9 +261,10 @@ normalise_filter_counts <- function(
     normalisation_plots$n_retained <- normalisation_steps %>%
       mutate(type = factor(type, levels=rev(type))) %>%
       gather("dimension", "n", -type) %>%
-      ggplot() +
-        geom_bar(aes(type, n, fill=dimension), position = "dodge", stat = "identity") + facet_wrap(~dimension, scales = "free_x") +
-      coord_flip()
+      ggplot2::ggplot() +
+        ggplot2::geom_bar(aes(type, n, fill=dimension), position = "dodge", stat = "identity") +
+        ggplot2::facet_wrap(~dimension, scales = "free_x") +
+        ggplot2::coord_flip()
   } else {
     normalisation_steps <- NULL
   }
