@@ -205,7 +205,7 @@ normalise_filter_counts <- function(
 
       normalisation_plots$gene_selection <- var_out %>%
         ggplot2::ggplot() +
-        ggplot2::geom_point(aes(FDR, bio)) +
+        ggplot2::geom_point(ggplot2::aes(FDR, bio)) +
         ggplot2::geom_hline(yintercept = hvg_bio) +
         ggplot2::geom_vline(xintercept = hvg_fdr)
     }
@@ -262,7 +262,7 @@ normalise_filter_counts <- function(
       mutate(type = factor(type, levels=rev(type))) %>%
       gather("dimension", "n", -type) %>%
       ggplot2::ggplot() +
-        ggplot2::geom_bar(aes(type, n, fill=dimension), position = "dodge", stat = "identity") +
+        ggplot2::geom_bar(ggplot2::aes(type, n, fill=dimension), position = "dodge", stat = "identity") +
         ggplot2::facet_wrap(~dimension, scales = "free_x") +
         ggplot2::coord_flip()
   } else {
