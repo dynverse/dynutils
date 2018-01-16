@@ -6,6 +6,9 @@
 #' @examples
 #' net <- data.frame(from=1:2, to=2:3, length=1, directed=TRUE, stringsAsFactors = F)
 #' simplify_milestone_network(net)
+#'
+#' net <- data.frame(from=c(1,2,3, 4), to=c(2,3,4, 1), directed=TRUE, length=1)
+#' simplify_milestone_network(net)
 simplify_milestone_network = function(net) {
   if (any(!net$directed)) {
     stop("Undirected networks are not supported by this function")
@@ -16,11 +19,12 @@ simplify_milestone_network = function(net) {
     tos <- net %>% filter(to == node)
 
     if (nrow(froms) == 1 && nrow(tos) == 1) {
-      newfrom <- tos$from
-      newto <- froms$to
+      connected <- net %>% filter((from == tos$from & to == froms$to) | (to == tos$from & from == froms$to))
 
-      # special check for A->B A->C C->B ("split and converge pattern")
-      if(!(paste0(newfrom, "#", newto) %in% paste0(net$from, "#", net$to))) {
+      # check if they are connected in a cycle
+      if (nrow(connected) == 0) {
+        newfrom <- tos$from
+        newto <- froms$to
         net <- net %>%
           filter(from != node, to != node) %>%
           add_row(
@@ -28,9 +32,14 @@ simplify_milestone_network = function(net) {
             to = newto,
             length = froms$length + tos$length,
             directed = froms$directed
-          )
+        )
       }
     }
+  }
+
+  # check for linear
+  if (nrow(net) == 1 && net$from != net$to) {
+    net <- tibble(from=c(net$from, ">1"), to=c(">1", net$to), directed=TRUE, length = 0.5)
   }
 
   net

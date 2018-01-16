@@ -15,4 +15,7 @@ Simplify a milestone network, so that consecutive linear edges are merged
 \examples{
 net <- data.frame(from=1:2, to=2:3, length=1, directed=TRUE, stringsAsFactors = F)
 simplify_milestone_network(net)
+
+net <- data.frame(from=c(1,2,3, 4), to=c(2,3,4, 1), directed=TRUE, length=1)
+simplify_milestone_network(net)
 }
