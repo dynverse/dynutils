@@ -100,8 +100,8 @@ determine_milenet_props <- function(gr) {
     num_outer_nodes <- sum(is_outer)
 
     # divergences & convergences
-    num_divergences <- sum(degr_in != 0 & degr_out > 1)
-    num_convergences <- sum(degr_in > 1 & degr_out != 0)
+    num_divergences <- sum(degr_out > 1)
+    num_convergences <- sum(degr_in > 1)
   } else {
     # degree
     degr_tot <- igraph::degree(gr)
