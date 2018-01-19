@@ -9,7 +9,7 @@
 #' @rdname timings_list
 add_timing_checkpoint <- function(timings_list, name) {
   if (is.null(timings_list)) {
-    timings_list <- list
+    timings_list <- list()
   }
   timings_list[[name]] <- Sys.time()
   timings_list
@@ -19,6 +19,7 @@ add_timing_checkpoint <- function(timings_list, name) {
 #' @export
 attach_timings_attribute <- function(object, timings_list) {
   attr(object, ".dynutils_timings_list") <- timings_list
+  object
 }
 
 #' @rdname timings_list
