@@ -61,34 +61,3 @@ eval_with_timeout <- function(expr, envir = parent.frame(), timeout, on_timeout 
   # send the buffered response
   return(myresult)
 }
-
-# old version
-# wait_or_kill <- function(expr, wait_time, cancel_output_fun, check_interval = 1, verbose = FALSE, ...) {
-#   expr <- substitute(expr)
-#   envir <- parent.frame()
-#
-#   requireNamespace("future")
-#   start_time <- Sys.time()
-#
-#   future_handle <- future(
-#     { expr },
-#     evaluator = plan("multisession"),
-#     substitute = FALSE,
-#     envir = envir,
-#     ...
-#   )
-#
-#   time_waited <- 0
-#   while (!resolved(future_handle) && time_waited < wait_time) {
-#     Sys.sleep(check_interval)
-#     time_waited <- as.numeric(difftime(Sys.time(), start_time, units = "secs"))
-#     if (verbose) cat("Time waited: ", time_waited, "\n", sep = "")
-#   }
-#
-#   if (resolved(future_handle)) {
-#     value(future_handle)
-#   } else {
-#     future:::ClusterRegistry("stop")
-#     cancel_output_fun(time_waited)
-#   }
-# }
