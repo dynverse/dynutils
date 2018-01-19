@@ -129,6 +129,7 @@ all_networks <- list(
   ),
   "directed_acyclic_graph" = list(
     "simple_convergence" = data_frame(from = c("A", "B", "C"), to = c("C", "C", "D"), length = 0.4, directed = TRUE),
+    "bifur_conv_from_start" = data_frame(from = c("A", "A", "B", "C"), to = c("B", "C", "D", "D"), length=0.4, directed=TRUE),
     "bifur_conv" = data_frame(from = c("A", "B", "B", "C", "D", "E"), to = c("B", "C", "D", "E", "E", "F"), length = 0.4, directed = TRUE),
     "directed_complete" = crossing(from = LETTERS, to = LETTERS, length = 1, directed = TRUE) %>% filter(from < to)
   ),
