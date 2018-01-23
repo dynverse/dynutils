@@ -54,9 +54,9 @@ generate_prior_information <- function(milestone_ids, milestone_network, progres
     seurat@ident <- ident
 
     old_warn <- getOption("warn")
-    options(warn=2)
-    changing <- Seurat::FindAllMarkers(seurat, logfc.treshold = 1, min.pct=0.4)
-    options(warn=old_warn)
+    options(warn = 2)
+    changing <- Seurat::FindAllMarkers(seurat, logfc.treshold = 1, min.pct = 0.4)
+    options(warn = old_warn)
 
     marker_feature_ids <- changing %>% rownames_to_column("gene_id") %>% filter(abs(avg_logFC) >= 1) %>% .$gene_id
   }
@@ -68,13 +68,31 @@ generate_prior_information <- function(milestone_ids, milestone_network, progres
   n_end_states <- length(end_milestones)
 
   # time information
-  if ("simulationtime" %in% colnames(cell_info)) {
-    time <- setNames(cell_info$simulationtime, cell_info$cell_id)
-  } else {time <- NULL}
+  time <-
+    if ("simulationtime" %in% colnames(cell_info)) {
+      setNames(cell_info$simulationtime, cell_info$cell_id)
+    } else {
+      NULL
+    }
 
-  if ("timepoint" %in% colnames(cell_info)) {
-    timecourse <- setNames(cell_info$timepoint, cell_info$cell_id)
-  } else {timecourse <- NULL}
+  timecourse <-
+    if ("timepoint" %in% colnames(cell_info)) {
+      setNames(cell_info$timepoint, cell_info$cell_id)
+    } else {
+      NULL
+    }
 
-  tibble::lst(start_milestones, start_cells, end_milestones, end_cells, grouping_assignment, grouping_network, marker_feature_ids, n_branches, time, timecourse, n_end_states)
+  tibble::lst(
+    start_milestones,
+    start_cells,
+    end_milestones,
+    end_cells,
+    grouping_assignment,
+    grouping_network,
+    marker_feature_ids,
+    n_branches,
+    time,
+    timecourse,
+    n_end_states
+  )
 }
