@@ -1,7 +1,8 @@
 #' Run until error
 #' Run a system command until the R parent gets an exit signal, or until the command completes
 #'
-#' @param command Character scalar, the command to run.
+#' @param commands Character scalar, the command to run.
+#' @param bash Whether to run the command within a bash shell
 #' @export
 run_until_exit <- function(commands, bash=TRUE) {
   if(bash) {

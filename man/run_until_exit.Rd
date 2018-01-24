@@ -8,7 +8,9 @@ Run a system command until the R parent gets an exit signal, or until the comman
 run_until_exit(commands, bash = TRUE)
 }
 \arguments{
-\item{command}{Character scalar, the command to run.}
+\item{commands}{Character scalar, the command to run.}
+
+\item{bash}{Whether to run the command within a bash shell}
 }
 \description{
 Run until error
