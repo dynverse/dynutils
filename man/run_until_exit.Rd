@@ -5,7 +5,7 @@
 \title{Run until error
 Run a system command until the R parent gets an exit signal, or until the command completes}
 \usage{
-run_until_exit(command)
+run_until_exit(commands, bash = TRUE)
 }
 \arguments{
 \item{command}{Character scalar, the command to run.}
