@@ -37,4 +37,5 @@ Imports:
   Seurat
 Suggests:
   parallelMap,
-  ggplot2
+  ggplot2,
+  tidyverse
