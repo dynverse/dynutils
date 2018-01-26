@@ -213,9 +213,11 @@ simplify_igraph_network <- function(gr) {
 
       weights_to_add <- sapply(edges_to_add, function(e) igraph::distances(gr, e[[1]], e[[2]])[1,1])
 
-      gr %>%
-        igraph::add.edges(unlist(edges_to_add), attr = list(weight = weights_to_add)) %>%
-        igraph::delete.vertices(which(!keep_v))
+      gr2 <- gr
+      if (length(edges_to_add) > 0) {
+        gr2 <- gr2 %>% igraph::add.edges(unlist(edges_to_add), attr = list(weight = weights_to_add))
+      }
+      gr2 %>% igraph::delete.vertices(which(!keep_v))
     }
   } else {
     degr <- igraph::degree(gr)
@@ -270,9 +272,11 @@ simplify_igraph_network <- function(gr) {
 
       weights_to_add <- sapply(edges_to_add, function(e) igraph::distances(gr, e[[1]], e[[2]])[1,1])
 
-      gr %>%
-        igraph::add.edges(unlist(edges_to_add), attr = list(weight = weights_to_add)) %>%
-        igraph::delete.vertices(which(!keep_v))
+      gr2 <- gr
+      if (length(edges_to_add) > 0) {
+        gr2 <- gr2 %>% igraph::add.edges(unlist(edges_to_add), attr = list(weight = weights_to_add))
+      }
+      gr2 %>% igraph::delete.vertices(which(!keep_v))
     }
   }
 
