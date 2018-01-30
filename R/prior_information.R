@@ -58,7 +58,7 @@ generate_prior_information <- function(milestone_ids, milestone_network, progres
     changing <- Seurat::FindAllMarkers(seurat, logfc.treshold = 1, min.pct = 0.4)
     options(warn = old_warn)
 
-    marker_feature_ids <- changing %>% rownames_to_column("gene_id") %>% filter(abs(avg_logFC) >= 1) %>% .$gene_id
+    marker_feature_ids <- changing%>% filter(abs(avg_logFC) >= 1) %>% .$gene %>% unique()
   }
 
   # number of branches
