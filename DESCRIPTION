@@ -18,12 +18,14 @@ Imports:
   crayon,
   dplyr,
   glue,
+  httr,
   limSolve,
   magrittr,
   methods,
   parallel,
   processx,
   purrr,
+  rvest,
   SingleCellExperiment,
   testthat,
   tibble,
@@ -34,7 +36,8 @@ Imports:
   transport,
   scater,
   scran,
-  Seurat
+  Seurat,
+  xml2
 Suggests:
   parallelMap,
   ggplot2,
