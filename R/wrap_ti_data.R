@@ -76,6 +76,9 @@ abstract_data_wrapper <- function(
   if (any(!milestone_network$from %in% milestone_ids) || any(!milestone_network$to %in% milestone_ids)) {
     stop("Not all states in ", sQuote("milestone_network"), " are in ", sQuote("milestone_ids"), ".")
   }
+  if (!is.null(progressions) && any(!progressions$from %in% milestone_ids) || any(!progressions$to %in% milestone_ids)) {
+    stop("Not all states in ", sQuote("progressions"), " are in ", sQuote("milestone_ids"), ".")
+  }
 
   if (is.null(milestone_percentages) == is.null(progressions)) {
     stop("Exactly one of ", sQuote("milestone_percentages"), " or ", sQuote("progressions"), " must be defined, the other must be NULL.")
