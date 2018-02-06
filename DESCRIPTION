@@ -12,30 +12,23 @@ RoxygenNote: 6.0.1
 Depends:
   R (>= 3.0.0)
 Imports: 
-  aroma.light,
-  Biobase,
-  BiocGenerics,
   crayon,
   dplyr,
   glue,
   httr,
-  limSolve,
+  igraph,
   magrittr,
   methods,
   parallel,
   processx,
   purrr,
   rvest,
-  SingleCellExperiment,
   testthat,
   tibble,
   tidyr,
   reshape2,
-  igraph,
   tools,
   transport,
-  scater,
-  scran,
   Seurat,
   xml2
 Suggests:
