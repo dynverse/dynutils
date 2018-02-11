@@ -29,9 +29,12 @@ run_until_exit <- function(commands, bash = TRUE) {
     stop(
       glue::collapse(
         c(
-          "Error running command: ", crayon::white$bold(command),
-          "-- output --", crayon::blue(output),
-          "-- error --", crayon::red(error)
+          "Error running command: ",
+          crayon::white$bold(command),
+          "-- output --",
+          crayon::blue(output),
+          "-- error --",
+          crayon::red(error)
         ),
         "\n"
       ),
