@@ -155,6 +155,10 @@ simplify_sample_graph <- function(edges, to_keep, is_directed) {
 #' net <- data.frame(from=1:2, to=2:3, length=1, directed=TRUE, stringsAsFactors = F)
 #' gr <- igraph::graph_from_data_frame(net)
 #' simplify_igraph_network(gr)
+#'
+#' net <- data.frame(from=c(1,2,3,1), to=c(2,3,1,4), length=1, directed=TRUE, stringsAsFactors = F)
+#' gr <- igraph::graph_from_data_frame(net)
+#' simplify_igraph_network(gr)
 simplify_igraph_network <- function(gr) {
   is_loop <- igraph::V(gr) %>%
     map_lgl(~ igraph::are_adjacent(gr, ., .))
@@ -212,10 +216,11 @@ simplify_igraph_network <- function(gr) {
       }
 
       weights_to_add <- sapply(edges_to_add, function(e) igraph::distances(gr, e[[1]], e[[2]])[1,1])
+      weights_to_add[weights_to_add == 0] <- sum(igraph::E(gr)$weight)
 
       gr2 <- gr
       if (length(edges_to_add) > 0) {
-        gr2 <- gr2 %>% igraph::add.edges(unlist(edges_to_add), attr = list(weight = weights_to_add))
+        gr2 <- gr2 %>% igraph::add.edges(unlist(edges_to_add), attr = list(weight = weights_to_add, directed=TRUE))
       }
       gr2 %>% igraph::delete.vertices(which(!keep_v))
     }
@@ -271,10 +276,11 @@ simplify_igraph_network <- function(gr) {
       }
 
       weights_to_add <- sapply(edges_to_add, function(e) igraph::distances(gr, e[[1]], e[[2]])[1,1])
+      weights_to_add[weights_to_add == 0] <- sum(igraph::E(gr)$weight)
 
       gr2 <- gr
       if (length(edges_to_add) > 0) {
-        gr2 <- gr2 %>% igraph::add.edges(unlist(edges_to_add), attr = list(weight = weights_to_add))
+        gr2 <- gr2 %>% igraph::add.edges(unlist(edges_to_add), attr = list(weight = weights_to_add, directed=TRUE))
       }
       gr2 %>% igraph::delete.vertices(which(!keep_v))
     }
