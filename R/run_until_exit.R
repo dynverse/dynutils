@@ -14,7 +14,12 @@ run_until_exit <- function(commands, bash=TRUE) {
   cmd <- processx::process$new(commandline=command, stdout = "|", stderr = "|")
   tryCatch(
     {
-      cmd$wait() # wait for process to be finished
+      repeat { # wait doesn't work correctly on the cluster
+        if(!cmd$is_alive()) {
+          break
+        }
+        Sys.sleep(1)
+      }
     },
     finally={
       if (cmd$is_alive()) {
