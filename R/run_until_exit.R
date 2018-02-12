@@ -11,15 +11,12 @@ run_until_exit <- function(commands, bash = TRUE) {
     command <- glue::collapse(commands, "\n")
   }
 
-  cmd <- processx::process$new(commandline=command, stdout = "|", stderr = "|")
+  stdout <- tempfile()
+  stderr <- tempfile()
+  cmd <- processx::process$new(commandline=command, stdout = stdout, stderr = stderr)
   tryCatch(
     {
-      repeat { # wait doesn't work correctly on the cluster
-        if(!cmd$is_alive()) {
-          break
-        }
-        Sys.sleep(1)
-      }
+      cmd$wait()
     },
     finally={
       if (cmd$is_alive()) {
@@ -28,8 +25,8 @@ run_until_exit <- function(commands, bash = TRUE) {
     }
   )
 
-  output <- cmd$read_all_output_lines()
-  error <- cmd$read_all_error_lines()
+  output <- readLines(stdout)
+  error <- readLines(stderr)
 
   if (cmd$get_exit_status() != 0) {
     print(cmd$get_exit_status())
