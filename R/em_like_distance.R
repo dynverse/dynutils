@@ -9,9 +9,9 @@
 #' @export
 compute_emlike_dist <- function(traj) {
   cell_ids <- traj$cell_ids
-  milestone_network <- traj$milestone_network
-  milestone_ids <- traj$milestone_ids
-  milestone_percentages <- traj$milestone_percentages
+  milestone_network <- traj$milestone_network %>% mutate(from = paste0("MILESTONE_", from), to = paste0("MILESTONE_", to))
+  milestone_ids <- traj$milestone_ids %>% paste0("MILESTONE_", .)
+  milestone_percentages <- traj$milestone_percentages %>% mutate(milestone_id = paste0("MILESTONE_", milestone_id))
 
   # calculate the shortest path distances between milestones
   phantom_edges <- bind_rows(lapply(milestone_ids, function(sn) {
