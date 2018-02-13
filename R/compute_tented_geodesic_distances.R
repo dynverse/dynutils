@@ -57,7 +57,7 @@ compute_tented_geodesic_distances <- function(trajectory) {
 
 
   # calculate shortcut edges between milestones. E.g. if A->B and A->C, then B->C will also be added
-  shortcut_edges <- bind_rows(lapply(milestone_ids, function(sn) {
+  shortcut_edges <- bind_rows(lapply(milestone_ids, function(mid) {
     tent <- names(igraph::neighborhood(mil_gr, nodes = mid, mode = "out")[[1]])
 
     if (length(tent) <= 1) {
