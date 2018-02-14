@@ -38,7 +38,6 @@ compute_tented_geodesic_distances <- function(trajectory) {
 
       scaled_dists <-
         relevant_pct %>%
-        filter(milestone_id != mid) %>%
         mutate(dist = percentage * tent_distances[mid, milestone_id])
 
       pct_mat <-
