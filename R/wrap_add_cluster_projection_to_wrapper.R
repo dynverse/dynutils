@@ -92,7 +92,7 @@ add_cluster_projection_to_wrapper <- function(
   dimred_trajectory_segments <- dimred_segment_df %>%
     mutate_at(c("from", "to"), renamefun) %>%
     select(starts_with("from_"), starts_with("to_")) %>%
-    set_rownames(NULL) %>%
+    magrittr::set_rownames(NULL) %>%
     as.matrix
 
   # return output
