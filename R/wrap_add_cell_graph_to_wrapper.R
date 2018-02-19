@@ -12,7 +12,7 @@
 #' @export
 #'
 #' @importFrom testthat expect_is expect_true expect_equal expect_length
-simplify_sample_graph <- function(
+add_cell_graph_to_wrapper <- function(
   data_wrapper,
   cell_graph,
   to_keep,
