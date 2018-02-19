@@ -1,4 +1,4 @@
-#' Add a linear trajectory to a data wrapper
+#' Add a cell graph trajectory to a data wrapper
 #'
 #' This function will generate the milestone_network and progressions.
 #'

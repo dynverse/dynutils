@@ -2,7 +2,7 @@
 % Please edit documentation in R/wrap_add_cell_graph_to_wrapper.R
 \name{add_cell_graph_to_wrapper}
 \alias{add_cell_graph_to_wrapper}
-\title{Add a linear trajectory to a data wrapper}
+\title{Add a cell graph trajectory to a data wrapper}
 \usage{
 add_cell_graph_to_wrapper(data_wrapper, cell_graph, to_keep, is_directed, ...)
 }
