@@ -7,10 +7,11 @@
 #' @importFrom httr GET add_headers
 #' @importFrom xml2 read_html
 #' @importFrom rvest html_nodes html_attr html_text
+#' @importFrom stats runif
 google_scholar <- function(cluster_id) {
   base_url <- "https://scholar.google.com/scholar"
 
-  Sys.sleep(runif(1, 0.05, .1))
+  Sys.sleep(stats::runif(1, 0.05, .1))
 
   random_user_agent <- paste0(sample(c("Mozilla", "Chrome"), 1), "/", sample.int(100, 1), ".", sample.int(100, 1))
 
