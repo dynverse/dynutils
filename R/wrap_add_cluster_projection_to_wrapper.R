@@ -90,7 +90,7 @@ add_cluster_projection_to_wrapper <- function(
   rownames(dimred_milestones) <- renamefun(rownames(dimred_milestones))
 
   dimred_trajectory_segments <- dimred_segment_df %>%
-    mutate_at(c("from", "to"), milestone_rename_fun) %>%
+    mutate_at(c("from", "to"), renamefun) %>%
     select(starts_with("from_"), starts_with("to_")) %>%
     set_rownames(NULL) %>%
     as.matrix

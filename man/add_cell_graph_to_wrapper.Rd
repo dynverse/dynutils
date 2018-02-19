@@ -4,7 +4,7 @@
 \alias{add_cell_graph_to_wrapper}
 \title{Add a cell graph trajectory to a data wrapper}
 \usage{
-add_cell_graph_to_wrapper(data_wrapper, cell_graph, to_keep, is_directed, ...)
+add_cell_graph_to_wrapper(data_wrapper, cell_graph, to_keep, ...)
 }
 \arguments{
 \item{data_wrapper}{A data wrapper to extend upon.}
@@ -13,8 +13,6 @@ add_cell_graph_to_wrapper(data_wrapper, cell_graph, to_keep, is_directed, ...)
 
 \item{to_keep}{A named vector containing booleans containing
 whether or not a sample is part of the trajectory that is to be kept.}
-
-\item{is_directed}{Whether or not the graph is directed.}
 
 \item{...}{extra information to be stored in the wrapper.}
 }

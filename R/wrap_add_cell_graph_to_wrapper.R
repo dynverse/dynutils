@@ -6,7 +6,6 @@
 #' @param cell_graph The edges between cells. Format: Data frame(from = character, to = character, length = numeric)
 #' @param to_keep A named vector containing booleans containing
 #'   whether or not a sample is part of the trajectory that is to be kept.
-#' @param is_directed Whether or not the graph is directed.
 #' @param ... extra information to be stored in the wrapper.
 #'
 #' @export
@@ -16,7 +15,6 @@ add_cell_graph_to_wrapper <- function(
   data_wrapper,
   cell_graph,
   to_keep,
-  is_directed,
   ...
 ) {
   requireNamespace("igraph")
@@ -26,11 +24,7 @@ add_cell_graph_to_wrapper <- function(
   cell_ids <- data_wrapper$cell_ids
 
   # check cell_graph
-  testthat::expect_is(cell_graph, "data.frame")
-  testthat::expect_equal(colnames(cell_graph), c("from", "to", "length"))
-  testthat::expect_equal(sapply(cell_graph, class), c(from = "character", to = "character", length = "numeric"))
-  testthat::expect_true(all(cell_graph$from %in% cell_ids))
-  testthat::expect_true(all(cell_graph$to %in% cell_ids))
+  check_milestone_network(cell_ids, cell_graph)
 
   # check to_keep
   testthat::expect_is(to_keep, "logical")
@@ -38,8 +32,7 @@ add_cell_graph_to_wrapper <- function(
   testthat::expect_equal(sort(unique(c(cell_graph$from, cell_graph$to))), sort(names(to_keep)))
 
   # check is_directed
-  testthat::expect_is(is_directed, "logical")
-  testthat::expect_length(is_directed, 1)
+  is_directed <- any(cell_graph$directed)
 
   # make igraph object
   ids <- names(to_keep)
