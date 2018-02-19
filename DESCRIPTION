@@ -20,6 +20,7 @@ Imports:
   magrittr,
   methods,
   parallel,
+  pdist,
   processx,
   purrr,
   rvest,
