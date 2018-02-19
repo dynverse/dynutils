@@ -34,7 +34,7 @@ add_cluster_projection_to_wrapper <- function(
   # collect information on clusters
   dimred_milestones_df <-
     dimred_milestones %>%
-    as.data.frame %>%
+    data.frame(stringsAsFactors = FALSE) %>%
     rownames_to_column("milestone_id")
 
   # collect information on edges
@@ -77,7 +77,7 @@ add_cluster_projection_to_wrapper <- function(
   progressions <- data.frame(
     cell_id = rownames(dimred_cells),
     piecewise_df[segment_ix,] %>% select(from, to, percentage),
-    stringsAsFactors = TRUE
+    stringsAsFactors = FALSE
   )
 
   # rename milestones so the milestones don't have the
