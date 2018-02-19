@@ -85,6 +85,7 @@ test_that("Testing add_trajectory_to_wrapper with milestone_percentages", {
   expect_equivalent(wr$milestone_network, milestone_network)
   expect_equivalent(wr$divergence_regions, divergence_regions)
   expect_equivalent(wr$milestone_percentages, milestone_percentages)
+  expect_equivalent(wr$trajectory_type, "directed_acyclic_graph")
 
   joined <- wr$progressions %>% left_join(progressions, by = c("cell_id", "from", "to")) %>% mutate(diff = abs(percentage.x - percentage.y))
   expect_equivalent(joined$percentage.x, joined$percentage.y)
@@ -175,6 +176,7 @@ test_that("Testing add_trajectory_to_wrapper with milestone_percentages", {
   expect_equivalent(wr$milestone_network, milestone_network)
   expect_equivalent(wr$divergence_regions, divergence_regions)
   expect_equivalent(wr$progressions, progressions)
+  expect_equivalent(wr$trajectory_type, "directed_acyclic_graph")
 
   joined <- wr$milestone_percentages %>% left_join(milestone_percentages, by = c("cell_id", "milestone_id")) %>% mutate(diff = abs(percentage.x - percentage.y))
   expect_equivalent(joined$percentage.x, joined$percentage.y)

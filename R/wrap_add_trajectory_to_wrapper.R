@@ -109,6 +109,7 @@ add_trajectory_to_wrapper <- function(
       divergence_regions = divergence_regions,
       milestone_percentages = milestone_percentages,
       progressions = progressions,
+      trajectory_type = trajectory_type,
       ...
     ))
   class(out) <- c("dynutils::with_trajectory", class(data_wrapper))
