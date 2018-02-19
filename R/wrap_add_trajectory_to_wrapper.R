@@ -12,7 +12,7 @@
 #'   Type: Data frame(cell_id = character, milestone_id = character, percentage = numeric).
 #' @param progressions Specifies the progression of a cell along a transition in the milestone_network.
 #'   Type: Data frame(cell_id = character, from = character, to = character, percentage = numeric).
-#' @param ... extra information to be stored in the wrapper
+#' @param ... extra information to be stored in the wrapper.
 #'
 #' @export
 #'

@@ -27,7 +27,7 @@ Type: Data frame(cell_id = character, milestone_id = character, percentage = num
 \item{progressions}{Specifies the progression of a cell along a transition in the milestone_network.
 Type: Data frame(cell_id = character, from = character, to = character, percentage = numeric).}
 
-\item{...}{extra information to be stored in the wrapper}
+\item{...}{extra information to be stored in the wrapper.}
 }
 \description{
 Add a trajectory to a data wrapper
