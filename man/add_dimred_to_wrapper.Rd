@@ -4,14 +4,17 @@
 \alias{add_dimred_to_wrapper}
 \title{Add a dimensionality reductio n to a data wrapper}
 \usage{
-add_dimred_to_wrapper(data_wrapper, dimred, dimred_milestone = NULL, ...)
+add_dimred_to_wrapper(data_wrapper, dimred, dimred_milestones = NULL,
+  dimred_trajectory_segments = NULL, ...)
 }
 \arguments{
 \item{data_wrapper}{A data wrapper to extend upon.}
 
 \item{dimred}{The dimensionality reduction matrix.}
 
-\item{dimred_milestone}{An optional dimensionality reduction of the milestones.}
+\item{dimred_milestones}{An optional dimensionality reduction of the milestones.}
+
+\item{dimred_trajectory_segments}{An optional dimensionality reduction of the trajectory segments.}
 
 \item{...}{extra information to be stored in the wrapper}
 }
