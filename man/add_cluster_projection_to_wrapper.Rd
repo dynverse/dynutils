@@ -6,7 +6,7 @@
 \usage{
 add_cluster_projection_to_wrapper(data_wrapper, milestone_network,
   dimred_milestones, dimred_cells, milestone_assignment_cells = NULL,
-  num_segments_per_edge = 100)
+  num_segments_per_edge = 100, ...)
 }
 \arguments{
 \item{data_wrapper}{A data wrapper to extend upon.}

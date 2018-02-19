@@ -18,7 +18,8 @@ add_cluster_projection_to_wrapper <- function(
   dimred_milestones,
   dimred_cells,
   milestone_assignment_cells = NULL,
-  num_segments_per_edge = 100
+  num_segments_per_edge = 100,
+  ...
 ) {
   # check data wrapper
   testthat::expect_is(data_wrapper, "dynutils::data_wrapper")
@@ -102,7 +103,8 @@ add_cluster_projection_to_wrapper <- function(
     milestone_network = milestone_network,
     divergence_regions = NULL,
     progressions = progressions,
-    milestone_assignment_cells = milestone_assignment_cells
+    milestone_assignment_cells = milestone_assignment_cells,
+    ...
   ) %>%
     add_dimred_to_wrapper(
       dimred = dimred_cells,
