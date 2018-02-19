@@ -4,12 +4,12 @@
 \alias{simplify_sample_graph}
 \title{Add a linear trajectory to a data wrapper}
 \usage{
-simplify_sample_graph(data_wrapper, edges, to_keep, is_directed, ...)
+simplify_sample_graph(data_wrapper, cell_graph, to_keep, is_directed, ...)
 }
 \arguments{
 \item{data_wrapper}{A data wrapper to extend upon.}
 
-\item{edges}{The edges between cells. Format: Data frame(from = character, to = character, length = numeric)}
+\item{cell_graph}{The edges between cells. Format: Data frame(from = character, to = character, length = numeric)}
 
 \item{to_keep}{A named vector containing booleans containing
 whether or not a sample is part of the trajectory that is to be kept.}

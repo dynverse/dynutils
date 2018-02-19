@@ -3,7 +3,7 @@
 #' This function will generate the milestone_network and progressions.
 #'
 #' @param data_wrapper A data wrapper to extend upon.
-#' @param edges The edges between cells. Format: Data frame(from = character, to = character, length = numeric)
+#' @param cell_graph The edges between cells. Format: Data frame(from = character, to = character, length = numeric)
 #' @param to_keep A named vector containing booleans containing
 #'   whether or not a sample is part of the trajectory that is to be kept.
 #' @param is_directed Whether or not the graph is directed.
@@ -14,7 +14,7 @@
 #' @importFrom testthat expect_is expect_true expect_equal expect_length
 simplify_sample_graph <- function(
   data_wrapper,
-  edges,
+  cell_graph,
   to_keep,
   is_directed,
   ...
@@ -25,17 +25,17 @@ simplify_sample_graph <- function(
   testthat::expect_is(data_wrapper, "dynutils::data_wrapper")
   cell_ids <- data_wrapper$cell_ids
 
-  # check edges
-  testthat::expect_is(edges, "data.frame")
-  testthat::expect_equal(colnames(edges), c("from", "to", "length"))
-  testthat::expect_equal(sapply(edges, class), c(from = "character", to = "character", length = "numeric"))
-  testthat::expect_true(all(edges$from %in% cell_ids))
-  testthat::expect_true(all(edges$to %in% cell_ids))
+  # check cell_graph
+  testthat::expect_is(cell_graph, "data.frame")
+  testthat::expect_equal(colnames(cell_graph), c("from", "to", "length"))
+  testthat::expect_equal(sapply(cell_graph, class), c(from = "character", to = "character", length = "numeric"))
+  testthat::expect_true(all(cell_graph$from %in% cell_ids))
+  testthat::expect_true(all(cell_graph$to %in% cell_ids))
 
   # check to_keep
   testthat::expect_is(to_keep, "logical")
   testthat::expect_true(all(names(to_keep) %in% cell_ids))
-  testthat::expect_equal(sort(unique(c(edges$from, edges$to))), sort(names(to_keep)))
+  testthat::expect_equal(sort(unique(c(cell_graph$from, cell_graph$to))), sort(names(to_keep)))
 
   # check is_directed
   testthat::expect_is(is_directed, "logical")
@@ -43,7 +43,7 @@ simplify_sample_graph <- function(
 
   # make igraph object
   ids <- names(to_keep)
-  gr <- igraph::graph_from_data_frame(edges %>% rename(weight = length), directed = is_directed, vertices = ids)
+  gr <- igraph::graph_from_data_frame(cell_graph %>% rename(weight = length), directed = is_directed, vertices = ids)
 
   # STEP 1: for each cell, find closest milestone
   v_keeps <- names(to_keep)[to_keep]
