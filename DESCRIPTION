@@ -23,6 +23,7 @@ Imports:
   pdist,
   processx,
   purrr,
+  Rcpp,
   rvest,
   testthat,
   tibble,
@@ -36,3 +37,5 @@ Suggests:
   parallelMap,
   ggplot2,
   tidyverse
+LinkingTo:
+  Rcpp
