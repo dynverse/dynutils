@@ -17,6 +17,10 @@ add_cluster_projection_to_wrapper(data_wrapper, milestone_network,
 
 \item{dimred_cells}{A dimensionality reduction of the cells.}
 
+\item{milestone_assignment_cells}{A milestone assignment of the cells.}
+
+\item{num_segments_per_edge}{The number of pieces each milestone transition will be split info for the calculation of the percentages.}
+
 \item{...}{extra information to be stored in the wrapper.}
 }
 \description{

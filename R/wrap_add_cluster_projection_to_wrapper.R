@@ -6,6 +6,8 @@
 #' @param milestone_network A network of milestones.
 #' @param dimred_milestones A dimensionality reduction of the milestones.
 #' @param dimred_cells A dimensionality reduction of the cells.
+#' @param milestone_assignment_cells A milestone assignment of the cells.
+#' @param num_segments_per_edge The number of pieces each milestone transition will be split info for the calculation of the percentages.
 #' @param ... extra information to be stored in the wrapper.
 #'
 #' @export
