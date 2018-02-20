@@ -106,6 +106,7 @@ add_cell_graph_to_wrapper <- function(
     milestone_ids = milestone_ids,
     milestone_network = milestone_network,
     divergence_regions = NULL,
-    progressions = progressions
+    progressions = progressions,
+    ...
   )
 }
