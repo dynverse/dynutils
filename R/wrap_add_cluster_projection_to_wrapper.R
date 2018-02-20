@@ -85,7 +85,13 @@ add_cluster_projection_to_wrapper <- function(
 
   # rename milestones so the milestones don't have the
   # same names as the nodes
-  renamefun <- function(x) paste0("milestone_", x)
+  renamefun <- function(x) {
+    y <- paste0("milestone_", x)
+    if (!is.null(names(x))) {
+      names(y) <- names(x)
+    }
+    y
+  }
 
   progressions <- progressions %>% mutate_at(c("from", "to"), renamefun)
   milestone_network <- milestone_network %>% mutate_at(c("from", "to"), renamefun)
