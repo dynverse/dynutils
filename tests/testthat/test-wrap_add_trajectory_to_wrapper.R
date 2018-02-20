@@ -58,7 +58,7 @@ test_that("Testing add_trajectory_to_wrapper with milestone_percentages", {
   )
 
   wr <-
-    data_wrapper(
+    wrap_data(
       id = id,
       cell_ids = cell_ids,
       cell_info = cell_info,
@@ -149,7 +149,7 @@ test_that("Testing add_trajectory_to_wrapper with milestone_percentages", {
   )
 
   wr <-
-    data_wrapper(
+    wrap_data(
       id = id,
       cell_ids = cell_ids,
       cell_info = cell_info,

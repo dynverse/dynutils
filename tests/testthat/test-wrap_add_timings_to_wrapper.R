@@ -21,7 +21,7 @@ test_that("Testing add_timings_to_wrapper", {
   tl <- tl %>% add_timing_checkpoint("stop")
 
   wr <-
-    data_wrapper(
+    wrap_data(
       id = id,
       cell_ids = cell_ids,
       cell_info = cell_info,

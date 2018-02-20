@@ -12,7 +12,7 @@ test_that("Testing data_wrapper", {
   extras1 <- list("a wife.")
   extras2 <- c("However", "little", "known")
 
-  wr <- data_wrapper(
+  wr <- wrap_data(
     id = id,
     cell_ids = cell_ids,
     cell_info = cell_info,

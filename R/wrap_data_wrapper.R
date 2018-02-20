@@ -8,7 +8,7 @@
 #' @export
 #'
 #' @importFrom testthat expect_is expect_length expect_equal
-data_wrapper <- function(
+wrap_data <- function(
   id,
   cell_ids,
   cell_info = NULL,
