@@ -20,7 +20,7 @@ test_that("Testing add_expression_to_wrapper", {
   feature_info <- data_frame(feature_id = feature_names, mean = colMeans(expression), var = apply(expression, 2, var))
 
   wr <-
-    abstract_data_wrapper(
+    data_wrapper(
       id = id,
       cell_ids = cell_ids,
       cell_info = cell_info,

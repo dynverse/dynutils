@@ -179,7 +179,7 @@ for (network_type in names(all_networks)) {
 #     pl2 = list({
 #       cat(network_name, " -- ", network_type, "\n", sep = "")
 #       cell_ids <- paste0("Cell", seq_len(nrow(milestone_network)))
-#       data <- dynutils::abstract_data_wrapper(
+#       data <- dynutils::data_wrapper(
 #         "one",
 #         paste0(network_name, " is a ", network_type),
 #         cell_ids = cell_ids,

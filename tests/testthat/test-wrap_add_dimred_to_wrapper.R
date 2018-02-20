@@ -18,7 +18,7 @@ test_that("Testing add_dimred_to_wrapper", {
   dimred <- matrix(runif(num_dims * length(cell_ids), 0, 1), nrow = length(cell_ids), dimnames = list(cell_ids, dim_names))
 
   wr <-
-    abstract_data_wrapper(
+    data_wrapper(
       id = id,
       cell_ids = cell_ids,
       cell_info = cell_info,

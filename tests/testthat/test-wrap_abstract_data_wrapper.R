@@ -1,6 +1,6 @@
 context("Check data_wrapper")
 
-test_that("Testing abstract_data_wrapper", {
+test_that("Testing data_wrapper", {
   id <- "a"
   cell_ids <- c("truth", "universally", "acknowledged", "that", "a", "single")
   cell_info <- data_frame(
@@ -12,7 +12,7 @@ test_that("Testing abstract_data_wrapper", {
   extras1 <- list("a wife.")
   extras2 <- c("However", "little", "known")
 
-  wr <- abstract_data_wrapper(
+  wr <- data_wrapper(
     id = id,
     cell_ids = cell_ids,
     cell_info = cell_info,

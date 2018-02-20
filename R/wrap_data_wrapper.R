@@ -1,4 +1,4 @@
-#' An abstract data wrapper
+#' A data wrapper for datasets and trajectories
 #'
 #' @param id A unique identifier for the data
 #' @param cell_ids The ids of the cells.
@@ -8,7 +8,7 @@
 #' @export
 #'
 #' @importFrom testthat expect_is expect_length expect_equal
-abstract_data_wrapper <- function(
+data_wrapper <- function(
   id,
   cell_ids,
   cell_info = NULL,
