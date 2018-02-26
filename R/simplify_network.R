@@ -159,8 +159,10 @@ simplify_igraph_network <- function(gr) {
           while (to_process[[i]]) {
             to_process[[i]] <- FALSE
             i_new <- setdiff(neighs[[i]], i_prev)
-            i_prev <- i
-            i <- i_new
+            if (length(i_new) > 0) {
+              i_prev <- i
+              i <- i_new
+            }
           }
 
           # search for out end
@@ -169,8 +171,10 @@ simplify_igraph_network <- function(gr) {
           while (to_process[[j]]) {
             to_process[[j]] <- FALSE
             j_new <- setdiff(neighs[[j]], j_prev)
-            j_prev <- j
-            j <- j_new
+            if (length(j_new) > 0) {
+              j_prev <- j
+              j <- j_new
+            }
           }
 
           edges_to_add[[length(edges_to_add)+1]] <- list(from = i, to = j)
