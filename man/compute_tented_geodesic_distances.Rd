@@ -4,10 +4,12 @@
 \alias{compute_tented_geodesic_distances}
 \title{Calculate geodesic distances between cells in a trajectory, taking into account tents}
 \usage{
-compute_tented_geodesic_distances(trajectory)
+compute_tented_geodesic_distances(trajectory, waypoint_cells = NULL)
 }
 \arguments{
-\item{trajectory}{the trajectory}
+\item{trajectory}{The trajectory}
+
+\item{waypoint_cells}{A vector of waypoint cells. Only the geodesic distances between waypoint cells and all other cells will be calculated.}
 }
 \description{
 Calculate geodesic distances between cells in a trajectory, taking into account tents

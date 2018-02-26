@@ -40,6 +40,7 @@ all_networks <- list(
     "simple" = data_frame(from = c("A", "B", "B"), to = c("B", "C", "D"), length = 1, directed = TRUE),
     "intermediate" = data_frame(from = c("A", "a", "B", "B", "C", "D"), to = c("a", "B", "C", "D", "c", "d"), length = 1, directed = TRUE),
     "shuffled" = data_frame(from = c("B", "A", "B"), to = c("C", "B" ,"D"), length = 1, directed = TRUE),
+    "small" = data_frame(from = c("A", "A"), to = c("B", "C"), length = 1, directed = T),
     "long" = {
       ord <- sample(LETTERS)
       data_frame(
@@ -49,6 +50,12 @@ all_networks <- list(
         directed = TRUE
       )
     }
+  ),
+  "convergence" = list(
+    "simple" = data_frame(from = c("A", "B", "C"), to = c("C", "C", "D"), length = 1, directed = TRUE),
+    "intermediate" = data_frame(from = c("A", "a", "B", "b", "C", "c", "D"), to = c("a", "C", "b", "C", "c", "D", "d"), length = 1, directed = TRUE),
+    "shuffled" = data_frame(from = c("B", "C", "A"), to = c("C", "D" ,"C"), length = c(2, 3, 1), directed = TRUE),
+    "small" = data_frame(from = c("A", "B"), to = c("C", "C"), length = 1, directed = T)
   ),
   "simple_fork" = list(
     "simple" = data_frame(from = c("A", "B", "B"), to = c("B", "C", "D"), length = 1, directed = FALSE),
@@ -128,7 +135,6 @@ all_networks <- list(
       select(from, to, length, directed)
   ),
   "directed_acyclic_graph" = list(
-    "simple_convergence" = data_frame(from = c("A", "B", "C"), to = c("C", "C", "D"), length = 0.4, directed = TRUE),
     "bifur_conv_from_start" = data_frame(from = c("A", "A", "B", "C"), to = c("B", "C", "D", "D"), length=0.4, directed=TRUE),
     "bifur_conv" = data_frame(from = c("A", "B", "B", "C", "D", "E"), to = c("B", "C", "D", "E", "E", "F"), length = 0.4, directed = TRUE),
     "directed_complete" = crossing(from = LETTERS, to = LETTERS, length = 1, directed = TRUE) %>% filter(from < to)
@@ -179,7 +185,7 @@ for (network_type in names(all_networks)) {
 #     pl2 = list({
 #       cat(network_name, " -- ", network_type, "\n", sep = "")
 #       cell_ids <- paste0("Cell", seq_len(nrow(milestone_network)))
-#       data <- dynutils::abstract_data_wrapper(
+#       data <- wrap_data(
 #         "one",
 #         paste0(network_name, " is a ", network_type),
 #         cell_ids = cell_ids,

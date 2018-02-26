@@ -39,6 +39,8 @@ determine_network_type <- function(props) {
             } else {
               "directed_acyclic_graph"
             }
+          } else if(num_divergences == 0) {
+            "convergence"
           } else {
             if (num_convergences == 0) {
               "rooted_tree"
