@@ -23,50 +23,59 @@ classify_milestone_network <- function(milestone_network) {
 determine_network_type <- function(props) {
   with(props, {
     if (is_directed) {
-      if (!has_cycles) {
-        if (num_branch_nodes == 0) {
-          "directed_linear"
-        } else if (num_branch_nodes == 1) {
-          if (num_convergences == 0) {
-            if (max_degree == 3) {
-              "bifurcation"
+      if (num_components > 1) {
+        "disconnected_directed_graph"
+      } else {
+        if (!has_cycles) {
+          if (num_branch_nodes == 0) {
+            "directed_linear"
+          } else if (num_branch_nodes == 1) {
+            if (num_convergences == 0) {
+              if (max_degree == 3) {
+                "bifurcation"
+              } else {
+                "multifurcation"
+              }
             } else {
-              "multifurcation"
+              "directed_acyclic_graph"
             }
           } else {
-            "directed_acyclic_graph"
+            if (num_convergences == 0) {
+              "rooted_tree"
+            } else {
+              "directed_acyclic_graph"
+            }
           }
         } else {
-          if (num_convergences == 0) {
-            "rooted_tree"
-          } else {
-            "directed_acyclic_graph"
-          }
+          if (num_branch_nodes == 0) {
+            "directed_cycle"
+          } else
+            "directed_graph"
         }
-      } else {
-        if (num_branch_nodes == 0) {
-          "directed_cycle"
-        } else
-          "directed_graph"
       }
+
     } else {
-      if (!has_cycles) {
-        if (num_branch_nodes == 0) {
-          "undirected_linear"
-        } else if (num_branch_nodes == 1) {
-          if (max_degree == 3) {
-            "simple_fork"
+      if (num_components > 1) {
+        "disconnected_undirected_graph"
+      } else {
+        if (!has_cycles) {
+          if (num_branch_nodes == 0) {
+            "undirected_linear"
+          } else if (num_branch_nodes == 1) {
+            if (max_degree == 3) {
+              "simple_fork"
+            } else {
+              "complex_fork"
+            }
           } else {
-            "complex_fork"
+            "unrooted_tree"
           }
         } else {
-          "unrooted_tree"
-        }
-      } else {
-        if (num_branch_nodes == 0) {
-          "undirected_cycle"
-        } else {
-          "undirected_graph"
+          if (num_branch_nodes == 0) {
+            "undirected_cycle"
+          } else {
+            "undirected_graph"
+          }
         }
       }
     }
@@ -82,6 +91,9 @@ determine_milenet_props <- function(gr) {
 
   # does it contain self-loops?
   is_self_loop <- sapply(igraph::V(gr), function(n) igraph::are_adjacent(gr, n, n))
+
+  # number of components
+  num_components <- igraph::components(gr)$no
 
   if (is_directed) {
     # degree
@@ -128,7 +140,8 @@ determine_milenet_props <- function(gr) {
     num_branch_nodes,
     num_outer_nodes,
     is_self_loop,
-    has_cycles
+    has_cycles,
+    num_components
   )
 
   if (is_directed) {
