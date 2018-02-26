@@ -40,6 +40,7 @@ all_networks <- list(
     "simple" = data_frame(from = c("A", "B", "B"), to = c("B", "C", "D"), length = 1, directed = TRUE),
     "intermediate" = data_frame(from = c("A", "a", "B", "B", "C", "D"), to = c("a", "B", "C", "D", "c", "d"), length = 1, directed = TRUE),
     "shuffled" = data_frame(from = c("B", "A", "B"), to = c("C", "B" ,"D"), length = 1, directed = TRUE),
+    "small" = data_frame(from = c("A", "A"), to = c("B", "C"), length = 1, directed = T),
     "long" = {
       ord <- sample(LETTERS)
       data_frame(
@@ -53,7 +54,8 @@ all_networks <- list(
   "convergence" = list(
     "simple" = data_frame(from = c("A", "B", "C"), to = c("C", "C", "D"), length = 1, directed = TRUE),
     "intermediate" = data_frame(from = c("A", "a", "B", "b", "C", "c", "D"), to = c("a", "C", "b", "C", "c", "D", "d"), length = 1, directed = TRUE),
-    "shuffled" = data_frame(from = c("B", "C", "A"), to = c("C", "D" ,"C"), length = c(2, 3, 1), directed = TRUE)
+    "shuffled" = data_frame(from = c("B", "C", "A"), to = c("C", "D" ,"C"), length = c(2, 3, 1), directed = TRUE),
+    "small" = data_frame(from = c("A", "B"), to = c("C", "C"), length = 1, directed = T)
   ),
   "simple_fork" = list(
     "simple" = data_frame(from = c("A", "B", "B"), to = c("B", "C", "D"), length = 1, directed = FALSE),

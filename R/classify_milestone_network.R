@@ -28,7 +28,7 @@ determine_network_type <- function(props) {
           "directed_linear"
         } else if (num_branch_nodes == 1) {
           if (num_convergences == 0) {
-            if (max_degree == 3) {
+            if (max_degree <= 3) {
               "bifurcation"
             } else {
               "multifurcation"
