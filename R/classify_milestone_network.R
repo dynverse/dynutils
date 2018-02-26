@@ -33,6 +33,8 @@ determine_network_type <- function(props) {
             } else {
               "multifurcation"
             }
+          } else if(num_divergences == 0) {
+            "convergence"
           } else {
             "directed_acyclic_graph"
           }
