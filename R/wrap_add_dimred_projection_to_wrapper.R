@@ -1,4 +1,4 @@
-#' Add a cluster projection trajectory to a data wrapper
+#' Add a dimred projection trajectory to a data wrapper
 #'
 #' This function will generate the milestone_network and progressions.
 #'
@@ -14,7 +14,7 @@
 #'
 #' @importFrom testthat expect_is expect_true expect_equal expect_length
 #' @importFrom pdist pdist
-add_cluster_projection_to_wrapper <- function(
+add_dimred_projection_to_wrapper <- function(
   data_wrapper,
   milestone_network,
   dimred_milestones,
