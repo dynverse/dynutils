@@ -1,8 +1,17 @@
 #include <Rcpp.h>
 using namespace Rcpp;
 
+//' Manhattan distance between two matrices
+//'
+//' Implemented in Rcpp
+//'
+//' @param x Matrix 1
+//' @param y Matrix 2
+//'
+//' @export
+//'
 // [[Rcpp::export]]
-Rcpp::NumericMatrix manhattan_distance_rcpp (const Rcpp::NumericMatrix & x, const Rcpp::NumericMatrix & y){
+Rcpp::NumericMatrix manhattan_distance (const Rcpp::NumericMatrix & x, const Rcpp::NumericMatrix & y){
   unsigned int nrow = x.nrow();
   unsigned int ncol = y.nrow();
   unsigned int i = 0, j = 0;

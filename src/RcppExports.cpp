@@ -5,21 +5,21 @@
 
 using namespace Rcpp;
 
-// manhattan_distance_rcpp
-Rcpp::NumericMatrix manhattan_distance_rcpp(const Rcpp::NumericMatrix& x, const Rcpp::NumericMatrix& y);
-RcppExport SEXP _dynutils_manhattan_distance_rcpp(SEXP xSEXP, SEXP ySEXP) {
+// manhattan_distance
+Rcpp::NumericMatrix manhattan_distance(const Rcpp::NumericMatrix& x, const Rcpp::NumericMatrix& y);
+RcppExport SEXP _dynutils_manhattan_distance(SEXP xSEXP, SEXP ySEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type x(xSEXP);
     Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type y(ySEXP);
-    rcpp_result_gen = Rcpp::wrap(manhattan_distance_rcpp(x, y));
+    rcpp_result_gen = Rcpp::wrap(manhattan_distance(x, y));
     return rcpp_result_gen;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_dynutils_manhattan_distance_rcpp", (DL_FUNC) &_dynutils_manhattan_distance_rcpp, 2},
+    {"_dynutils_manhattan_distance", (DL_FUNC) &_dynutils_manhattan_distance, 2},
     {NULL, NULL, 0}
 };
 

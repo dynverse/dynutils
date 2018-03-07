@@ -75,7 +75,7 @@ compute_tented_geodesic_distances <- function(trajectory, waypoint_cells = NULL)
 
       wp_cells <- rownames(pct_mat)[rownames(pct_mat) %in% waypoint_cells]
 
-      manhattan_distance_rcpp(pct_mat, pct_mat[c(tent, wp_cells), , drop=FALSE]) %>%
+      manhattan_distance(pct_mat, pct_mat[c(tent, wp_cells), , drop=FALSE]) %>%
         reshape2::melt(varnames = c("from", "to"), value.name = "length") %>%
         mutate_at(c("from", "to"), as.character) %>%
         filter(from != to)
