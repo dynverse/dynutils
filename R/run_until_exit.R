@@ -13,7 +13,12 @@ run_until_exit <- function(commands, bash = TRUE) {
 
   stdout <- tempfile()
   stderr <- tempfile()
-  cmd <- processx::process$new(commandline=command, stdout = stdout, stderr = stderr)
+  cmd <- processx::process$new(
+    commandline = command,
+    stdout = stdout,
+    stderr = stderr
+  )
+
   tryCatch(
     {
       cmd$wait()
