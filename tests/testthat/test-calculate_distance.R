@@ -27,7 +27,7 @@ test_that("calculate_distance and other functions return the correct format", {
   x <- matrix(c(1, 2, 5, 3), ncol = 2)
   y <- matrix(c(5, 6, 7, 8, 9, 10), ncol = 2)
 
-  walk(dist_tib$method, function(method) {
+  purrr::walk(dist_tib$method, function(method) {
     o <- calculate_distance(x, y, method = method)
     check_output(x, y, o, e = NULL)
   })
@@ -36,7 +36,7 @@ test_that("calculate_distance and other functions return the correct format", {
   rownames(y) <- c("C", "D", "E")
   colnames(x) <- colnames(y) <- c("f1", "f2")
 
-  walk(dist_tib$method, function(method) {
+  purrr::walk(dist_tib$method, function(method) {
     o <- calculate_distance(x, y, method = method)
     check_output(x, y, o, e = NULL)
   })
@@ -49,7 +49,7 @@ test_that("calculate_distance returns the same output as the metric-specific fun
   rownames(y) <- c("C", "D", "E")
   colnames(x) <- colnames(y) <- c("f1", "f2")
 
-  walk(seq_len(nrow(dist_tib)), function(i) {
+  purrr::walk(seq_len(nrow(dist_tib)), function(i) {
     method <- dist_tib$method[[i]]
     dist_fun <- dist_tib$dist_fun[[i]]
     o1 <- calculate_distance(x, y, method = method)
