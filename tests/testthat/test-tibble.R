@@ -15,4 +15,6 @@ test_that("Tibble helpers", {
   for (i in seq_len(nrow(tib))) {
     expect_equal( extract_row_to_list(tib, i), l[[i]] )
   }
+
+  expect_null(extract_row_to_list(NULL, 1))
 })
