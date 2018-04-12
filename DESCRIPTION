@@ -19,7 +19,6 @@ Imports:
   igraph,
   magrittr,
   methods,
-  parallel,
   pdist,
   processx,
   purrr,
@@ -30,7 +29,6 @@ Imports:
   tibble,
   tidyr,
   reshape2,
-  tools,
   transport,
   Seurat,
   xml2
@@ -41,16 +39,15 @@ Suggests:
 LinkingTo:
   Rcpp
 Collate: 
-    'RcppExports.R'
-    'inherit_default_params.R'
-    'calculate_distance.R'
-    'google_scholar.R'
-    'override_setseed.R'
-    'package.R'
-    'pritt.R'
-    'random_time_string.R'
-    'run_until_exit.R'
-    'scaling.R'
-    'tibble.R'
-    'timeout.R'
-    'update_list.R'
+  'RcppExports.R'
+  'inherit_default_params.R'
+  'calculate_distance.R'
+  'google_scholar.R'
+  'override_setseed.R'
+  'package.R'
+  'pritt.R'
+  'random_time_string.R'
+  'run_until_exit.R'
+  'scaling.R'
+  'tibble.R'
+  'update_list.R'
