@@ -7,7 +7,6 @@
 #' @export
 #'
 #' @examples
-#'
 #' fun1 <- function(a = 10, b = 7) {
 #'   runif(a, -b, b)
 #' }
@@ -19,13 +18,18 @@
 #' fun3 <- inherit_default_params(
 #'   super = list(fun1, fun2),
 #'   fun = function(a, b, c) {
-#'     params <- as.list(environment())[formalArgs(fun3)]
-#'     z <- fun1(a, b)
+#'     x <- fun1(a, b)
 #'     y <- fun2(c)
-#'     list(params = params, z = z, y = y)
+#'     list(x = x, y = y)
 #'   }
 #' )
+#'
+#' fun3(1, 2, 3)
+#' fun3()
 inherit_default_params <- function(super_functions, fun) {
+  if (is.function(super_functions)) {
+    super_functions <- list(super_functions)
+  }
   for (sup in super_functions) {
     argsup <- intersect(formalArgs(fun), formalArgs(sup))
     formals(fun)[argsup] <- formals(sup)[argsup]

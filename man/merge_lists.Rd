@@ -10,7 +10,7 @@ merge_lists(x, y)
 \arguments{
 \item{x}{List to be updated}
 
-\item{y}{List to update `x` with}
+\item{y}{List to update \code{x} with}
 }
 \value{
 Update list
