@@ -15,7 +15,6 @@ Imports:
   crayon,
   dplyr,
   glue,
-  httr,
   igraph,
   magrittr,
   methods,
@@ -23,15 +22,13 @@ Imports:
   processx,
   purrr,
   Rcpp,
-  rvest,
   stringr,
   testthat,
   tibble,
   tidyr,
   reshape2,
   transport,
-  Seurat,
-  xml2
+  Seurat
 Suggests:
   parallelMap,
   ggplot2,
@@ -42,7 +39,6 @@ Collate:
     'RcppExports.R'
     'inherit_default_params.R'
     'calculate_distance.R'
-    'google_scholar.R'
     'override_setseed.R'
     'package.R'
     'pritt.R'
