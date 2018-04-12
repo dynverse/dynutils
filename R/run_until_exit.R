@@ -34,11 +34,10 @@ run_until_exit <- function(commands, bash = TRUE) {
   error <- readLines(stderr)
 
   if (cmd$get_exit_status() != 0) {
-    print(cmd$get_exit_status())
     stop(
       glue::collapse(
         c(
-          "Error running command: ",
+          "Error status {cmd$get_exit_status()} while running command: ",
           crayon::white$bold(command),
           "-- output --",
           crayon::blue(output),
