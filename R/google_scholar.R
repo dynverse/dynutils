@@ -21,11 +21,24 @@ google_scholar <- function(cluster_id) {
   results <- webpage %>% html_nodes(".gs_ri")
 
   map_df(results, function(result) {
-    title <- result %>% html_nodes(".gs_rt") %>% html_text() %>% str_replace_all("\\[[^\\]]*\\] *", "")
-    url <- result %>% html_nodes(".gs_rt a") %>% html_attr(name = "href")
-    text_fields <- result %>% html_nodes(".gs_fl a") %>% html_text()
-    num_citations <- text_fields[grepl("Cited by", text_fields)] %>% str_replace("Cited by ", "") %>% as.integer() %>% ifelse(length(.) == 0, NA, .)
-    web_of_science <- text_fields[grepl("Web of Science", text_fields)] %>% str_replace("Web of Science: ", "") %>% as.integer() %>% ifelse(length(.) == 0, NA, .)
+    title <- result %>%
+      html_nodes(".gs_rt") %>%
+      html_text() %>%
+      str_replace_all("\\[[^\\]]*\\] *", "")
+    url <- result %>%
+      html_nodes(".gs_rt a") %>%
+      html_attr(name = "href")
+    text_fields <- result %>%
+      html_nodes(".gs_fl a") %>%
+      html_text()
+    num_citations <- text_fields[grepl("Cited by", text_fields)] %>%
+      str_replace("Cited by ", "") %>%
+      as.integer() %>%
+      ifelse(length(.) == 0, NA, .)
+    web_of_science <- text_fields[grepl("Web of Science", text_fields)] %>%
+      str_replace("Web of Science: ", "") %>%
+      as.integer() %>%
+      ifelse(length(.) == 0, NA, .)
 
     data_frame(
       cluster_id,
