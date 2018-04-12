@@ -154,6 +154,9 @@ test_that("Testing scale_quantile", {
   expect_equal( nrow(data_sc), nrow(data) )
   expect_equal( ncol(data_sc), ncol(data) )
   expect_equal( ranges, matrix(rep(c(0, 1), num_dims), ncol = num_dims, dimnames = list(NULL, colnames(data))) )
+
+  data_sc2 <- scale_minmax(data)
+  expect_equal(data_sc, data_sc2)
 })
 
 test_that("Testing scale_quantile with edge case", {
@@ -182,6 +185,9 @@ test_that("Testing scale_quantile with edge case", {
   expect_equal( nrow(data_sc), nrow(data) )
   expect_equal( ncol(data_sc), ncol(data) )
   expect_equal( ranges, matrix(rep(c(0, 0), num_dims), ncol = num_dims) )
+
+  data_sc2 <- scale_minmax(data)
+  expect_equal(data_sc, data_sc2)
 })
 
 test_that("Testing scale_quantile with another edge case", {
@@ -210,6 +216,9 @@ test_that("Testing scale_quantile with another edge case", {
   expect_equal( nrow(data_sc), nrow(data) )
   expect_equal( ncol(data_sc), ncol(data) )
   expect_equal( ranges, matrix(rep(c(0, 1), num_dims), ncol = num_dims) )
+
+  data_sc2 <- scale_minmax(data)
+  expect_equal(data_sc, data_sc2)
 })
 
 
@@ -236,5 +245,8 @@ test_that("Testing scale_quantile with a vector", {
   expect_is( data_sc, "numeric" )
   expect_equal( length(data_sc), length(data) )
   expect_equal( ranges, c(0, 1) )
+
+  data_sc2 <- scale_minmax(data)
+  expect_equal(data_sc, data_sc2)
 })
 
