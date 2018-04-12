@@ -17,9 +17,22 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// euclidean_distance
+Rcpp::NumericMatrix euclidean_distance(const Rcpp::NumericMatrix& x, const Rcpp::NumericMatrix& y);
+RcppExport SEXP _dynutils_euclidean_distance(SEXP xSEXP, SEXP ySEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type y(ySEXP);
+    rcpp_result_gen = Rcpp::wrap(euclidean_distance(x, y));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_dynutils_manhattan_distance", (DL_FUNC) &_dynutils_manhattan_distance, 2},
+    {"_dynutils_euclidean_distance", (DL_FUNC) &_dynutils_euclidean_distance, 2},
     {NULL, NULL, 0}
 };
 

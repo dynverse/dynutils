@@ -40,3 +40,17 @@ Suggests:
   tidyverse
 LinkingTo:
   Rcpp
+Collate: 
+    'RcppExports.R'
+    'inherit_default_params.R'
+    'calculate_distance.R'
+    'google_scholar.R'
+    'nice_glue.R'
+    'override_setseed.R'
+    'package.R'
+    'random_time_string.R'
+    'run_until_exit.R'
+    'scaling.R'
+    'tibble.R'
+    'timeout.R'
+    'update_list.R'
