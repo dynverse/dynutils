@@ -4,14 +4,14 @@
 \alias{extend_with}
 \title{Extend an object}
 \usage{
-extend_with(object, class_name, extension)
+extend_with(object, class_name, ...)
 }
 \arguments{
 \item{object}{A list}
 
 \item{class_name}{A class name to add}
 
-\item{extension}{Extra information in the list}
+\item{...}{Extra information in the list}
 }
 \description{
 Extend an object
