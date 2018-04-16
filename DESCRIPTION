@@ -37,6 +37,7 @@ LinkingTo:
   Rcpp
 Collate: 
     'RcppExports.R'
+    'add_class.R'
     'inherit_default_params.R'
     'calculate_distance.R'
     'override_setseed.R'
