@@ -18,6 +18,8 @@ test_that("Test extend_with", {
 })
 
 test_that("Test extend_with with ... functionality", {
+  orig_list <- list(a = 1, b = 2)
+
   new_list <- orig_list %>% extend_with(
     "extension2",
     b = list(2),
