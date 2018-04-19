@@ -27,8 +27,7 @@ Imports:
   tibble,
   tidyr,
   reshape2,
-  transport,
-  Seurat
+  transport
 Suggests:
   parallelMap,
   ggplot2,
