@@ -17,7 +17,7 @@ install_packages <- function(dependencies, package=NULL) {
 
   if(length(dependencies)) {
     if(!is.null(package)) {
-      remotes <- desc::desc_get_remotes(find.package("dynmethods")) %>%
+      remotes <- desc::desc_get_remotes(find.package(package)) %>%
         set_names(., stringr::str_replace(., ".*/([:alpha:]*).*", "\\1"))
 
       for (dependency in dependencies[dependencies %in% names(remotes)]) {
