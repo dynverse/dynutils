@@ -12,24 +12,20 @@ check_packages <- function(dependencies) {
 #'
 #' @inheritParams check_packages
 #' @export
-install_packages <- function(dependencies, package=NULL) {
+install_packages <- function(dependencies, package = NULL) {
   dependencies <- dependencies[!check_packages(dependencies)]
 
-  if(length(dependencies)) {
+  if (length(dependencies) > 0) {
     if(!is.null(package)) {
       remotes <- desc::desc_get_remotes(find.package(package)) %>%
         set_names(., stringr::str_replace(., ".*/([:alpha:]*).*", "\\1"))
 
-      for (dependency in dependencies[dependencies %in% names(remotes)]) {
-        devtools::install_github(remotes[[dependency]])
-      }
+      devtools::install_github(remotes[dependencies[dependencies %in% names(remotes)]])
     } else {
       remotes <- character()
     }
 
-    for (dependency in dependencies[!dependencies %in% names(remotes)]) {
-      devtools::install_cran(dependency)
-    }
+    devtools::install_cran(dependencies[!dependencies %in% names(remotes)])
 
     message("Installed ", paste0(dependencies, collapse = ", "))
   }
