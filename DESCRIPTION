@@ -41,6 +41,7 @@ Collate:
     'add_class.R'
     'inherit_default_params.R'
     'calculate_distance.R'
+    'expand_matrix.R'
     'extend_with.R'
     'install_packages.R'
     'override_setseed.R'
