@@ -13,20 +13,24 @@ check_packages <- function(dependencies) {
 #' @inheritParams check_packages
 #' @export
 install_packages <- function(dependencies, package=NULL) {
-  if(!is.null(package)) {
-    remotes <- desc::desc_get_remotes(find.package("dynmethods")) %>%
-      set_names(., stringr::str_replace(., ".*/([:alpha:]*).*", "\\1"))
+  dependencies <- dependencies[!check_packages(dependencies)]
 
-    for (dependency in dependencies[dependencies %in% names(remotes)]) {
-      devtools::install_github(remotes[[dependency]])
+  if(length(dependencies)) {
+    if(!is.null(package)) {
+      remotes <- desc::desc_get_remotes(find.package("dynmethods")) %>%
+        set_names(., stringr::str_replace(., ".*/([:alpha:]*).*", "\\1"))
+
+      for (dependency in dependencies[dependencies %in% names(remotes)]) {
+        devtools::install_github(remotes[[dependency]])
+      }
+    } else {
+      remotes <- character()
     }
-  } else {
-    remotes <- character()
-  }
 
-  for (dependency in dependencies[!dependencies %in% names(remotes)]) {
-    devtools::install_cran(dependency)
-  }
+    for (dependency in dependencies[!dependencies %in% names(remotes)]) {
+      devtools::install_cran(dependency)
+    }
 
-  message("Installed ", paste0(dependencies, collapse = ", "))
+    message("Installed ", paste0(dependencies, collapse = ", "))
+  }
 }
