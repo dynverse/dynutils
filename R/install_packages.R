@@ -13,6 +13,8 @@ check_packages <- function(dependencies) {
 #' @inheritParams check_packages
 #' @export
 install_packages <- function(dependencies, package=NULL) {
+  dependencies <- dependencies[!check_packages(dependencies)]
+
   if(!is.null(package)) {
     remotes <- desc::desc_get_remotes(find.package("dynmethods")) %>%
       set_names(., stringr::str_replace(., ".*/([:alpha:]*).*", "\\1"))
