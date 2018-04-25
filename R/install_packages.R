@@ -1,9 +1,10 @@
 #' Check which packages are installed
 #'
 #' @param dependencies The names of the packages to be installed
+#'
 #' @export
 check_packages <- function(dependencies) {
-  dependencies %in% rownames(installed.packages())
+  set_names(dependencies %in% rownames(installed.packages()), dependencies)
 }
 
 #' Installs the suggests of a particular package including information from the remotes
@@ -11,6 +12,10 @@ check_packages <- function(dependencies) {
 #' @param package The package from which the remotes will be extracted
 #'
 #' @inheritParams check_packages
+#'
+#' @importFrom desc desc_get_remotes
+#' @importFrom devtools install_github install_cran
+#'
 #' @export
 install_packages <- function(dependencies, package = NULL) {
   dependencies <- dependencies[!check_packages(dependencies)]
@@ -27,6 +32,12 @@ install_packages <- function(dependencies, package = NULL) {
 
     devtools::install_cran(dependencies[!dependencies %in% names(remotes)])
 
+    # display message
     message("Installed ", paste0(dependencies, collapse = ", "))
+
+    # return installed dependencies at the end
+    dependencies
+  } else {
+    NULL
   }
 }
