@@ -2,7 +2,7 @@ context("Testing install_packages")
 
 test_that("Test check_packages", {
   check <- check_packages(c("dplyr", "dynutils", "jhrveioohvovwhrei", "ijewiojwijoweew"))
-  expect_equal(check, c(TRUE, TRUE, FALSE, FALSE))
+  expect_equal(check, c(dplyr = TRUE, dynutils = TRUE, jhrveioohvovwhrei = FALSE, ijewiojwijoweew = FALSE))
 })
 
 test_that("Test install_packages", {
