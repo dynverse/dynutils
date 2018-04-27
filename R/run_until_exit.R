@@ -2,19 +2,13 @@
 #' Run a system command until the R parent gets an exit signal, or until the command completes
 #'
 #' @param commands Character scalar, the command to run.
-#' @param bash Whether to run the command within a bash shell
 #' @export
-run_until_exit <- function(commands, bash = TRUE) {
-  if (bash) {
-    command <- paste0("/bin/bash -c ", "'", glue::collapse(commands, ";"), "'")
-  } else {
-    command <- glue::collapse(commands, "\n")
-  }
-
+run_until_exit <- function(commands) {
   stdout <- tempfile()
   stderr <- tempfile()
   cmd <- processx::process$new(
-    commandline = command,
+    "bash",
+    c("-c", commands),
     stdout = stdout,
     stderr = stderr
   )
