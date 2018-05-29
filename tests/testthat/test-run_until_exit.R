@@ -15,7 +15,7 @@ test_that("Testing run_until_exit", {
   expect_equal(out$output, "foo")
   expect_equal(out$error, "bar")
 
-  out <- run_until_exit("sleep 1; echo foo; echo bar 1>&2", bash = FALSE)
+  out <- run_until_exit("sleep 1; echo foo; echo bar 1>&2")
   expect_equal(out$output, "foo")
   expect_equal(out$error, "bar")
 })
