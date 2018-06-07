@@ -20,7 +20,7 @@ Calculate and apply a quantile scale
 \examples{
 ## Generate a matrix from a normal distribution
 ## with a large standard deviation, centered at c(5, 5)
-x <- matrix(rnorm(200*2, sd = 10, mean = 5), ncol=2)
+x <- matrix(rnorm(200*2, sd = 10, mean = 5), ncol = 2)
 
 ## Scale the dataset between [0,1]
 x_scaled <- scale_quantile(x)
