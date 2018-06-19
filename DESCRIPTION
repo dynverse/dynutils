@@ -17,22 +17,15 @@ Imports:
   desc,
   dplyr,
   glue,
-  igraph,
   magrittr,
   methods,
-  pdist,
   processx,
   purrr,
   Rcpp,
   stringr,
   testthat,
   tibble,
-  tidyr,
-  reshape2,
-  transport
-Suggests:
-  parallelMap,
-  ggplot2
+  tidyr
 LinkingTo:
   Rcpp
 Collate: 
