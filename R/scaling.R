@@ -15,10 +15,10 @@
 #' @examples
 #' ## Generate a matrix from a normal distribution
 #' ## with a large standard deviation, centered at c(5, 5)
-#' x <- matrix(rnorm(200*2, sd = 10, mean = 5), ncol=2)
+#' x <- matrix(rnorm(200*2, sd = 10, mean = 5), ncol = 2)
 #'
 #' ## Center the dataset at c(0, 0) with a minimum of c(-.5, -.5) and a maximum of c(.5, .5)
-#' x_scaled <- scale_uniform(x, center=0, max_range=1)
+#' x_scaled <- scale_uniform(x, center = 0, max_range = 1)
 #'
 #' ## Plot rescaled data
 #' plot(x_scaled)
@@ -90,7 +90,7 @@ apply_uniform_scale <- function(x, addend, multiplier) {
 #' @examples
 #' ## Generate a matrix from a normal distribution
 #' ## with a large standard deviation, centered at c(5, 5)
-#' x <- matrix(rnorm(200*2, sd = 10, mean = 5), ncol=2)
+#' x <- matrix(rnorm(200*2, sd = 10, mean = 5), ncol = 2)
 #'
 #' ## Scale the dataset between [0,1]
 #' x_scaled <- scale_quantile(x)
@@ -155,7 +155,7 @@ apply_quantile_scale <- function(x, addend, multiplier) {
 #' @examples
 #' ## Generate a matrix from a normal distribution
 #' ## with a large standard deviation, centered at c(5, 5)
-#' x <- matrix(rnorm(200*2, sd = 10, mean = 5), ncol=2)
+#' x <- matrix(rnorm(200*2, sd = 10, mean = 5), ncol = 2)
 #'
 #' ## Minmax scale the data
 #' x_scaled <- scale_minmax(x)

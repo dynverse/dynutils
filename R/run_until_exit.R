@@ -17,7 +17,7 @@ run_until_exit <- function(commands) {
     {
       cmd$wait()
     },
-    finally={
+    finally = {
       if (cmd$is_alive()) {
         cmd$kill()
       }

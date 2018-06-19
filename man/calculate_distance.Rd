@@ -40,8 +40,8 @@ Calculate (pairwise) distances between two matrices
 }
 \examples{
 ## Generate two matrices with 50 and 100 samples
-x <- matrix(rnorm(50*10, mean=0, sd=1), ncol=10)
-y <- matrix(rnorm(100*10, mean=1, sd=2), ncol=10)
+x <- matrix(rnorm(50*10, mean = 0, sd = 1), ncol = 10)
+y <- matrix(rnorm(100*10, mean = 1, sd = 2), ncol = 10)
 
 dist_euclidean <- calculate_distance(x, y, method = "euclidean")
 dist_manhattan <- calculate_distance(x, y, method = "manhattan")
