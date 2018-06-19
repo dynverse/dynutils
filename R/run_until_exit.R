@@ -32,7 +32,7 @@ run_until_exit <- function(commands) {
       glue::collapse(
         c(
           "Error status {cmd$get_exit_status()} while running command: ",
-          crayon::white$bold(command),
+          crayon::white$bold(commands),
           "-- output --",
           crayon::blue(output),
           "-- error --",
