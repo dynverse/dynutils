@@ -3,8 +3,10 @@
 #' @param dependencies The names of the packages to be installed
 #'
 #' @export
+#'
+#' @importFrom utils installed.packages
 check_packages <- function(dependencies) {
-  set_names(dependencies %in% rownames(installed.packages()), dependencies)
+  set_names(dependencies %in% rownames(utils::installed.packages()), dependencies)
 }
 
 #' Installs the suggests of a particular package including information from the remotes
@@ -15,13 +17,14 @@ check_packages <- function(dependencies) {
 #'
 #' @importFrom desc desc_get_remotes
 #' @importFrom devtools install_github install_cran
+#' @importFrom utils setRepositories
 #'
 #' @export
 install_packages <- function(dependencies, package = NULL) {
   dependencies <- dependencies[!check_packages(dependencies)]
 
   if (length(dependencies) > 0) {
-    setRepositories(ind = 1:2) # set repositories to include bioconductor
+    utils::setRepositories(ind = 1:2) # set repositories to include bioconductor
 
     message("Installing ", paste0(dependencies, collapse = ", "))
 
