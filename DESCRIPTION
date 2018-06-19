@@ -36,7 +36,6 @@ Collate:
     'expand_matrix.R'
     'extend_with.R'
     'install_packages.R'
-    'override_setseed.R'
     'package.R'
     'pritt.R'
     'random_time_string.R'
