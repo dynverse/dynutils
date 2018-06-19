@@ -24,7 +24,7 @@ install_packages <- function(dependencies, package = NULL) {
   dependencies <- dependencies[!check_packages(dependencies)]
 
   if (length(dependencies) > 0) {
-    utils::setRepositories(ind = 1:2) # set repositories to include bioconductor
+    utils::setRepositories(ind = 1:4) # set repositories to include bioconductor
 
     message("Installing ", paste0(dependencies, collapse = ", "))
 
