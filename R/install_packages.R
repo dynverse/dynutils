@@ -23,6 +23,8 @@ install_packages <- function(dependencies, package = NULL) {
   if (length(dependencies) > 0) {
     setRepositories(ind=1:2) # set repositories to include bioconductor
 
+    message("Installing ", paste0(dependencies, collapse = ", "))
+
     if(!is.null(package)) {
       remotes <- desc::desc_get_remotes(find.package(package)) %>%
         set_names(., stringr::str_replace(., ".*/([:alpha:]*).*", "\\1"))
