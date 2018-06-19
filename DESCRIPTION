@@ -3,7 +3,7 @@ Type: Package
 Title: Common functions for the dyn packages
 Version: 0.1.0
 Authors@R: c(
-  person("Robrecht", "Cannoodt", email = "rcannood@ugent.be", role = c("aut", "cre")),
+  person("Robrecht", "Cannoodt", email = "rcannood@gmail.com", role = c("aut", "cre")),
   person("Wouter", "Saelens", email = "wouter.saelens@ugent.be", role = c("aut")))
 Description: Providing a common library with helper functions eliminates many inbetween dependencies between the dyn packages.
 License: GPL-3
