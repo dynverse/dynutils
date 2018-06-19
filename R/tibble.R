@@ -20,6 +20,7 @@ list_as_tibble <- function(list_of_rows) {
   tib <- lapply(seq_along(list_names), function(x) {
     colname <- list_names[[x]]
     list <- lapply(list_of_rows, function(z) z[[colname]])
+    list <- lapply(list, function(x) if(is.null(x)) {NA} else {x})
     if (typeof(list[[1]]) != "list" && all(sapply(list, length) == 1)) {
       unlist(list, recursive = F)
     } else {
