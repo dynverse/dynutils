@@ -9,6 +9,11 @@ check_packages <- function(dependencies) {
   set_names(dependencies %in% rownames(utils::installed.packages()), dependencies)
 }
 
+parse_remotes <- function(remotes) {
+  str_replace(remotes, ".*/([:alpha:]*).*", "\\1") %>%
+    set_names(remotes)
+}
+
 #' Installs the suggests of a particular package including information from the remotes
 #'
 #' @param package The package from which the remotes will be extracted
@@ -30,7 +35,7 @@ install_packages <- function(dependencies, package = NULL) {
 
     if(!is.null(package)) {
       remotes <- desc::desc_get_remotes(find.package(package)) %>%
-        set_names(., stringr::str_replace(., ".*/([:alpha:]*).*", "\\1"))
+        parse_remotes()
 
       devtools::install_github(remotes[dependencies[dependencies %in% names(remotes)]])
     } else {
