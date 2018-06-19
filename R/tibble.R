@@ -15,7 +15,7 @@
 list_as_tibble <- function(list_of_rows) {
   object_classes <- list_of_rows %>% map(class)
 
-  list_names <- names(list_of_rows[[1]])
+  list_names <- map(list_of_rows, names) %>% unlist() %>% unique()
 
   tib <- lapply(seq_along(list_names), function(x) {
     colname <- list_names[[x]]
