@@ -32,8 +32,7 @@ Imports:
   transport
 Suggests:
   parallelMap,
-  ggplot2,
-  tidyverse
+  ggplot2
 LinkingTo:
   Rcpp
 Collate: 
