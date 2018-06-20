@@ -23,6 +23,9 @@ test_that("Test install_packages", {
   out <- install_packages("incgraph")
   expect_equal(out, "incgraph")
 
+  skip_on_travis()
+  skip_on_cran()
+
   # intentionally remove tiny package, see whether it gets reinstalled
   if (check_packages("glue")) remove.packages("glue")
   out <- install_packages("glue")
