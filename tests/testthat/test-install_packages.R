@@ -14,9 +14,11 @@ test_that("Test install_packages", {
   expect_null(out)
 
   # intentionally remove tiny package, see whether it gets reinstalled
-  remove.packages("glue")
-  out <- install_packages("glue")
-  expect_equal(out, "glue")
+  if (check_packages("incgraph")) {
+    remove.packages("incgraph")
+  }
+  out <- install_packages("incgraph")
+  expect_equal(out, "incgraph")
 
   # specify package
   remove.packages("desc")
