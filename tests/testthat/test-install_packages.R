@@ -5,6 +5,8 @@ test_that("Test check_packages", {
   expect_equal(check, c(dplyr = TRUE, dynutils = TRUE, jhrveioohvovwhrei = FALSE, ijewiojwijoweew = FALSE))
 })
 
+options(repos = "http://cran.us.r-project.org")
+
 test_that("Test install_packages", {
   # test whether no message is printed when packages are already installed
   expect_message(out <- install_packages(c("dynutils", "dplyr")), NA)
@@ -16,20 +18,18 @@ test_that("Test install_packages", {
   out <- install_packages("dplyr", dependencies = "dynutils")
   expect_null(out)
 
-  # test with a small package
+  # test with a small package that should not already be present on the system
+  if (check_packages("incgraph")) remove.packages("incgraph")
   out <- install_packages("incgraph")
   expect_equal(out, "incgraph")
 
-  # the rest of this test does not work with covr, for some reason
-  skip_on_travis()
-
   # intentionally remove tiny package, see whether it gets reinstalled
-  remove.packages("glue")
+  if (check_packages("glue")) remove.packages("glue")
   out <- install_packages("glue")
   expect_equal(out, "glue")
 
   # specify depending package
-  remove.packages("desc")
+  if (check_packages("desc")) remove.packages("desc")
   out <- install_packages("desc", package = "dynutils")
   expect_equal(out, "desc")
 })
