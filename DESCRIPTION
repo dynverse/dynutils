@@ -1,11 +1,13 @@
 Package: dynutils
 Type: Package
-Title: Common functions for the dyn packages
+Title: Common functions for the dynverse packages
 Version: 0.1.0
 Authors@R: c(
   person("Robrecht", "Cannoodt", email = "rcannood@gmail.com", role = c("aut", "cre")),
   person("Wouter", "Saelens", email = "wouter.saelens@ugent.be", role = c("aut")))
-Description: Providing a common library with helper functions eliminates many inbetween dependencies between the dyn packages.
+Description: 
+  Provides a common library with helper functions for the dynverse packages.
+  For more information on dynverse, check https://github.com/dynverse/dynverse.
 License: GPL-3
 LazyData: TRUE
 RoxygenNote: 6.0.1
