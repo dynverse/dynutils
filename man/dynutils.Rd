@@ -4,7 +4,8 @@
 \name{dynutils}
 \alias{dynutils}
 \alias{dynutils-package}
-\title{Helper functions}
+\title{Common functions for the dynverse packages}
 \description{
-Helper functions
+Provides a common functionality for the dynverse packages.
+For more information on dynverse, see \url{https://github.com/dynverse/dynverse} for more info.
 }
