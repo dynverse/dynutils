@@ -16,6 +16,10 @@ test_that("Test install_packages", {
   out <- install_packages("dplyr", dependencies = "dynutils")
   expect_null(out)
 
+  # test with a small package
+  out <- install_packages("incgraph")
+  expect_equal(out, "incgraph")
+
   # the rest of this test does not work with covr, for some reason
   skip_on_travis()
 
