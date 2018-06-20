@@ -3,8 +3,21 @@ Type: Package
 Title: Common functions for the dynverse packages
 Version: 0.1.0
 Authors@R: c(
-  person("Robrecht", "Cannoodt", email = "rcannood@gmail.com", role = c("aut", "cre")),
-  person("Wouter", "Saelens", email = "wouter.saelens@ugent.be", role = c("aut")))
+    person(
+      "Robrecht", 
+      "Cannoodt", 
+      email = "rcannood@gmail.com", 
+      role = c("aut", "cre"),
+      comment = c(ORCID = "0000-0003-3641-729X", github = "rcannood")
+    ),
+    person(
+      "Wouter", 
+      "Saelens", 
+      email = "wouter.saelens@ugent.be", 
+      role = c("aut"), 
+      comment = c(ORCID = "0000-0002-7114-6248", github = "zouter")
+    )
+  )
 Description: 
   Provides a common library with helper functions for the dynverse packages.
   For more information on dynverse, check https://github.com/dynverse/dynverse.
