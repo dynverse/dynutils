@@ -1,7 +1,7 @@
 #' Common functions for the dynverse packages
 #'
 #' Provides a common functionality for the dynverse packages.
-#' For more information on dynverse, check out [github.com/dynverse/dynverse](https://github.com/dynverse/dynverse).
+#' For more information on dynverse, see \url{https://github.com/dynverse/dynverse} for more info.
 #'
 #' @import dplyr
 #' @import tidyr

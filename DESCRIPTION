@@ -20,7 +20,7 @@ Authors@R: c(
   )
 Description: 
   Provides a common functionality for the dynverse packages.
-  For more information on dynverse, check https://github.com/dynverse/dynverse.
+  For more information on dynverse, see <https://github.com/dynverse/dynverse> for more info.
 License: GPL-3
 LazyData: TRUE
 RoxygenNote: 6.0.1
