@@ -42,6 +42,24 @@ test_that("calculate_distance and other functions return the correct format", {
   })
 })
 
+test_that("calculate_distance work when y is NULL", {
+  x <- matrix(c(1, 2, 5, 3), ncol = 2)
+  y <- NULL
+
+  purrr::walk(dist_tib$method, function(method) {
+    o <- calculate_distance(x, y, method = method)
+    check_output(x, y, o, e = NULL)
+  })
+
+  rownames(x) <- c("A", "B")
+  colnames(x) <- c("f1", "f2")
+
+  purrr::walk(dist_tib$method, function(method) {
+    o <- calculate_distance(x, y, method = method)
+    check_output(x, y, o, e = NULL)
+  })
+})
+
 test_that("calculate_distance returns the same output as the metric-specific functions", {
   x <- matrix(c(1, 2, 5, 3), ncol = 2)
   y <- matrix(c(5, 6, 7, 8, 9, 10), ncol = 2)
@@ -73,6 +91,6 @@ test_that("calculate_distance returns collect solutions", {
 
   sapply(dist_tib$method, function(method) {
     o <- calculate_distance(x, y, method = method)
-    # check_output(x, y, o, e = expected[[method]])
+    check_output(x, y, o, e = expected[[method]])
   })
 })

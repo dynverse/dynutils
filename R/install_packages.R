@@ -17,6 +17,7 @@ parse_remotes <- function(remotes) {
 #' Installs the suggests of a particular package including information from the remotes
 #'
 #' @param package The package from which the remotes will be extracted
+#' @param prompt Whether to ask the user first for installation
 #'
 #' @inheritParams check_packages
 #'
@@ -25,10 +26,22 @@ parse_remotes <- function(remotes) {
 #' @importFrom utils setRepositories
 #'
 #' @export
-install_packages <- function(dependencies, package = NULL) {
+install_packages <- function(dependencies, package = NULL, prompt = FALSE) {
   dependencies <- dependencies[!check_packages(dependencies)]
 
   if (length(dependencies) > 0) {
+    if (prompt) {
+      message(paste0(
+        "Following packages have to be installed: ",
+        glue::collapse(crayon::bold(dependencies), ", ", last = " and ")
+      ))
+      answer <- readline("Do you want to install them: y/yes/1 or n/no/2? ")
+
+      if (answer %in% c("n", "no", 2)) {
+        stop("Cannot run method without required packages.")
+      }
+    }
+
     utils::setRepositories(ind = 1:4) # set repositories to include bioconductor
 
     message("Installing ", paste0(dependencies, collapse = ", "))

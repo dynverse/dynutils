@@ -15,7 +15,7 @@ test_that("Test install_packages", {
   expect_null(out)
 
   # add depending package
-  out <- install_packages("dplyr", dependencies = "dynutils")
+  out <- install_packages("dplyr", package = "dynutils")
   expect_null(out)
 
   # test with a small package that should not already be present on the system
