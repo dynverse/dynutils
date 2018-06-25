@@ -1,7 +1,7 @@
 Package: dynutils
 Type: Package
 Title: Common Functions for the Dynverse Packages
-Version: 0.1.0
+Version: 0.1.0.9001
 Authors@R: c(
     person(
       "Robrecht", 
