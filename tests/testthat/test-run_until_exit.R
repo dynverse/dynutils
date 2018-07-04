@@ -19,3 +19,9 @@ test_that("Testing run_until_exit", {
   expect_equal(out$output, "foo")
   expect_equal(out$error, "bar")
 })
+
+
+
+test_that("Testing print_processx", {
+  expect_output(print_processx("hi", NULL), "hi")
+})
