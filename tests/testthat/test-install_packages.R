@@ -5,7 +5,9 @@ test_that("Test check_packages", {
   expect_equal(check, c(dplyr = TRUE, dynutils = TRUE, jhrveioohvovwhrei = FALSE, ijewiojwijoweew = FALSE))
 })
 
-options(repos = "http://cran.us.r-project.org")
+r <- getOption("repos")
+r["CRAN"] <- "http://cran.r-project.org"
+options(repos = r)
 
 skip_on_cran()
 
