@@ -25,5 +25,11 @@ test_that("Test install_packages", {
   out <- install_packages("whoami", package = "desc")
   on.exit(remove.packages("whoami"))
   expect_equal(out, "whoami")
+
+  options(dynutils_testmodeprompt = TRUE)
+
+  expect_message(out <- install_packages("SCORPIUS", prompt = TRUE), "Following packages have to be installed")
+  on.exit(remove.packages("SCORPIUS"))
+  expect_equal(out, "SCORPIUS")
 })
 
