@@ -7,6 +7,8 @@ test_that("Test check_packages", {
 
 options(repos = "http://cran.us.r-project.org")
 
+skip_on_cran()
+
 test_that("Test install_packages", {
   # test whether no message is printed when packages are already installed
   expect_message(out <- install_packages(c("dynutils", "dplyr")), NA)
@@ -18,22 +20,25 @@ test_that("Test install_packages", {
   out <- install_packages("dplyr", package = "dynutils")
   expect_null(out)
 
-  # test with a small package that should not already be present on the system
-  if (check_packages("incgraph")) remove.packages("incgraph")
-  out <- install_packages("incgraph")
-  expect_equal(out, "incgraph")
+  are_installed <- check_packages(c("SCORPIUS", "knitr", "glue", "desc"))
+  on.exit(remove.packages(names(are_installed)[!are_installed]))
 
-  skip_on_travis()
-  skip_on_cran()
+  if (are_installed["SCORPIUS"]) remove.packages("SCORPIUS")
+  out <- install_packages("SCORPIUS")
+  expect_equal(out, "SCORPIUS")
 
-  # intentionally remove tiny package, see whether it gets reinstalled
-  if (check_packages("glue")) remove.packages("glue")
+  if (are_installed["knitr"]) remove.packages("knitr")
+  out <- install_packages("knitr", package = "SCORPIUS")
+  expect_equal(out, "knitr")
+
+  if (are_installed["glue"]) remove.packages("glue")
   out <- install_packages("glue")
   expect_equal(out, "glue")
 
-  # specify depending package
-  if (check_packages("desc")) remove.packages("desc")
+  if (are_installed["desc"]) remove.packages("desc")
   out <- install_packages("desc", package = "dynutils")
   expect_equal(out, "desc")
+
+
 })
 
