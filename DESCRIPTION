@@ -54,7 +54,6 @@ Collate:
     'install_packages.R'
     'package.R'
     'pritt.R'
-    'processx_helpers.R'
     'random_time_string.R'
     'scaling.R'
     'tibble.R'
