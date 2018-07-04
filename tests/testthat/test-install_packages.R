@@ -28,8 +28,8 @@ test_that("Test install_packages", {
 
   options(dynutils_testmodeprompt = TRUE)
 
-  expect_message(out <- install_packages("SCORPIUS", prompt = TRUE), "Following packages have to be installed")
-  on.exit(remove.packages("SCORPIUS"))
-  expect_equal(out, "SCORPIUS")
+  expect_message(out <- install_packages("princurve", prompt = TRUE), "Following packages have to be installed")
+  on.exit(remove.packages("princurve"))
+  expect_equal(out, "princurve")
 })
 
