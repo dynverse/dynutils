@@ -26,8 +26,10 @@ test_that("Test install_packages", {
   on.exit(remove.packages("whoami"))
   expect_equal(out, "whoami")
 
-  options(dynutils_testmodeprompt = TRUE)
+  options(dynutils_testmodepromptresponse = 2)
+  expect_error(out <- install_packages("princurve", prompt = TRUE), "Installation was interrupted")
 
+  options(dynutils_testmodepromptresponse = 1)
   expect_message(out <- install_packages("princurve", prompt = TRUE), "Following packages have to be installed")
   on.exit(remove.packages("princurve"))
   expect_equal(out, "princurve")

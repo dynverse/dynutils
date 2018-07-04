@@ -36,13 +36,13 @@ install_packages <- function(dependencies, package = NULL, prompt = FALSE) {
         glue::collapse(crayon::bold(dependencies), ", ", last = " and ")
       ))
       answer <- ifelse (
-        is.null(getOption("dynutils_testmodeprompt")) || !getOption("dynutils_testmodeprompt"),
+        is.null(getOption("dynutils_testmodeprompt")),
         readline("Do you want to install these packages? (y/yes/1 or n/no/2): "),
-        1
+        getOption("dynutils_testmodeprompt")
       )
 
       if (answer %in% c("n", "no", 2)) {
-        stop("Cannot run method without required packages.")
+        stop("Installation was interrupted.")
       }
     }
 
