@@ -23,8 +23,8 @@
 #' @section Scaling of matrices and vectors:
 #' \itemize{
 #'   \item{\code{\link{scale_uniform}}: Rescale data to have a certain center and max range}
-#'   \item{\code{\link{scale_minmax}}: Rescale data to a [0, 1] range
-#'   \item{\code{\link{scale_quantile}}: Cut off outer quantiles and rescale to a [0, 1] range
+#'   \item{\code{\link{scale_minmax}}: Rescale data to a [0, 1] range}
+#'   \item{\code{\link{scale_quantile}}: Cut off outer quantiles and rescale to a [0, 1] range}
 #' }
 #'
 #' @section Manipulation of functions:
@@ -40,7 +40,7 @@
 #'
 #' @section Manipulation of character vectors:
 #' \itemize{
-#'   \item{\code{\link{pritt}}: A friendly version of \code{\link[glue::glue]{glue::glue}}
+#'   \item{\code{\link{pritt}}: A friendly version of \code{\link[glue:glue]{glue::glue}}}
 #'   \item{\code{\link{random_time_string}}: Generates a string very likely to be unique}
 #' }
 #'

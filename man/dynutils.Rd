@@ -32,6 +32,15 @@ For more information, check out \url{https://github.com/dynverse/dynverse}.
 }
 }
 
+\section{Scaling of matrices and vectors}{
+
+\itemize{
+  \item{\code{\link{scale_uniform}}: Rescale data to have a certain center and max range}
+  \item{\code{\link{scale_minmax}}: Rescale data to a [0, 1] range}
+  \item{\code{\link{scale_quantile}}: Cut off outer quantiles and rescale to a [0, 1] range}
+}
+}
+
 \section{Manipulation of functions}{
 
 \itemize{
@@ -44,6 +53,14 @@ For more information, check out \url{https://github.com/dynverse/dynverse}.
 \itemize{
   \item{\code{\link{check_packages}}: Easily checking whether certain packages are installed}
   \item{\code{\link{install_packages}}: Install packages taking into account the remotes of another}
+}
+}
+
+\section{Manipulation of character vectors}{
+
+\itemize{
+  \item{\code{\link{pritt}}: A friendly version of \code{\link[glue:glue]{glue::glue}}}
+  \item{\code{\link{random_time_string}}: Generates a string very likely to be unique}
 }
 }
 

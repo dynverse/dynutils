@@ -17,6 +17,7 @@ extend_with(object, .class_name, ...)
 Extend an object
 }
 \examples{
+library(purrr)
 l <- list(important_number = 42) \%>\% add_class("my_list")
 l \%>\% extend_with(
   .class_name = "improved_list",
