@@ -1,6 +1,6 @@
 Package: dynutils
 Type: Package
-Title: Common Functions for the 'dynverse' Packages
+Title: Common Functionality for the 'dynverse' Packages
 Version: 1.0.0.9001
 Authors@R: c(
     person(
@@ -19,7 +19,7 @@ Authors@R: c(
     )
   )
 Description: 
-  Provides a common functionality for the 'dynverse' packages. 
+  Provides common functionality for the 'dynverse' packages. 
   'dynverse' is created to support the development, execution, and benchmarking of trajectory inference methods.
   For more information, check out <https://github.com/dynverse/dynverse>.
 License: GPL-3
@@ -49,6 +49,7 @@ Collate:
     'add_class.R'
     'inherit_default_params.R'
     'calculate_distance.R'
+    'check_packages.R'
     'expand_matrix.R'
     'extend_with.R'
     'install_packages.R'

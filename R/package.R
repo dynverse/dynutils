@@ -1,7 +1,8 @@
-#' Common functions for the dynverse packages
+#' Common functionality for the dynverse packages
 #'
-#' Provides a common functionality for the dynverse packages.
-#' For more information on dynverse, see \url{https://github.com/dynverse/dynverse} for more info.
+#' Provides common functionality for the dynverse packages.
+#' dynverse is created to support the development, execution, and benchmarking of trajectory inference methods.
+#' For more information, check out \url{https://github.com/dynverse/dynverse}.
 #'
 #' @import dplyr
 #' @import tidyr
