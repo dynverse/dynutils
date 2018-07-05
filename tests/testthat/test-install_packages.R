@@ -22,16 +22,25 @@ test_that("Test install_packages", {
   out <- install_packages("dplyr", package = "dynutils")
   expect_null(out)
 
+  if (check_packages("whoami")) remove.packages("whoami")
   out <- install_packages("whoami", package = "desc")
-  on.exit(remove.packages("whoami"))
+  remove.packages("whoami")
   expect_equal(out, "whoami")
 
+  if (check_packages("princurve")) remove.packages("princurve")
   options(dynutils_testmodepromptresponse = 2)
-  expect_error(out <- install_packages("princurve", prompt = TRUE), "Installation was interrupted")
+  expect_error(
+    expect_message(
+      out <- install_packages("princurve", prompt = TRUE),
+      "Following packages have to be installed"
+    ),
+    "Installation was interrupted"
+  )
 
+  if (check_packages("princurve")) remove.packages("princurve")
   options(dynutils_testmodepromptresponse = 1)
   expect_message(out <- install_packages("princurve", prompt = TRUE), "Following packages have to be installed")
-  on.exit(remove.packages("princurve"))
+  remove.packages("princurve")
   expect_equal(out, "princurve")
 })
 
