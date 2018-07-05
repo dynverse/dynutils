@@ -8,6 +8,7 @@ editor_options:
 knitr::opts_chunk$set(fig.path = "man/figures/README_", warning = FALSE, message = FALSE, error = FALSE, echo = TRUE)
 library(tidyverse)
 library(dynutils)
+set.seed(1)
 ```
 
 # dynutils
@@ -64,7 +65,7 @@ expand_matrix(x, letters[1:5], LETTERS[1:10], fill = 0)
 
 ## Scaling of matrices and vectors
 
-### `scale_uniform`: Rescale data to have a certain center and max range.
+### `scale_uniform`: Rescale data to have a certain center and max range
 Generate a matrix from a normal distribution with a large standard deviation, centered at c(5, 5).
 ```{r scale_uniform_gen}
 x <- matrix(rnorm(200*2, sd = 10, mean = 5), ncol = 2)
@@ -94,7 +95,7 @@ apply(x_scaled2, 2, range)  # each column should be [0, 1]
 ```
 
 
-### `scale_quantile`: Like minmax, but will cut off outer quantiles
+### `scale_quantile`: Cut off outer quantiles and rescale to a [0, 1] range
 ```{r scale_quantile}
 x_scaled3 <- scale_quantile(x, .05)
 ```

@@ -58,19 +58,19 @@ See `?calculate_distance` for the list of currently supported distances.
     y <- matrix(runif(50), ncol = 10)
     calculate_distance(x, y, method = "euclidean")
 
-    ##           [,1]     [,2]      [,3]     [,4]     [,5]
-    ## [1,] 0.7606178 1.560995 0.6443703 1.092695 1.120412
-    ## [2,] 1.8076023 1.336034 1.5940569 1.400716 1.424859
-    ## [3,] 1.4652862 1.680814 1.3553183 1.331192 1.526138
+    ##          [,1]      [,2]      [,3]     [,4]      [,5]
+    ## [1,] 1.184305 0.9571034 1.1284052 1.022205 1.5531565
+    ## [2,] 1.078353 1.1378581 0.7076092 1.072164 0.8846294
+    ## [3,] 1.335627 1.4116406 1.3526085 1.239853 1.6282805
 
 For euclidean distances, this is similar to calculating:
 
     as.matrix(dist(rbind(x, y)))[1:3, -1:-3]
 
-    ##           4        5         6        7        8
-    ## 1 0.7606178 1.560995 0.6443703 1.092695 1.120412
-    ## 2 1.8076023 1.336034 1.5940569 1.400716 1.424859
-    ## 3 1.4652862 1.680814 1.3553183 1.331192 1.526138
+    ##          4         5         6        7         8
+    ## 1 1.184305 0.9571034 1.1284052 1.022205 1.5531565
+    ## 2 1.078353 1.1378581 0.7076092 1.072164 0.8846294
+    ## 3 1.335627 1.4116406 1.3526085 1.239853 1.6282805
 
 Manipulation of matrices
 ------------------------
@@ -80,17 +80,17 @@ Manipulation of matrices
     x <- matrix(runif(12), ncol = 4, dimnames = list(c("a", "c", "d"), c("D", "F", "H", "I")))
     expand_matrix(x, letters[1:5], LETTERS[1:10], fill = 0)
 
-    ##   A B C         D E         F G         H         I J
-    ## a 0 0 0 0.5165556 0 0.5338506 0 0.2584455 0.3020218 0
-    ## b 0 0 0 0.0000000 0 0.0000000 0 0.0000000 0.0000000 0
-    ## c 0 0 0 0.9402114 0 0.8249603 0 0.4731859 0.9824018 0
-    ## d 0 0 0 0.2384094 0 0.3453903 0 0.6952219 0.3507425 0
-    ## e 0 0 0 0.0000000 0 0.0000000 0 0.0000000 0.0000000 0
+    ##   A B C         D E         F G         H          I J
+    ## a 0 0 0 0.4346595 0 0.3253522 0 0.7111212 0.14330438 0
+    ## b 0 0 0 0.0000000 0 0.0000000 0 0.0000000 0.00000000 0
+    ## c 0 0 0 0.7125147 0 0.7570871 0 0.1216919 0.23962942 0
+    ## d 0 0 0 0.3999944 0 0.2026923 0 0.2454885 0.05893438 0
+    ## e 0 0 0 0.0000000 0 0.0000000 0 0.0000000 0.00000000 0
 
 Scaling of matrices and vectors
 -------------------------------
 
-### `scale_uniform`: Rescale data to have a certain center and max range.
+### `scale_uniform`: Rescale data to have a certain center and max range
 
 Generate a matrix from a normal distribution with a large standard
 deviation, centered at c(5, 5).
@@ -107,9 +107,9 @@ Check the ranges and verify that the scaling is correct.
     ranges <- apply(x_scaled, 2, range)
     ranges                   # should all lie between -.5 and .5
 
-    ##      [,1]      [,2]
-    ## [1,] -0.5 -0.408829
-    ## [2,]  0.5  0.408829
+    ##            [,1] [,2]
+    ## [1,] -0.4760807 -0.5
+    ## [2,]  0.4760807  0.5
 
     colMeans(ranges)         # should all be equal to 0
 
@@ -117,7 +117,7 @@ Check the ranges and verify that the scaling is correct.
 
     apply(ranges, 2, diff)   # max should be 1
 
-    ## [1] 1.0000000 0.8176581
+    ## [1] 0.9521614 1.0000000
 
 ### `scale_minmax`: Rescale data to a \[0, 1\] range
 
@@ -131,7 +131,7 @@ Check the ranges and verify that the scaling is correct.
     ## [1,]    0    0
     ## [2,]    1    1
 
-### `scale_quantile`: Like minmax, but will cut off outer quantiles
+### `scale_quantile`: Cut off outer quantiles and rescale to a \[0, 1\] range
 
     x_scaled3 <- scale_quantile(x, .05)
 
@@ -223,12 +223,12 @@ Manipulation of character vectors
 
     random_time_string("test")
 
-    ## [1] "20180705_085308__test__84M7eBQibT"
+    ## [1] "20180705_090432__test__FAUHkCAKzv"
 
     random_time_string("test")
 
-    ## [1] "20180705_085308__test__9nVgE8K7X9"
+    ## [1] "20180705_090432__test__QLNDDJECgw"
 
     random_time_string("test")
 
-    ## [1] "20180705_085308__test__IVrO4GqkpB"
+    ## [1] "20180705_090432__test__rEBbJsr2U8"
