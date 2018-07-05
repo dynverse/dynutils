@@ -43,5 +43,7 @@ test_that("prompt works as expected", {
   expect_message(out <- install_packages("princurve", prompt = TRUE), "Following packages have to be installed")
   remove.packages("princurve")
   expect_equal(out, "princurve")
+
+  options(dynutils_testmodepromptresponse = NULL)
 })
 
