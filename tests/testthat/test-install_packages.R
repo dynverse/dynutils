@@ -17,6 +17,7 @@ test_that("no messages are printed when packages are already installed, given a 
 })
 
 test_that("error is produced when super package is not installed", {
+  if (check_packages("SCORPIUS")) remove.packages("SCORPIUS")
   expect_error(install_packages("SCORPIUS", package = "wubbalubbadubdub"), "needs to have been installed first!")
 })
 
