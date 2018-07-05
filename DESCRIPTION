@@ -55,6 +55,5 @@ Collate:
     'package.R'
     'pritt.R'
     'random_time_string.R'
-    'run_until_exit.R'
     'scaling.R'
     'tibble.R'
