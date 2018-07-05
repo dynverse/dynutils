@@ -76,7 +76,7 @@ apply_uniform_scale <- function(x, addend, multiplier) {
   }
 }
 
-#' Calculate and apply a quantile scale
+#' Cut off outer quantiles and rescale to a [0, 1] range
 #'
 #' @param x A numeric vector, matrix or data frame.
 #' @param outlier_cutoff The quantile cutoff for outliers (default 0.05).
@@ -145,7 +145,7 @@ apply_quantile_scale <- function(x, addend, multiplier) {
   }
 }
 
-#' Calculate and apply a minmax scale
+#' Rescale data to a [0, 1] range
 #'
 #' @param x A numeric vector, matrix or data frame.
 #' @return The centered, scaled matrix or vector. The numeric centering and scalings used are returned as attributes.

@@ -25,6 +25,10 @@ full delimiter escapes it.}
 \description{
 Uses \code{\link[glue]{glue}}, but removes the class from the output.
 }
+\examples{
+a <- 10
+pritt("a: {a}")
+}
 \seealso{
 \code{\link[glue]{glue}}
 }

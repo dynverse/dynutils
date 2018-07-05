@@ -12,3 +12,6 @@ random_time_string(name = NULL)
 \description{
 Generate a random string with first the current time, together with a random number
 }
+\examples{
+random_time_string("test")
+}

@@ -2,7 +2,7 @@
 % Please edit documentation in R/install_packages.R
 \name{install_packages}
 \alias{install_packages}
-\title{Installs the suggests of a particular package including information from the remotes}
+\title{Install packages taking into account the remotes of another}
 \usage{
 install_packages(..., package = NULL, prompt = FALSE)
 }
@@ -14,7 +14,7 @@ install_packages(..., package = NULL, prompt = FALSE)
 \item{prompt}{Whether to ask the user first for installation}
 }
 \description{
-Installs the suggests of a particular package including information from the remotes
+Useful for installing suggested packages with GitHub remotes.
 }
 \examples{
 \dontrun{
