@@ -78,7 +78,7 @@ extract_row_to_list <- function(tib, row_id) {
 #' @export
 #'
 #' @examples
-#' tib <- tibble(x=1:3, y=3:5)
+#' tib <- data.frame(x=1:3, y=3:5)
 #' tmap(tib, function(z) {z$x + z$y})
 tmap <- function(.x, .f, ...) {
   map(seq_len(nrow(.x)), function(row_ix) {
