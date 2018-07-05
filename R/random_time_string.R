@@ -5,6 +5,9 @@
 #' @param name Optional string to be added in the random_time_string
 #'
 #' @export
+#'
+#' @examples
+#' random_time_string("test")
 random_time_string <- function(name = NULL) {
   paste0(
     format(Sys.time(), format = "%Y%m%d_%H%M%S"),

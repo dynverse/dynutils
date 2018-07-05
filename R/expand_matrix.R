@@ -6,6 +6,10 @@
 #' @param fill With what to fill missing data
 #'
 #' @export
+#'
+#' @examples
+#' x <- matrix(runif(12), ncol = 4, dimnames = list(c("a", "c", "d"), c("D", "F", "H", "I")))
+#' expand_matrix(x, letters[1:5], LETTERS[1:10], fill = 0)
 expand_matrix <- function(
   mat,
   rownames = NULL,

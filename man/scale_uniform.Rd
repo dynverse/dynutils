@@ -2,7 +2,7 @@
 % Please edit documentation in R/scaling.R
 \name{scale_uniform}
 \alias{scale_uniform}
-\title{Scaling and centering of matrix-like objects}
+\title{Rescale data to have a certain center and max range.}
 \usage{
 scale_uniform(x, center = 0, max_range = 1)
 }

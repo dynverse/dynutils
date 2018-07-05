@@ -14,3 +14,7 @@ add_class(x, class)
 \description{
 Add class to object whilst keeping the old classes
 }
+\examples{
+library(purrr)
+l <- list(important_number = 42) \%>\% add_class("my_list")
+}

@@ -2,17 +2,22 @@
 % Please edit documentation in R/install_packages.R
 \name{install_packages}
 \alias{install_packages}
-\title{Installs the suggests of a particular package including information from the remotes}
+\title{Install packages taking into account the remotes of another}
 \usage{
-install_packages(dependencies, package = NULL, prompt = FALSE)
+install_packages(..., package = NULL, prompt = FALSE)
 }
 \arguments{
-\item{dependencies}{The names of the packages to be installed}
+\item{...}{The names of the packages to be installed}
 
-\item{package}{The package from which the remotes will be extracted}
+\item{package}{The package from which the remotes will be extracted. If used, this package does need to be installed.}
 
 \item{prompt}{Whether to ask the user first for installation}
 }
 \description{
-Installs the suggests of a particular package including information from the remotes
+Useful for installing suggested packages with GitHub remotes.
+}
+\examples{
+\dontrun{
+install_packages("SCORPIUS", package = "dynmethods", prompt = TRUE)
+}
 }

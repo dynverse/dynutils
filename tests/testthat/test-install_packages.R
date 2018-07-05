@@ -1,32 +1,33 @@
 context("Testing install_packages")
 
-test_that("Test check_packages", {
-  check <- check_packages(c("dplyr", "dynutils", "jhrveioohvovwhrei", "ijewiojwijoweew"))
-  expect_equal(check, c(dplyr = TRUE, dynutils = TRUE, jhrveioohvovwhrei = FALSE, ijewiojwijoweew = FALSE))
-})
-
 r <- getOption("repos")
 r["CRAN"] <- "http://cran.r-project.org"
 options(repos = r)
 
 skip_on_cran()
 
-test_that("Test install_packages", {
-  # test whether no message is printed when packages are already installed
+test_that("no messages are printed when packages are already installed", {
   expect_message(out <- install_packages(c("dynutils", "dplyr")), NA)
-
-  # test whether no output is returned when packages are already installed
   expect_null(out)
+})
 
-  # add depending package
-  out <- install_packages("dplyr", package = "dynutils")
+test_that("no messages are printed when packages are already installed, given a depending package", {
+  expect_message(out <- install_packages("tidyr", "dplyr", package = "dynutils"), NA)
   expect_null(out)
+})
 
+test_that("error is produced when super package is not installed", {
+  expect_error(install_packages("SCORPIUS", package = "wubbalubbadubdub"), "needs to have been installed first!")
+})
+
+test_that("dependencies can be installed", {
   if (check_packages("whoami")) remove.packages("whoami")
   out <- install_packages("whoami", package = "desc")
   remove.packages("whoami")
   expect_equal(out, "whoami")
+})
 
+test_that("prompt works as expected", {
   if (check_packages("princurve")) remove.packages("princurve")
   options(dynutils_testmodepromptresponse = 2)
   expect_error(
@@ -42,5 +43,7 @@ test_that("Test install_packages", {
   expect_message(out <- install_packages("princurve", prompt = TRUE), "Following packages have to be installed")
   remove.packages("princurve")
   expect_equal(out, "princurve")
+
+  options(dynutils_testmodepromptresponse = NULL)
 })
 

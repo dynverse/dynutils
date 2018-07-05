@@ -17,6 +17,10 @@
 #' @seealso \code{\link[glue]{glue}}
 #'
 #' @export
+#'
+#' @examples
+#' a <- 10
+#' pritt("a: {a}")
 pritt <- function(..., .sep = "", .envir = parent.frame(), .open = "{", .close = "}") {
   as.character(glue::glue(..., .sep = .sep, .envir = .envir, .open = .open, .close = .close))
 }

@@ -1,6 +1,6 @@
-#' @title Scaling and centering of matrix-like objects
+#' Rescale data to have a certain center and max range.
 #'
-#' @description \code{scale_uniform} uniformily scales a given matrix such that
+#' \code{scale_uniform} uniformily scales a given matrix such that
 #' the returned space is centered on \code{center}, and each column was scaled equally
 #' such that the range of each column is at most \code{max_range}.
 #'
@@ -76,7 +76,7 @@ apply_uniform_scale <- function(x, addend, multiplier) {
   }
 }
 
-#' Calculate and apply a quantile scale
+#' Cut off outer quantiles and rescale to a [0, 1] range
 #'
 #' @param x A numeric vector, matrix or data frame.
 #' @param outlier_cutoff The quantile cutoff for outliers (default 0.05).
@@ -145,7 +145,7 @@ apply_quantile_scale <- function(x, addend, multiplier) {
   }
 }
 
-#' Calculate and apply a minmax scale
+#' Rescale data to a [0, 1] range
 #'
 #' @param x A numeric vector, matrix or data frame.
 #' @return The centered, scaled matrix or vector. The numeric centering and scalings used are returned as attributes.
