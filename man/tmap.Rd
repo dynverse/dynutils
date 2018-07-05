@@ -36,6 +36,6 @@ to extract named attributes. If a component is not present, the value of
 Loop over each row in a tibble
 }
 \examples{
-tib <- tibble(x=1:3, y=3:5)
+tib <- data.frame(x=1:3, y=3:5)
 tmap(tib, function(z) {z$x + z$y})
 }
