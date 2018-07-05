@@ -1,0 +1,16 @@
+#' Check which packages are installed
+#'
+#' @param ... A set of package names
+#'
+#' @export
+#'
+#' @importFrom utils installed.packages
+#'
+#' @examples
+#' check_packages("SCORPIUS", "dynutils")
+#' check_packages(c("princurve", "mlr", "tidyverse"))
+check_packages <- function(...) {
+  packages <- unlist(list(...))
+  installed_packages <- rownames(utils::installed.packages())
+  set_names(packages %in% installed_packages, packages)
+}
