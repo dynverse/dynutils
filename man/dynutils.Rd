@@ -20,6 +20,30 @@ For more information, check out \url{https://github.com/dynverse/dynverse}.
 
 \section{Distances}{
 
-* `calculate_distance`: Compute pairwise distances between two matrices
+\itemize{
+  \item{\code{\link{calculate_distance}}: Compute pairwise distances between two matrices}
+}
+}
+
+\section{Manipulation of matrices}{
+
+\itemize{
+  \item{\code{\link{expand_matrix}}: Add rows and columns to a matrix}
+}
+}
+
+\section{Manipulation of functions}{
+
+\itemize{
+  \item{\code{\link{inherit_default_params}}: Have one function inherit the default parameters from other functions}
+}
+}
+
+\section{Manipulation of packages}{
+
+\itemize{
+  \item{\code{\link{check_packages}}: Easily checking whether certain packages are installed}
+  \item{\code{\link{install_packages}}: Install packages taking into account the remotes of another}
+}
 }
 

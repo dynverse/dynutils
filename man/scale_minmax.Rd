@@ -2,7 +2,7 @@
 % Please edit documentation in R/scaling.R
 \name{scale_minmax}
 \alias{scale_minmax}
-\title{Calculate and apply a minmax scale}
+\title{Rescale data to a [0, 1] range}
 \usage{
 scale_minmax(x)
 }
@@ -13,7 +13,7 @@ scale_minmax(x)
 The centered, scaled matrix or vector. The numeric centering and scalings used are returned as attributes.
 }
 \description{
-Calculate and apply a minmax scale
+Rescale data to a [0, 1] range
 }
 \examples{
 ## Generate a matrix from a normal distribution
