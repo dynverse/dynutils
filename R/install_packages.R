@@ -1,14 +1,3 @@
-#' Check which packages are installed
-#'
-#' @param dependencies The names of the packages to be installed
-#'
-#' @export
-#'
-#' @importFrom utils installed.packages
-check_packages <- function(dependencies) {
-  set_names(dependencies %in% rownames(utils::installed.packages()), dependencies)
-}
-
 parse_remotes <- function(remotes) {
   str_replace(remotes, ".*/([:alpha:]*).*", "\\1") %>%
     set_names(remotes)
@@ -16,18 +5,22 @@ parse_remotes <- function(remotes) {
 
 #' Installs the suggests of a particular package including information from the remotes
 #'
-#' @param package The package from which the remotes will be extracted
+#' @param ... The names of the packages to be installed
+#' @param package The package from which the remotes will be extracted. If used, this package does need to be installed.
 #' @param prompt Whether to ask the user first for installation
-#'
-#' @inheritParams check_packages
 #'
 #' @importFrom desc desc_get_remotes
 #' @importFrom devtools install_github install_cran
 #' @importFrom utils setRepositories
 #'
 #' @export
-install_packages <- function(dependencies, package = NULL, prompt = FALSE) {
-  dependencies <- dependencies[!check_packages(dependencies)]
+#'
+#' @examples
+#' \dontrun{
+#' install_packages("SCORPIUS", package = "dynmethods", prompt = TRUE)
+#' }
+install_packages <- function(..., package = NULL, prompt = FALSE) {
+  dependencies <- unlist(list(...)) %>% discard(check_packages)
 
   if (length(dependencies) > 0) {
     if (prompt) {
@@ -46,12 +39,20 @@ install_packages <- function(dependencies, package = NULL, prompt = FALSE) {
       }
     }
 
-    utils::setRepositories(ind = 1:4) # set repositories to include bioconductor
+    # set repositories to include bioconductor
+    utils::setRepositories(ind = 1:4)
 
     message("Installing ", paste0(dependencies, collapse = ", "))
 
-    if(!is.null(package)) {
-      remotes <- desc::desc_get_remotes(find.package(package)) %>%
+    # if a package is provided, check the remotes
+    # to see whether to install the dependencies from given remotes
+    if (!is.null(package)) {
+      if (!check_packages(package)) {
+        stop("Package ", sQuote(package), " needs to have been installed first!")
+      }
+      remotes <-
+        find.package(package) %>%
+        desc::desc_get_remotes() %>%
         parse_remotes()
 
       devtools::install_github(remotes[dependencies[dependencies %in% names(remotes)]])
@@ -59,6 +60,7 @@ install_packages <- function(dependencies, package = NULL, prompt = FALSE) {
       remotes <- character()
     }
 
+    # install other depencies from cran
     devtools::install_cran(dependencies[!dependencies %in% names(remotes)])
 
     # display message
