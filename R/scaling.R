@@ -1,6 +1,6 @@
-#' @title Scaling and centering of matrix-like objects
+#' Rescale data to have a certain center and max range.
 #'
-#' @description \code{scale_uniform} uniformily scales a given matrix such that
+#' \code{scale_uniform} uniformily scales a given matrix such that
 #' the returned space is centered on \code{center}, and each column was scaled equally
 #' such that the range of each column is at most \code{max_range}.
 #'
