@@ -11,7 +11,6 @@
 #' check_packages(c("princurve", "mlr", "tidyverse"))
 check_packages <- function(...) {
   packages <- unlist(list(...))
-  utils::installed.packages() %>%
-    {packages %in% rownames(.)} %>%
-    set_names(packages)
+  installed_packages <- rownames(utils::installed.packages())
+  set_names(packages %in% installed_packages, packages)
 }
