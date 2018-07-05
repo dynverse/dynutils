@@ -36,9 +36,9 @@ install_packages <- function(dependencies, package = NULL, prompt = FALSE) {
         glue::collapse(crayon::bold(dependencies), ", ", last = " and ")
       ))
       answer <- ifelse (
-        is.null(getOption("dynutils_testmodeprompt")),
+        is.null(getOption("dynutils_testmodepromptresponse")),
         readline("Do you want to install these packages? (y/yes/1 or n/no/2): "),
-        getOption("dynutils_testmodeprompt")
+        getOption("dynutils_testmodepromptresponse")
       )
 
       if (answer %in% c("n", "no", 2)) {
