@@ -4,8 +4,22 @@
 \name{dynutils}
 \alias{dynutils}
 \alias{dynutils-package}
-\title{Common functions for the dynverse packages}
+\title{Common functionality for the dynverse packages}
 \description{
-Provides a common functionality for the dynverse packages.
-For more information on dynverse, see \url{https://github.com/dynverse/dynverse} for more info.
+Provides common functionality for the dynverse packages.
+dynverse is created to support the development, execution, and benchmarking of trajectory inference methods.
+For more information, check out \url{https://github.com/dynverse/dynverse}.
 }
+\section{Manipulation of lists}{
+
+\itemize{
+  \item{\code{\link{add_class}}: Add a class to an object}
+  \item{\code{\link{extend_with}}: Extend list with more data}
+}
+}
+
+\section{Distances}{
+
+* `calculate_distance`: Compute pairwise distances between two matrices
+}
+
