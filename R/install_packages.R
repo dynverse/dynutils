@@ -36,7 +36,7 @@ install_packages <- function(..., package = NULL, prompt = FALSE) {
         getOption("dynutils_testmodepromptresponse")
       )
 
-      if (answer %in% c("n", "no", 2)) {
+      if (!answer %in% c("y", "yes", 1)) {
         stop("Installation was interrupted.")
       }
     }

@@ -70,3 +70,20 @@ extract_row_to_list <- function(tib, row_id) {
     NULL
   }
 }
+
+
+#' Loop over each row in a tibble
+#'
+#' @inheritParams purrr::map
+#' @param .f The function to apply to each row
+#' @export
+#'
+#' @examples
+#' tib <- data.frame(x=1:3, y=3:5)
+#' tmap(tib, function(z) {z$x + z$y})
+tmap <- function(.x, .f, ...) {
+  map(seq_len(nrow(.x)), function(row_ix) {
+    row <- extract_row_to_list(.x, row_ix)
+    .f(row, ...)
+  })
+}
