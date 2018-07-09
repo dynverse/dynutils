@@ -75,6 +75,7 @@ extract_row_to_list <- function(tib, row_id) {
 #' Loop over each row in a tibble
 #'
 #' @inheritParams purrr::map
+#' @param .f The function to apply to each row
 #' @export
 #'
 #' @examples
