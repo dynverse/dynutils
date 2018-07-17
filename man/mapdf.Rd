@@ -9,8 +9,6 @@
 \alias{mapdf_dfr}
 \alias{mapdf_dfc}
 \alias{walkdf}
-\alias{mapdf_if}
-\alias{mapdf_at}
 \title{Apply a function to each row of a data frame}
 \usage{
 mapdf(.x, .f, ...)
@@ -28,10 +26,6 @@ mapdf_dfr(.x, .f, ...)
 mapdf_dfc(.x, .f, ...)
 
 walkdf(.x, .f, ...)
-
-mapdf_if(.x, .p, .f, ...)
-
-mapdf_at(.x, .at, .f, ...)
 }
 \arguments{
 \item{.x}{A \code{\link[base]{data.frame}}, \code{\link[tibble]{data_frame}} or \code{\link[tibble]{tibble}}.}
@@ -41,24 +35,13 @@ If a function, the first argument will be the row as a list.
 If a formula, e.g. \code{~ .$a}, the \code{.} is a placeholder for the row as a list.}
 
 \item{...}{Additional arguments passed on to \code{.f}.}
-
-\item{.p}{A single predicate function, a formula describing such a
-predicate function, or a logical vector of the same length as \code{.x}.
-Alternatively, if the elements of \code{.x} are themselves lists of
-objects, a string indicating the name of a logical element in the
-inner lists. Only those elements where \code{.p} evaluates to
-\code{TRUE} will be modified.}
-
-\item{.at}{A character vector of names or a numeric vector of
-positions. Only those elements corresponding to \code{.at} will be
-modified.}
 }
 \description{
 The mapdf functions transform their input by applying a function to each row of a data frame and returning a vector the same length as the input.
 These functions work a lot like purrr's \code{\link[purrr]{map}} functions.
 }
 \details{
-* \code{mapdf()}, \code{mapdf_if()} and \code{mapdf_at()} always return a list.
+* \code{mapdf()} always returns a list.
 
 * \code{mapdf_lgl()}, \code{mapdf_int()}, \code{mapdf_dbl()} and \code{mapdf_chr()} return vectors of the corresponding type (or die trying).
 
