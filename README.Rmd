@@ -18,10 +18,39 @@ set.seed(1)
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/dynutils)](https://cran.r-project.org/package=dynutils)
 [![Coverage Status](https://codecov.io/gh/dynverse/dynutils/branch/master/graph/badge.svg)](https://codecov.io/gh/dynverse/dynutils?branch=master)
 
-Provides common functionality for the 'dynverse' packages. The functions in dynutils are showcased below, in no particular order.
+Provides common functionality for the dynverse packages. The functions in dynutils are showcased below, in no particular order.
 
-'dynverse' is created to support the development, execution, and benchmarking of trajectory inference methods.
+dynverse is created to support the development, execution, and benchmarking of trajectory inference methods.
 For more information, check out [github.com/dynverse/dynverse](https://github.com/dynverse/dynverse).
+
+## Table of contents
+dynutils provides the following functions:
+
+```{r echo=FALSE, results='asis'}
+lines <- readr::read_lines("README.Rmd")
+headings <- c(which(grepl("^## ", lines))[-1], length(lines))
+subheadings <- which(grepl("^### ", lines))
+
+strs <- map_chr(seq_len(length(headings) - 1), function(i) {
+  head <- lines[[headings[[i]]]]
+  subhead <- subheadings %>% keep(~ headings[[i]] < . & . < headings[[i+1]]) %>% lines[.]
+  
+  fun_texts <- gsub(".*(`[^`]*`).*", "\\1", subhead)
+  fun_links <- subhead %>% 
+    tolower() %>% 
+    str_replace_all(" ", "-") %>%
+    str_replace_all("[^a-z\\-_]", "") %>% 
+    str_replace("^-*", "README.md#")
+  
+  out <- paste0(
+    gsub("## ", "* ", head), ": \n",
+    paste0("  [", fun_texts, "](", fun_links, ")", collapse = ",\n", sep = ""),
+    "\n"
+  )
+})
+# paste(strs, collapse = "")
+cat(strs, sep = "")
+```
 
 ## Manipulation of lists
 ### `add_class`: Add a class to an object
