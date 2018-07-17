@@ -11,7 +11,7 @@ library(dynutils)
 set.seed(1)
 ```
 
-```{r news, results='asis', echo=FALSE}
+```{r news, echo=FALSE}
 # Automatically update inst/NEWS
 news_md <- readr::read_lines("inst/NEWS.md")
 
@@ -21,7 +21,6 @@ news_normal <- news_md %>%
   str_replace_all("\\[[^\\]]*\\]\\(([^\\)]*)\\)", "\\1")
 readr::write_lines(news_normal, "inst/NEWS")
 ```
-
 
 # dynutils
 
