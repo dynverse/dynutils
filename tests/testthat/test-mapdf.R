@@ -62,3 +62,11 @@ test_that("Testing whether walkdf works", {
   expect_error(walkdf(tib, ~ length(.)), NA)
 })
 
+test_that("Testing whether mapdf_fun works", {
+  mapdf_int2 <- mapdf_fun(purrr::map_int)
+
+  expect_equal(mapdf_int2(tib, length), c(5L, 5L))
+  expect_equal(mapdf_int2(tib, function(row) as.integer(row$a * 10L)), as.integer(tib$a * 10))
+  expect_equal(mapdf_int2(tib, ~nchar(.$c)), c(6, 5))
+})
+
