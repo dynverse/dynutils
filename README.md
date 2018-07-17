@@ -19,7 +19,7 @@ dynutils provides the following functions:
 -   Scaling of matrices and vectors: [`scale_uniform`](README.md#scale_uniform-rescale-data-to-have-a-certain-center-and-max-range), [`scale_minmax`](README.md#scale_minmax-rescale-data-to-a---range), [`scale_quantile`](README.md#scale_quantile-cut-off-outer-quantiles-and-rescale-to-a---range)
 -   Manipulation of functions: [`inherit_default_params`](README.md#inherit_default_params-have-one-function-inherit-the-default-parameters-from-other-functions)
 -   Manipulation of packages: [`check_packages`](README.md#check_packages-easily-checking-whether-certain-packages-are-installed), [`install_packages`](README.md#install_packages-install-packages-taking-into-account-the-remotes-of-another)
--   Manipulation of character vectors: [`glue::glue`](README.md#pritt-a-friendly-version-of-glueglue), [`random_time_string`](README.md#random_time_string-generates-a-string-very-likely-to-be-unique)
+-   Manipulation of character vectors: [`pritt`](README.md#pritt-a-friendly-version-of-glueglue), [`random_time_string`](README.md#random_time_string-generates-a-string-very-likely-to-be-unique)
 -   Tibble helpers: [`list_as_tibble`](README.md#list_as_tibble-convert-a-list-of-lists-to-a-tibble-whilst-retaining-class-information), [`tibble_as_list`](README.md#tibble_as_list-convert-a-tibble-back-to-a-list-of-lists-whilst-retaining-class-information), [`extract_row_to_list`](README.md#extract_row_to_list-extracts-one-row-from-a-tibble-and-converts-it-to-a-list), [`mapdf`](README.md#mapdf-apply-a-function-to-each-row-of-a-data-frame)
 
 Manipulation of lists
@@ -303,19 +303,19 @@ class(comparison)     # glue::glue adds a class to the output
 random_time_string("test")
 ```
 
-    ## [1] "20180717_161007__test__mMIwnRLQgq"
+    ## [1] "20180717_161548__test__mMIwnRLQgq"
 
 ``` r
 random_time_string("test")
 ```
 
-    ## [1] "20180717_161007__test__X7HCfj0o6f"
+    ## [1] "20180717_161548__test__X7HCfj0o6f"
 
 ``` r
 random_time_string("test")
 ```
 
-    ## [1] "20180717_161007__test__F9Y32SIQAy"
+    ## [1] "20180717_161548__test__F9Y32SIQAy"
 
 Tibble helpers
 --------------

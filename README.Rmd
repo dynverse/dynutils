@@ -35,7 +35,7 @@ strs <- map_chr(seq_len(length(headings) - 1), function(i) {
   head <- lines[[headings[[i]]]]
   subhead <- subheadings %>% keep(~ headings[[i]] < . & . < headings[[i+1]]) %>% lines[.]
   
-  fun_texts <- gsub(".*(`[^`]*`).*", "\\1", subhead)
+  fun_texts <- gsub("[^`]*(`[^`]*`).*", "\\1", subhead)
   fun_links <- subhead %>% 
     tolower() %>% 
     str_replace_all(" ", "-") %>%
