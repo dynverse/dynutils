@@ -22,7 +22,7 @@ For more information, check out \url{https://github.com/dynverse/dynverse}.
 
 \itemize{
   \item{\code{\link{calculate_distance}}: Compute pairwise distances between two matrices}
-  \item{\code{\link{project_to_segments}}: Project a set of points to the closest point on a set of segments}
+  \item{\code{\link{project_to_segments}}: Project a set of points to to set of segments}
 }
 }
 

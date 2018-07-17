@@ -14,7 +14,7 @@ Table of contents
 dynutils provides the following functions:
 
 -   Manipulation of lists: [`add_class`](README.md#add_class-add-a-class-to-an-object), [`extend_with`](README.md#extend_with-extend-list-with-more-data)
--   Calculations: [`calculate_distance`](README.md#calculate_distance-compute-pairwise-distances-between-two-matrices), [`project_to_segments`](README.md#project_to_segments-project-a-set-of-points-to-the-closest-point-on-a-set-of-segments)
+-   Calculations: [`calculate_distance`](README.md#calculate_distance-compute-pairwise-distances-between-two-matrices), [`project_to_segments`](README.md#project_to_segments-project-a-set-of-points-to-to-set-of-segments)
 -   Manipulation of matrices: [`expand_matrix`](README.md#expand_matrix-add-rows-and-columns-to-a-matrix)
 -   Scaling of matrices and vectors: [`scale_uniform`](README.md#scale_uniform-rescale-data-to-have-a-certain-center-and-max-range), [`scale_minmax`](README.md#scale_minmax-rescale-data-to-a---range), [`scale_quantile`](README.md#scale_quantile-cut-off-outer-quantiles-and-rescale-to-a---range)
 -   Manipulation of functions: [`inherit_default_params`](README.md#inherit_default_params-have-one-function-inherit-the-default-parameters-from-other-functions)
@@ -85,7 +85,7 @@ as.matrix(dist(rbind(x, y)))[1:3, -1:-3]
     ## 2 1.078353 1.1378581 0.7076092 1.072164 0.8846294
     ## 3 1.335627 1.4116406 1.3526085 1.239853 1.6282805
 
-### `project_to_segments`: Project a set of points to the closest point on a set of segments
+### `project_to_segments`: Project a set of points to to set of segments
 
 ``` r
 x <- matrix(rnorm(50, 0, .5), ncol = 2)
@@ -303,19 +303,19 @@ class(comparison)     # glue::glue adds a class to the output
 random_time_string("test")
 ```
 
-    ## [1] "20180717_163548__test__mMIwnRLQgq"
+    ## [1] "20180717_164233__test__mMIwnRLQgq"
 
 ``` r
 random_time_string("test")
 ```
 
-    ## [1] "20180717_163548__test__X7HCfj0o6f"
+    ## [1] "20180717_164233__test__X7HCfj0o6f"
 
 ``` r
 random_time_string("test")
 ```
 
-    ## [1] "20180717_163548__test__F9Y32SIQAy"
+    ## [1] "20180717_164233__test__F9Y32SIQAy"
 
 Tibble helpers
 --------------

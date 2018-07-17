@@ -1,7 +1,7 @@
 #include <Rcpp.h>
 using namespace Rcpp;
 
-//' Project a set of points to the closest point on a set of segments
+//' Project a set of points to to set of segments
 //'
 //' Finds the projection index for a matrix of points \code{x}, when
 //' projected onto a set of segments defined by \code{segment_start} and \code{segment_end}.
