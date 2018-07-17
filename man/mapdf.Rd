@@ -28,7 +28,7 @@ mapdf_dfc(.x, .f, ...)
 walkdf(.x, .f, ...)
 }
 \arguments{
-\item{.x}{A \code{\link[base]{data.frame}}, \code{\link[tibble]{data_frame}} or \code{\link[tibble]{tibble}}.}
+\item{.x}{A data.frame, data_frame, or tibble.}
 
 \item{.f}{A function or formula.
 If a function, the first argument will be the row as a list.

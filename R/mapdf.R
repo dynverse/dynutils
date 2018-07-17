@@ -26,7 +26,7 @@ mapdf_fun <- function(purrrfun) {
 #'
 #' @inheritParams purrr::map
 #'
-#' @param .x A \code{\link[base]{data.frame}}, \code{\link[tibble]{data_frame}} or \code{\link[tibble]{tibble}}.
+#' @param .x A data.frame, data_frame, or tibble.
 #' @param .f A function or formula.
 #'   If a function, the first argument will be the row as a list.
 #'   If a formula, e.g. \code{~ .$a}, the \code{.} is a placeholder for the row as a list.
