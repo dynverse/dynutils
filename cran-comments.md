@@ -32,7 +32,9 @@ improved documentation and better tests.
 
 ## R CMD check results
 
-0 errors | 0 warnings | 0 notes
+Malformed Description field: should contain one or more complete sentences.
+
+0 errors | 0 warnings | 1 notes
 
 ## Reverse dependencies
 
