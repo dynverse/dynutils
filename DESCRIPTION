@@ -42,8 +42,12 @@ Imports:
   testthat,
   tibble,
   tidyr
+Suggests:
+  knitr,
+  rmarkdown
 LinkingTo:
   Rcpp
+VignetteBuilder: knitr
 Collate: 
     'RcppExports.R'
     'add_class.R'
