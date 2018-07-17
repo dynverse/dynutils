@@ -22,6 +22,36 @@ dynutils provides the following functions:
 -   Manipulation of character vectors: [`pritt`](README.md#pritt-a-friendly-version-of-glueglue), [`random_time_string`](README.md#random_time_string-generates-a-string-very-likely-to-be-unique)
 -   Tibble helpers: [`list_as_tibble`](README.md#list_as_tibble-convert-a-list-of-lists-to-a-tibble-whilst-retaining-class-information), [`tibble_as_list`](README.md#tibble_as_list-convert-a-tibble-back-to-a-list-of-lists-whilst-retaining-class-information), [`extract_row_to_list`](README.md#extract_row_to_list-extracts-one-row-from-a-tibble-and-converts-it-to-a-list), [`mapdf`](README.md#mapdf-apply-a-function-to-each-row-of-a-data-frame)
 
+<!-- ## Latest changes -->
+<!-- This section gets automatically generated from inst/NEWS.md, and also generates inst/NEWS -->
+Latest changes in dynutils 0.2.0 (unreleased)
+---------------------------------------------
+
+-   REMOVED `run_until_exit()`: This functionality is already sufficiently covered by the `processx` package.
+
+-   ADDED `mapdf()` functions: Apply a function to each row of a data frame. These functions are very similar to the `purrr::map()` functions.
+
+-   ADDED `tibble_as_list()`: Reverse functionality of `list_as_tibble()`.
+
+-   ADDED `project_to_segments()`: Project a set of points to to set of segments.
+
+-   DOCUMENTATION: Added documentation to every exported function.
+
+-   DOCUMENTATION: Added overview of functions to `?dynutils`.
+
+-   DOCUMENTATION: Added overview of functionality to `README.md`.
+
+-   TESTING: Expanded tests for tibble helper functions, `calculate_distance()`, and `install_packages()`.
+
+-   DOCUMENTATION: Added `inst/NEWS.md` file.
+
+Latest changes in dynutils 0.1.0 (2018-06-24)
+---------------------------------------------
+
+-   INITIAL RELEASE ON CRAN: dynutils provides common functionality for the dynverse packages.
+
+Check [NEWS.md](inst/NEWS.md) for a full list of changes.
+
 Manipulation of lists
 ---------------------
 
@@ -303,19 +333,19 @@ class(comparison)     # glue::glue adds a class to the output
 random_time_string("test")
 ```
 
-    ## [1] "20180717_164233__test__mMIwnRLQgq"
+    ## [1] "20180717_165421__test__mMIwnRLQgq"
 
 ``` r
 random_time_string("test")
 ```
 
-    ## [1] "20180717_164233__test__X7HCfj0o6f"
+    ## [1] "20180717_165421__test__X7HCfj0o6f"
 
 ``` r
 random_time_string("test")
 ```
 
-    ## [1] "20180717_164233__test__F9Y32SIQAy"
+    ## [1] "20180717_165421__test__F9Y32SIQAy"
 
 Tibble helpers
 --------------
