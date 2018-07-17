@@ -36,9 +36,9 @@ mapdf_at(.x, .at, .f, ...)
 \arguments{
 \item{.x}{A \code{\link[base]{data.frame}}, \code{\link[tibble]{data_frame}} or \code{\link[tibble]{tibble}}.}
 
-\item{.f}{A function in the form of \code{function(l, ...) {}},
-where \code{l} will be one row from the data frame, converted as a list,
-and \code{...} can be any other arguments passed to the \code{mapdf} function.}
+\item{.f}{A function or formula.
+If a function, the first argument will be the row as a list.
+If a formula, e.g. \code{~ .$a}, the \code{.} is a placeholder for the row as a list.}
 
 \item{...}{Additional arguments passed on to \code{.f}.}
 
@@ -67,6 +67,28 @@ These functions work a lot like purrr's \code{\link[purrr]{map}} functions.
 * \code{walkdf()} calls .f for its side-effect and returns the input .x.
 }
 \examples{
-tib <- data.frame(x=1:3, y=3:5)
-mapdf(tib, function(z) {z$x + z$y})
+library(tibble)
+
+tib <- tibble(
+  a = c(1, 2),
+  b = list(log10, sqrt),
+  c = c("parrot", "quest"),
+  .object_class = list(c("myobject", "list"), c("yourobject", "list"))
+)
+
+# map over the rows using a function
+tib \%>\% mapdf(class)
+
+# or use an anonymous function
+tib \%>\% mapdf(function(row) paste0(row$b(row$a), "_", row$c))
+
+# or a formula
+tib \%>\% mapdf(~ .$b)
+
+# there are many more variations available
+# see ?mapdf for more info
+tib \%>\% mapdf_lgl(~ .$a > 1)
+tib \%>\% mapdf_chr(~ paste0("~", .$c, "~"))
+tib \%>\% mapdf_int(~ nchar(.$c))
+tib \%>\% mapdf_dbl(~ .$a * 1.234)
 }

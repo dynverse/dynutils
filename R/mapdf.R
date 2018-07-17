@@ -1,5 +1,7 @@
+#' @importFrom purrr as_mapper
 mapdf_fun <- function(purrrfun) {
   function(.x, .f, ...) {
+    .f <- purrr::as_mapper(.f, ...)
     purrrfun(seq_len(nrow(.x)), function(row_ix) {
       row <- extract_row_to_list(.x, row_ix)
       .f(row, ...)
@@ -25,15 +27,37 @@ mapdf_fun <- function(purrrfun) {
 #' @inheritParams purrr::map
 #'
 #' @param .x A \code{\link[base]{data.frame}}, \code{\link[tibble]{data_frame}} or \code{\link[tibble]{tibble}}.
-#' @param .f A function in the form of \code{function(l, ...) {}},
-#'   where \code{l} will be one row from the data frame, converted as a list,
-#'   and \code{...} can be any other arguments passed to the \code{mapdf} function.
+#' @param .f A function or formula.
+#'   If a function, the first argument will be the row as a list.
+#'   If a formula, e.g. \code{~ .$a}, the \code{.} is a placeholder for the row as a list.
 #'
 #' @export
 #'
 #' @examples
-#' tib <- data.frame(x=1:3, y=3:5)
-#' mapdf(tib, function(z) {z$x + z$y})
+#' library(tibble)
+#'
+#' tib <- tibble(
+#'   a = c(1, 2),
+#'   b = list(log10, sqrt),
+#'   c = c("parrot", "quest"),
+#'   .object_class = list(c("myobject", "list"), c("yourobject", "list"))
+#' )
+#'
+#' # map over the rows using a function
+#' tib %>% mapdf(class)
+#'
+#' # or use an anonymous function
+#' tib %>% mapdf(function(row) paste0(row$b(row$a), "_", row$c))
+#'
+#' # or a formula
+#' tib %>% mapdf(~ .$b)
+#'
+#' # there are many more variations available
+#' # see ?mapdf for more info
+#' tib %>% mapdf_lgl(~ .$a > 1)
+#' tib %>% mapdf_chr(~ paste0("~", .$c, "~"))
+#' tib %>% mapdf_int(~ nchar(.$c))
+#' tib %>% mapdf_dbl(~ .$a * 1.234)
 mapdf <- mapdf_fun(map)
 
 #' @export
@@ -67,6 +91,7 @@ walkdf <- mapdf_fun(walk)
 #' @export
 #' @rdname mapdf
 mapdf_if <- function(.x, .p, .f, ...) {
+  .f <- purrr::as_mapper(.f, ...)
   map_if(seq_len(nrow(.x)), .p = .p, function(row_ix) {
     row <- extract_row_to_list(.x, row_ix)
     .f(row, ...)
@@ -76,6 +101,7 @@ mapdf_if <- function(.x, .p, .f, ...) {
 #' @export
 #' @rdname mapdf
 mapdf_at <- function(.x, .at, .f, ...) {
+  .f <- purrr::as_mapper(.f, ...)
   map_at(seq_len(nrow(.x)), .at = .at, function(row_ix) {
     row <- extract_row_to_list(.x, row_ix)
     .f(row, ...)
