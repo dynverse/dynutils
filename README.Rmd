@@ -153,7 +153,7 @@ x_scaled3 <- scale_quantile(x, .05)
 Check the ranges and verify that the scaling is correct.
 ```{r scale_quantile_verify}
 apply(x_scaled3, 2, range)   # each column should be [0, 1]
-plot(x_scaled2[,1], x_scaled3[,1])
+qplot(x_scaled2[,1], x_scaled3[,1]) + theme_bw()
 ```
 
 ## Manipulation of functions

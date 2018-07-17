@@ -206,7 +206,7 @@ apply(x_scaled3, 2, range)   # each column should be [0, 1]
     ## [2,]    1    1
 
 ``` r
-plot(x_scaled2[,1], x_scaled3[,1])
+qplot(x_scaled2[,1], x_scaled3[,1]) + theme_bw()
 ```
 
 ![](man/figures/README_scale_quantile_verify-1.png)
@@ -303,19 +303,19 @@ class(comparison)     # glue::glue adds a class to the output
 random_time_string("test")
 ```
 
-    ## [1] "20180717_161548__test__mMIwnRLQgq"
+    ## [1] "20180717_163548__test__mMIwnRLQgq"
 
 ``` r
 random_time_string("test")
 ```
 
-    ## [1] "20180717_161548__test__X7HCfj0o6f"
+    ## [1] "20180717_163548__test__X7HCfj0o6f"
 
 ``` r
 random_time_string("test")
 ```
 
-    ## [1] "20180717_161548__test__F9Y32SIQAy"
+    ## [1] "20180717_163548__test__F9Y32SIQAy"
 
 Tibble helpers
 --------------
