@@ -40,7 +40,7 @@ l %>% extend_with(
 )
 ```
 
-## Distances
+## Calculations
 ### `calculate_distance`: Compute pairwise distances between two matrices
 See `?calculate_distance` for the list of currently supported distances.
 
@@ -54,6 +54,27 @@ For euclidean distances, this is similar to calculating:
 ```{r dist}
 as.matrix(dist(rbind(x, y)))[1:3, -1:-3]
 ```
+
+### `project_to_segments`: Project a set of points to the closest point on a set of segments
+```{r project_to_segments}
+x <- matrix(rnorm(50, 0, .5), ncol = 2)
+segfrom <- matrix(c(0, 1, 0, -1, 1, 0, -1, 0), ncol = 2, byrow = TRUE)
+segto <- segfrom / 10
+fit <- project_to_segments(x, segfrom, segto)
+
+ggplot() +
+  geom_segment(aes(x = x[,1], xend = fit$x_proj[,1], y = x[,2], yend = fit$x_proj[,2], colour = "projection"), linetype = "dashed") +
+  geom_point(aes(x[,1], x[,2], colour = "point")) +
+  geom_segment(aes(x = segfrom[,1], xend = segto[,1], y = segfrom[,2], yend = segto[,2], colour = "segment")) +
+  cowplot::theme_cowplot() +
+  scale_colour_brewer(palette = "Dark2") +
+  scale_x_continuous(name = NULL, breaks = NULL) +
+  scale_y_continuous(name = NULL, breaks = NULL) +
+  labs(colour = "Object type")
+
+str(fit)
+```
+
 
 ## Manipulation of matrices
 ### `expand_matrix`: Add rows and columns to a matrix
@@ -172,3 +193,52 @@ random_time_string("test")
 random_time_string("test")
 ```
 
+## Tibble helpers
+
+### `list_as_tibble`: Convert a list of lists to a tibble whilst retaining class information
+```{r list_as_tibble}
+li <- list(
+  list(a = 1, b = log10, c = "parrot") %>% add_class("myobject"), 
+  list(a = 2, b = sqrt, c = "quest") %>% add_class("yourobject")
+)
+
+tib <- list_as_tibble(li)
+
+tib
+```
+
+### `tibble_as_list`: Convert a tibble back to a list of lists whilst retaining class information
+```{r tibble_as_list}
+li <- tibble_as_list(tib)
+
+li
+```
+
+### `extract_row_to_list`: Extracts one row from a tibble and converts it to a list
+```{r extract_row_to_list}
+extract_row_to_list(tib, 2)
+```
+
+### `mapdf`: Apply a function to each row of a data frame
+The `mapdf` functions apply a function on each row of a data frame. They are based heavily on purrr's `map` functions.
+```{r mapdf_function}
+tib %>% mapdf(class)
+```
+
+Or use an anonymous function.
+```{r mapdf_anonfun}
+tib %>% mapdf(function(row) paste0(row$b(row$a), "_", row$c))
+```
+
+Or even a formula.
+```{r mapdf_formula}
+tib %>% mapdf(~ .$b)
+```
+
+There are many more variations available. See `?mapdf` for more info.
+```{r mapdf_more}
+tib %>% mapdf_lgl(~ .$a > 1)
+tib %>% mapdf_chr(~ paste0("~", .$c, "~"))
+tib %>% mapdf_int(~ nchar(.$c))
+tib %>% mapdf_dbl(~ .$a * 1.234)
+```

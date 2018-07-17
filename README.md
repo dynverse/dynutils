@@ -42,8 +42,8 @@ l %>% extend_with(
     ## attr(,"class")
     ## [1] "improved_list" "my_list"       "list"
 
-Distances
----------
+Calculations
+------------
 
 ### `calculate_distance`: Compute pairwise distances between two matrices
 
@@ -71,6 +71,37 @@ as.matrix(dist(rbind(x, y)))[1:3, -1:-3]
     ## 2 1.078353 1.1378581 0.7076092 1.072164 0.8846294
     ## 3 1.335627 1.4116406 1.3526085 1.239853 1.6282805
 
+### `project_to_segments`: Project a set of points to the closest point on a set of segments
+
+``` r
+x <- matrix(rnorm(50, 0, .5), ncol = 2)
+segfrom <- matrix(c(0, 1, 0, -1, 1, 0, -1, 0), ncol = 2, byrow = TRUE)
+segto <- segfrom / 10
+fit <- project_to_segments(x, segfrom, segto)
+
+ggplot() +
+  geom_segment(aes(x = x[,1], xend = fit$x_proj[,1], y = x[,2], yend = fit$x_proj[,2], colour = "projection"), linetype = "dashed") +
+  geom_point(aes(x[,1], x[,2], colour = "point")) +
+  geom_segment(aes(x = segfrom[,1], xend = segto[,1], y = segfrom[,2], yend = segto[,2], colour = "segment")) +
+  cowplot::theme_cowplot() +
+  scale_colour_brewer(palette = "Dark2") +
+  scale_x_continuous(name = NULL, breaks = NULL) +
+  scale_y_continuous(name = NULL, breaks = NULL) +
+  labs(colour = "Object type")
+```
+
+![](man/figures/README_project_to_segments-1.png)
+
+``` r
+str(fit)
+```
+
+    ## List of 4
+    ##  $ x_proj     : num [1:25, 1:2] 0 0 0 0.278 0 ...
+    ##  $ distance   : num [1:25] 0.0068 0.01605 0.12144 0.00587 0.12604 ...
+    ##  $ segment    : int [1:25] 1 2 1 3 1 4 2 3 2 2 ...
+    ##  $ progression: num [1:25] 1 0.108 0.297 0.802 0 ...
+
 Manipulation of matrices
 ------------------------
 
@@ -81,12 +112,12 @@ x <- matrix(runif(12), ncol = 4, dimnames = list(c("a", "c", "d"), c("D", "F", "
 expand_matrix(x, letters[1:5], LETTERS[1:10], fill = 0)
 ```
 
-    ##   A B C         D E         F G         H          I J
-    ## a 0 0 0 0.4346595 0 0.3253522 0 0.7111212 0.14330438 0
-    ## b 0 0 0 0.0000000 0 0.0000000 0 0.0000000 0.00000000 0
-    ## c 0 0 0 0.7125147 0 0.7570871 0 0.1216919 0.23962942 0
-    ## d 0 0 0 0.3999944 0 0.2026923 0 0.2454885 0.05893438 0
-    ## e 0 0 0 0.0000000 0 0.0000000 0 0.0000000 0.00000000 0
+    ##   A B C         D E         F G         H         I J
+    ## a 0 0 0 0.2937302 0 0.5033395 0 0.7581031 0.5476466 0
+    ## b 0 0 0 0.0000000 0 0.0000000 0 0.0000000 0.0000000 0
+    ## c 0 0 0 0.1912601 0 0.8770575 0 0.7244989 0.7117439 0
+    ## d 0 0 0 0.8864509 0 0.1891936 0 0.9437248 0.3889051 0
+    ## e 0 0 0 0.0000000 0 0.0000000 0 0.0000000 0.0000000 0
 
 Scaling of matrices and vectors
 -------------------------------
@@ -113,8 +144,8 @@ ranges                   # should all lie between -.5 and .5
 ```
 
     ##            [,1] [,2]
-    ## [1,] -0.4760807 -0.5
-    ## [2,]  0.4760807  0.5
+    ## [1,] -0.4061179 -0.5
+    ## [2,]  0.4061179  0.5
 
 ``` r
 colMeans(ranges)         # should all be equal to 0
@@ -126,7 +157,7 @@ colMeans(ranges)         # should all be equal to 0
 apply(ranges, 2, diff)   # max should be 1
 ```
 
-    ## [1] 0.9521614 1.0000000
+    ## [1] 0.8122358 1.0000000
 
 ### `scale_minmax`: Rescale data to a \[0, 1\] range
 
@@ -207,7 +238,7 @@ check_packages(c("princurve", "mlr", "tidyverse"))
 ```
 
     ## princurve       mlr tidyverse 
-    ##      TRUE     FALSE      TRUE
+    ##      TRUE      TRUE      TRUE
 
 ### `install_packages`: Install packages taking into account the remotes of another
 
@@ -258,16 +289,154 @@ class(comparison)     # glue::glue adds a class to the output
 random_time_string("test")
 ```
 
-    ## [1] "20180705_104947__test__FAUHkCAKzv"
+    ## [1] "20180717_154540__test__mMIwnRLQgq"
 
 ``` r
 random_time_string("test")
 ```
 
-    ## [1] "20180705_104947__test__QLNDDJECgw"
+    ## [1] "20180717_154540__test__X7HCfj0o6f"
 
 ``` r
 random_time_string("test")
 ```
 
-    ## [1] "20180705_104947__test__rEBbJsr2U8"
+    ## [1] "20180717_154540__test__F9Y32SIQAy"
+
+Tibble helpers
+--------------
+
+### `list_as_tibble`: Convert a list of lists to a tibble whilst retaining class information
+
+``` r
+li <- list(
+  list(a = 1, b = log10, c = "parrot") %>% add_class("myobject"), 
+  list(a = 2, b = sqrt, c = "quest") %>% add_class("yourobject")
+)
+
+tib <- list_as_tibble(li)
+
+tib
+```
+
+    ## # A tibble: 2 x 4
+    ##       a b         c      .object_class
+    ##   <dbl> <list>    <chr>  <list>       
+    ## 1     1 <builtin> parrot <chr [2]>    
+    ## 2     2 <builtin> quest  <chr [2]>
+
+### `tibble_as_list`: Convert a tibble back to a list of lists whilst retaining class information
+
+``` r
+li <- tibble_as_list(tib)
+
+li
+```
+
+    ## [[1]]
+    ## $a
+    ## [1] 1
+    ## 
+    ## $b
+    ## function (x)  .Primitive("log10")
+    ## 
+    ## $c
+    ## [1] "parrot"
+    ## 
+    ## attr(,"class")
+    ## [1] "myobject" "list"    
+    ## 
+    ## [[2]]
+    ## $a
+    ## [1] 2
+    ## 
+    ## $b
+    ## function (x)  .Primitive("sqrt")
+    ## 
+    ## $c
+    ## [1] "quest"
+    ## 
+    ## attr(,"class")
+    ## [1] "yourobject" "list"
+
+### `extract_row_to_list`: Extracts one row from a tibble and converts it to a list
+
+``` r
+extract_row_to_list(tib, 2)
+```
+
+    ## $a
+    ## [1] 2
+    ## 
+    ## $b
+    ## function (x)  .Primitive("sqrt")
+    ## 
+    ## $c
+    ## [1] "quest"
+    ## 
+    ## attr(,"class")
+    ## [1] "yourobject" "list"
+
+### `mapdf`: Apply a function to each row of a data frame
+
+The `mapdf` functions apply a function on each row of a data frame. They are based heavily on purrr's `map` functions.
+
+``` r
+tib %>% mapdf(class)
+```
+
+    ## [[1]]
+    ## [1] "myobject" "list"    
+    ## 
+    ## [[2]]
+    ## [1] "yourobject" "list"
+
+Or use an anonymous function.
+
+``` r
+tib %>% mapdf(function(row) paste0(row$b(row$a), "_", row$c))
+```
+
+    ## [[1]]
+    ## [1] "0_parrot"
+    ## 
+    ## [[2]]
+    ## [1] "1.4142135623731_quest"
+
+Or even a formula.
+
+``` r
+tib %>% mapdf(~ .$b)
+```
+
+    ## [[1]]
+    ## function (x)  .Primitive("log10")
+    ## 
+    ## [[2]]
+    ## function (x)  .Primitive("sqrt")
+
+There are many more variations available. See `?mapdf` for more info.
+
+``` r
+tib %>% mapdf_lgl(~ .$a > 1)
+```
+
+    ## [1] FALSE  TRUE
+
+``` r
+tib %>% mapdf_chr(~ paste0("~", .$c, "~"))
+```
+
+    ## [1] "~parrot~" "~quest~"
+
+``` r
+tib %>% mapdf_int(~ nchar(.$c))
+```
+
+    ## [1] 6 5
+
+``` r
+tib %>% mapdf_dbl(~ .$a * 1.234)
+```
+
+    ## [1] 1.234 2.468
