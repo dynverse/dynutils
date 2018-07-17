@@ -17,7 +17,7 @@ test_that("project_to_segments works", {
 
   expect_equal(out$x_proj, matrix(c(-1.75, -1.5, -1.25, 0, 0, 0, 1.25, 1.5, 1.75, .75, .5, .25, 1, 1, 1, .25, .5, .75), ncol = 2))
   expect_equal(out$distance, c(.125, 0, .125, .5, .25, .5, .125, 0, .125))
-  expect_equal(out$segment, c(3, 3, 3, 0, 0, 0, 2, 2, 2))
+  expect_equal(out$segment, c(4, 4, 4, 1, 1, 1, 3, 3, 3))
   expect_equal(out$progression, c(.875, .75, .625, 0, 0, 0, .375, .25, .125))
 
   # plot(segment_points)

@@ -40,11 +40,8 @@ List project_to_segments(NumericMatrix x, NumericMatrix segment_start, NumericMa
   colnames(x_proj) = colnames(x);
 
   NumericVector distance(x.nrow());
-  distance.attr("names") = rownames(x);
   IntegerVector segment(x.nrow());
-  segment.attr("names") = rownames(x);
   NumericVector progression(x.nrow());
-  progression.attr("names") = rownames(x);
 
   // iterate over points in x
   for (int i = 0; i < x.nrow(); ++i) {
@@ -89,15 +86,19 @@ List project_to_segments(NumericMatrix x, NumericMatrix segment_start, NumericMa
     // save the best projection to the output data structures
     x_proj(i, _) = p_proj;
     distance[i] = best_distance;
-    segment[i] = best_segment;
+    segment[i] = best_segment + 1; // increase by 1 for R
     progression[i] = best_progression;
   }
+
+  distance.attr("names") = rownames(x);
+  segment.attr("names") = rownames(x);
+  progression.attr("names") = rownames(x);
 
   // return output
   List ret;
   ret["x_proj"] = x_proj;
   ret["distance"] = distance;
-  ret["segment"] = segment + 1;
+  ret["segment"] = segment;
   ret["progression"] = progression;
 
     return ret;
