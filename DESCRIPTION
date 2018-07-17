@@ -53,6 +53,7 @@ Collate:
     'expand_matrix.R'
     'extend_with.R'
     'install_packages.R'
+    'mapdf.R'
     'package.R'
     'pritt.R'
     'random_time_string.R'

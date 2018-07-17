@@ -18,5 +18,5 @@ test_that("Tibble helpers", {
 
   expect_null(extract_row_to_list(NULL, 1))
 
-  expect_equal(tmap(tib, function(.) {.$a}), list(1, 2))
+  expect_equal(mapdf(tib, function(.) {.$a}), list(1, 2))
 })
