@@ -108,7 +108,7 @@ extract_row_to_list <- function(tib, row_id) {
 #'   .object_class = list(c("myobject", "list"), c("yourobject", "list"))
 #' )
 #'
-#' li <- list_as_tibble(tib)
+#' li <- tibble_as_list(tib)
 #'
 #' li
 tibble_as_list <- function(tib) {

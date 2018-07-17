@@ -25,7 +25,7 @@ tib <- tibble(
   .object_class = list(c("myobject", "list"), c("yourobject", "list"))
 )
 
-li <- list_as_tibble(tib)
+li <- tibble_as_list(tib)
 
 li
 }
