@@ -18,8 +18,17 @@ the corresponding row from the tibble as a list
 Extracts one row from a tibble and converts it to a list
 }
 \examples{
-l <- list(list(a = 1, b = log10), list(a = 2, b = sqrt))
-tib <- list_as_tibble(l)
+library(tibble)
+
+tib <- tibble(
+  a = c(1, 2),
+  b = list(log10, sqrt),
+  c = c("parrot", "quest"),
+  .object_class = list(c("myobject", "list"), c("yourobject", "list"))
+)
 
 extract_row_to_list(tib, 2)
+}
+\seealso{
+list_as_tibble tibble_as_list mapdf
 }
