@@ -10,9 +10,10 @@
 #'   \item{\code{\link{extend_with}}: Extend list with more data}
 #' }
 #'
-#' @section Distances:
+#' @section Calculations:
 #' \itemize{
 #'   \item{\code{\link{calculate_distance}}: Compute pairwise distances between two matrices}
+#'   \item{\code{\link{project_to_segments}}: Project a set of points to the closest point on a set of segments}
 #' }
 #'
 #' @section Manipulation of matrices:
@@ -44,6 +45,13 @@
 #'   \item{\code{\link{random_time_string}}: Generates a string very likely to be unique}
 #' }
 #'
+#' @section Tibble helpers:
+#' \itemize{
+#'   \item{\code{\link{list_as_tibble}}: Convert a list of lists to a tibble whilst retaining class information}
+#'   \item{\code{\link{tibble_as_list}}: Convert a tibble back to a list of lists whilst retaining class information}
+#'   \item{\code{\link{extract_row_to_list}}: Extracts one row from a tibble and converts it to a list}
+#'   \item{\code{\link{mapdf}}: Apply a function to each row of a data frame}
+#' }
 #'
 #'
 #' @import dplyr
