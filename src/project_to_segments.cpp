@@ -27,40 +27,75 @@ using namespace Rcpp;
 //' @export
 // [[Rcpp::export]]
 List project_to_segments(NumericMatrix x, NumericMatrix segment_start, NumericMatrix segment_end) {
+  // Determine dimensionalities
+  int ncols = x.ncol();
+  int npts = x.nrow();
+  int nsegs = segment_start.nrow();
 
-  // calculate lengths of the segments
-  NumericVector length(segment_start.nrow());
-  for (int i = 0; i < segment_start.nrow(); ++i) {
-    length[i] = sum(pow(segment_end(i, _) - segment_start(i, _), 2.0));
+  if (segment_start.ncol() != ncols || segment_end.ncol() != ncols) {
+    stop("the number of columns of 'x', 'segment_start' and 'segment_end' should be exactly the same");
+  }
+  if (segment_end.nrow() != nsegs) {
+    stop("the number of rows of 'segment_start' and 'segment_end' should be exactly the same");
   }
 
-  // projections of x onto s
-  NumericMatrix x_proj(x.nrow(), x.ncol());
-  rownames(x_proj) = rownames(x);
-  colnames(x_proj) = colnames(x);
+  // calculate lengths of the segments
+  NumericVector length = no_init(nsegs);
+  NumericMatrix diff = no_init(nsegs, ncols);
+  for (int i = 0; i < nsegs; ++i) {
+    // OPTIMISATION: compute length manually
+    //   diff(i, _) = segment_end(i, _) - segment_start(i, _);
+    //   length[i] = sum(pow(diff(i, _), 2));
+    double l = 0;
+    for (int k = 0; k < ncols; ++k) {
+      double value = segment_end(i, k) - segment_start(i, k);
+      diff(i, k) = value;
+      l += value * value;
+    }
+    length[i] = l;
+    // END OPTIMISATION
+  }
 
-  NumericVector distance(x.nrow());
-  IntegerVector segment(x.nrow());
-  NumericVector progression(x.nrow());
+  // Output objects
+  NumericMatrix x_proj = no_init(npts, ncols);
+  NumericVector distance = no_init(npts);
+  IntegerVector segment = no_init(npts);
+  NumericVector progression = no_init(npts);
+
+  // OPTIMISATION: Allocate space for intermediate objects
+  NumericVector p = no_init(ncols);
+  NumericVector p_proj = no_init(ncols);
+  NumericVector test_p_proj = no_init(ncols);
+  // END OPTIMISATION
 
   // iterate over points in x
-  for (int i = 0; i < x.nrow(); ++i) {
-    NumericVector p = x(i, _);
+  for (int i = 0; i < npts; ++i) {
+    // OPTIMISATION: Preallocate p
+    //   NumericVector p = x(i, _);
+    for (int k = 0; k < ncols; ++k) {
+      p[k] = x(i, k);
+    }
 
     // store information on the closest segment
-    NumericVector p_proj(x.ncol());
     int best_segment = -1;
     double best_progression = -1;
     double best_distance = R_PosInf;
 
     // iterate over the segments
-    for (int segi = 0; segi < segment_start.nrow(); ++segi) {
+    for (int segi = 0; segi < nsegs; ++segi) {
 
       // project p orthogonally onto the segment
-      NumericVector diff1 = segment_end(segi, _) - segment_start(segi, _);
-      NumericVector diff2 = p - segment_start(segi, _);
+      // OPTIMISATION: do not compute diff1 and diff2 separately
+      //   NumericVector diff1 = diff(segi, _);
+      //   NumericVector diff2 = p - segment_start(segi, _);
+      //   double test_progression = sum(diff1 * diff2) / length(segi);
+      double test_progression = 0;
+      for (int k = 0; k < ncols; ++k) {
+        test_progression += diff(segi, k) * (p[k] - segment_start(segi, k));
+      }
+      test_progression /= length(segi);
+      // END OPTIMISATION
 
-      double test_progression = sum(diff1 * diff2) / length(segi);
       if (test_progression < 0) {
         test_progression = 0.0;
       }
@@ -69,27 +104,39 @@ List project_to_segments(NumericMatrix x, NumericMatrix segment_start, NumericMa
       }
 
       // calculate position of projection and the distance
-      NumericVector test_p_proj = segment_start(segi, _) + test_progression * diff1;
-
-      // calculate distance of projection and original point
-      double test_distance = sum(pow(test_p_proj - p, 2.0));
+      // OPTIMISATION: compute di and n_test manually
+      //   NumericVector test_p_proj = segment_start(segi, _) + test_progression * diff1;
+      //   double test_distance = sum(pow(test_p_proj - p, 2.0));
+      double test_distance = 0;
+      for (int k = 0; k < ncols; ++k) {
+        double value = segment_start(segi, k) + test_progression * diff(segi, k);
+        test_p_proj(k) = value;
+        test_distance += (value - p[k]) * (value - p[k]);
+      }
+      // END OPTIMISATION
 
       // if this is better than what was found earlier, store it
       if (test_distance < best_distance) {
         best_distance = test_distance;
-        p_proj = test_p_proj;
         best_segment = segi;
         best_progression = test_progression;
+        for (int k = 0; k < ncols; ++k) {
+          p_proj[k] = test_p_proj[k];
+        }
       }
     }
 
     // save the best projection to the output data structures
-    x_proj(i, _) = p_proj;
+    for (int k = 0; k < ncols; ++k) {
+      x_proj(i, k) = p_proj(k);
+    }
     distance[i] = best_distance;
     segment[i] = best_segment + 1; // increase by 1 for R
     progression[i] = best_progression;
   }
 
+  rownames(x_proj) = rownames(x);
+  colnames(x_proj) = colnames(x);
   distance.attr("names") = rownames(x);
   segment.attr("names") = rownames(x);
   progression.attr("names") = rownames(x);
@@ -101,5 +148,5 @@ List project_to_segments(NumericMatrix x, NumericMatrix segment_start, NumericMa
   ret["segment"] = segment;
   ret["progression"] = progression;
 
-    return ret;
+  return ret;
 }
