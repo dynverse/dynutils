@@ -4,3 +4,6 @@
 ^\.git$
 ^appveyor\.yml$
 ^README\.Rmd$
+^inst/NEWS.md$
+^cran-comments\.md$
+^revdep$
