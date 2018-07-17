@@ -8,8 +8,8 @@ Provides common functionality for the dynverse packages. The functions in dynuti
 
 dynverse is created to support the development, execution, and benchmarking of trajectory inference methods. For more information, check out [github.com/dynverse/dynverse](https://github.com/dynverse/dynverse).
 
-Table of contents
------------------
+Overview
+--------
 
 dynutils provides the following functions:
 
@@ -22,10 +22,13 @@ dynutils provides the following functions:
 -   Manipulation of character vectors: [`pritt`](README.md#pritt-a-friendly-version-of-glueglue), [`random_time_string`](README.md#random_time_string-generates-a-string-very-likely-to-be-unique)
 -   Tibble helpers: [`list_as_tibble`](README.md#list_as_tibble-convert-a-list-of-lists-to-a-tibble-whilst-retaining-class-information), [`tibble_as_list`](README.md#tibble_as_list-convert-a-tibble-back-to-a-list-of-lists-whilst-retaining-class-information), [`extract_row_to_list`](README.md#extract_row_to_list-extracts-one-row-from-a-tibble-and-converts-it-to-a-list), [`mapdf`](README.md#mapdf-apply-a-function-to-each-row-of-a-data-frame)
 
-<!-- ## Latest changes -->
+Latest changes
+--------------
+
+Check [NEWS.md](inst/NEWS.md) for a full list of changes.
+
 <!-- This section gets automatically generated from inst/NEWS.md, and also generates inst/NEWS -->
-Latest changes in dynutils 1.0.0 (unreleased)
----------------------------------------------
+### dynutils 1.0.0 (unreleased)
 
 -   REMOVED `run_until_exit()`: This functionality is already sufficiently covered by the `processx` package.
 
@@ -45,17 +48,16 @@ Latest changes in dynutils 1.0.0 (unreleased)
 
 -   DOCUMENTATION: Added `inst/NEWS.md` file.
 
-Latest changes in dynutils 0.1.0 (2018-06-24)
----------------------------------------------
+### dynutils 0.1.0 (2018-06-24)
 
 -   INITIAL RELEASE ON CRAN: dynutils provides common functionality for the dynverse packages.
 
-Check [NEWS.md](inst/NEWS.md) for a full list of changes.
+Examples
+--------
 
-Manipulation of lists
----------------------
+### Manipulation of lists
 
-### `add_class`: Add a class to an object
+#### `add_class`: Add a class to an object
 
 ``` r
 l <- list(important_number = 42) %>% add_class("my_list")
@@ -68,7 +70,7 @@ l
     ## attr(,"class")
     ## [1] "my_list" "list"
 
-### `extend_with`: Extend list with more data
+#### `extend_with`: Extend list with more data
 
 ``` r
 l %>% extend_with(
@@ -86,10 +88,9 @@ l %>% extend_with(
     ## attr(,"class")
     ## [1] "improved_list" "my_list"       "list"
 
-Calculations
-------------
+### Calculations
 
-### `calculate_distance`: Compute pairwise distances between two matrices
+#### `calculate_distance`: Compute pairwise distances between two matrices
 
 See `?calculate_distance` for the list of currently supported distances.
 
@@ -115,7 +116,7 @@ as.matrix(dist(rbind(x, y)))[1:3, -1:-3]
     ## 2 1.078353 1.1378581 0.7076092 1.072164 0.8846294
     ## 3 1.335627 1.4116406 1.3526085 1.239853 1.6282805
 
-### `project_to_segments`: Project a set of points to to set of segments
+#### `project_to_segments`: Project a set of points to to set of segments
 
 ``` r
 x <- matrix(rnorm(50, 0, .5), ncol = 2)
@@ -146,10 +147,9 @@ str(fit)
     ##  $ segment    : int [1:25] 1 2 1 3 1 4 2 3 2 2 ...
     ##  $ progression: num [1:25] 1 0.108 0.297 0.802 0 ...
 
-Manipulation of matrices
-------------------------
+### Manipulation of matrices
 
-### `expand_matrix`: Add rows and columns to a matrix
+#### `expand_matrix`: Add rows and columns to a matrix
 
 ``` r
 x <- matrix(runif(12), ncol = 4, dimnames = list(c("a", "c", "d"), c("D", "F", "H", "I")))
@@ -163,10 +163,9 @@ expand_matrix(x, letters[1:5], LETTERS[1:10], fill = 0)
     ## d 0 0 0 0.8864509 0 0.1891936 0 0.9437248 0.3889051 0
     ## e 0 0 0 0.0000000 0 0.0000000 0 0.0000000 0.0000000 0
 
-Scaling of matrices and vectors
--------------------------------
+### Scaling of matrices and vectors
 
-### `scale_uniform`: Rescale data to have a certain center and max range
+#### `scale_uniform`: Rescale data to have a certain center and max range
 
 Generate a matrix from a normal distribution with a large standard deviation, centered at c(5, 5).
 
@@ -203,7 +202,7 @@ apply(ranges, 2, diff)   # max should be 1
 
     ## [1] 0.8122358 1.0000000
 
-### `scale_minmax`: Rescale data to a \[0, 1\] range
+#### `scale_minmax`: Rescale data to a \[0, 1\] range
 
 ``` r
 x_scaled2 <- scale_minmax(x)
@@ -219,7 +218,7 @@ apply(x_scaled2, 2, range)  # each column should be [0, 1]
     ## [1,]    0    0
     ## [2,]    1    1
 
-### `scale_quantile`: Cut off outer quantiles and rescale to a \[0, 1\] range
+#### `scale_quantile`: Cut off outer quantiles and rescale to a \[0, 1\] range
 
 ``` r
 x_scaled3 <- scale_quantile(x, .05)
@@ -241,10 +240,9 @@ qplot(x_scaled2[,1], x_scaled3[,1]) + theme_bw()
 
 ![](man/figures/README_scale_quantile_verify-1.png)
 
-Manipulation of functions
--------------------------
+### Manipulation of functions
 
-### `inherit_default_params`: Have one function inherit the default parameters from other functions
+#### `inherit_default_params`: Have one function inherit the default parameters from other functions
 
 ``` r
 fun1 <- function(a = 10, b = 7) runif(a, -b, b)
@@ -265,10 +263,9 @@ fun3
     ##     list(x = fun1(a, b), y = fun2(c))
     ## }
 
-Manipulation of packages
-------------------------
+### Manipulation of packages
 
-### `check_packages`: Easily checking whether certain packages are installed
+#### `check_packages`: Easily checking whether certain packages are installed
 
 ``` r
 check_packages("SCORPIUS", "dynutils", "wubbalubbadubdub")
@@ -284,7 +281,7 @@ check_packages(c("princurve", "mlr", "tidyverse"))
     ## princurve       mlr tidyverse 
     ##      TRUE      TRUE      TRUE
 
-### `install_packages`: Install packages taking into account the remotes of another
+#### `install_packages`: Install packages taking into account the remotes of another
 
 This is useful for installing suggested packages with GitHub remotes.
 
@@ -302,10 +299,9 @@ install_packages("SCORPIUS", package = "dynmethods", prompt = TRUE)
     Installed SCORPIUS
     [1] "SCORPIUS"
 
-Manipulation of character vectors
----------------------------------
+### Manipulation of character vectors
 
-### `pritt`: A friendly version of `glue::glue`
+#### `pritt`: A friendly version of `glue::glue`
 
 ``` r
 a <- 10
@@ -327,30 +323,29 @@ class(comparison)     # glue::glue adds a class to the output
 
     ## [1] "glue"      "character"
 
-### `random_time_string`: Generates a string very likely to be unique
+#### `random_time_string`: Generates a string very likely to be unique
 
 ``` r
 random_time_string("test")
 ```
 
-    ## [1] "20180717_173253__test__mMIwnRLQgq"
+    ## [1] "20180717_181223__test__mMIwnRLQgq"
 
 ``` r
 random_time_string("test")
 ```
 
-    ## [1] "20180717_173253__test__X7HCfj0o6f"
+    ## [1] "20180717_181223__test__X7HCfj0o6f"
 
 ``` r
 random_time_string("test")
 ```
 
-    ## [1] "20180717_173253__test__F9Y32SIQAy"
+    ## [1] "20180717_181223__test__F9Y32SIQAy"
 
-Tibble helpers
---------------
+### Tibble helpers
 
-### `list_as_tibble`: Convert a list of lists to a tibble whilst retaining class information
+#### `list_as_tibble`: Convert a list of lists to a tibble whilst retaining class information
 
 ``` r
 li <- list(
@@ -369,7 +364,7 @@ tib
     ## 1     1 <builtin> parrot <chr [2]>    
     ## 2     2 <builtin> quest  <chr [2]>
 
-### `tibble_as_list`: Convert a tibble back to a list of lists whilst retaining class information
+#### `tibble_as_list`: Convert a tibble back to a list of lists whilst retaining class information
 
 ``` r
 li <- tibble_as_list(tib)
@@ -403,7 +398,7 @@ li
     ## attr(,"class")
     ## [1] "yourobject" "list"
 
-### `extract_row_to_list`: Extracts one row from a tibble and converts it to a list
+#### `extract_row_to_list`: Extracts one row from a tibble and converts it to a list
 
 ``` r
 extract_row_to_list(tib, 2)
@@ -421,7 +416,7 @@ extract_row_to_list(tib, 2)
     ## attr(,"class")
     ## [1] "yourobject" "list"
 
-### `mapdf`: Apply a function to each row of a data frame
+#### `mapdf`: Apply a function to each row of a data frame
 
 The `mapdf` functions apply a function on each row of a data frame. They are based heavily on purrr's `map` functions.
 

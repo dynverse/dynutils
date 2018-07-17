@@ -23,13 +23,13 @@ Provides common functionality for the dynverse packages. The functions in dynuti
 dynverse is created to support the development, execution, and benchmarking of trajectory inference methods.
 For more information, check out [github.com/dynverse/dynverse](https://github.com/dynverse/dynverse).
 
-## Table of contents
+## Overview
 dynutils provides the following functions:
 
 ```{r echo=FALSE, results='asis'}
 lines <- readr::read_lines("README.Rmd")
-headings <- c(which(grepl("^## ", lines)), length(lines))
-subheadings <- which(grepl("^### .*`", lines))
+headings <- c(which(grepl("^### ", lines)), length(lines))
+subheadings <- which(grepl("^#### .*`", lines))
 
 strs <- map_chr(seq_len(length(headings) - 1), function(i) {
   head <- lines[[headings[[i]]]]
@@ -44,7 +44,7 @@ strs <- map_chr(seq_len(length(headings) - 1), function(i) {
       str_replace("^-*", "README.md#")
     
     paste0(
-      gsub("## ", "* ", head), ": \n",
+      gsub("### ", "* ", head), ": \n",
       paste0("  [", fun_texts, "](", fun_links, ")", collapse = ",\n", sep = ""),
       "\n"
     )
@@ -56,7 +56,10 @@ strs <- map_chr(seq_len(length(headings) - 1), function(i) {
 cat(strs, sep = "")
 ```
 
-<!-- ## Latest changes -->
+## Latest changes
+
+Check [NEWS.md](inst/NEWS.md) for a full list of changes.
+
 <!-- This section gets automatically generated from inst/NEWS.md, and also generates inst/NEWS -->
 
 ```{r news, results='asis', echo=FALSE}
@@ -71,26 +74,26 @@ readr::write_lines(news_normal, "inst/NEWS")
 # creating text for readme
 ix <- c(which(str_detect(news_md, "^# dynutils")), length(news_md)+1)
 
-cat(str_replace(news_md[[ix[[1]]]], "^# ", "## Latest changes in "))
+cat(str_replace(news_md[[ix[[1]]]], "^# ", "### "))
 
 cat(news_md[seq(ix[[1]]+1, ix[[2]]-1)], sep = "\n")
 
-cat(str_replace(news_md[[ix[[2]]]], "^# ", "## Latest changes in "))
+cat(str_replace(news_md[[ix[[2]]]], "^# ", "### "))
 
 cat(news_md[seq(ix[[2]]+1, ix[[3]]-1)], sep = "\n")
 ```
 
-Check [NEWS.md](inst/NEWS.md) for a full list of changes.
 
-## Manipulation of lists
-### `add_class`: Add a class to an object
+## Examples
+### Manipulation of lists
+#### `add_class`: Add a class to an object
 
 ```{r add_class}
 l <- list(important_number = 42) %>% add_class("my_list")
 l
 ```
 
-### `extend_with`: Extend list with more data
+#### `extend_with`: Extend list with more data
 
 ```{r extend_with}
 l %>% extend_with(
@@ -99,8 +102,8 @@ l %>% extend_with(
 )
 ```
 
-## Calculations
-### `calculate_distance`: Compute pairwise distances between two matrices
+### Calculations
+#### `calculate_distance`: Compute pairwise distances between two matrices
 See `?calculate_distance` for the list of currently supported distances.
 
 ```{r calculate_distance}
@@ -114,7 +117,7 @@ For euclidean distances, this is similar to calculating:
 as.matrix(dist(rbind(x, y)))[1:3, -1:-3]
 ```
 
-### `project_to_segments`: Project a set of points to to set of segments
+#### `project_to_segments`: Project a set of points to to set of segments
 ```{r project_to_segments}
 x <- matrix(rnorm(50, 0, .5), ncol = 2)
 segfrom <- matrix(c(0, 1, 0, -1, 1, 0, -1, 0), ncol = 2, byrow = TRUE)
@@ -135,17 +138,17 @@ str(fit)
 ```
 
 
-## Manipulation of matrices
-### `expand_matrix`: Add rows and columns to a matrix
+### Manipulation of matrices
+#### `expand_matrix`: Add rows and columns to a matrix
 
 ```{r expand_matrix}
 x <- matrix(runif(12), ncol = 4, dimnames = list(c("a", "c", "d"), c("D", "F", "H", "I")))
 expand_matrix(x, letters[1:5], LETTERS[1:10], fill = 0)
 ```
 
-## Scaling of matrices and vectors
+### Scaling of matrices and vectors
 
-### `scale_uniform`: Rescale data to have a certain center and max range
+#### `scale_uniform`: Rescale data to have a certain center and max range
 Generate a matrix from a normal distribution with a large standard deviation, centered at c(5, 5).
 ```{r scale_uniform_gen}
 x <- matrix(rnorm(200*2, sd = 10, mean = 5), ncol = 2)
@@ -164,7 +167,7 @@ colMeans(ranges)         # should all be equal to 0
 apply(ranges, 2, diff)   # max should be 1
 ```
 
-### `scale_minmax`: Rescale data to a [0, 1] range
+#### `scale_minmax`: Rescale data to a [0, 1] range
 ```{r scale_minmax}
 x_scaled2 <- scale_minmax(x)
 ```
@@ -175,7 +178,7 @@ apply(x_scaled2, 2, range)  # each column should be [0, 1]
 ```
 
 
-### `scale_quantile`: Cut off outer quantiles and rescale to a [0, 1] range
+#### `scale_quantile`: Cut off outer quantiles and rescale to a [0, 1] range
 ```{r scale_quantile}
 x_scaled3 <- scale_quantile(x, .05)
 ```
@@ -186,8 +189,8 @@ apply(x_scaled3, 2, range)   # each column should be [0, 1]
 qplot(x_scaled2[,1], x_scaled3[,1]) + theme_bw()
 ```
 
-## Manipulation of functions
-### `inherit_default_params`: Have one function inherit the default parameters from other functions
+### Manipulation of functions
+#### `inherit_default_params`: Have one function inherit the default parameters from other functions
 
 ```{r inherit_default_params}
 fun1 <- function(a = 10, b = 7) runif(a, -b, b)
@@ -203,14 +206,14 @@ fun3 <- inherit_default_params(
 fun3
 ```
 
-## Manipulation of packages
-### `check_packages`: Easily checking whether certain packages are installed
+### Manipulation of packages
+#### `check_packages`: Easily checking whether certain packages are installed
 ```{r check_packages}
 check_packages("SCORPIUS", "dynutils", "wubbalubbadubdub")
 check_packages(c("princurve", "mlr", "tidyverse"))
 ```
 
-### `install_packages`: Install packages taking into account the remotes of another
+#### `install_packages`: Install packages taking into account the remotes of another
 
 This is useful for installing suggested packages with GitHub remotes.
 
@@ -230,9 +233,9 @@ Installed SCORPIUS
 [1] "SCORPIUS"
 ```
 
-## Manipulation of character vectors
+### Manipulation of character vectors
 
-### `pritt`: A friendly version of `glue::glue`
+#### `pritt`: A friendly version of `glue::glue`
 
 ```{r pritt}
 a <- 10
@@ -243,7 +246,7 @@ comparison            # glue::glue prints differently than base R
 class(comparison)     # glue::glue adds a class to the output
 ```
 
-### `random_time_string`: Generates a string very likely to be unique
+#### `random_time_string`: Generates a string very likely to be unique
 ```{r random_time_string}
 random_time_string("test")
 
@@ -252,9 +255,9 @@ random_time_string("test")
 random_time_string("test")
 ```
 
-## Tibble helpers
+### Tibble helpers
 
-### `list_as_tibble`: Convert a list of lists to a tibble whilst retaining class information
+#### `list_as_tibble`: Convert a list of lists to a tibble whilst retaining class information
 ```{r list_as_tibble}
 li <- list(
   list(a = 1, b = log10, c = "parrot") %>% add_class("myobject"), 
@@ -266,19 +269,19 @@ tib <- list_as_tibble(li)
 tib
 ```
 
-### `tibble_as_list`: Convert a tibble back to a list of lists whilst retaining class information
+#### `tibble_as_list`: Convert a tibble back to a list of lists whilst retaining class information
 ```{r tibble_as_list}
 li <- tibble_as_list(tib)
 
 li
 ```
 
-### `extract_row_to_list`: Extracts one row from a tibble and converts it to a list
+#### `extract_row_to_list`: Extracts one row from a tibble and converts it to a list
 ```{r extract_row_to_list}
 extract_row_to_list(tib, 2)
 ```
 
-### `mapdf`: Apply a function to each row of a data frame
+#### `mapdf`: Apply a function to each row of a data frame
 The `mapdf` functions apply a function on each row of a data frame. They are based heavily on purrr's `map` functions.
 ```{r mapdf_function}
 tib %>% mapdf(class)
