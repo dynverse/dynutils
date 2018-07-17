@@ -7,3 +7,6 @@
 ^inst/NEWS.md$
 ^cran-comments\.md$
 ^revdep$
+^vignettes/.*\.html$
+^vignettes/.*\.md$
+^vignettes/.*/.*\.png$
