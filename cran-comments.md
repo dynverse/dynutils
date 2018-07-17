@@ -36,6 +36,9 @@ Malformed Description field: should contain one or more complete sentences.
 
 0 errors | 0 warnings | 1 notes
 
+↑ the description field note is a false positive ─ the field does contain three sentences. 
+I'm not sure what specifically triggers the note message.
+
 ## Reverse dependencies
 
 This is a new release, so there are no reverse dependencies.
