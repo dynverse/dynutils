@@ -34,7 +34,7 @@ mapdf_fun <- function(purrrfun) {
 #' @export
 #'
 #' @examples
-#' library(tibble)
+#' library(dplyr)
 #'
 #' tib <- tibble(
 #'   a = c(1, 2),

@@ -50,7 +50,7 @@ These functions work a lot like purrr's \code{\link[purrr]{map}} functions.
 * \code{walkdf()} calls .f for its side-effect and returns the input .x.
 }
 \examples{
-library(tibble)
+library(dplyr)
 
 tib <- tibble(
   a = c(1, 2),
