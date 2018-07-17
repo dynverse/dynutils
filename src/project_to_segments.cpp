@@ -16,6 +16,14 @@ using namespace Rcpp;
 //'   \item{progression}{the progression of a projection along its segment}
 //'   \item{distance}{the distance from each point in \code{x} to its projection in \code{x_proj}}
 //'
+//' @examples
+//' x <- matrix(rnorm(50, 0, .5), ncol = 2)
+//' segfrom <- matrix(c(0, 1, 0, -1, 1, 0, -1, 0), ncol = 2, byrow = TRUE)
+//' segto <- segfrom / 10
+//' fit <- project_to_segments(x, segfrom, segto)
+//'
+//' str(fit) # examine output
+//'
 //' @export
 // [[Rcpp::export]]
 List project_to_segments(NumericMatrix x, NumericMatrix segment_start, NumericMatrix segment_end) {
@@ -89,7 +97,7 @@ List project_to_segments(NumericMatrix x, NumericMatrix segment_start, NumericMa
   List ret;
   ret["x_proj"] = x_proj;
   ret["distance"] = distance;
-  ret["segment"] = segment;
+  ret["segment"] = segment + 1;
   ret["progression"] = progression;
 
     return ret;

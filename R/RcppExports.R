@@ -24,6 +24,14 @@ euclidean_distance <- function(x, y) {
 #'   \item{progression}{the progression of a projection along its segment}
 #'   \item{distance}{the distance from each point in \code{x} to its projection in \code{x_proj}}
 #'
+#' @examples
+#' x <- matrix(rnorm(50, 0, .5), ncol = 2)
+#' segfrom <- matrix(c(0, 1, 0, -1, 1, 0, -1, 0), ncol = 2, byrow = TRUE)
+#' segto <- segfrom / 10
+#' fit <- project_to_segments(x, segfrom, segto)
+#'
+#' str(fit) # examine output
+#'
 #' @export
 project_to_segments <- function(x, segment_start, segment_end) {
     .Call('_dynutils_project_to_segments', PACKAGE = 'dynutils', x, segment_start, segment_end)
