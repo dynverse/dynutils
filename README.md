@@ -7,5 +7,3 @@ dynutils
 Provides common functionality for the dynverse packages. An overview of this functionality is available using the `?dynutils` command or in the [examples vignette](vignettes/functionality.md).
 
 dynverse is created to support the development, execution, and benchmarking of trajectory inference methods. For more information, check out [github.com/dynverse/dynverse](https://github.com/dynverse/dynverse).
-
-Check `news(package = "dynutils")` or [NEWS.md](inst/NEWS.md) for a full list of changes.
