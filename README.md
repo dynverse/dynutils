@@ -24,7 +24,7 @@ dynutils provides the following functions:
 
 <!-- ## Latest changes -->
 <!-- This section gets automatically generated from inst/NEWS.md, and also generates inst/NEWS -->
-Latest changes in dynutils 0.2.0 (unreleased)
+Latest changes in dynutils 1.0.0 (unreleased)
 ---------------------------------------------
 
 -   REMOVED `run_until_exit()`: This functionality is already sufficiently covered by the `processx` package.
@@ -333,19 +333,19 @@ class(comparison)     # glue::glue adds a class to the output
 random_time_string("test")
 ```
 
-    ## [1] "20180717_165421__test__mMIwnRLQgq"
+    ## [1] "20180717_173253__test__mMIwnRLQgq"
 
 ``` r
 random_time_string("test")
 ```
 
-    ## [1] "20180717_165421__test__X7HCfj0o6f"
+    ## [1] "20180717_173253__test__X7HCfj0o6f"
 
 ``` r
 random_time_string("test")
 ```
 
-    ## [1] "20180717_165421__test__F9Y32SIQAy"
+    ## [1] "20180717_173253__test__F9Y32SIQAy"
 
 Tibble helpers
 --------------
