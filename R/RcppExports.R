@@ -9,7 +9,7 @@ euclidean_distance <- function(x, y) {
     .Call('_dynutils_euclidean_distance', PACKAGE = 'dynutils', x, y)
 }
 
-#' Project a set of points to the closest point on a set of segments
+#' Project a set of points to to set of segments
 #'
 #' Finds the projection index for a matrix of points \code{x}, when
 #' projected onto a set of segments defined by \code{segment_start} and \code{segment_end}.
@@ -23,6 +23,14 @@ euclidean_distance <- function(x, y) {
 #'   \item{segment}{the index of the segment a point is projected on}
 #'   \item{progression}{the progression of a projection along its segment}
 #'   \item{distance}{the distance from each point in \code{x} to its projection in \code{x_proj}}
+#'
+#' @examples
+#' x <- matrix(rnorm(50, 0, .5), ncol = 2)
+#' segfrom <- matrix(c(0, 1, 0, -1, 1, 0, -1, 0), ncol = 2, byrow = TRUE)
+#' segto <- segfrom / 10
+#' fit <- project_to_segments(x, segfrom, segto)
+#'
+#' str(fit) # examine output
 #'
 #' @export
 project_to_segments <- function(x, segment_start, segment_end) {

@@ -2,7 +2,7 @@
 % Please edit documentation in R/tibble.R
 \name{list_as_tibble}
 \alias{list_as_tibble}
-\title{Attempts to convert a list of lists to a tibble}
+\title{Convert a list of lists to a tibble}
 \usage{
 list_as_tibble(list_of_rows)
 }
@@ -13,10 +13,20 @@ list_as_tibble(list_of_rows)
 A tibble with the same number of rows as there were elements in \code{list_of_rows}
 }
 \description{
-Attempts to convert a list of lists to a tibble
+Convert a list of lists to a tibble
 }
 \examples{
-l <- list(list(a = 1, b = log10), list(a = 2, b = sqrt))
-tib <- list_as_tibble(l)
+library(purrr)
+
+li <- list(
+  list(a = 1, b = log10, c = "parrot") \%>\% add_class("myobject"),
+  list(a = 2, b = sqrt, c = "quest") \%>\% add_class("yourobject")
+)
+
+tib <- list_as_tibble(li)
+
 tib
+}
+\seealso{
+tibble_as_list extract_row_to_list mapdf
 }

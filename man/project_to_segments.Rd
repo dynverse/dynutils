@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{project_to_segments}
 \alias{project_to_segments}
-\title{Project a set of points to the closest point on a set of segments}
+\title{Project a set of points to to set of segments}
 \usage{
 project_to_segments(x, segment_start, segment_end)
 }
@@ -23,4 +23,13 @@ A list with components
 \description{
 Finds the projection index for a matrix of points \code{x}, when
 projected onto a set of segments defined by \code{segment_start} and \code{segment_end}.
+}
+\examples{
+x <- matrix(rnorm(50, 0, .5), ncol = 2)
+segfrom <- matrix(c(0, 1, 0, -1, 1, 0, -1, 0), ncol = 2, byrow = TRUE)
+segto <- segfrom / 10
+fit <- project_to_segments(x, segfrom, segto)
+
+str(fit) # examine output
+
 }

@@ -18,10 +18,11 @@ For more information, check out \url{https://github.com/dynverse/dynverse}.
 }
 }
 
-\section{Distances}{
+\section{Calculations}{
 
 \itemize{
   \item{\code{\link{calculate_distance}}: Compute pairwise distances between two matrices}
+  \item{\code{\link{project_to_segments}}: Project a set of points to to set of segments}
 }
 }
 
@@ -61,6 +62,16 @@ For more information, check out \url{https://github.com/dynverse/dynverse}.
 \itemize{
   \item{\code{\link{pritt}}: A friendly version of \code{\link[glue:glue]{glue::glue}}}
   \item{\code{\link{random_time_string}}: Generates a string very likely to be unique}
+}
+}
+
+\section{Tibble helpers}{
+
+\itemize{
+  \item{\code{\link{list_as_tibble}}: Convert a list of lists to a tibble whilst retaining class information}
+  \item{\code{\link{tibble_as_list}}: Convert a tibble back to a list of lists whilst retaining class information}
+  \item{\code{\link{extract_row_to_list}}: Extracts one row from a tibble and converts it to a list}
+  \item{\code{\link{mapdf}}: Apply a function to each row of a data frame}
 }
 }
 

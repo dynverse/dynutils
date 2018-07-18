@@ -1,4 +1,4 @@
-#' Attempts to convert a list of lists to a tibble
+#' Convert a list of lists to a tibble
 #'
 #' @param list_of_rows The list to be converted to a tibble
 #'
@@ -6,11 +6,19 @@
 #' @export
 #'
 #' @importFrom testthat expect_equal
-#' @importFrom stats setNames
+#'
+#' @seealso tibble_as_list extract_row_to_list mapdf
 #'
 #' @examples
-#' l <- list(list(a = 1, b = log10), list(a = 2, b = sqrt))
-#' tib <- list_as_tibble(l)
+#' library(purrr)
+#'
+#' li <- list(
+#'   list(a = 1, b = log10, c = "parrot") %>% add_class("myobject"),
+#'   list(a = 2, b = sqrt, c = "quest") %>% add_class("yourobject")
+#' )
+#'
+#' tib <- list_as_tibble(li)
+#'
 #' tib
 list_as_tibble <- function(list_of_rows) {
   object_classes <- list_of_rows %>% map(class)
@@ -27,7 +35,7 @@ list_as_tibble <- function(list_of_rows) {
       list
     }
   }) %>%
-    setNames(list_names) %>%
+    set_names(list_names) %>%
     as_tibble()
 
   tib[[".object_class"]] <- object_classes
@@ -42,9 +50,17 @@ list_as_tibble <- function(list_of_rows) {
 #' @return the corresponding row from the tibble as a list
 #' @export
 #'
+#' @seealso list_as_tibble tibble_as_list mapdf
+#'
 #' @examples
-#' l <- list(list(a = 1, b = log10), list(a = 2, b = sqrt))
-#' tib <- list_as_tibble(l)
+#' library(tibble)
+#'
+#' tib <- tibble(
+#'   a = c(1, 2),
+#'   b = list(log10, sqrt),
+#'   c = c("parrot", "quest"),
+#'   .object_class = list(c("myobject", "list"), c("yourobject", "list"))
+#' )
 #'
 #' extract_row_to_list(tib, 2)
 extract_row_to_list <- function(tib, row_id) {
@@ -71,19 +87,30 @@ extract_row_to_list <- function(tib, row_id) {
   }
 }
 
-
-#' Loop over each row in a tibble
+#' Convert a tibble to a list of lists
 #'
-#' @inheritParams purrr::map
-#' @param .f The function to apply to each row
+#' @param tib A tibble
+#'
+#' @return A list with the same number of lists as there were rows in \code{tib}
 #' @export
 #'
+#' @importFrom testthat expect_equal
+#'
+#' @seealso list_as_tibble extract_row_to_list mapdf
+#'
 #' @examples
-#' tib <- data.frame(x=1:3, y=3:5)
-#' tmap(tib, function(z) {z$x + z$y})
-tmap <- function(.x, .f, ...) {
-  map(seq_len(nrow(.x)), function(row_ix) {
-    row <- extract_row_to_list(.x, row_ix)
-    .f(row, ...)
-  })
+#' library(tibble)
+#'
+#' tib <- tibble(
+#'   a = c(1, 2),
+#'   b = list(log10, sqrt),
+#'   c = c("parrot", "quest"),
+#'   .object_class = list(c("myobject", "list"), c("yourobject", "list"))
+#' )
+#'
+#' li <- tibble_as_list(tib)
+#'
+#' li
+tibble_as_list <- function(tib) {
+  mapdf(tib, identity)
 }
