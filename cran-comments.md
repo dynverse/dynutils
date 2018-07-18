@@ -3,6 +3,8 @@
 dynutils 1.0.0 comes with a lot of new functionality,
 improved documentation and better tests.
 
+The notes and errors from the previous release has been fixed.
+
   * REMOVED `run_until_exit()`: This functionality is already 
     sufficiently covered by the `processx` package.
     
@@ -40,10 +42,6 @@ Malformed Description field: should contain one or more complete sentences.
 I'm not sure what specifically triggers the note message.
 
 ## Reverse dependencies
-
-This is a new release, so there are no reverse dependencies.
-
----
 
 * I have run R CMD check on the 1 downstream dependencies.
   (Summary at [revdep/README.md](revdep/README.md)). 
