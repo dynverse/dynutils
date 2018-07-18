@@ -41,10 +41,6 @@ I'm not sure what specifically triggers the note message.
 
 ## Reverse dependencies
 
-This is a new release, so there are no reverse dependencies.
-
----
-
 * I have run R CMD check on the 1 downstream dependencies.
   (Summary at [revdep/README.md](revdep/README.md)). 
   
