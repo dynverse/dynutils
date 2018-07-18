@@ -1,6 +1,9 @@
 language: r
 sudo: required
 dist: trusty
+os:
+ - linux
+ - osx
 cache: packages
 install:
  - if [ `git branch | grep '* master' | wc -l` == 0 ]; then sed -i 's#\(dynverse/[^, ]*\)#\1@devel#' DESCRIPTION; fi

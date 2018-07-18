@@ -3,6 +3,8 @@
 dynutils 1.0.0 comes with a lot of new functionality,
 improved documentation and better tests.
 
+The notes and errors from the previous release has been fixed.
+
   * REMOVED `run_until_exit()`: This functionality is already 
     sufficiently covered by the `processx` package.
     
