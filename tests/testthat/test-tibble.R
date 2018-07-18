@@ -36,4 +36,6 @@ test_that("Testing whether extract_row_to_list works", {
   for (i in seq_len(nrow(tib))) {
     expect_equal(extract_row_to_list(tib, i), li[[i]])
   }
+
+  expect_null(extract_row_to_list(NULL, 1))
 })
