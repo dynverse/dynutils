@@ -43,7 +43,9 @@ Imports:
   tibble,
   tidyr
 Suggests:
+  ggplot2,
   knitr,
+  readr,
   rmarkdown
 LinkingTo:
   Rcpp
