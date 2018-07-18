@@ -95,11 +95,11 @@ ggplot() +
   geom_segment(aes(x = x[,1], xend = fit$x_proj[,1], y = x[,2], yend = fit$x_proj[,2], colour = "projection"), linetype = "dashed") +
   geom_point(aes(x[,1], x[,2], colour = "point")) +
   geom_segment(aes(x = segfrom[,1], xend = segto[,1], y = segfrom[,2], yend = segto[,2], colour = "segment")) +
-  cowplot::theme_cowplot() +
   scale_colour_brewer(palette = "Dark2") +
   scale_x_continuous(name = NULL, breaks = NULL) +
   scale_y_continuous(name = NULL, breaks = NULL) +
-  labs(colour = "Object type")
+  labs(colour = "Object type") +
+  theme_classic()
 
 str(fit)
 ```

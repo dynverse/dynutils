@@ -160,9 +160,9 @@ Manipulation of character vectors
 
 ### `random_time_string`: Generates a string very likely to be unique
 
-    #> [1] "20180717_182549__test__mMIwnRLQgq"
-    #> [1] "20180717_182549__test__X7HCfj0o6f"
-    #> [1] "20180717_182549__test__F9Y32SIQAy"
+    #> [1] "20180718_112029__test__mMIwnRLQgq"
+    #> [1] "20180718_112029__test__X7HCfj0o6f"
+    #> [1] "20180718_112029__test__F9Y32SIQAy"
 
 Tibble helpers
 --------------
