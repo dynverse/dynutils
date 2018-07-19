@@ -15,7 +15,7 @@ rmarkdown::render("vignettes/functionality.Rmd", output_format = "github_documen
 -->
 
 ```{r setup1, echo=FALSE, message=FALSE}
-knitr::opts_chunk$set(comment = "#>", collapse = TRUE, echo = FALSE)
+knitr::opts_chunk$set(comment = "#>", collapse = TRUE)
 library(dplyr)
 library(readr)
 library(purrr)
