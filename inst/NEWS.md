@@ -1,4 +1,8 @@
-# dynutils 1.0.0 (unreleased)
+# dynutils 1.0.1 (unreleased)
+
+  * DOCUMENTATION: Fixed functionality vignette not showing any code.
+  
+# dynutils 1.0.0 (2018-07-18)
   
   * REMOVED `run_until_exit()`: This functionality is already 
     sufficiently covered by the `processx` package.
