@@ -8,6 +8,7 @@
 \alias{mapdf_dbl}
 \alias{mapdf_dfr}
 \alias{mapdf_dfc}
+\alias{mapdf_lat}
 \alias{walkdf}
 \title{Apply a function to each row of a data frame}
 \usage{
@@ -24,6 +25,8 @@ mapdf_dbl(.x, .f, ...)
 mapdf_dfr(.x, .f, ...)
 
 mapdf_dfc(.x, .f, ...)
+
+mapdf_lat(.x, .f, ...)
 
 walkdf(.x, .f, ...)
 }
@@ -46,6 +49,8 @@ These functions work a lot like purrr's \code{\link[purrr]{map}} functions.
 * \code{mapdf_lgl()}, \code{mapdf_int()}, \code{mapdf_dbl()} and \code{mapdf_chr()} return vectors of the corresponding type (or die trying).
 
 * \code{mapdf_dfr()} and \code{mapdf_dfc()} return data frames created by row-binding and column-binding respectively. They require dplyr to be installed.
+
+* \code{mapdf_lat()} returns a tibble by transforming outputted lists to a tibble using \code{\link{list_as_tibble}}.
 
 * \code{walkdf()} calls .f for its side-effect and returns the input .x.
 }

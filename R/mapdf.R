@@ -20,6 +20,8 @@ mapdf_fun <- function(purrrfun) {
 #'
 #'  * \code{mapdf_dfr()} and \code{mapdf_dfc()} return data frames created by row-binding and column-binding respectively. They require dplyr to be installed.
 #'
+#'  * \code{mapdf_lat()} returns a tibble by transforming outputted lists to a tibble using \code{\link{list_as_tibble}}.
+#'
 #'  * \code{walkdf()} calls .f for its side-effect and returns the input .x.
 #'
 #' @importFrom purrr map map_lgl map_chr map_int map_dbl map_dfr map_dfc walk map_if map_at
@@ -86,4 +88,11 @@ mapdf_dfc <- mapdf_fun(map_dfc)
 
 #' @export
 #' @rdname mapdf
+mapdf_lat <- mapdf_fun(function(X, FUN) {
+  list_as_tibble(map(X, FUN))
+})
+
+#' @export
+#' @rdname mapdf
 walkdf <- mapdf_fun(walk)
+
