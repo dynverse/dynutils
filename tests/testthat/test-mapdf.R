@@ -9,8 +9,6 @@ tib <- tibble(
   .object_class = list(c("myobject", "list"), c("yourobject", "list"))
 )
 
-# mapdf mapdf_lgl mapdf_chr mapdf_int mapdf_dbl, mapdf_dfr mapdf_dfc walkdf mapdf_if mapdf_at
-
 test_that("Testing whether mapdf works", {
   expect_equal(mapdf(tib, class), tib$.object_class)
   expect_equal(mapdf(tib, function(row) class(row)), tib$.object_class)
@@ -45,6 +43,22 @@ test_that("Testing whether mapdf_dfr works", {
     data_frame(a = 1, b = row$e, c = row$a)
   })
   expect_equal(out, data_frame(a = c(1, 1), b = c(TRUE, FALSE), c = c(1, 2)))
+})
+
+test_that("Testing whether mapdf_lat works", {
+  out <- mapdf_lat(tib, function(row) {
+    list(a = 1, b = row$e, c = row$a, d = list(row$c, row$a)) %>% add_class("test")
+  })
+  expected_out <- tibble(
+    a = c(1, 1),
+    b = c(TRUE, FALSE),
+    c = c(1, 2),
+    d = list(list("parrot", 1), list("quest", 2)),
+    .object_class = list(c("test", "list"), c("test", "list"))
+  )
+
+  expect_equal(colnames(out), colnames(expected_out))
+  walk(colnames(out), ~ expect_equal(out[[.]], expected_out[[.]]))
 })
 
 test_that("Testing whether mapdf_dfc works", {
