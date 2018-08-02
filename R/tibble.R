@@ -75,8 +75,8 @@ extract_row_to_list <- function(tib, row_id) {
       stop("No rows were matched")
     }
 
-    object
-      as.list %>%
+    object %>%
+      as.list() %>%
       map(function(x) {
         if (is.null(x) | !is.list(x)) {
           x
