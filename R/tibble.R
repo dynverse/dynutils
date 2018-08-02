@@ -68,6 +68,14 @@ extract_row_to_list <- function(tib, row_id) {
   if (!is.null(tib)) {
     object <- tib %>%
       slice(!!x) %>%
+
+    if (nrow(object) > 1) {
+      stop("Multiple rows were matched")
+    } else if (nrow(object) == 0) {
+      stop("No rows were matched")
+    }
+
+    object
       as.list %>%
       map(function(x) {
         if (is.null(x) | !is.list(x)) {
