@@ -67,7 +67,7 @@ extract_row_to_list <- function(tib, row_id) {
   x <- enquo(row_id)
   if (!is.null(tib)) {
     object <- tib %>%
-      slice(!!x) %>%
+      slice(!!x)
 
     if (nrow(object) > 1) {
       stop("Multiple rows were matched")
