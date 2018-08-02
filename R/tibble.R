@@ -45,7 +45,7 @@ list_as_tibble <- function(list_of_rows) {
 #' Extracts one row from a tibble and converts it to a list
 #'
 #' @param tib the tibble
-#' @param row_id the index of the row to be selected
+#' @param row_id the index of the row to be selected, or alternatively an expression which will be evaluated to such an index
 #'
 #' @return the corresponding row from the tibble as a list
 #' @export
