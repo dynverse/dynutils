@@ -45,7 +45,7 @@ list_as_tibble <- function(list_of_rows) {
 #' Extracts one row from a tibble and converts it to a list
 #'
 #' @param tib the tibble
-#' @param row_id the index of the row to be selected
+#' @param row_id the index of the row to be selected, or alternatively an expression which will be evaluated to such an index
 #'
 #' @return the corresponding row from the tibble as a list
 #' @export
@@ -64,10 +64,19 @@ list_as_tibble <- function(list_of_rows) {
 #'
 #' extract_row_to_list(tib, 2)
 extract_row_to_list <- function(tib, row_id) {
+  x <- enquo(row_id)
   if (!is.null(tib)) {
     object <- tib %>%
-      slice(row_id) %>%
-      as.list %>%
+      slice(!!x)
+
+    if (nrow(object) > 1) {
+      stop("Multiple rows were matched")
+    } else if (nrow(object) == 0) {
+      stop("No rows were matched")
+    }
+
+    object <- object %>%
+      as.list() %>%
       map(function(x) {
         if (is.null(x) | !is.list(x)) {
           x
