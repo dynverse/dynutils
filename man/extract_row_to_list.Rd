@@ -28,6 +28,7 @@ tib <- tibble(
 )
 
 extract_row_to_list(tib, 2)
+extract_row_to_list(tib, which(a == 1))
 }
 \seealso{
 list_as_tibble tibble_as_list mapdf
