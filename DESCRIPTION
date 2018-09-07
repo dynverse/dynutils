@@ -63,5 +63,6 @@ Collate:
     'package.R'
     'pritt.R'
     'random_time_string.R'
+    'safe_tempdir.R'
     'scaling.R'
     'tibble.R'
