@@ -22,14 +22,16 @@ test_that("error is produced when super package is not installed", {
 })
 
 test_that("dependencies can be installed", {
-  if (check_packages("whoami")) remove.packages("whoami")
+  is_present <- check_packages("whoami")
+  if (is_present) remove.packages("whoami")
   out <- install_packages("whoami", package = "desc")
-  remove.packages("whoami")
+  if (!is_present) remove.packages("whoami")
   expect_equal(out, "whoami")
 })
 
 test_that("prompt works as expected", {
-  if (check_packages("princurve")) remove.packages("princurve")
+  is_present <- check_packages("princurve")
+  if (is_present) remove.packages("princurve")
   options(dynutils_testmodepromptresponse = 2)
   expect_error(
     expect_message(
@@ -42,7 +44,7 @@ test_that("prompt works as expected", {
   if (check_packages("princurve")) remove.packages("princurve")
   options(dynutils_testmodepromptresponse = 1)
   expect_message(out <- install_packages("princurve", prompt = TRUE), "Following packages have to be installed")
-  remove.packages("princurve")
+  if (is_present) remove.packages("princurve")
   expect_equal(out, "princurve")
 
   options(dynutils_testmodepromptresponse = NULL)
