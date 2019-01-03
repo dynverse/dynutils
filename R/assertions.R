@@ -98,7 +98,7 @@ on_failure(is_bounded) <- function(call, env) {
 #' # TRUE
 #'
 #' assert_that(li %has_names% "c")
-#' # Error: li is missing 1 names from "c": "c"
+#' # Error: li is missing 1 name from "c": "c"
 #'
 #' assert_that(li %has_names% letters)
 #' # Error: li is missing 24 names from letters: "c", "d", "e", ...
@@ -124,7 +124,7 @@ on_failure(has_names) <- function(call, env) {
     " is missing ",
     length(elements),
     " name",
-    ifelse(length(elements) == 0, "", "s"),
+    ifelse(length(elements) == 1, "", "s"),
     " from ",
     deparse(call$which),
     ": ",
@@ -177,7 +177,7 @@ on_failure(all_in) <- function(call, env) {
     " is missing ",
     length(elements),
     " element",
-    ifelse(length(elements) == 0, "", "s"),
+    ifelse(length(elements) == 1, "", "s"),
     " from ",
     deparse(call$table),
     ": ",

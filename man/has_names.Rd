@@ -26,7 +26,7 @@ assert_that(li \%has_names\% "a")
 # TRUE
 
 assert_that(li \%has_names\% "c")
-# Error: li is missing 1 names from "c": "c"
+# Error: li is missing 1 name from "c": "c"
 
 assert_that(li \%has_names\% letters)
 # Error: li is missing 24 names from letters: "c", "d", "e", ...
