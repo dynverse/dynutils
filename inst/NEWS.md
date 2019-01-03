@@ -1,11 +1,11 @@
-# dynutils 1.0.1 (unreleased)
+# dynutils 1.0.1 (2018-01-03)
 
  * DOCUMENTATION: Fixed functionality vignette not showing any code.
 
- * FUNCTIONALITY: Add `mapdf_lat`. This function expects a data frame,
+ * FUNCTIONALITY: Add `mapdf_lat()`. This function expects a data frame,
    which gets broken down into a list of lists before applying the FUN.
    It expects the FUN to return a list, which gets transformed into a tibble
-   with `list_as_tibble`.
+   with `list_as_tibble()`.
 
  * FUNCTIONALITY: `extract_row_to_list()` now works with tidy evaluation.
 
@@ -16,7 +16,7 @@
    unique temporary directory and creates it if necessary.
    
  * FUNCTIONALITY: Add helper assertion functions 
-   `%all_in`, `%has_names%`, `is_bounded()` and `is_single_numeric`.
+   `%allin%`, `%has_names%`, `is_bounded()` and `is_single_numeric()`.
  
 # dynutils 1.0.0 (2018-07-18)
  
