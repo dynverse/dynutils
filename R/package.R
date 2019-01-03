@@ -77,6 +77,7 @@
 #' @importFrom assertthat on_failure<-
 #'
 #' @useDynLib dynutils
+#' @importFrom Rcpp evalCpp
 #'
 #' @docType package
 #' @name dynutils
