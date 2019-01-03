@@ -21,7 +21,7 @@ Authors@R: c(
 Description: 
   Provides common functionality for the 'dynverse' packages. 
   'dynverse' is created to support the development, execution, and benchmarking of trajectory inference methods.
-  For more information, check out <https://github.com/dynverse/dynverse>.
+  For more information, check out <dynverse.org>.
 License: GPL-3
 LazyData: TRUE
 RoxygenNote: 6.1.0
