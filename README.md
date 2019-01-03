@@ -15,5 +15,4 @@ this functionality is available using the `?dynutils` command or in the
 
 dynverse is created to support the development, execution, and
 benchmarking of trajectory inference methods. For more information,
-check out
-[github.com/dynverse/dynverse](https://github.com/dynverse/dynverse).
+check out [dynverse.org](dynverse.org).
