@@ -22,7 +22,7 @@ test_that("Testing whether mapdf_lgl works", {
 })
 
 test_that("Testing whether mapdf_chr works", {
-  expect_equal(mapdf_chr(tib, glue::collapse), c("1.Primitive(\"log10\")parrotc(1, 2, 3)TRUE", "2.Primitive(\"sqrt\")questc(\"a\", \"b\", \"c\")FALSE"))
+  expect_equal(mapdf_chr(tib, glue::glue_collapse), c("1.Primitive(\"log10\")parrotc(1, 2, 3)TRUE", "2.Primitive(\"sqrt\")questc(\"a\", \"b\", \"c\")FALSE"))
   expect_equal(mapdf_chr(tib, function(row) paste0("~", row$e, "~")), paste0("~", tib$e, "~"))
   expect_equal(mapdf_chr(tib, ~.$c), tib$c)
 })

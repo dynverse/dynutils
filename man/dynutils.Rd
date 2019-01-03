@@ -8,7 +8,7 @@
 \description{
 Provides common functionality for the dynverse packages.
 dynverse is created to support the development, execution, and benchmarking of trajectory inference methods.
-For more information, check out \url{https://github.com/dynverse/dynverse}.
+For more information, check out \url{dynverse.org}.
 }
 \section{Manipulation of lists}{
 
@@ -72,6 +72,23 @@ For more information, check out \url{https://github.com/dynverse/dynverse}.
   \item{\code{\link{tibble_as_list}}: Convert a tibble back to a list of lists whilst retaining class information}
   \item{\code{\link{extract_row_to_list}}: Extracts one row from a tibble and converts it to a list}
   \item{\code{\link{mapdf}}: Apply a function to each row of a data frame}
+}
+}
+
+\section{File helpers}{
+
+\itemize{
+  \item{\code{\link{safe_tempdir}}: Create an empty temporary directory and return its path}
+}
+}
+
+\section{Assertion helpers}{
+
+\itemize{
+  \item{\code{\link{\%all_in\%}}: Check whether a vector are all elements of another vector}
+  \item{\code{\link{\%has_names\%}}: Check whether an object has certain names}
+  \item{\code{\link{is_single_numeric}}: Check whether a value is a single numeric}
+  \item{\code{\link{is_bounded}}: Check whether a value within a certain interval}
 }
 }
 

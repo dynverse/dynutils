@@ -1,7 +1,7 @@
 Package: dynutils
 Type: Package
 Title: Common Functionality for the 'dynverse' Packages
-Version: 1.0.1.9000
+Version: 1.0.1
 Authors@R: c(
     person(
       "Robrecht", 
@@ -21,13 +21,16 @@ Authors@R: c(
 Description: 
   Provides common functionality for the 'dynverse' packages. 
   'dynverse' is created to support the development, execution, and benchmarking of trajectory inference methods.
-  For more information, check out <https://github.com/dynverse/dynverse>.
+  For more information, check out <dynverse.org>.
 License: GPL-3
+URL: http://github.com/dynverse/dynutils
+BugReports: https://github.com/dynverse/dynutils/issues
 LazyData: TRUE
 RoxygenNote: 6.1.0
 Depends:
   R (>= 3.0.0)
 Imports: 
+  assertthat,
   crayon,
   devtools,
   desc,
@@ -53,6 +56,7 @@ VignetteBuilder: knitr
 Collate: 
     'RcppExports.R'
     'add_class.R'
+    'assertions.R'
     'inherit_default_params.R'
     'calculate_distance.R'
     'check_packages.R'
