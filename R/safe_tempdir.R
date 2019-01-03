@@ -1,4 +1,4 @@
-#' Get temporary directory
+#' Create an empty temporary directory and return its path
 #'
 #' @param subfolder Name of a subfolder to be created
 #'
