@@ -17,3 +17,18 @@ x \%has_names\% which
 \description{
 Check whether an object has certain names
 }
+\examples{
+\dontrun{
+library(assertthat)
+li <- list(a = 1, b = 2)
+
+assert_that(li \%has_names\% "a")
+# TRUE
+
+assert_that(li \%has_names\% "c")
+# Error: li is missing 1 names from "c": "c"
+
+assert_that(li \%has_names\% letters)
+# Error: li is missing 24 names from letters: "c", "d", "e", ...
+}
+}

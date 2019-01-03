@@ -21,3 +21,28 @@ is_bounded(x, lower_bound = -Inf, lower_closed = FALSE,
 \description{
 Check whether a value within a certain interval
 }
+\examples{
+\dontrun{
+library(assertthat)
+assert_that(is_bounded(10))
+# TRUE
+
+assert_that(is_bounded(10:30))
+# TRUE
+
+assert_that(is_bounded(Inf))
+# Error: Inf is not bounded by (-Inf,Inf)
+
+assert_that(is_bounded(10, lower_bound = 20))
+# Error: 10 is not bounded by (20,Inf)
+
+assert_that(is_bounded(
+  10,
+  lower_bound = 20,
+  lower_closed = TRUE,
+  upper_bound = 30,
+  upper_closed = FALSE
+))
+# Error: 10 is not bounded by [20,30)
+}
+}

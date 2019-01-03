@@ -12,3 +12,9 @@ safe_tempdir(subfolder)
 \description{
 Create an empty temporary directory and return its path
 }
+\examples{
+\dontrun{
+safe_tempdir("samson")
+# "/tmp/Rtmp8xCGJe/file339a13bec763/samson"
+}
+}

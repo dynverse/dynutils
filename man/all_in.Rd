@@ -17,3 +17,19 @@ x \%allin\% table
 \description{
 Check whether a vector are all elements of another vector
 }
+\examples{
+\dontrun{
+library(assertthat)
+assert_that(c(1, 2) \%allin\% c(0, 1, 2, 3, 4))
+# TRUE
+
+assert_that("a" \%allin\% letters)
+# TRUE
+
+assert_that("A" \%allin\% letters)
+# Error: "A" is missing 1 element from letters: "A"
+
+assert_that(1:10 \%allin\% letters)
+# Error: 1:10 is missing 10 elements from letters: 1, 2, 3, ...
+}
+}

@@ -86,7 +86,7 @@ For more information, check out \url{dynverse.org}.
 
 \itemize{
   \item{\code{\link[allin]{\%allin\%}}: Check whether a vector are all elements of another vector}
-  \item{\code{\link[hasnames]{\%hasnames\%}}: Check whether an object has certain names}
+  \item{\code{\link[has_names]{\%has_names\%}}: Check whether an object has certain names}
   \item{\code{\link{is_single_numeric}}: Check whether a value is a single numeric}
   \item{\code{\link{is_bounded}}: Check whether a value within a certain interval}
 }
