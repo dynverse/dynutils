@@ -28,6 +28,7 @@ RoxygenNote: 6.1.0
 Depends:
   R (>= 3.0.0)
 Imports: 
+  assertthat,
   crayon,
   devtools,
   desc,
@@ -53,6 +54,7 @@ VignetteBuilder: knitr
 Collate: 
     'RcppExports.R'
     'add_class.R'
+    'assertions.R'
     'inherit_default_params.R'
     'calculate_distance.R'
     'check_packages.R'
