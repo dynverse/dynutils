@@ -1,30 +1,22 @@
-# dynutils 1.0.0
+# dynutils 1.0.1
 
-dynutils 1.0.0 comes with a lot of new functionality,
-improved documentation and better tests.
+ * DOCUMENTATION: Fixed functionality vignette not showing any code.
 
-The notes and errors from the previous release has been fixed.
+ * FUNCTIONALITY: Add `mapdf_lat()`. This function expects a data frame,
+   which gets broken down into a list of lists before applying the FUN.
+   It expects the FUN to return a list, which gets transformed into a tibble
+   with `list_as_tibble()`.
 
-  * REMOVED `run_until_exit()`: This functionality is already 
-    sufficiently covered by the `processx` package.
-    
-  * ADDED `mapdf()` functions: Apply a function to each row of a data frame.
-    These functions are very similar to the `purrr::map()` functions.
-  
-  * ADDED `tibble_as_list()`: Reverse functionality of `list_as_tibble()`.
-  
-  * ADDED `project_to_segments()`: Project a set of points to to set of segments.
-  
-  * DOCUMENTATION: Added documentation to every exported function.
-  
-  * DOCUMENTATION: Added overview of functions to `?dynutils`.
-  
-  * DOCUMENTATION: Added overview of functionality to `README.md`.
-  
-  * TESTING: Expanded tests for tibble helper functions,
-    `calculate_distance()`, and `install_packages()`.
-    
-  * DOCUMENTATION: Added `inst/NEWS.md` file.
+ * FUNCTIONALITY: `extract_row_to_list()` now works with tidy evaluation.
+
+ * TESTING: Expand tests for tibble helper fuctions `list_as_tibble()` and
+   `extract_row_to_list()`.
+
+ * FUNCTIONALITY: Add `safe_tempdir()` function. This function creates a
+   unique temporary directory and creates it if necessary.
+   
+ * FUNCTIONALITY: Add helper assertion functions 
+   `%allin%`, `%has_names%`, `is_bounded()` and `is_single_numeric()`.
 
 ## Test environments
 * local Fedora 28 installation, R 3.5.0
@@ -33,23 +25,19 @@ The notes and errors from the previous release has been fixed.
 * win-builder (on appveyor), R 3.5.0
 
 ## R CMD check results
+```
+── R CMD check results ──────────────────────────────── dynutils 1.0.0.9000 ────
+Duration: 38.2s
 
-Malformed Description field: should contain one or more complete sentences.
+0 errors ✔ | 0 warnings ✔ | 0 notes ✔
 
-0 errors | 0 warnings | 1 notes
-
-↑ the description field note is a false positive ─ the field does contain three sentences. 
-I'm not sure what specifically triggers the note message.
+R CMD check succeeded
+```
 
 ## Reverse dependencies
 
-* I have run R CMD check on the 1 downstream dependencies.
-  (Summary at [revdep/README.md](revdep/README.md)). 
-  
+TO DO:
 ```
-── CHECK ──────────────────────────────────────────────── 1 packages ──
-✔ SCORPIUS 1.0.2                         ── E: 0     | W: 0     | N: 0                                                                                                                   
-OK:                                                                                                                                                                                    
-BROKEN: 0
-Total time: 9 min
+revdepcheck::revdep_reset()
+revdepcheck::revdep_check(num_workers = 8, timeout = as.difftime(60, units = "mins"))
 ```
