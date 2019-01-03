@@ -36,7 +36,7 @@ rmarkdown::render("vignettes/functionality.Rmd", output_format = "github_documen
   - File helpers:
     [`safe_tempdir`](functionality.md#safe_tempdir-create-an-empty-temporary-directory-and-return-its-path)
   - Assertion helpers:
-    [`%allin%`](functionality.md#allin-check-whether-a-vector-are-all-elements-of-another-vector),
+    [`%all_in%`](functionality.md#all_in-check-whether-a-vector-are-all-elements-of-another-vector),
     [`%has_names%`](functionality.md#has_names-check-whether-an-object-has-certain-names),
     [`is_single_numeric`](functionality.md#is_single_numeric-check-whether-a-value-is-a-single-numeric),
     [`is_bounded`](functionality.md#is_bounded-check-whether-a-value-within-a-certain-interval)
@@ -283,13 +283,13 @@ class(comparison)     # glue::glue adds a class to the output
 
 ``` r
 random_time_string("test")
-#> [1] "20190103_155317__test__mMIwnRLQgq"
+#> [1] "20190103_164222__test__mMIwnRLQgq"
 
 random_time_string("test")
-#> [1] "20190103_155317__test__X7HCfj0o6f"
+#> [1] "20190103_164222__test__X7HCfj0o6f"
 
 random_time_string("test")
-#> [1] "20190103_155317__test__F9Y32SIQAy"
+#> [1] "20190103_164222__test__F9Y32SIQAy"
 ```
 
 ## Tibble helpers
@@ -417,23 +417,23 @@ tib %>% mapdf_dbl(~ .$a * 1.234)
 
 ``` r
 safe_tempdir("samson")
-#> [1] "/tmp/Rtmp7wxTKl/file3f533a184d8e/samson"
+#> [1] "/tmp/Rtmplxmqm6/file409453744e7f/samson"
 ```
 
 ## Assertion helpers
 
-### `%allin%`: Check whether a vector are all elements of another vector
+### `%all_in%`: Check whether a vector are all elements of another vector
 
 ``` r
 library(assertthat)
-assert_that(c(1, 2) %allin% c(0, 1, 2, 3, 4))
-#> [1] TRUE
-assert_that("a" %allin% letters)
-#> [1] TRUE
-assert_that("A" %allin% letters)
-#> Error: "A" is missing 1 elements from letters: "A"
-assert_that(1:10 %allin% letters)
-#> Error: 1:10 is missing 10 elements from letters: 1L, 2L, 3L, ...
+assert_that(c(1, 2) %all_in% c(0, 1, 2, 3, 4))
+#> Error in c(1, 2) %all_in% c(0, 1, 2, 3, 4): could not find function "%all_in%"
+assert_that("a" %all_in% letters)
+#> Error in "a" %all_in% letters: could not find function "%all_in%"
+assert_that("A" %all_in% letters)
+#> Error in "A" %all_in% letters: could not find function "%all_in%"
+assert_that(1:10 %all_in% letters)
+#> Error in 1:10 %all_in% letters: could not find function "%all_in%"
 ```
 
 ### `%has_names%`: Check whether an object has certain names

@@ -286,14 +286,14 @@ safe_tempdir("samson")
 
 ## Assertion helpers
 
-### `%allin%`: Check whether a vector are all elements of another vector
+### `%all_in%`: Check whether a vector are all elements of another vector
 
-```{r allin, error=TRUE}
+```{r all_in, error=TRUE}
 library(assertthat)
-assert_that(c(1, 2) %allin% c(0, 1, 2, 3, 4))
-assert_that("a" %allin% letters)
-assert_that("A" %allin% letters)
-assert_that(1:10 %allin% letters)
+assert_that(c(1, 2) %all_in% c(0, 1, 2, 3, 4))
+assert_that("a" %all_in% letters)
+assert_that("A" %all_in% letters)
+assert_that(1:10 %all_in% letters)
 ```
 
 ### `%has_names%`: Check whether an object has certain names

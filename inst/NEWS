@@ -16,7 +16,7 @@ dynutils 1.0.1 (2018-01-03)
    unique temporary directory and creates it if necessary.
    
  * FUNCTIONALITY: Add helper assertion functions 
-   `%allin%`, `%has_names%`, `is_bounded()` and `is_single_numeric()`.
+   `%all_in%`, `%has_names%`, `is_bounded()` and `is_single_numeric()`.
  
 dynutils 1.0.0 (2018-07-18)
  

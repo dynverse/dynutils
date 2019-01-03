@@ -16,7 +16,7 @@
    unique temporary directory and creates it if necessary.
    
  * FUNCTIONALITY: Add helper assertion functions 
-   `%allin%`, `%has_names%`, `is_bounded()` and `is_single_numeric()`.
+   `%all_in%`, `%has_names%`, `is_bounded()` and `is_single_numeric()`.
 
 ## Test environments
 * local Fedora 28 installation, R 3.5.0

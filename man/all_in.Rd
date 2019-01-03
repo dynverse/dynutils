@@ -2,12 +2,12 @@
 % Please edit documentation in R/assertions.R
 \name{all_in}
 \alias{all_in}
-\alias{\%allin\%}
+\alias{\%all_in\%}
 \title{Check whether a vector are all elements of another vector}
 \usage{
 all_in(x, table)
 
-x \%allin\% table
+x \%all_in\% table
 }
 \arguments{
 \item{x}{The values to be matched.}
@@ -20,16 +20,16 @@ Check whether a vector are all elements of another vector
 \examples{
 \dontrun{
 library(assertthat)
-assert_that(c(1, 2) \%allin\% c(0, 1, 2, 3, 4))
+assert_that(c(1, 2) \%all_in\% c(0, 1, 2, 3, 4))
 # TRUE
 
-assert_that("a" \%allin\% letters)
+assert_that("a" \%all_in\% letters)
 # TRUE
 
-assert_that("A" \%allin\% letters)
+assert_that("A" \%all_in\% letters)
 # Error: "A" is missing 1 element from letters: "A"
 
-assert_that(1:10 \%allin\% letters)
+assert_that(1:10 \%all_in\% letters)
 # Error: 1:10 is missing 10 elements from letters: 1, 2, 3, ...
 }
 }

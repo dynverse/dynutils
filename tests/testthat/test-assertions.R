@@ -49,11 +49,11 @@ test_that("has_names works", {
 })
 
 test_that("all_in works", {
-  expect_true(c(1, 2, 3) %allin% -1:4)
-  expect_true(1:3 %allin% c(-60, 10, 1, -5, 2, -9, 3))
-  expect_true("a" %allin% letters)
+  expect_true(c(1, 2, 3) %all_in% -1:4)
+  expect_true(1:3 %all_in% c(-60, 10, 1, -5, 2, -9, 3))
+  expect_true("a" %all_in% letters)
 
-  expect_false(c(1, 2, 3) %allin% 3:10)
-  expect_false(1:60 %allin% c(-60, 10, 1, -5, 2, -9, 3))
-  expect_false("a" %allin% LETTERS)
+  expect_false(c(1, 2, 3) %all_in% 3:10)
+  expect_false(1:60 %all_in% c(-60, 10, 1, -5, 2, -9, 3))
+  expect_false("a" %all_in% LETTERS)
 })
