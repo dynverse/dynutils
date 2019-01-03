@@ -3,7 +3,7 @@
 \name{has_names}
 \alias{has_names}
 \alias{\%has_names\%}
-\title{Has names}
+\title{Check whether an object has certain names}
 \usage{
 has_names(x, which)
 
@@ -15,5 +15,5 @@ x \%has_names\% which
 \item{which}{name}
 }
 \description{
-Has names
+Check whether an object has certain names
 }

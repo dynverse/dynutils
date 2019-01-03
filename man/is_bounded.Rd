@@ -2,7 +2,7 @@
 % Please edit documentation in R/assertions.R
 \name{is_bounded}
 \alias{is_bounded}
-\title{Return whether a value within a certain interval}
+\title{Check whether a value within a certain interval}
 \usage{
 is_bounded(x, lower_bound = -Inf, lower_closed = FALSE,
   upper_bound = Inf, upper_closed = FALSE)
@@ -19,5 +19,5 @@ is_bounded(x, lower_bound = -Inf, lower_closed = FALSE,
 \item{upper_closed}{Whether the upper bound is closed}
 }
 \description{
-Return whether a value within a certain interval
+Check whether a value within a certain interval
 }

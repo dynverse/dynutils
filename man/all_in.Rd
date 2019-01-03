@@ -3,7 +3,7 @@
 \name{all_in}
 \alias{all_in}
 \alias{\%allin\%}
-\title{Are all element of a vector}
+\title{Check whether a vector are all elements of another vector}
 \usage{
 all_in(x, table)
 
@@ -15,5 +15,5 @@ x \%allin\% table
 \item{table}{The values to be matched against.}
 }
 \description{
-Are all element of a vector
+Check whether a vector are all elements of another vector
 }

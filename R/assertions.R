@@ -1,4 +1,4 @@
-#' Return whether a value is a single numeric
+#' Check whether a value is a single numeric
 #'
 #' @param x A value to be tested
 #'
@@ -10,7 +10,7 @@ on_failure(is_single_numeric) <- function(call, env) {
   paste0(deparse(call$x), " is not a single numeric value")
 }
 
-#' Return whether a value within a certain interval
+#' Check whether a value within a certain interval
 #'
 #' @param x A value to be tested
 #' @param lower_bound The lower bound
@@ -34,7 +34,7 @@ on_failure(is_bounded) <- function(call, env) {
   paste0(deparse(call$x), " is not bounded by ", left_sym, left_bound, ",", right_bound, right_sym)
 }
 
-#' Has names
+#' Check whether an object has certain names
 #'
 #' @param x object to test
 #' @param which name
@@ -51,7 +51,7 @@ on_failure(has_names) <- function(call, env) {
 #' @export
 `%has_names%` <- has_names
 
-#' Are all element of a vector
+#' Check whether a vector are all elements of another vector
 #'
 #' @param x The values to be matched.
 #' @param table The values to be matched against.

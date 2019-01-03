@@ -2,7 +2,7 @@
 % Please edit documentation in R/assertions.R
 \name{is_single_numeric}
 \alias{is_single_numeric}
-\title{Return whether a value is a single numeric}
+\title{Check whether a value is a single numeric}
 \usage{
 is_single_numeric(x)
 }
@@ -10,5 +10,5 @@ is_single_numeric(x)
 \item{x}{A value to be tested}
 }
 \description{
-Return whether a value is a single numeric
+Check whether a value is a single numeric
 }
