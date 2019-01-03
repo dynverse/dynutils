@@ -28,7 +28,7 @@ install_packages <- function(..., package = NULL, prompt = FALSE) {
     if (prompt) {
       message(paste0(
         "Following packages have to be installed: ",
-        glue::collapse(crayon::bold(dependencies), ", ", last = " and ")
+        glue::glue_collapse(crayon::bold(dependencies), ", ", last = " and ")
       ))
       answer <- ifelse (
         is.null(getOption("dynutils_testmodepromptresponse")),
