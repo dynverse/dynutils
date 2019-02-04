@@ -2,7 +2,7 @@
 #'
 #' Provides common functionality for the dynverse packages.
 #' dynverse is created to support the development, execution, and benchmarking of trajectory inference methods.
-#' For more information, check out \url{https://github.com/dynverse/dynverse}.
+#' For more information, check out \url{dynverse.org}.
 #'
 #' @section Manipulation of lists:
 #' \itemize{
@@ -53,16 +53,31 @@
 #'   \item{\code{\link{mapdf}}: Apply a function to each row of a data frame}
 #' }
 #'
+#' @section File helpers:
+#' \itemize{
+#'   \item{\code{\link{safe_tempdir}}: Create an empty temporary directory and return its path}
+#' }
+#'
+#' @section Assertion helpers:
+#' \itemize{
+#'   \item{\code{\link{\%all_in\%}}: Check whether a vector are all elements of another vector}
+#'   \item{\code{\link{\%has_names\%}}: Check whether an object has certain names}
+#'   \item{\code{\link{is_single_numeric}}: Check whether a value is a single numeric}
+#'   \item{\code{\link{is_bounded}}: Check whether a value within a certain interval}
+#' }
+#'
 #'
 #' @import dplyr
 #' @import tidyr
 #' @import methods
 #' @import tibble
 #' @import stringr
-#' @importFrom purrr %>% map map_df map_chr map_lgl map_int map_dbl keep discard set_names
+#' @importFrom purrr %>% %||% map map_df map_chr map_lgl map_int map_dbl keep discard set_names
 #' @importFrom magrittr %<>% %$% set_rownames set_colnames
+#' @importFrom assertthat on_failure<-
 #'
 #' @useDynLib dynutils
+#' @importFrom Rcpp evalCpp
 #'
 #' @docType package
 #' @name dynutils

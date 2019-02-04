@@ -2,7 +2,7 @@
 % Please edit documentation in R/safe_tempdir.R
 \name{safe_tempdir}
 \alias{safe_tempdir}
-\title{Get temporary directory}
+\title{Create an empty temporary directory and return its path}
 \usage{
 safe_tempdir(subfolder)
 }
@@ -10,5 +10,11 @@ safe_tempdir(subfolder)
 \item{subfolder}{Name of a subfolder to be created}
 }
 \description{
-Get temporary directory
+Create an empty temporary directory and return its path
+}
+\examples{
+\dontrun{
+safe_tempdir("samson")
+# "/tmp/Rtmp8xCGJe/file339a13bec763/samson"
+}
 }

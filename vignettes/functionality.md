@@ -5,20 +5,43 @@ Robrecht Cannoodt & Wouter Saelens
 <!-- github markdown using
 rmarkdown::render("vignettes/functionality.Rmd", output_format = "github_document")
 -->
-Table of contents
------------------
 
--   Manipulation of lists: [`add_class`](functionality.md#add_class-add-a-class-to-an-object), [`extend_with`](functionality.md#extend_with-extend-list-with-more-data)
--   Calculations: [`calculate_distance`](functionality.md#calculate_distance-compute-pairwise-distances-between-two-matrices), [`project_to_segments`](functionality.md#project_to_segments-project-a-set-of-points-to-to-set-of-segments)
--   Manipulation of matrices: [`expand_matrix`](functionality.md#expand_matrix-add-rows-and-columns-to-a-matrix)
--   Scaling of matrices and vectors: [`scale_uniform`](functionality.md#scale_uniform-rescale-data-to-have-a-certain-center-and-max-range), [`scale_minmax`](functionality.md#scale_minmax-rescale-data-to-a---range), [`scale_quantile`](functionality.md#scale_quantile-cut-off-outer-quantiles-and-rescale-to-a---range)
--   Manipulation of functions: [`inherit_default_params`](functionality.md#inherit_default_params-have-one-function-inherit-the-default-parameters-from-other-functions)
--   Manipulation of packages: [`check_packages`](functionality.md#check_packages-easily-checking-whether-certain-packages-are-installed), [`install_packages`](functionality.md#install_packages-install-packages-taking-into-account-the-remotes-of-another)
--   Manipulation of character vectors: [`pritt`](functionality.md#pritt-a-friendly-version-of-glueglue), [`random_time_string`](functionality.md#random_time_string-generates-a-string-very-likely-to-be-unique)
--   Tibble helpers: [`list_as_tibble`](functionality.md#list_as_tibble-convert-a-list-of-lists-to-a-tibble-whilst-retaining-class-information), [`tibble_as_list`](functionality.md#tibble_as_list-convert-a-tibble-back-to-a-list-of-lists-whilst-retaining-class-information), [`extract_row_to_list`](functionality.md#extract_row_to_list-extracts-one-row-from-a-tibble-and-converts-it-to-a-list), [`mapdf`](functionality.md#mapdf-apply-a-function-to-each-row-of-a-data-frame)
+## Table of contents
 
-Manipulation of lists
----------------------
+  - Manipulation of lists:
+    [`add_class`](functionality.md#add_class-add-a-class-to-an-object),
+    [`extend_with`](functionality.md#extend_with-extend-list-with-more-data)
+  - Calculations:
+    [`calculate_distance`](functionality.md#calculate_distance-compute-pairwise-distances-between-two-matrices),
+    [`project_to_segments`](functionality.md#project_to_segments-project-a-set-of-points-to-to-set-of-segments)
+  - Manipulation of matrices:
+    [`expand_matrix`](functionality.md#expand_matrix-add-rows-and-columns-to-a-matrix)
+  - Scaling of matrices and vectors:
+    [`scale_uniform`](functionality.md#scale_uniform-rescale-data-to-have-a-certain-center-and-max-range),
+    [`scale_minmax`](functionality.md#scale_minmax-rescale-data-to-a---range),
+    [`scale_quantile`](functionality.md#scale_quantile-cut-off-outer-quantiles-and-rescale-to-a---range)
+  - Manipulation of functions:
+    [`inherit_default_params`](functionality.md#inherit_default_params-have-one-function-inherit-the-default-parameters-from-other-functions)
+  - Manipulation of packages:
+    [`check_packages`](functionality.md#check_packages-easily-checking-whether-certain-packages-are-installed),
+    [`install_packages`](functionality.md#install_packages-install-packages-taking-into-account-the-remotes-of-another)
+  - Manipulation of character vectors:
+    [`pritt`](functionality.md#pritt-a-friendly-version-of-glueglue),
+    [`random_time_string`](functionality.md#random_time_string-generates-a-string-very-likely-to-be-unique)
+  - Tibble helpers:
+    [`list_as_tibble`](functionality.md#list_as_tibble-convert-a-list-of-lists-to-a-tibble-whilst-retaining-class-information),
+    [`tibble_as_list`](functionality.md#tibble_as_list-convert-a-tibble-back-to-a-list-of-lists-whilst-retaining-class-information),
+    [`extract_row_to_list`](functionality.md#extract_row_to_list-extracts-one-row-from-a-tibble-and-converts-it-to-a-list),
+    [`mapdf`](functionality.md#mapdf-apply-a-function-to-each-row-of-a-data-frame)
+  - File helpers:
+    [`safe_tempdir`](functionality.md#safe_tempdir-create-an-empty-temporary-directory-and-return-its-path)
+  - Assertion helpers:
+    [`%all_in%`](functionality.md#all_in-check-whether-a-vector-are-all-elements-of-another-vector),
+    [`%has_names%`](functionality.md#has_names-check-whether-an-object-has-certain-names),
+    [`is_single_numeric`](functionality.md#is_single_numeric-check-whether-a-value-is-a-single-numeric),
+    [`is_bounded`](functionality.md#is_bounded-check-whether-a-value-within-a-certain-interval)
+
+## Manipulation of lists
 
 ### `add_class`: Add a class to an object
 
@@ -49,8 +72,7 @@ l %>% extend_with(
 #> [1] "improved_list" "my_list"       "list"
 ```
 
-Calculations
-------------
+## Calculations
 
 ### `calculate_distance`: Compute pairwise distances between two matrices
 
@@ -95,7 +117,7 @@ ggplot() +
   theme_classic()
 ```
 
-![](functionality_files/figure-markdown_github/project_to_segments-1.png)
+![](functionality_files/figure-gfm/project_to_segments-1.png)<!-- -->
 
 ``` r
 
@@ -107,8 +129,7 @@ str(fit)
 #>  $ progression: num [1:25] 1 0.108 0.297 0.802 0 ...
 ```
 
-Manipulation of matrices
-------------------------
+## Manipulation of matrices
 
 ### `expand_matrix`: Add rows and columns to a matrix
 
@@ -123,18 +144,19 @@ expand_matrix(x, letters[1:5], LETTERS[1:10], fill = 0)
 #> e 0 0 0 0.0000000 0 0.0000000 0 0.0000000 0.0000000 0
 ```
 
-Scaling of matrices and vectors
--------------------------------
+## Scaling of matrices and vectors
 
 ### `scale_uniform`: Rescale data to have a certain center and max range
 
-Generate a matrix from a normal distribution with a large standard deviation, centered at c(5, 5).
+Generate a matrix from a normal distribution with a large standard
+deviation, centered at c(5, 5).
 
 ``` r
 x <- matrix(rnorm(200*2, sd = 10, mean = 5), ncol = 2)
 ```
 
-Center the dataset at c(0, 0) with a minimum of c(-.5, -.5) and a maximum of c(.5, .5).
+Center the dataset at c(0, 0) with a minimum of c(-.5, -.5) and a
+maximum of c(.5, .5).
 
 ``` r
 x_scaled <- scale_uniform(x, center = 0, max_range = 1)
@@ -185,10 +207,9 @@ apply(x_scaled3, 2, range)   # each column should be [0, 1]
 qplot(x_scaled2[,1], x_scaled3[,1]) + theme_bw()
 ```
 
-![](functionality_files/figure-markdown_github/scale_quantile_verify-1.png)
+![](functionality_files/figure-gfm/scale_quantile_verify-1.png)<!-- -->
 
-Manipulation of functions
--------------------------
+## Manipulation of functions
 
 ### `inherit_default_params`: Have one function inherit the default parameters from other functions
 
@@ -210,23 +231,23 @@ fun3
 #> }
 ```
 
-Manipulation of packages
-------------------------
+## Manipulation of packages
 
 ### `check_packages`: Easily checking whether certain packages are installed
 
 ``` r
 check_packages("SCORPIUS", "dynutils", "wubbalubbadubdub")
 #>         SCORPIUS         dynutils wubbalubbadubdub 
-#>             TRUE             TRUE            FALSE
+#>            FALSE             TRUE            FALSE
 check_packages(c("princurve", "mlr", "tidyverse"))
 #> princurve       mlr tidyverse 
-#>      TRUE      TRUE      TRUE
+#>     FALSE      TRUE      TRUE
 ```
 
 ### `install_packages`: Install packages taking into account the remotes of another
 
-This is useful for installing suggested packages with GitHub remotes.
+This is useful for installing suggested packages with GitHub
+    remotes.
 
 ``` r
 install_packages("SCORPIUS", package = "dynmethods", prompt = TRUE)
@@ -242,8 +263,7 @@ install_packages("SCORPIUS", package = "dynmethods", prompt = TRUE)
     Installed SCORPIUS
     [1] "SCORPIUS"
 
-Manipulation of character vectors
----------------------------------
+## Manipulation of character vectors
 
 ### `pritt`: A friendly version of `glue::glue`
 
@@ -263,17 +283,16 @@ class(comparison)     # glue::glue adds a class to the output
 
 ``` r
 random_time_string("test")
-#> [1] "20180719_133432__test__mMIwnRLQgq"
+#> [1] "20190103_164222__test__mMIwnRLQgq"
 
 random_time_string("test")
-#> [1] "20180719_133432__test__X7HCfj0o6f"
+#> [1] "20190103_164222__test__X7HCfj0o6f"
 
 random_time_string("test")
-#> [1] "20180719_133432__test__F9Y32SIQAy"
+#> [1] "20190103_164222__test__F9Y32SIQAy"
 ```
 
-Tibble helpers
---------------
+## Tibble helpers
 
 ### `list_as_tibble`: Convert a list of lists to a tibble whilst retaining class information
 
@@ -287,10 +306,10 @@ tib <- list_as_tibble(li)
 
 tib
 #> # A tibble: 2 x 4
-#>       a b         c      .object_class
-#>   <dbl> <list>    <chr>  <list>       
-#> 1     1 <builtin> parrot <chr [2]>    
-#> 2     2 <builtin> quest  <chr [2]>
+#>       a b      c      .object_class
+#>   <dbl> <list> <chr>  <list>       
+#> 1     1 <fn>   parrot <chr [2]>    
+#> 2     2 <fn>   quest  <chr [2]>
 ```
 
 ### `tibble_as_list`: Convert a tibble back to a list of lists whilst retaining class information
@@ -345,7 +364,8 @@ extract_row_to_list(tib, 2)
 
 ### `mapdf`: Apply a function to each row of a data frame
 
-The `mapdf` functions apply a function on each row of a data frame. They are based heavily on purrr's `map` functions.
+The `mapdf` functions apply a function on each row of a data frame. They
+are based heavily on purrr’s `map` functions.
 
 ``` r
 tib %>% mapdf(class)
@@ -389,4 +409,78 @@ tib %>% mapdf_int(~ nchar(.$c))
 #> [1] 6 5
 tib %>% mapdf_dbl(~ .$a * 1.234)
 #> [1] 1.234 2.468
+```
+
+## File helpers
+
+### `safe_tempdir`: Create an empty temporary directory and return its path
+
+``` r
+safe_tempdir("samson")
+#> [1] "/tmp/Rtmplxmqm6/file409453744e7f/samson"
+```
+
+## Assertion helpers
+
+### `%all_in%`: Check whether a vector are all elements of another vector
+
+``` r
+library(assertthat)
+assert_that(c(1, 2) %all_in% c(0, 1, 2, 3, 4))
+#> Error in c(1, 2) %all_in% c(0, 1, 2, 3, 4): could not find function "%all_in%"
+assert_that("a" %all_in% letters)
+#> Error in "a" %all_in% letters: could not find function "%all_in%"
+assert_that("A" %all_in% letters)
+#> Error in "A" %all_in% letters: could not find function "%all_in%"
+assert_that(1:10 %all_in% letters)
+#> Error in 1:10 %all_in% letters: could not find function "%all_in%"
+```
+
+### `%has_names%`: Check whether an object has certain names
+
+``` r
+assert_that(li %has_names% "a")
+#> Error: li is missing 1 names from "a": "a"
+assert_that(li %has_names% "c")
+#> Error: li is missing 1 names from "c": "c"
+assert_that(li %has_names% letters)
+#> Error: li is missing 26 names from letters: "a", "b", "c", ...
+```
+
+### `is_single_numeric`: Check whether a value is a single numeric
+
+``` r
+assert_that(is_single_numeric(1))
+#> [1] TRUE
+assert_that(is_single_numeric(Inf))
+#> [1] TRUE
+assert_that(is_single_numeric(1.6))
+#> [1] TRUE
+assert_that(is_single_numeric(NA))
+#> Error: NA is not a single numeric value
+assert_that(is_single_numeric(1:6))
+#> Error: 1:6 is not a single numeric value
+assert_that(is_single_numeric("pie"))
+#> Error: "pie" is not a single numeric value
+```
+
+### `is_bounded`: Check whether a value within a certain interval
+
+``` r
+assert_that(is_bounded(10))
+#> [1] TRUE
+assert_that(is_bounded(10:30))
+#> [1] TRUE
+assert_that(is_bounded(Inf))
+#> Error: Inf is not bounded by (-Inf,Inf)
+assert_that(is_bounded(10, lower_bound = 20))
+#> Error: 10 is not bounded by (20,Inf)
+assert_that(is_bounded(
+  10,
+  lower_bound = 20,
+  lower_closed = TRUE,
+  upper_bound = 30,
+  upper_closed = FALSE
+))
+#> Error: 10 is not bounded by [20,30)
 ```

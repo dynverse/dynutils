@@ -276,3 +276,57 @@ tib %>% mapdf_chr(~ paste0("~", .$c, "~"))
 tib %>% mapdf_int(~ nchar(.$c))
 tib %>% mapdf_dbl(~ .$a * 1.234)
 ```
+
+## File helpers
+
+### `safe_tempdir`: Create an empty temporary directory and return its path
+```{R safe_tempdir}
+safe_tempdir("samson")
+```
+
+## Assertion helpers
+
+### `%all_in%`: Check whether a vector are all elements of another vector
+
+```{r all_in, error=TRUE}
+library(assertthat)
+assert_that(c(1, 2) %all_in% c(0, 1, 2, 3, 4))
+assert_that("a" %all_in% letters)
+assert_that("A" %all_in% letters)
+assert_that(1:10 %all_in% letters)
+```
+
+### `%has_names%`: Check whether an object has certain names
+
+```{r hasnames, error=TRUE}
+assert_that(li %has_names% "a")
+assert_that(li %has_names% "c")
+assert_that(li %has_names% letters)
+```
+
+### `is_single_numeric`: Check whether a value is a single numeric
+
+```{r is_single_numeric, error=TRUE}
+assert_that(is_single_numeric(1))
+assert_that(is_single_numeric(Inf))
+assert_that(is_single_numeric(1.6))
+assert_that(is_single_numeric(NA))
+assert_that(is_single_numeric(1:6))
+assert_that(is_single_numeric("pie"))
+```
+
+### `is_bounded`: Check whether a value within a certain interval
+
+```{r is_bounded, error=TRUE}
+assert_that(is_bounded(10))
+assert_that(is_bounded(10:30))
+assert_that(is_bounded(Inf))
+assert_that(is_bounded(10, lower_bound = 20))
+assert_that(is_bounded(
+  10,
+  lower_bound = 20,
+  lower_closed = TRUE,
+  upper_bound = 30,
+  upper_closed = FALSE
+))
+```

@@ -11,9 +11,9 @@ Status](https://codecov.io/gh/dynverse/dynutils/branch/master/graph/badge.svg)](
 
 Provides common functionality for the dynverse packages. An overview of
 this functionality is available using the `?dynutils` command or in the
-[examples vignette](vignettes/functionality.md).
+[examples
+vignette](https://CRAN.R-project.org/package=dynutils/vignettes/functionality.html).
 
 dynverse is created to support the development, execution, and
 benchmarking of trajectory inference methods. For more information,
-check out
-[github.com/dynverse/dynverse](https://github.com/dynverse/dynverse).
+check out [dynverse.org](dynverse.org).
