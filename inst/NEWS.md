@@ -1,4 +1,4 @@
-# dynutils 1.0.1 (2018-01-03)
+# dynutils 1.0.1 (2018-02-04)
 
  * DOCUMENTATION: Fixed functionality vignette not showing any code.
 
