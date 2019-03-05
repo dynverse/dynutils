@@ -26,7 +26,7 @@ License: GPL-3
 URL: http://github.com/dynverse/dynutils
 BugReports: https://github.com/dynverse/dynutils/issues
 LazyData: TRUE
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1
 Depends:
   R (>= 3.0.0)
 Imports: 

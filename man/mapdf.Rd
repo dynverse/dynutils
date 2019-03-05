@@ -37,7 +37,7 @@ walkdf(.x, .f, ...)
 If a function, the first argument will be the row as a list.
 If a formula, e.g. \code{~ .$a}, the \code{.} is a placeholder for the row as a list.}
 
-\item{...}{Additional arguments passed on to \code{.f}.}
+\item{...}{Additional arguments passed on to the mapped function.}
 }
 \description{
 The mapdf functions transform their input by applying a function to each row of a data frame and returning a vector the same length as the input.

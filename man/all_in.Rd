@@ -30,6 +30,6 @@ assert_that("A" \%all_in\% letters)
 # Error: "A" is missing 1 element from letters: "A"
 
 assert_that(1:10 \%all_in\% letters)
-# Error: 1:10 is missing 10 elements from letters: 1, 2, 3, ...
+# Error: 1:10 is missing 10 elements from letters: 1L, 2L, 3L, ...
 }
 }
