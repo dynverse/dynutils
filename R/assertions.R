@@ -157,7 +157,7 @@ on_failure(has_names) <- function(call, env) {
 #' # Error: "A" is missing 1 element from letters: "A"
 #'
 #' assert_that(1:10 %all_in% letters)
-#' # Error: 1:10 is missing 10 elements from letters: 1, 2, 3, ...
+#' # Error: 1:10 is missing 10 elements from letters: 1L, 2L, 3L, ...
 #' }
 all_in <- function(x, table) {
   all(x %in% table)
@@ -169,17 +169,17 @@ on_failure(all_in) <- function(call, env) {
   elem_str <-
     elements %>%
     head(3) %>%
-    map_chr(deparse) %>%
+    map_chr(deparse, nlines = 1) %>%
     paste(collapse = ", ")
 
   paste0(
-    deparse(call$x),
+    paste0(deparse(call$x, nlines = 3), collapse= " "),
     " is missing ",
     length(elements),
     " element",
     ifelse(length(elements) == 1, "", "s"),
     " from ",
-    deparse(call$table),
+    paste0(deparse(call$table, nlines = 3), collapse= " "),
     ": ",
     elem_str,
     ifelse(length(elements) > 3, ", ...", "")
