@@ -127,7 +127,7 @@ write_h5 <- function(x, file) {
   } else if (any(grepl("^[dlniz]..Matrix$", class(x)))) {
     ipx <- as(x, "dgCMatrix")
     subfile <- file_h5$create_group(name)
-    h5attr(subfile, "object_class") <- "sparse_matrix"
+    hdf5r::h5attr(subfile, "object_class") <- "sparse_matrix"
     subfile[["i"]] <- ipx@i
     subfile[["p"]] <- ipx@p
     subfile[["x"]] <- ipx@x
@@ -146,7 +146,7 @@ write_h5 <- function(x, file) {
     subfile[["data"]] <- x
   } else if (is.data.frame(x)) {
     subfile <- file_h5$create_group(name)
-    h5attr(subfile, "object_class") <- "data_frame"
+    hdf5r::h5attr(subfile, "object_class") <- "data_frame"
     subfile[["rownames"]] <- rownames(x)
     subfile[["colnames"]] <- colnames(x)
     subsubfile <- subfile$create_group("data")
@@ -155,7 +155,7 @@ write_h5 <- function(x, file) {
     }
   } else if (is.atomic(x)) {
     subfile <- file_h5$create_group(name)
-    h5attr(subfile, "object_class") <- "vector"
+    hdf5r::h5attr(subfile, "object_class") <- "vector"
     if (!is.null(names(x))) subfile[["names"]] <- names(x)
     subfile[["data"]] <- x
   } else if (is.list(x)) {
@@ -164,7 +164,7 @@ write_h5 <- function(x, file) {
     } else {
       subfile <- file_h5$create_group(name)
     }
-    h5attr(subfile, "object_class") <- "list"
+    hdf5r::h5attr(subfile, "object_class") <- "list"
     subfile[["class"]] <- class(x)
     if (!is.null(names(x))) subfile[["names"]] <- names(x)
 
