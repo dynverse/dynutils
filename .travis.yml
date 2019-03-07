@@ -5,7 +5,7 @@ cache: packages
 before_install:
 - source <(curl -sSL https://raw.githubusercontent.com/dynverse/travis_scripts/master/helper.sh)
 install:
-- install_cran remotes covr
+- install_cran devtools covr
 - install_withdeps
 after_success:
 - R -e 'covr::codecov()'
