@@ -1,6 +1,8 @@
 # dynutils 1.0.2 (unreleased)
 
  * BUG FIX: Fix %all_in% error message
+ 
+ * FUNCTIONALITY: Added `read_h5()` and `write_h5()` functions.
 
 # dynutils 1.0.1 (2018-02-04)
 
