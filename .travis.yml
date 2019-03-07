@@ -2,9 +2,10 @@ language: r
 sudo: required
 dist: trusty
 cache: packages
+before_install:
+- source <(curl -sSL https://raw.githubusercontent.com/dynverse/travis_scripts/master/helper.sh)
 install:
- - R -e 'if ("devtools" %in% rownames(installed.packages())) update.packages(oldPkgs = "devtools", ask = FALSE) else install.packages("devtools")'
- - R -e 'devtools::install_cran("covr")'
- - R -e 'setRepositories(ind = 1:4); devtools::install(dependencies = TRUE, upgrade_dependencies = TRUE)'
+- install_cran remotes covr
+- install_withdeps
 after_success:
- - R -e 'covr::codecov()'
+- R -e 'covr::codecov()'
