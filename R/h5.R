@@ -7,12 +7,9 @@
 read_h5 <- function(path) {
   requireNamespace("hdf5r")
   file_h5 <- hdf5r::H5File$new(path, "r")
+  on.exit(file_h5$close_all())
 
-  lis <- .read_h5(file_h5)
-
-  file_h5$close_all()
-
-  lis
+  .read_h5(file_h5)
 }
 
 .read_h5 <- function(file_h5) {
@@ -116,10 +113,9 @@ read_h5 <- function(path) {
 write_h5 <- function(x, file) {
   requireNamespace("hdf5r")
   file_h5 <- hdf5r::H5File$new(file, "w")
+  on.exit(file_h5$close_all())
 
   .write_h5(x, file_h5, "")
-
-  file_h5$close_all()
 }
 
 .write_h5 <- function(x, file_h5, name) {
