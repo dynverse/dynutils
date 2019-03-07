@@ -2,17 +2,19 @@
 #'
 #' @param x R object to write.
 #' @param path Path to read from/write to.
-
+#' @param file_h5 A H5 file to read from/write to.
 #' @export
 read_h5 <- function(path) {
   requireNamespace("hdf5r")
   file_h5 <- hdf5r::H5File$new(path, "r")
   on.exit(file_h5$close_all())
 
-  .read_h5(file_h5)
+  read_h5_(file_h5)
 }
 
-.read_h5 <- function(file_h5) {
+#' @rdname read_h5
+#' @export
+read_h5_ <- function(file_h5) {
   requireNamespace("hdf5r")
   requireNamespace("Matrix")
   if (!"object_class" %in% hdf5r::h5attr_names(file_h5)) {
@@ -55,7 +57,7 @@ read_h5 <- function(path) {
     # workaround
     nms <- if (has_names) .read_h5_vec(file_h5[["names"]]) else names(subfile)
 
-    out <- map(nms, ~.read_h5(subfile[[.]]))
+    out <- map(nms, ~read_h5_(subfile[[.]]))
     if (has_names) names(out) <- nms
     if ("class" %in% names(file_h5)) class(out) <- file_h5[["class"]][]
 
@@ -100,33 +102,41 @@ read_h5 <- function(path) {
   }
 }
 
-.read_h5_vec <- function(file_h5)
+read_h5_vec <- function(file_h5) {
   # workaround for https://github.com/hhoeflin/hdf5r/issues/118
   if (file_h5$dims == 0 && "H5T_STRING" %in% class(file_h5$get_type())) {
     character(0)
   } else {
     file_h5[]
   }
+}
 
 #' @rdname read_h5
 #' @export
-write_h5 <- function(x, file) {
+write_h5 <- function(x, path) {
   requireNamespace("hdf5r")
-  file_h5 <- hdf5r::H5File$new(file, "w")
+  file_h5 <- hdf5r::H5File$new(path, "w")
   on.exit(file_h5$close_all())
 
-  .write_h5(x, file_h5, "")
+  write_h5_(x, file_h5, "")
 }
 
-.write_h5 <- function(x, file_h5, name) {
+#' @rdname read_h5
+#' @export
+write_h5_ <- function(x, file_h5, path) {
   requireNamespace("hdf5r")
   requireNamespace("Matrix")
+
+  if (path == "") {
+    subfile <- file_h5
+  } else {
+    subfile <- file_h5$create_group(path)
+  }
+
   if (is.null(x)) {
-    file_h5[[name]] <- 0
-    hdf5r::h5attr(file_h5[[name]], "object_class") <- "null"
+    hdf5r::h5attr(subfile, "object_class") <- "null"
   } else if (any(grepl("^[dlniz]..Matrix$", class(x)))) {
     ipx <- as(x, "dgCMatrix")
-    subfile <- file_h5$create_group(name)
     hdf5r::h5attr(subfile, "object_class") <- "sparse_matrix"
     subfile[["i"]] <- ipx@i
     subfile[["p"]] <- ipx@p
@@ -139,13 +149,11 @@ write_h5 <- function(x, file) {
       subfile[["colnames"]] <- colnames(ipx)
     }
   } else if (is.matrix(x)) {
-    subfile <- file_h5$create_group(name)
     hdf5r::h5attr(subfile, "object_class") <- "dense_matrix"
     if (!is.null(rownames(x))) subfile[["rownames"]] <- rownames(x)
     if (!is.null(colnames(x))) subfile[["colnames"]] <- colnames(x)
     subfile[["data"]] <- x
   } else if (is.data.frame(x)) {
-    subfile <- file_h5$create_group(name)
     hdf5r::h5attr(subfile, "object_class") <- "data_frame"
     subfile[["rownames"]] <- rownames(x)
     subfile[["colnames"]] <- colnames(x)
@@ -154,16 +162,10 @@ write_h5 <- function(x, file) {
       subsubfile[[xn]] <- x[[xn]]
     }
   } else if (is.atomic(x)) {
-    subfile <- file_h5$create_group(name)
     hdf5r::h5attr(subfile, "object_class") <- "vector"
     if (!is.null(names(x))) subfile[["names"]] <- names(x)
     subfile[["data"]] <- x
   } else if (is.list(x)) {
-    if (name == "") {
-      subfile <- file_h5
-    } else {
-      subfile <- file_h5$create_group(name)
-    }
     hdf5r::h5attr(subfile, "object_class") <- "list"
     subfile[["class"]] <- class(x)
     if (!is.null(names(x))) subfile[["names"]] <- names(x)
@@ -173,7 +175,7 @@ write_h5 <- function(x, file) {
     if (is.null(names(x)) && length(x) > 0) names(x) <- paste0("elem", seq_along(x))
 
     for (xn in names(x)) {
-      .write_h5(x[[xn]], subsubfile, xn)
+      write_h5_(x[[xn]], subsubfile, xn)
     }
   }
 }
