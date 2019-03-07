@@ -102,7 +102,7 @@ read_h5_ <- function(file_h5) {
   }
 }
 
-read_h5_vec <- function(file_h5) {
+.read_h5_vec <- function(file_h5) {
   # workaround for https://github.com/hhoeflin/hdf5r/issues/118
   if (file_h5$dims == 0 && "H5T_STRING" %in% class(file_h5$get_type())) {
     character(0)
