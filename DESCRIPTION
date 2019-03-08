@@ -1,7 +1,7 @@
 Package: dynutils
 Type: Package
 Title: Common Functionality for the 'dynverse' Packages
-Version: 1.0.1
+Version: 1.0.1.9000
 Authors@R: c(
     person(
       "Robrecht", 
@@ -26,7 +26,7 @@ License: GPL-3
 URL: http://github.com/dynverse/dynutils
 BugReports: https://github.com/dynverse/dynutils/issues
 LazyData: TRUE
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1
 Depends:
   R (>= 3.0.0)
 Imports: 
@@ -46,7 +46,9 @@ Imports:
   tidyr
 Suggests:
   ggplot2,
+  hdf5r,
   knitr,
+  Matrix,
   readr,
   rmarkdown
 LinkingTo:
@@ -61,6 +63,7 @@ Collate:
     'check_packages.R'
     'expand_matrix.R'
     'extend_with.R'
+    'h5.R'
     'install_packages.R'
     'mapdf.R'
     'package.R'
