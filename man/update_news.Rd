@@ -8,6 +8,8 @@ update_news(package, write = TRUE)
 }
 \arguments{
 \item{package}{The package name}
+
+\item{write}{Whether to overwrite news}
 }
 \description{
 Update the news based on the md file

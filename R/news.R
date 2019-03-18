@@ -13,6 +13,7 @@ find_news <- function(package) {
 #' Update the news based on the md file
 #'
 #' @param package The package name
+#' @param write Whether to overwrite news
 #'
 #' @export
 update_news <- function(package, write = TRUE) {
