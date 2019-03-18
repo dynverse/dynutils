@@ -12,14 +12,8 @@ set.seed(1)
 ```
 
 ```{r news, echo=FALSE}
-# Automatically update inst/NEWS
-news_md <- readr::read_lines("inst/NEWS.md")
-
-# creating NEWS for package
-news_normal <- news_md %>% 
-  str_replace_all("^# dynutils", "dynutils") %>% 
-  str_replace_all("\\[[^\\]]*\\]\\(([^\\)]*)\\)", "\\1")
-readr::write_lines(news_normal, "inst/NEWS")
+update_news()
+cat(recent_news())
 ```
 
 # dynutils
