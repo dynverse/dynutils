@@ -36,11 +36,11 @@ process_news <- function(package) {
   matches <- stringr::str_match(news_md[ix], c("\\# ([A-Za-z0-9]*) ([0-9\\.]*) \\((.*)\\)"))
   version <- matches[, 3]
   release_data <- matches[, 4]
-  items <- purrr::map2(ix, lead(ix, default = length(news_md)), function(start, end) {
-    news_md[(start + 1):(end-1)]
+  items <- purrr::map2(ix, lead(ix - 1, default = length(news_md)), function(start, end) {
+    news_md[(start + 1):(end)]
   })
-  text <- purrr::map2(ix, lead(ix, default = length(news_md)), function(start, end) {
-    news_md[(start):(end-1)]
+  text <- purrr::map2(ix, lead(ix - 1, default = length(news_md)), function(start, end) {
+    news_md[(start):(end)]
   })
 
   tibble(
