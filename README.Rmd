@@ -1,7 +1,7 @@
 ---
 output:
   github_document:
-    html_preview: false
+    html_preview: true
 ---
 
 ```{r setup1, include=FALSE}
@@ -9,11 +9,6 @@ knitr::opts_chunk$set(fig.path = "man/figures/README_", warning = FALSE, message
 library(tidyverse)
 library(dynutils)
 set.seed(1)
-```
-
-```{r news, echo=FALSE}
-update_news()
-cat(recent_news())
 ```
 
 # dynutils
@@ -29,3 +24,7 @@ is available using the `?dynutils` command or in the [examples vignette](https:/
 dynverse is created to support the development, execution, and benchmarking of trajectory inference methods.
 For more information, check out [dynverse.org](dynverse.org).
 
+```{r news, echo=FALSE, results="asis"}
+update_news("dynutils")
+cat(recent_news("dynutils"))
+```
