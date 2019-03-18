@@ -18,33 +18,32 @@ dynverse is created to support the development, execution, and
 benchmarking of trajectory inference methods. For more information,
 check out [dynverse.org](dynverse.org).
 
-### Recent changes in dynutils 1.0.2 (unreleased)
+## Latest changes
 
-  - BUG FIX: Fix %all\_in% error message
+Check out `news(package = "dynwrap")` or [NEWS.md](inst/NEWS.md) for a
+full list of
+changes.
 
-  - FUNCTIONALITY: Added `read_h5()` and `write_h5()` functions.
+<!-- This section gets automatically generated from inst/NEWS.md, and also generates inst/NEWS -->
 
-  - FUNCTIONALITY: Added `is_sparse()`
+### Recent changes in dynwrap 1.0.0 (unreleased)
 
-  - FUNCTIONALITY: Added `update_news()` and `recent_news()`. Meta\!
+  - MAJOR CHANGE: Add support for Singularity 3.0, drop support for
+    previous releases of Singularity and singularity-hub.
 
-### Recent changes in dynutils 1.0.1 (2018-02-04)
+  - FEATURE: Add `create_ti_method_definition()` to create a definition
+    from a local script.
 
-  - DOCUMENTATION: Fixed functionality vignette not showing any code.
+  - DOCUMENTATION: Major update of all documentation for release of
+    dynwrap v2
 
-  - FUNCTIONALITY: Add `mapdf_lat()`. This function expects a data
-    frame, which gets broken down into a list of lists before applying
-    the FUN. It expects the FUN to return a list, which gets transformed
-    into a tibble with `list_as_tibble()`.
+  - MINOR CHANGE: Rename `compute_tented_geodesic_distances()` to
+    `compute_geodesic_distances()`
 
-  - FUNCTIONALITY: `extract_row_to_list()` now works with tidy
-    evaluation.
+### Recent changes in dynwrap 0.3.1.2 (01-02-2019)
 
-  - TESTING: Expand tests for tibble helper fuctions `list_as_tibble()`
-    and `extract_row_to_list()`.
-
-  - FUNCTIONALITY: Add `safe_tempdir()` function. This function creates
-    a unique temporary directory and creates it if necessary.
-
-  - FUNCTIONALITY: Add helper assertion functions `%all_in%`,
-    `%has_names%`, `is_bounded()` and `is_single_numeric()`.
+  - BUG FIX: `simplify_replace_edges()` would sometimes swap edges in
+    milestone network around, but forget invert percentages.
+  - BUG FIX: Close sinks when interupting the R process
+  - MINOR CHANGE: Work with new babelwhale, which includes support for
+    singularity 3.0

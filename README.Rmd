@@ -1,7 +1,7 @@
 ---
 output:
   github_document:
-    html_preview: true
+    html_preview: false
 ---
 
 ```{r setup1, include=FALSE}
@@ -24,7 +24,15 @@ is available using the `?dynutils` command or in the [examples vignette](https:/
 dynverse is created to support the development, execution, and benchmarking of trajectory inference methods.
 For more information, check out [dynverse.org](dynverse.org).
 
+
+## Latest changes
+
+Check out `news(package = "dynwrap")` or [NEWS.md](inst/NEWS.md) for a full list of changes.
+
+<!-- This section gets automatically generated from inst/NEWS.md, and also generates inst/NEWS -->
+
 ```{r news, echo=FALSE, results="asis"}
-update_news("dynutils")
-cat(recent_news("dynutils"))
+dynutils::update_news("dynwrap")
+cat(dynutils::recent_news("dynwrap"))
 ```
+
