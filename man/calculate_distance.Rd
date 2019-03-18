@@ -24,9 +24,9 @@ euclidean_distance(x, y = NULL)
 
 \item{method}{Distance method to use. Options are:
 \itemize{
-  \item euclidean: \code{\link{euclidean_distance}}
-  \item manhattan: \code{\link{manhattan_distance}}
-  \item spearman, pearson, or kendall: \code{\link{correlation_distance}}
+\item euclidean: \code{\link[=euclidean_distance]{euclidean_distance()}}
+\item manhattan: \code{\link[=manhattan_distance]{manhattan_distance()}}
+\item spearman, pearson, or kendall: \code{\link[=correlation_distance]{correlation_distance()}}
 }}
 
 \item{use}{an optional character string giving a

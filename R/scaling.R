@@ -1,8 +1,8 @@
 #' Rescale data to have a certain center and max range.
 #'
-#' \code{scale_uniform} uniformily scales a given matrix such that
-#' the returned space is centered on \code{center}, and each column was scaled equally
-#' such that the range of each column is at most \code{max_range}.
+#' `scale_uniform` uniformily scales a given matrix such that
+#' the returned space is centered on `center`, and each column was scaled equally
+#' such that the range of each column is at most `max_range`.
 #'
 #' @param x A numeric vector matrix or data frame.
 #' @param center The new center point of the data.

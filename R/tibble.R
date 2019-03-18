@@ -2,7 +2,7 @@
 #'
 #' @param list_of_rows The list to be converted to a tibble
 #'
-#' @return A tibble with the same number of rows as there were elements in \code{list_of_rows}
+#' @return A tibble with the same number of rows as there were elements in `list_of_rows`
 #' @export
 #'
 #' @importFrom testthat expect_equal
@@ -101,7 +101,7 @@ extract_row_to_list <- function(tib, row_id) {
 #'
 #' @param tib A tibble
 #'
-#' @return A list with the same number of lists as there were rows in \code{tib}
+#' @return A list with the same number of lists as there were rows in `tib`
 #' @export
 #'
 #' @importFrom testthat expect_equal

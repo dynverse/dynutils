@@ -15,10 +15,10 @@ project_to_segments(x, segment_start, segment_end)
 }
 \value{
 A list with components
-  \item{x_proj}{a matrix of projections of \code{x} onto the given segments.}
-  \item{segment}{the index of the segment a point is projected on}
-  \item{progression}{the progression of a projection along its segment}
-  \item{distance}{the distance from each point in \code{x} to its projection in \code{x_proj}}
+\item{x_proj}{a matrix of projections of \code{x} onto the given segments.}
+\item{segment}{the index of the segment a point is projected on}
+\item{progression}{the progression of a projection along its segment}
+\item{distance}{the distance from each point in \code{x} to its projection in \code{x_proj}}
 }
 \description{
 Finds the projection index for a matrix of points \code{x}, when

@@ -30,3 +30,14 @@ test_that("write_h5 and read_h5 works", {
 })
 
 
+test_that("is_sparse works", {
+  expect_false(is_sparse(matrix(c(1:10))))
+
+  m <- Matrix::Matrix(matrix(c(1:10)))
+  expect_true(is_sparse(m))
+  expect_true(is_sparse(as(m, "dgCMatrix")))
+  expect_true(is_sparse(as(m, "dgeMatrix")))
+})
+
+
+
