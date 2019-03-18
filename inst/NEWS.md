@@ -3,6 +3,8 @@
  * BUG FIX: Fix %all_in% error message
  
  * FUNCTIONALITY: Added `read_h5()` and `write_h5()` functions.
+ 
+ * FUNCTIONALITY: Added `is_sparse()`
 
 # dynutils 1.0.1 (2018-02-04)
 

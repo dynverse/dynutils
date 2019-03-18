@@ -53,6 +53,7 @@ Suggests:
   rmarkdown
 LinkingTo:
   Rcpp
+Encoding: UTF-8
 VignetteBuilder: knitr
 Collate: 
     'RcppExports.R'
