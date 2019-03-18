@@ -2,7 +2,7 @@
 % Please edit documentation in R/scaling.R
 \name{scale_quantile}
 \alias{scale_quantile}
-\title{Cut off outer quantiles and rescale to a \link{0, 1} range}
+\title{Cut off outer quantiles and rescale to a [0, 1] range}
 \usage{
 scale_quantile(x, outlier_cutoff = 0.05)
 }
@@ -15,7 +15,7 @@ scale_quantile(x, outlier_cutoff = 0.05)
 The centered, scaled matrix or vector. The numeric centering and scalings used are returned as attributes.
 }
 \description{
-Cut off outer quantiles and rescale to a \link{0, 1} range
+Cut off outer quantiles and rescale to a [0, 1] range
 }
 \examples{
 ## Generate a matrix from a normal distribution

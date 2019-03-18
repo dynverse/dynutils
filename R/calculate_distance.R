@@ -21,12 +21,12 @@ calculate_distance_postproc_d <- function(x, y, d) {
 #' Calculate (pairwise) distances between two matrices
 #'
 #' @param x A numeric matrix
-#' @param y (Optional) a numeric matrix, with `ncol(x) == ncol(y)`.
+#' @param y (Optional) a numeric matrix, with \code{ncol(x) == ncol(y)}.
 #' @param method Distance method to use. Options are:
 #' \itemize{
-#'   \item euclidean: [euclidean_distance()]
-#'   \item manhattan: [manhattan_distance()]
-#'   \item spearman, pearson, or kendall: [correlation_distance()]
+#'   \item euclidean: \code{\link{euclidean_distance}}
+#'   \item manhattan: \code{\link{manhattan_distance}}
+#'   \item spearman, pearson, or kendall: \code{\link{correlation_distance}}
 #' }
 #'
 #' @rdname calculate_distance

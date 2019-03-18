@@ -17,5 +17,5 @@ apply_quantile_scale(x, addend, multiplier)
 The scaled matrix or vector. The numeric centering and scalings used are returned as attributes.
 }
 \description{
-Anything outside the range of \link{0, 1} will be set to 0 or 1.
+Anything outside the range of [0, 1] will be set to 0 or 1.
 }

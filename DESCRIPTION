@@ -73,4 +73,3 @@ Collate:
     'safe_tempdir.R'
     'scaling.R'
     'tibble.R'
-Roxygen: list(markdown = TRUE)

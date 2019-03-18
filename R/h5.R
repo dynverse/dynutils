@@ -181,6 +181,8 @@ write_h5_ <- function(x, file_h5, path) {
 }
 
 
+
+
 #' Check if a matrix is sparse
 #'
 #' @param x A sparse or not sparse matrix
@@ -193,4 +195,6 @@ write_h5_ <- function(x, file_h5, path) {
 is_sparse <- function(x) {
   any(grepl("[di]..Matrix", class(x)))
 }
+
+
 
