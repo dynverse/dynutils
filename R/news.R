@@ -2,7 +2,7 @@ find_news <- function(package) {
   file <- system.file("NEWS.md", package = package)
 
   if (nchar(file) == 0) {
-    stop(package, " does not have a news.md!")
+    stop(package, " does not have a NEWS.md!")
   }
 
   file
