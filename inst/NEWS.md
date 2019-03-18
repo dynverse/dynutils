@@ -5,6 +5,8 @@
  * FUNCTIONALITY: Added `read_h5()` and `write_h5()` functions.
  
  * FUNCTIONALITY: Added `is_sparse()`
+ 
+ * FUNCTIONALITY: Added `update_news()` and `recent_news()`. Meta!
 
 # dynutils 1.0.1 (2018-02-04)
 

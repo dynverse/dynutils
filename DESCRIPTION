@@ -67,6 +67,7 @@ Collate:
     'h5.R'
     'install_packages.R'
     'mapdf.R'
+    'news.R'
     'package.R'
     'pritt.R'
     'random_time_string.R'

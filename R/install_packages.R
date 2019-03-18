@@ -63,7 +63,7 @@ install_packages <- function(..., package = NULL, prompt = FALSE) {
     }
 
     # install other depencies from cran
-    devtools::install_cran(dependencies[!dependencies %in% names(remotes)])
+    devtools::install_cran(dependencies[!dependencies %in% names(remotes)], repos = "http://cran.rstudio.com")
 
     # display message
     message("Installed ", paste0(dependencies, collapse = ", "))
