@@ -36,9 +36,7 @@ changes.
 
   - FUNCTIONALITY: Added `update_news()` and `recent_news()`. So meta\!
 
-  - FUNCTIONALITY: Moved
-    `calculate_{geometric,harmonic,arithmetic}_mean()` from dyneval to
-    dynutils.
+  - FUNCTIONALITY: Moved `calculate_mean()` from dyneval to dynutils.
 
 ### Recent changes in dynutils 1.0.1 (2019-02-04)
 
