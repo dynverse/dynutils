@@ -26,7 +26,7 @@ detect_package_name <- function(path = NULL) {
 find_news <- function(path = NULL, package = detect_package_name(path = path)) {
   paths <- detect_package_folder(path = path)
 
-  if (nchar(paths$news_md) == 0) {
+  if (!file.exists(paths$news_md)) {
     stop(package, " does not have a NEWS.md!")
   }
 
