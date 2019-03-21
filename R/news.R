@@ -1,16 +1,15 @@
 detect_package_name <- function() {
-  if (file.exists("DESCRIPTION")) {
+  path <-
+    getOption("detecting_description_path") %||% "DESCRIPTION"
+
+  if (!file.exists(path)) {
+    stop("Could not find DESCRIPTION file, please specify the package manually.")
+  } else {
     lines <-
-      readr::read_lines("DESCRIPTION") %>%
+      readr::read_lines(path) %>%
       keep(grepl("^Package: ", .)) %>%
       gsub("^Package: *", "", .)
   }
-
-  if (!is.null(getOption("detecting_description_path"))) {
-    getOption("detecting_description_path")
-  }
-
-  stop("Could not find DESCRIPTION file, please specify the package manually.")
 }
 
 find_news <- function(package) {
