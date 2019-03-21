@@ -17,7 +17,3 @@ recent_news(path = NULL, package = detect_package_name(path = path),
 \description{
 Print the most recent news
 }
-\examples{
-recent_news(package = "dynutils")
-
-}

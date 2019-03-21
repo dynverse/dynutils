@@ -18,10 +18,9 @@ detect_package_folder <- function(path = NULL) {
 detect_package_name <- function(path = NULL) {
   paths <- detect_package_folder(path = path)
 
-  lines <-
-    readr::read_lines(paths$description) %>%
-    keep(grepl("^Package: ", .)) %>%
-    gsub("^Package: *", "", .)
+  lines <- readr::read_lines(paths$description)
+  lines <- lines[grepl("^Package: ", lines)]
+  gsub("^Package: *", "", lines)
 }
 
 find_news <- function(path = NULL, package = detect_package_name(path = path)) {
@@ -92,9 +91,11 @@ process_news <- function(path = NULL, package = detect_package_name(path = path)
 #'
 #' @export
 recent_news <- function(path = NULL, package = detect_package_name(path = path), n = 2) {
-  process_news(path = path, package = package) %>%
-    slice(seq_len(n)) %>%
-    pull(text) %>%
+  news <-
+    process_news(path = path, package = package) %>%
+    slice(seq_len(n))
+
+  news$text %>%
     unlist() %>%
     str_replace("^#", "### Recent changes in ") %>%
     paste0(collapse = "\n")
