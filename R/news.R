@@ -90,9 +90,6 @@ process_news <- function(path = NULL, package = detect_package_name(path = path)
 #' @param n Number of recent news to print
 #' @inheritParams update_news
 #'
-#' @examples
-#' recent_news(package = "dynutils")
-#'
 #' @export
 recent_news <- function(path = NULL, package = detect_package_name(path = path), n = 2) {
   process_news(path = path, package = package) %>%
