@@ -27,12 +27,12 @@ For more information, check out [dynverse.org](dynverse.org).
 
 ## Latest changes
 
-Check out `news(package = "dynwrap")` or [NEWS.md](inst/NEWS.md) for a full list of changes.
+Check out `news(package = "dynutils")` or [NEWS.md](inst/NEWS.md) for a full list of changes.
 
 <!-- This section gets automatically generated from inst/NEWS.md, and also generates inst/NEWS -->
 
 ```{r news, echo=FALSE, results="asis"}
-dynutils::update_news("dynutils")
-cat(dynutils::recent_news("dynutils"))
+dynutils::update_news()
+cat(dynutils::recent_news())
 ```
 

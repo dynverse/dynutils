@@ -1,36 +1,67 @@
-find_news <- function(package) {
-  file <- system.file("NEWS.md", package = package)
+detect_package_folder <- function(path = NULL) {
+  path <-
+    path %||% getOption("detecting_description_path") %||% "."
 
-  if (nchar(file) == 0) {
+  paths <- lst(
+    description = paste0(path, "/DESCRIPTION"),
+    news_md = paste0(path, "/inst/NEWS.md"),
+    news = paste0(path, "/inst/NEWS")
+  )
+
+  if (!file.exists(paths$description)) {
+    stop("Could not find DESCRIPTION file, please specify the package manually.")
+  }
+
+  paths
+}
+
+detect_package_name <- function(path = NULL) {
+  paths <- detect_package_folder(path = path)
+
+  lines <- readr::read_lines(paths$description)
+  lines <- lines[grepl("^Package: ", lines)]
+  gsub("^Package: *", "", lines)
+}
+
+find_news <- function(path = NULL, package = detect_package_name(path = path)) {
+  paths <- detect_package_folder(path = path)
+
+  if (!file.exists(paths$news_md)) {
     stop(package, " does not have a NEWS.md!")
   }
 
-  file
+  paths$news_md
 }
-
-
 
 #' Update the news based on the md file
 #'
+#' @param path The path of the description in which the package resides
 #' @param package The package name
 #' @param write Whether to overwrite news
 #'
 #' @export
-update_news <- function(package, write = TRUE) {
-  # Automatically update inst/NEWS
-  news_md <- readr::read_lines(find_news(package))
+update_news <- function(path = NULL, package = detect_package_name(path = path), write = TRUE) {
+  paths <- detect_package_folder(path = path)
 
-  # creating NEWS for package
-  news_normal <- news_md %>%
-    str_replace_all("^# dynutils", "dynutils") %>%
+  # Automatically update inst/NEWS
+  news_normal <-
+    find_news(path = path, package = package) %>%
+    readr::read_lines() %>%
+    str_replace_all(paste0("^# ", package), package) %>%
     str_replace_all("\\[[^\\]]*\\]\\(([^\\)]*)\\)", "\\1")
 
-  if (write) { readr::write_lines(news_normal, "inst/NEWS") }  else {news_normal}
+  if (write) {
+    readr::write_lines(news_normal, paths$news)
+  } else {
+    news_normal
+  }
 }
 
 # processes the news into tidy format
-process_news <- function(package) {
-  news_md <- readr::read_lines(find_news(package))
+process_news <- function(path = NULL, package = detect_package_name(path = path)) {
+  news_md <-
+    find_news(path = path, package = package) %>%
+    readr::read_lines()
 
   ix <- which(stringr::str_detect(news_md, "^# "))
   matches <- stringr::str_match(news_md[ix], c("\\# ([A-Za-z0-9]*) ([0-9\\.]*) \\((.*)\\)"))
@@ -58,14 +89,13 @@ process_news <- function(package) {
 #' @param n Number of recent news to print
 #' @inheritParams update_news
 #'
-#' @examples
-#' recent_news("dynutils")
-#'
 #' @export
-recent_news <- function(package, n = 2) {
-  process_news(package) %>%
-    slice(1:n) %>%
-    pull(text) %>%
+recent_news <- function(path = NULL, package = detect_package_name(path = path), n = 2) {
+  news <-
+    process_news(path = path, package = package) %>%
+    slice(seq_len(n))
+
+  news$text %>%
     unlist() %>%
     str_replace("^#", "### Recent changes in ") %>%
     paste0(collapse = "\n")

@@ -20,23 +20,25 @@ check out [dynverse.org](dynverse.org).
 
 ## Latest changes
 
-Check out `news(package = "dynwrap")` or [NEWS.md](inst/NEWS.md) for a
+Check out `news(package = "dynutils")` or [NEWS.md](inst/NEWS.md) for a
 full list of
 changes.
 
 <!-- This section gets automatically generated from inst/NEWS.md, and also generates inst/NEWS -->
 
-### Recent changes in dynutils 1.0.2 (unreleased)
+### Recent changes in dynutils 1.0.2 (2019-03-21)
 
-  - BUG FIX: Fix %all\_in% error message
+  - BUG FIX: Fix generation of error messages in `%all_in%`.
 
   - FUNCTIONALITY: Added `read_h5()` and `write_h5()` functions.
 
-  - FUNCTIONALITY: Added `is_sparse()`
+  - FUNCTIONALITY: Added `is_sparse()`.
 
-  - FUNCTIONALITY: Added `update_news()` and `recent_news()`. Meta\!
+  - FUNCTIONALITY: Added `update_news()` and `recent_news()`. So meta\!
 
-### Recent changes in dynutils 1.0.1 (2018-02-04)
+  - FUNCTIONALITY: Moved `calculate_mean()` from dyneval to dynutils.
+
+### Recent changes in dynutils 1.0.1 (2019-02-04)
 
   - DOCUMENTATION: Fixed functionality vignette not showing any code.
 

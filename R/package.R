@@ -12,7 +12,8 @@
 #'
 #' @section Calculations:
 #' \itemize{
-#'   \item{\code{\link{calculate_distance}}: Compute pairwise distances between two matrices}
+#'   \item{\code{\link{calculate_distance}}: Calculate pairwise distances between two matrices}
+#'   \item{\code{\link{calculate_mean}}: Calculate a (weighted) mean between vectors or a list of vectors; supports the arithmetic, geometric and harmonic mean}
 #'   \item{\code{\link{project_to_segments}}: Project a set of points to to set of segments}
 #' }
 #'
@@ -64,6 +65,12 @@
 #'   \item{\code{\link{\%has_names\%}}: Check whether an object has certain names}
 #'   \item{\code{\link{is_single_numeric}}: Check whether a value is a single numeric}
 #'   \item{\code{\link{is_bounded}}: Check whether a value within a certain interval}
+#' }
+#'
+#' @section Package helpers:
+#' \itemize{
+#'   \item{\code{\link{update_news}}: Update the news based on the md file (assuming a certain format, see dynutils/inst/NEWS.md)}
+#'   \item{\code{\link{recent_news}}: Print the most recent news (assuming a certain format, see dynutils/inst/NEWS.md)}
 #' }
 #'
 #'

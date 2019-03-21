@@ -4,9 +4,12 @@
 \alias{update_news}
 \title{Update the news based on the md file}
 \usage{
-update_news(package, write = TRUE)
+update_news(path = NULL, package = detect_package_name(path = path),
+  write = TRUE)
 }
 \arguments{
+\item{path}{The path of the description in which the package resides}
+
 \item{package}{The package name}
 
 \item{write}{Whether to overwrite news}

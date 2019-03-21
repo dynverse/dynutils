@@ -6,7 +6,9 @@ obj <-
   list(
     charone = "a",
     charmany = c("one", "two", "three"),
+    charnone = character(0),
     logicalone = TRUE,
+    logicalnone = logical(0),
     even = c(one = FALSE, two = TRUE, three = FALSE),
     listone = list(a = 1, b = 2),
     listtwo = list(mat = matrix(1:10, ncol = 2), df = data.frame(a = 1, b = c(1, 2)), null = NULL),
@@ -30,7 +32,6 @@ test_that("write_h5 and read_h5 works", {
 })
 
 
-
 test_that("is_sparse works", {
   expect_false(is_sparse(matrix(c(1:10))))
 
@@ -40,3 +41,14 @@ test_that("is_sparse works", {
   expect_true(is_sparse(as(m, "dgeMatrix")))
 })
 
+
+test_that("errors gracefully", {
+  file <- tempfile()
+  on.exit(file.remove(file))
+
+  h5file <- hdf5r::H5File$new(file, mode = "w")
+  h5file[["a"]] <- 1
+  h5file$close_all()
+
+  expect_error(read_h5(file), regexp = "Object class not found")
+})
