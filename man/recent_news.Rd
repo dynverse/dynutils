@@ -4,9 +4,12 @@
 \alias{recent_news}
 \title{Print the most recent news}
 \usage{
-recent_news(package = detect_package_name(), n = 2)
+recent_news(path = NULL, package = detect_package_name(path = path),
+  n = 2)
 }
 \arguments{
+\item{path}{The path of the description in which the package resides}
+
 \item{package}{The package name}
 
 \item{n}{Number of recent news to print}
@@ -15,6 +18,6 @@ recent_news(package = detect_package_name(), n = 2)
 Print the most recent news
 }
 \examples{
-recent_news("dynutils")
+recent_news(package = "dynutils")
 
 }
