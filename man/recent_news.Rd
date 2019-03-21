@@ -4,7 +4,7 @@
 \alias{recent_news}
 \title{Print the most recent news}
 \usage{
-recent_news(package, n = 2)
+recent_news(package = detect_package_name(), n = 2)
 }
 \arguments{
 \item{package}{The package name}

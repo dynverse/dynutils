@@ -1,3 +1,14 @@
+detect_package_name <- function() {
+  if (!file.exists("DESCRIPTION")) {
+    stop("Could not find DESCRIPTION file, please specify the package manually.")
+  }
+
+  lines <-
+    readr::read_lines("DESCRIPTION") %>%
+    keep(grepl("^Package: ", .)) %>%
+    gsub("^Package: *", "", .)
+}
+
 find_news <- function(package) {
   file <- "inst/NEWS.md"
 
@@ -18,7 +29,7 @@ find_news <- function(package) {
 #' @param write Whether to overwrite news
 #'
 #' @export
-update_news <- function(package, write = TRUE) {
+update_news <- function(package = detect_package_name(), write = TRUE) {
   # Automatically update inst/NEWS
   news_md <- readr::read_lines(find_news(package))
 
@@ -68,9 +79,9 @@ process_news <- function(package) {
 #' recent_news("dynutils")
 #'
 #' @export
-recent_news <- function(package, n = 2) {
+recent_news <- function(package = detect_package_name(), n = 2) {
   process_news(package) %>%
-    slice(1:n) %>%
+    slice(seq_len(n)) %>%
     pull(text) %>%
     unlist() %>%
     str_replace("^#", "### Recent changes in ") %>%

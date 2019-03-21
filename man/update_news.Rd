@@ -4,7 +4,7 @@
 \alias{update_news}
 \title{Update the news based on the md file}
 \usage{
-update_news(package, write = TRUE)
+update_news(package = detect_package_name(), write = TRUE)
 }
 \arguments{
 \item{package}{The package name}
