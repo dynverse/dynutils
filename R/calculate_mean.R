@@ -80,12 +80,12 @@ process_combination_input <- function(...) {
   dots <- list(...)
   if (length(dots) > 1 && all(map_lgl(dots, is.numeric))) {
     do.call(cbind, dots)
-  } else if (is.numeric(..1)) {
-    do.call(cbind, as.list(..1))
   } else if (is.list(..1) && all(map_lgl(..1, is.numeric))) {
     do.call(cbind, ..1)
   } else if (is.matrix(..1) && is.numeric(..1)) {
     ..1
+  } else if (is.numeric(..1)) {
+    do.call(cbind, as.list(..1))
   } else {
     stop("Invalid input")
   }
