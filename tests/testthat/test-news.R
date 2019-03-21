@@ -44,10 +44,10 @@ test_that("update_news works", {
   expect_true(any(grepl("testing 0.1.1", recent_news)))
   expect_false(any(grepl("testing 0.0.1", recent_news)))
 
-  file.remove(news, news_md)
+  file.remove(news_md)
   expect_error(find_news(path = dir_loc), regexp = "does not have a NEWS.md")
 
   file.remove(description)
-  expect_error(detect_package_folder(path = dir_loc), regexp = "Could not find DESCRIPTION file")
+  expect_error(detect_package_folder(path = path), regexp = "Could not find DESCRIPTION file")
 })
 
