@@ -92,3 +92,11 @@ For more information, check out \url{dynverse.org}.
 }
 }
 
+\section{Package helpers}{
+
+\itemize{
+  \item{\code{\link{update_news}}: Update the news based on the md file (assuming a certain format, see dynutils/inst/NEWS.md)}
+  \item{\code{\link{recent_news}}: Print the most recent news (assuming a certain format, see dynutils/inst/NEWS.md)}
+}
+}
+

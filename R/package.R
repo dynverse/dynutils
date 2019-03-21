@@ -66,6 +66,12 @@
 #'   \item{\code{\link{is_bounded}}: Check whether a value within a certain interval}
 #' }
 #'
+#' @section Package helpers:
+#' \itemize{
+#'   \item{\code{\link{update_news}}: Update the news based on the md file (assuming a certain format, see dynutils/inst/NEWS.md)}
+#'   \item{\code{\link{recent_news}}: Print the most recent news (assuming a certain format, see dynutils/inst/NEWS.md)}
+#' }
+#'
 #'
 #' @import dplyr
 #' @import tidyr
