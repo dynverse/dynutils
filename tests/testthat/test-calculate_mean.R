@@ -18,8 +18,19 @@ test_that(paste0("calculate_mean"), {
   testthat::expect_equal(calculate_mean(0.001, 1, 1, weights = c(1, 2, 0), method = "geometric"), 0.1)
 
   testthat::expect_equal(calculate_arithmetic_mean(c(1, 2, 3), c(4, 5, 6), weights = c(2, 1)), c(2, 3, 4))
+  testthat::expect_equal(calculate_arithmetic_mean(cbind(c(1, 2, 3), c(4, 5, 6)), weights = c(2, 1)), c(2, 3, 4))
+  testthat::expect_equal(calculate_arithmetic_mean(list(c(1, 2, 3), c(4, 5, 6)), weights = c(2, 1)), c(2, 3, 4))
+
+
   exp <- 3 / c(1 / .2 + 1 / .2 + 1 / .3, 1 / .2 + 1 / .2 + 1 / .4, 1 / .3 + 1 / .3 + 1 / .6)
   testthat::expect_equal(calculate_harmonic_mean(c(0.2, 0.2, 0.3), c(0.3, 0.4, 0.6), weights = c(2, 1)), exp)
+  testthat::expect_equal(calculate_harmonic_mean(cbind(c(0.2, 0.2, 0.3), c(0.3, 0.4, 0.6)), weights = c(2, 1)), exp)
+  testthat::expect_equal(calculate_harmonic_mean(list(c(0.2, 0.2, 0.3), c(0.3, 0.4, 0.6)), weights = c(2, 1)), exp)
+
   expr <- c(.2 * .2 * .3, .2 * .2 * .4, .3 * .3 * .6)^(1 / 3)
   testthat::expect_equal(calculate_harmonic_mean(c(0.2, 0.2, 0.3), c(0.3, 0.4, 0.6), weights = c(2, 1)), exp)
+  testthat::expect_equal(calculate_harmonic_mean(cbind(c(0.2, 0.2, 0.3), c(0.3, 0.4, 0.6)), weights = c(2, 1)), exp)
+  testthat::expect_equal(calculate_harmonic_mean(list(c(0.2, 0.2, 0.3), c(0.3, 0.4, 0.6)), weights = c(2, 1)), exp)
+
+  testthat::expect_error(calculate_arithmetic_mean("I am a banana"), regexp = "Invalid input")
 })
