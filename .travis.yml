@@ -9,7 +9,7 @@ before_install:
 - source <(curl -sSL https://raw.githubusercontent.com/dynverse/travis_scripts/master/helper.sh)
 - install_hdf5
 install:
-- install_cran devtools covr
+- install_cran devtools covr pkgbuild
 - install_withdeps
 after_success:
 - R -e 'covr::codecov()'
