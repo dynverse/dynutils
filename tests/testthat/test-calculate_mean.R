@@ -14,8 +14,8 @@ test_that(paste0("calculate_mean"), {
   testthat::expect_true(length(calculate_geometric_mean(tibble::tibble(x = numeric(), y = numeric()), weights = c(x = 0, y = 1))) == 0)
 
   testthat::expect_equal(calculate_mean(0.1, 0.4, 0.4, weights = c(1, 2, 5), method = "arithmetic"), 0.3625)
-  testthat::expect_equal(calculate_mean(0.5, 1, 1, weights = c(1, 2, 4)), method = "harmonic", 0.875)
-  testthat::expect_equal(calculate_mean(0.001, 1, 1, weights = c(1, 2, 0)), method = "geometric", 0.1)
+  testthat::expect_equal(calculate_mean(0.5, 1, 1, weights = c(1, 2, 4), method = "harmonic"), 0.875)
+  testthat::expect_equal(calculate_mean(0.001, 1, 1, weights = c(1, 2, 0), method = "geometric"), 0.1)
 
   testthat::expect_equal(calculate_arithmetic_mean(c(1, 2, 3), c(4, 5, 6), weights = c(2, 1)), c(2, 3, 4))
   exp <- 3 / c(1 / .2 + 1 / .2 + 1 / .3, 1 / .2 + 1 / .2 + 1 / .4, 1 / .3 + 1 / .3 + 1 / .6)
