@@ -1,16 +1,16 @@
-# dynutils 1.0.2 (unreleased)
+# dynutils 1.0.2 (2019-03-21)
 
- * BUG FIX: Fix %all_in% error message
+ * BUG FIX: Fix generation of error messages in `%all_in%`.
  
  * FUNCTIONALITY: Added `read_h5()` and `write_h5()` functions.
  
- * FUNCTIONALITY: Added `is_sparse()`
+ * FUNCTIONALITY: Added `is_sparse()`.
  
- * FUNCTIONALITY: Added `update_news()` and `recent_news()`. Very meta!
+ * FUNCTIONALITY: Added `update_news()` and `recent_news()`. So meta!
  
  * FUNCTIONALITY: Moved `calculate_{geometric,harmonic,arithmetic}_mean()` from dyneval to dynutils.
  
-# dynutils 1.0.1 (2018-02-04)
+# dynutils 1.0.1 (2019-02-04)
 
  * DOCUMENTATION: Fixed functionality vignette not showing any code.
 
