@@ -33,7 +33,7 @@ calculate_mean <- function(..., method, weights = NULL) {
       arithmetic = calculate_arithmetic_mean,
       harmonic = calculate_harmonic_mean,
       geometric = calculate_geometric_mean
-    )[method]
+    )[[method]]
   fun(..., weights = weights)
 }
 
