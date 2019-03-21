@@ -1,5 +1,9 @@
 find_news <- function(package) {
-  file <- system.file("NEWS.md", package = package)
+  file <- "inst/NEWS.md"
+
+  if (!file.exists(file)) {
+    file <- system.file("NEWS.md", package = package)
+  }
 
   if (nchar(file) == 0) {
     stop(package, " does not have a NEWS.md!")
@@ -7,8 +11,6 @@ find_news <- function(package) {
 
   file
 }
-
-
 
 #' Update the news based on the md file
 #'
@@ -22,10 +24,14 @@ update_news <- function(package, write = TRUE) {
 
   # creating NEWS for package
   news_normal <- news_md %>%
-    str_replace_all("^# dynutils", "dynutils") %>%
+    str_replace_all(paste0("^# ", package), package) %>%
     str_replace_all("\\[[^\\]]*\\]\\(([^\\)]*)\\)", "\\1")
 
-  if (write) { readr::write_lines(news_normal, "inst/NEWS") }  else {news_normal}
+  if (write) {
+    readr::write_lines(news_normal, "inst/NEWS")
+  } else {
+    news_normal
+  }
 }
 
 # processes the news into tidy format
