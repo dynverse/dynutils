@@ -6,8 +6,10 @@
  
  * FUNCTIONALITY: Added `is_sparse()`
  
- * FUNCTIONALITY: Added `update_news()` and `recent_news()`. Meta!
-
+ * FUNCTIONALITY: Added `update_news()` and `recent_news()`. Very meta!
+ 
+ * FUNCTIONALITY: Moved `calculate_{geometric,harmonic,arithmetic}_mean()` from dyneval to dynutils.
+ 
 # dynutils 1.0.1 (2018-02-04)
 
  * DOCUMENTATION: Fixed functionality vignette not showing any code.

@@ -20,7 +20,7 @@ check out [dynverse.org](dynverse.org).
 
 ## Latest changes
 
-Check out `news(package = "dynwrap")` or [NEWS.md](inst/NEWS.md) for a
+Check out `news(package = "dynutils")` or [NEWS.md](inst/NEWS.md) for a
 full list of
 changes.
 
@@ -34,7 +34,12 @@ changes.
 
   - FUNCTIONALITY: Added `is_sparse()`
 
-  - FUNCTIONALITY: Added `update_news()` and `recent_news()`. Meta\!
+  - FUNCTIONALITY: Added `update_news()` and `recent_news()`. Very
+    meta\!
+
+  - FUNCTIONALITY: Moved
+    `calculate_{geometric,harmonic,arithmetic}_mean()` from dyneval to
+    dynutils.
 
 ### Recent changes in dynutils 1.0.1 (2018-02-04)
 

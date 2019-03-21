@@ -61,6 +61,7 @@ Collate:
     'assertions.R'
     'inherit_default_params.R'
     'calculate_distance.R'
+    'calculate_means.R'
     'check_packages.R'
     'expand_matrix.R'
     'extend_with.R'
