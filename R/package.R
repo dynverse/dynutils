@@ -12,7 +12,10 @@
 #'
 #' @section Calculations:
 #' \itemize{
-#'   \item{\code{\link{calculate_distance}}: Compute pairwise distances between two matrices}
+#'   \item{\code{\link{calculate_distance}}: Calculate pairwise distances between two matrices}
+#'   \item{\code{\link{calculate_arithmetic_mean}}: Calculate the arithmetic between various sorts of objects}
+#'   \item{\code{\link{calculate_geometric_mean}}: Calculate the geometric between various sorts of objects}
+#'   \item{\code{\link{calculate_harmonic_mean}}: Calculate the harmonic between various sorts of objects}
 #'   \item{\code{\link{project_to_segments}}: Project a set of points to to set of segments}
 #' }
 #'
