@@ -13,11 +13,7 @@ safe_tempdir <- function(subfolder) {
   dir <- file.path(tempfile(), subfolder) %>%
     fix_macosx_tmp()
 
-  if (dir.exists(dir)) {
-    unlink(dir, recursive = TRUE, force = TRUE)
-  }
-
-  dir.create(dir, recursive = TRUE)
+  dir.create(dir, recursive = TRUE, showWarnings = FALSE)
 
   dir
 }
