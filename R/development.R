@@ -1,16 +1,3 @@
-dynverse_packages <- c(
-  "babelwhale",
-  "dyndimred",
-  "dynutils",
-  "dynparam",
-  "dyneval",
-  "dynplot",
-  "dynbenchmark",
-  "dyno",
-  "dyngen",
-  "dyntoy"
-)
-
 #' Switching of development stage within the dynverse
 #'
 #' @param file The description file, defaults to DESCRIPTION
@@ -26,7 +13,9 @@ switch_devel <- function(file = "DESCRIPTION", desc = desc::desc(file = file)) {
   }
 
   # add dynverse remotes if needed, and set to devel
-  dynverse_dependencies <- intersect(desc$get_deps()$package, dynverse_packages)
+  dynverse_dependencies <- desc$get_remotes() %>%
+    stringr::str_subset("dynverse/") %>%
+    gsub("dynverse/([A-Za-z0-9]*).*", "\\1", .)
 
   if (length(dynverse_dependencies) > 0) {
     needed_remotes <- paste0("dynverse/", dynverse_dependencies)
@@ -54,7 +43,9 @@ switch_master <- function(file = "DESCRIPTION", desc = desc::desc(file = file)) 
   }
 
   # add dynverse remotes if needed, and set to master
-  dynverse_dependencies <- intersect(desc$get_deps()$package, dynverse_packages)
+  dynverse_dependencies <- desc$get_remotes() %>%
+    stringr::str_subset("dynverse/") %>%
+    gsub("dynverse/([A-Za-z0-9]*).*", "\\1", .)
 
   if (length(dynverse_dependencies) > 0) {
     needed_remotes <- paste0("dynverse/", dynverse_dependencies)
