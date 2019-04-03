@@ -227,6 +227,7 @@ test_h5_installation <- function(detailed = FALSE) {
 }
 
 #' @rdname test_h5_installation
+#' @importFrom stats runif
 #' @export
 get_h5_test_data <- function() {
   m <- matrix(1:20, ncol = 4, dimnames = list(letters[1:5], LETTERS[1:4]))
