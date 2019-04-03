@@ -177,6 +177,8 @@ write_h5_ <- function(x, file_h5, path) {
     for (xn in names(x)) {
       write_h5_(x[[xn]], subsubfile, xn)
     }
+  } else {
+    stop("Cannot write ", x)
   }
 }
 
@@ -198,3 +200,98 @@ is_sparse <- function(x) {
 
 
 
+
+
+
+
+
+#' Tests whether hdf5 is correctly installed and can load/write data
+#'
+#' @param detailed Whether top do a detailed check
+#' @param obj The object with which to check
+#' @param file The location where the hdf5 file will be stored
+#'
+#' @importFrom glue glue
+#' @importFrom crayon red green bold
+#' @importFrom stringr str_pad
+#'
+#' @export
+test_h5_installation <- function(detailed = FALSE) {
+  obj <- get_h5_test_data()
+  file <- test_h5_installation_write(detailed, obj)
+  obj2 <- test_h5_installation_read(detailed, file)
+  test_h5_installation_equal(detailed, obj, obj2)
+
+  if (detailed)
+    message(crayon::green(crayon::bold(stringr::str_pad("\u2714 HDF5 test successful ", 90, side = "right", "-"))))
+
+  TRUE
+}
+
+#' @rdname test_h5_installation
+#' @export
+get_h5_test_data <- function() {
+  m <- matrix(1:20, ncol = 4, dimnames = list(letters[1:5], LETTERS[1:4]))
+
+  obj <-
+    list(
+      charone = "a",
+      charmany = c("one", "two", "three"),
+      charnone = character(0),
+      logicalone = TRUE,
+      logicalnone = logical(0),
+      even = c(one = FALSE, two = TRUE, three = FALSE),
+      listone = list(a = 1, b = 2),
+      listtwo = list(mat = matrix(1:10, ncol = 2), df = data.frame(a = 1, b = c(1, 2)), null = NULL),
+      listmany = list(list(list())),
+      df = data.frame(a = letters[1:4], b = runif(4), c = c(T, F, T, T), d = 2L:5L),
+      mat = m,
+      spmat = Matrix::Matrix(m, sparse = TRUE),
+      null = NULL
+    )
+  class(obj) <- "tenten"
+
+  obj
+}
+
+test_h5_installation_write <- function(detailed = FALSE, obj = get_h5_test_data(), file = tempfile()) {
+  tryCatch(
+    write_h5(obj, file),
+    error = function(e) {
+      paste0("\u274C Unable to write hdf5 files\n") %>%
+        crayon::red() %>%
+        cat()
+      stop(e)
+    }
+  )
+  if (detailed) message(crayon::green("\u2714 HDF5 files can be written"))
+
+  file
+}
+
+test_h5_installation_read <- function(detailed = FALSE, file) {
+  obj2 <- tryCatch(
+    read_h5(file),
+    error = function(e) {
+      paste0("\u274C Unable to read hdf5 files\n") %>%
+        crayon::red() %>%
+        cat()
+      stop(e)
+    }
+  )
+  if (detailed) message(crayon::green("\u2714 HDF5 files can be read"))
+
+  obj2
+}
+
+
+test_h5_installation_equal <- function(detailed = FALSE, obj, obj2) {
+  if (!isTRUE(all.equal(obj2, obj, check.attributes = FALSE))) {
+    paste0("\u274C R objects written and read through hdf5 are not the same\n") %>%
+      crayon::red() %>%
+      cat()
+    stop()
+  }
+  if (detailed)
+    message(crayon::green("\u2714 An R object that is written and read with HDF5 is the same"))
+}
