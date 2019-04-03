@@ -11,10 +11,6 @@ get_h5_test_data()
 }
 \arguments{
 \item{detailed}{Whether top do a detailed check}
-
-\item{obj}{The object with which to check}
-
-\item{file}{The location where the hdf5 file will be stored}
 }
 \description{
 Tests whether hdf5 is correctly installed and can load/write data

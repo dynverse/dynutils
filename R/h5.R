@@ -208,8 +208,6 @@ is_sparse <- function(x) {
 #' Tests whether hdf5 is correctly installed and can load/write data
 #'
 #' @param detailed Whether top do a detailed check
-#' @param obj The object with which to check
-#' @param file The location where the hdf5 file will be stored
 #'
 #' @importFrom glue glue
 #' @importFrom crayon red green bold
