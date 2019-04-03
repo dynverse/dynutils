@@ -28,14 +28,16 @@ switch_devel <- function(file = "DESCRIPTION", desc = desc::desc(file = file)) {
   # add dynverse remotes if needed, and set to devel
   dynverse_dependencies <- intersect(desc$get_deps()$package, dynverse_packages)
 
-  needed_remotes <- paste0("dynverse/", dynverse_dependencies)
-  current_remotes <- desc$get_remotes() %>% purrr::discard(stringr::str_detect, "dynverse/")
-  new_remotes <- c(
-    current_remotes,
-    paste0(needed_remotes, "@devel")
-  )
-  if (length(new_remotes) > 0) {
-    desc$set_remotes(new_remotes)
+  if (length(dynverse_dependencies) > 0) {
+    needed_remotes <- paste0("dynverse/", dynverse_dependencies)
+    current_remotes <- desc$get_remotes() %>% purrr::discard(stringr::str_detect, "dynverse/")
+    new_remotes <- c(
+      current_remotes,
+      paste0(needed_remotes, "@devel")
+    )
+    if (length(new_remotes) > 0 || new_remotes[1] == "") {
+      desc$set_remotes(new_remotes)
+    }
   }
 
   desc$write(file = file)
@@ -54,14 +56,16 @@ switch_master <- function(file = "DESCRIPTION", desc = desc::desc(file = file)) 
   # add dynverse remotes if needed, and set to master
   dynverse_dependencies <- intersect(desc$get_deps()$package, dynverse_packages)
 
-  needed_remotes <- paste0("dynverse/", dynverse_dependencies)
-  current_remotes <- desc$get_remotes() %>% purrr::discard(stringr::str_detect, "dynverse/")
-  new_remotes <- c(
-    current_remotes,
-    paste0(needed_remotes, "@master")
-  )
-  if (length(new_remotes) > 0) {
-    desc$set_remotes(new_remotes)
+  if (length(dynverse_dependencies) > 0) {
+    needed_remotes <- paste0("dynverse/", dynverse_dependencies)
+    current_remotes <- desc$get_remotes() %>% purrr::discard(stringr::str_detect, "dynverse/")
+    new_remotes <- c(
+      current_remotes,
+      paste0(needed_remotes, "@master")
+    )
+    if (length(new_remotes) > 0 || new_remotes[1] == "") {
+      desc$set_remotes(new_remotes)
+    }
   }
 
   desc$write(file = file)
