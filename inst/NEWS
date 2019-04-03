@@ -1,3 +1,7 @@
+dynutils 1.0.3 (unreleased)
+
+ * FUNCTIONALITY: Added `test_h5_installation()`
+
 dynutils 1.0.2 (2019-03-21)
 
  * BUG FIX: Fix generation of error messages in `%all_in%`.
