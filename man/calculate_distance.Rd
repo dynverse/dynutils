@@ -3,15 +3,18 @@
 \name{calculate_distance}
 \alias{calculate_distance}
 \alias{correlation_distance}
+\alias{angular_distance}
 \alias{manhattan_distance}
 \alias{euclidean_distance}
 \title{Distance metrics}
 \usage{
 calculate_distance(x, y = NULL, method = c("euclidean", "manhattan",
-  "spearman", "pearson", "kendall"))
+  "spearman", "pearson", "kendall", "angular"))
 
 correlation_distance(x, y = NULL, method = c("pearson", "kendall",
   "spearman"), use = "everything")
+
+angular_distance(x, y = NULL)
 
 manhattan_distance(x, y = NULL)
 
@@ -27,6 +30,7 @@ euclidean_distance(x, y = NULL)
   \item euclidean: \code{\link{euclidean_distance}}
   \item manhattan: \code{\link{manhattan_distance}}
   \item spearman, pearson, or kendall: \code{\link{correlation_distance}}
+  \item angular: \code{\link{angular_distance}}
 }}
 
 \item{use}{an optional character string giving a
@@ -48,4 +52,5 @@ dist_manhattan <- calculate_distance(x, y, method = "manhattan")
 dist_spearman <- calculate_distance(x, y, method = "spearman")
 dist_pearson <- calculate_distance(x, y, method = "pearson")
 dist_kendall <- calculate_distance(x, y, method = "kendall")
+dist_angular <- calculate_distance(x, y, method = "angular")
 }

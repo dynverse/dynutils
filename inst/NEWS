@@ -1,6 +1,8 @@
 dynutils 1.0.3 (unreleased)
 
- * FUNCTIONALITY: Added `test_h5_installation()`
+ * FUNCTIONALITY: Added `test_h5_installation()`.
+ 
+ * FUNCTIONALITY: Added `angular_distance()`.
 
 dynutils 1.0.2 (2019-03-21)
 

@@ -20,7 +20,7 @@ check out [dynverse.org](dynverse.org).
 
 ## Latest changes
 
-Check out `news(package = "dynwrap")` or [NEWS.md](inst/NEWS.md) for a
+Check out `news(package = "dynutils")` or [NEWS.md](inst/NEWS.md) for a
 full list of
 changes.
 
@@ -28,7 +28,9 @@ changes.
 
 ### Recent changes in dynutils 1.0.3 (unreleased)
 
-  - FUNCTIONALITY: Added `test_h5_installation()`
+  - FUNCTIONALITY: Added `test_h5_installation()`.
+
+  - FUNCTIONALITY: Added `angular_distance()`.
 
 ### Recent changes in dynutils 1.0.2 (2019-03-21)
 

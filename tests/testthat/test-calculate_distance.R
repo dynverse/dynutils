@@ -19,7 +19,8 @@ dist_tib <- tribble(
   "manhattan", manhattan_distance,
   "spearman", function(x, y) correlation_distance(x, y, method = "spearman"),
   "pearson", function(x, y) correlation_distance(x, y, method = "pearson"),
-  "kendall", function(x, y) correlation_distance(x, y, method = "kendall")
+  "kendall", function(x, y) correlation_distance(x, y, method = "kendall"),
+  "angular", angular_distance
 )
 
 
@@ -86,7 +87,8 @@ test_that("calculate_distance returns collect solutions", {
     manhattan = sum(abs(x - y)),
     spearman = 1 - (cor(t(x), t(y), method = "spearman") + 1) / 2,
     pearson = 1 - (cor(t(x), t(y), method = "pearson") + 1) / 2,
-    kendall = 1 - (cor(t(x), t(y), method = "kendall") + 1) / 2
+    kendall = 1 - (cor(t(x), t(y), method = "kendall") + 1) / 2,
+    angular = acos(sum(x * y) / (sqrt(sum(x^2)) * sqrt(sum(y^2)))) * 2 / pi
   ))
 
   sapply(dist_tib$method, function(method) {

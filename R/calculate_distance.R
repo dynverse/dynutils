@@ -27,6 +27,7 @@ calculate_distance_postproc_d <- function(x, y, d) {
 #'   \item euclidean: \code{\link{euclidean_distance}}
 #'   \item manhattan: \code{\link{manhattan_distance}}
 #'   \item spearman, pearson, or kendall: \code{\link{correlation_distance}}
+#'   \item angular: \code{\link{angular_distance}}
 #' }
 #'
 #' @rdname calculate_distance
@@ -43,10 +44,11 @@ calculate_distance_postproc_d <- function(x, y, d) {
 #' dist_spearman <- calculate_distance(x, y, method = "spearman")
 #' dist_pearson <- calculate_distance(x, y, method = "pearson")
 #' dist_kendall <- calculate_distance(x, y, method = "kendall")
+#' dist_angular <- calculate_distance(x, y, method = "angular")
 calculate_distance <- function(
   x,
   y = NULL,
-  method = c("euclidean", "manhattan", "spearman", "pearson", "kendall")
+  method = c("euclidean", "manhattan", "spearman", "pearson", "kendall", "angular")
 ) {
   method <- match.arg(method)
 
@@ -56,6 +58,8 @@ calculate_distance <- function(
     manhattan_distance(x, y)
   } else if (method %in% c("spearman", "pearson", "kendall")) {
     correlation_distance(x, y, method = method)
+  } else if (method == "angular") {
+    angular_distance(x, y)
   }
 }
 
@@ -79,6 +83,44 @@ correlation_distance <- inherit_default_params(
     calculate_distance_postproc_d(x, y, d)
   }
 )
+
+#' @rdname calculate_distance
+#'
+#' @include inherit_default_params.R
+#'
+#' @export
+angular_distance <- function(x, y = NULL) {
+  x <- calculate_distance_preproc_x(x)
+  y <- calculate_distance_preproc_y(x, y)
+
+  top <- x %*% t(y)
+  bot1 <- sqrt(rowSums(x^2))
+  bot2 <- sqrt(rowSums(y^2))
+
+  # optimisation of:
+  # div <- top %>% sweep(1, bot1, "/") %>% sweep(2, bot2, "/")
+  # https://stackoverflow.com/a/20596490/585801
+  bot1 <-
+    if (length(bot1) != 1) {
+      diag(1 / bot1)
+    } else {
+      1 / bot1
+    }
+  bot2 <-
+    if (length(bot2) != 1) {
+      diag(1 / bot2)
+    } else {
+      1 / bot2
+    }
+  div <- bot1 %*% top %*% bot2
+
+  # div should never be larger than 1, but sometimes is due to rounding errors
+  div[div > 1] <- 1
+
+  d <- acos(div) * 2 / pi
+
+  calculate_distance_postproc_d(x, y, d)
+}
 
 #' @rdname calculate_distance
 #'
