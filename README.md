@@ -30,7 +30,8 @@ changes.
 
   - FUNCTIONALITY: Added `test_h5_installation()`.
 
-  - FUNCTIONALITY: Added `angular_distance()`.
+  - FUNCTIONALITY: Added `angular_distance()` and
+    `list_distance_metrics()`.
 
 ### Recent changes in dynutils 1.0.2 (2019-03-21)
 
