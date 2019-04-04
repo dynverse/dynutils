@@ -81,7 +81,7 @@
 #' @import stringr
 #' @importFrom purrr %>% %||% map map_df map_chr map_lgl map_int map_dbl keep discard set_names
 #' @importFrom magrittr %<>% %$% set_rownames set_colnames
-#' @importFrom assertthat on_failure<-
+#' @importFrom assertthat assert_that on_failure<-
 #'
 #' @useDynLib dynutils
 #' @importFrom Rcpp evalCpp

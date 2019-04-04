@@ -1,7 +1,12 @@
 #' @importFrom testthat expect_is
 calculate_distance_preproc_x <- function(x) {
-  testthat::expect_is(x, c("matrix", "data.frame", "dgCMatrix"))
-  as.matrix(x)
+  assert_that(
+    is.matrix(x) || is.data.frame(x) || grepl("...Matrix", class(x)[[1]])
+  )
+  if (is.data.frame(x)) {
+    x <- as.matrix(x)
+  }
+  x
 }
 
 #' @importFrom testthat expect_equal
@@ -21,6 +26,7 @@ calculate_distance_postproc_d <- function(x, y, d) {
 #' @inheritParams stats::cor
 #'
 #' @importFrom stats cor
+#' @importFrom Matrix t
 #'
 #' @include inherit_default_params.R
 #'
@@ -31,7 +37,8 @@ correlation_distance <- inherit_default_params(
     x <- calculate_distance_preproc_x(x)
     y <- calculate_distance_preproc_y(x, y)
 
-    d <- 1 - (stats::cor(t(x), t(y), method = method, use = use) + 1) / 2
+    sim <- stats::cor(Matrix::t(x), Matrix::t(y), method = method, use = use)
+    d <- 1 - (sim + 1) / 2
 
     calculate_distance_postproc_d(x, y, d)
   }
@@ -62,14 +69,15 @@ kendall_distance = inherit_default_params(
 #'
 #' @include inherit_default_params.R
 #'
+#' @importFrom Matrix t rowSums
 #' @export
 angular_distance <- function(x, y = NULL) {
   x <- calculate_distance_preproc_x(x)
   y <- calculate_distance_preproc_y(x, y)
 
-  top <- x %*% t(y)
-  bot1 <- sqrt(rowSums(x^2))
-  bot2 <- sqrt(rowSums(y^2))
+  top <- x %*% Matrix::t(y)
+  bot1 <- sqrt(Matrix::rowSums(x^2))
+  bot2 <- sqrt(Matrix::rowSums(y^2))
 
   # optimisation of:
   # div <- top %>% sweep(1, bot1, "/") %>% sweep(2, bot2, "/")
@@ -103,7 +111,17 @@ manhattan_distance <- function(x, y = NULL) {
   x <- calculate_distance_preproc_x(x)
   y <- calculate_distance_preproc_y(x, y)
 
-  d <- .Call('_dynutils_manhattan_distance', PACKAGE = 'dynutils', x, y)
+  # borrow from https://github.com/cran/wordspace/blob/master/src/wordspace.cpp
+  if (grepl("...Matrix", class(x)[[1]]) || grepl("...Matrix", class(y)[[1]])) {
+    d <- matrix(NA, nrow = nrow(x), ncol = nrow(y))
+    # for (i in seq_len(nrow(x))) {
+    #   for (j in seq_len(nrow(y))) {
+    #     d[i, j] <- sum(abs(x[i, ] - y[j, ]))
+    #   }
+    # }
+  } else {
+    d <- .Call('_dynutils_manhattan_distance', PACKAGE = 'dynutils', x, y)
+  }
 
   calculate_distance_postproc_d(x, y, d)
 }
@@ -115,7 +133,17 @@ euclidean_distance <- function(x, y = NULL) {
   x <- calculate_distance_preproc_x(x)
   y <- calculate_distance_preproc_y(x, y)
 
-  d <- .Call('_dynutils_euclidean_distance', PACKAGE = 'dynutils', x, y)
+  # borrow from https://github.com/cran/wordspace/blob/master/src/wordspace.cpp
+  if (grepl("...Matrix", class(x)[[1]]) || grepl("...Matrix", class(y)[[1]])) {
+    d <- matrix(NA, nrow = nrow(x), ncol = nrow(y))
+    # for (i in seq_len(nrow(x))) {
+    #   for (j in seq_len(nrow(y))) {
+    #     d[i, j] <- sum(abs(x[i, ] - y[j, ])^2)
+    #   }
+    # }
+  } else {
+    d <- .Call('_dynutils_euclidean_distance', PACKAGE = 'dynutils', x, y)
+  }
 
   calculate_distance_postproc_d(x, y, d)
 }

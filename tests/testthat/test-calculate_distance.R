@@ -13,16 +13,14 @@ check_output <- function(x, y, o, e) {
   }
 }
 
-dist_tib <- tribble(
-  ~method, ~dist_fun,
-  "euclidean", euclidean_distance,
-  "manhattan", manhattan_distance,
-  "spearman", function(x, y) correlation_distance(x, y, method = "spearman"),
-  "pearson", function(x, y) correlation_distance(x, y, method = "pearson"),
-  "kendall", function(x, y) correlation_distance(x, y, method = "kendall"),
-  "angular", angular_distance
-)
+test_that("list_distance_metrics works", {
+  expect_true(all(names(list_distance_metrics()) %in% c("euclidean", "manhattan", "angular", "spearman", "pearson", "kendall")))
+  expect_true(all(map_chr(list_distance_metrics(), class) == "function"))
+})
 
+dist_tib <-
+  list_distance_metrics() %>%
+  enframe("method", "dist_fun")
 
 test_that("calculate_distance and other functions return the correct format", {
   x <- matrix(c(1, 2, 5, 3), ncol = 2)
@@ -94,5 +92,30 @@ test_that("calculate_distance returns collect solutions", {
   sapply(dist_tib$method, function(method) {
     o <- calculate_distance(x, y, method = method)
     check_output(x, y, o, e = expected[[method]])
+  })
+})
+
+
+test_that("calculate_distance works on matrices, data frames and sparse matrices", {
+
+  generate_expr <- function(nrow, ncol) {
+    i <- unlist(lapply(seq_len(nrow), function(i) rep(i, sample(25:50, 1))))
+    j <- sample(seq_len(ncol), length(i), replace = TRUE)
+    expr <- Matrix::sparseMatrix(i = i, j = j, x = runif(length(i)))
+
+    rownames(expr) <- sample(paste0("cell", seq_len(nrow(expr))))
+    colnames(expr) <- sample(paste0("gene", seq_len(ncol(expr))))
+
+    expr
+  }
+
+  x <- generate_expr(nrow = 10000, ncol = 50)
+  y <- generate_expr(nrow = 20, ncol = 50)
+
+
+  purrr::walk(dist_tib$dist_fun, function(fun) {
+    out <- fun(x, y)
+    expect_equal(nrow(out), nrow(x))
+    expect_equal(ncol(out), nrow(y))
   })
 })

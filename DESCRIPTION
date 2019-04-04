@@ -37,6 +37,7 @@ Imports:
   dplyr,
   glue,
   magrittr,
+  Matrix,
   methods,
   purrr,
   Rcpp,
@@ -48,7 +49,6 @@ Suggests:
   ggplot2,
   hdf5r,
   knitr,
-  Matrix,
   readr,
   rmarkdown
 LinkingTo:
