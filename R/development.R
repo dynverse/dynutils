@@ -4,6 +4,7 @@
 #' @param desc The read in description using the desc package
 #'
 #' @export
+#' @importFrom stringr str_replace_all
 switch_devel <- function(file = "DESCRIPTION", desc = desc::desc(file = file)) {
   # set version to 9000
   version <- as.character(desc$get_version())
@@ -13,9 +14,10 @@ switch_devel <- function(file = "DESCRIPTION", desc = desc::desc(file = file)) {
   }
 
   # add dynverse remotes if needed, and set to devel
-  dynverse_dependencies <- desc$get_remotes() %>%
+  dynverse_dependencies <-
+    desc$get_remotes() %>%
     stringr::str_subset("dynverse/") %>%
-    gsub("dynverse/([A-Za-z0-9]*).*", "\\1", .)
+    str_replace_all("dynverse/([A-Za-z0-9]*).*", "\\1")
 
   if (length(dynverse_dependencies) > 0) {
     needed_remotes <- paste0("dynverse/", dynverse_dependencies)
@@ -34,6 +36,7 @@ switch_devel <- function(file = "DESCRIPTION", desc = desc::desc(file = file)) {
 
 #' @export
 #' @rdname switch_devel
+#' @importFrom stringr str_replace_all
 switch_master <- function(file = "DESCRIPTION", desc = desc::desc(file = file)) {
   # set version to 9000
   version <- as.character(desc$get_version())
@@ -43,9 +46,10 @@ switch_master <- function(file = "DESCRIPTION", desc = desc::desc(file = file)) 
   }
 
   # add dynverse remotes if needed, and set to master
-  dynverse_dependencies <- desc$get_remotes() %>%
+  dynverse_dependencies <-
+    desc$get_remotes() %>%
     stringr::str_subset("dynverse/") %>%
-    gsub("dynverse/([A-Za-z0-9]*).*", "\\1", .)
+    str_replace_all("dynverse/([A-Za-z0-9]*).*", "\\1")
 
   if (length(dynverse_dependencies) > 0) {
     needed_remotes <- paste0("dynverse/", dynverse_dependencies)
