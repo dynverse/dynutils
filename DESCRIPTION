@@ -63,6 +63,7 @@ Collate:
     'calculate_distance.R'
     'calculate_mean.R'
     'check_packages.R'
+    'development.R'
     'expand_matrix.R'
     'extend_with.R'
     'h5.R'

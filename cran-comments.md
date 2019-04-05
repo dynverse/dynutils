@@ -12,7 +12,6 @@
 
 ## Test environments
 * local Fedora 28 installation, R 3.5.0
-* OS X install (on travis-ci), R 3.5.0
 * ubuntu 14.04 (on travis-ci), R 3.5.0
 * win-builder (via devtools), R release
 * win-builder (via devtools), R devel

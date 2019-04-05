@@ -33,6 +33,7 @@ read_h5_ <- function(file_h5) {
 
     # workaround
     out <- .read_h5_vec(data_file)
+
     if ("names" %in% names(file_h5)) names(out) <- .read_h5_vec(file_h5[["names"]])
 
     out
@@ -107,8 +108,36 @@ read_h5_ <- function(file_h5) {
   if (file_h5$dims == 0 && "H5T_STRING" %in% class(file_h5$get_type())) {
     character(0)
   } else {
-    file_h5[]
+    x <- file_h5[]
+
+    # workaround for https://github.com/dynverse/dyno/issues/43
+    is_workaround <- is.integer(x) && "is_logical" %in% hdf5r::h5attr_names(file_h5) && hdf5r::h5attr(file_h5, "is_logical") == "true"
+    if (is_workaround) {
+      x <- ifelse(x == 2L, NA, ifelse(x == 1L, TRUE, FALSE))
+    }
+
+    x
   }
+}
+
+.write_h5_vec <- function(x, file_h5, name) {
+  # workaround for https://github.com/dynverse/dyno/issues/43
+  was_logical <- is.logical(x)
+  if (is.logical(x)) {
+    if (length(x) == 0) {
+      x <- integer(0)
+    } else {
+      x <- ifelse(is.na(x), 2L, ifelse(x, 1L, 0L))
+    }
+  }
+
+  file_h5[[name]] <- x
+
+  # workaround for https://github.com/dynverse/dyno/issues/43
+  subfile <- file_h5[[name]]
+  hdf5r::h5attr(subfile, "is_logical") <- ifelse(was_logical, "true", "false")
+
+  return()
 }
 
 #' @rdname read_h5
@@ -140,7 +169,9 @@ write_h5_ <- function(x, file_h5, path) {
     hdf5r::h5attr(subfile, "object_class") <- "sparse_matrix"
     subfile[["i"]] <- ipx@i
     subfile[["p"]] <- ipx@p
-    subfile[["x"]] <- ipx@x
+    # subfile[["x"]] <- ipx@x
+    # workaround
+    .write_h5_vec(ipx@x, subfile, "x")
     subfile[["dims"]] <- dim(ipx)
     if (!is.null(rownames(ipx))) {
       subfile[["rownames"]] <- rownames(ipx)
@@ -159,12 +190,19 @@ write_h5_ <- function(x, file_h5, path) {
     subfile[["colnames"]] <- colnames(x)
     subsubfile <- subfile$create_group("data")
     for (xn in names(x)) {
-      subsubfile[[xn]] <- x[[xn]]
+      # subsubfile[[xn]] <- x[[xn]]
+
+      # workaround
+      .write_h5_vec(x[[xn]], subsubfile, xn)
     }
   } else if (is.atomic(x)) {
     hdf5r::h5attr(subfile, "object_class") <- "vector"
     if (!is.null(names(x))) subfile[["names"]] <- names(x)
-    subfile[["data"]] <- x
+    # subfile[["data"]] <- x
+
+    # workaround
+    .write_h5_vec(x, subfile, "data")
+
   } else if (is.list(x)) {
     hdf5r::h5attr(subfile, "object_class") <- "list"
     subfile[["class"]] <- class(x)
@@ -177,6 +215,8 @@ write_h5_ <- function(x, file_h5, path) {
     for (xn in names(x)) {
       write_h5_(x[[xn]], subsubfile, xn)
     }
+  } else {
+    stop("Cannot write ", x)
   }
 }
 
@@ -198,3 +238,97 @@ is_sparse <- function(x) {
 
 
 
+
+
+
+
+
+#' Tests whether hdf5 is correctly installed and can load/write data
+#'
+#' @param detailed Whether top do a detailed check
+#'
+#' @importFrom glue glue
+#' @importFrom crayon red green bold
+#' @importFrom stringr str_pad
+#'
+#' @export
+test_h5_installation <- function(detailed = FALSE) {
+  obj <- get_h5_test_data()
+  file <- test_h5_installation_write(detailed, obj)
+  obj2 <- test_h5_installation_read(detailed, file)
+  test_h5_installation_equal(detailed, obj, obj2)
+
+  if (detailed)
+    message(crayon::green(crayon::bold(stringr::str_pad("\u2714 HDF5 test successful ", 90, side = "right", "-"))))
+
+  TRUE
+}
+
+#' @rdname test_h5_installation
+#' @importFrom stats runif
+#' @export
+get_h5_test_data <- function() {
+  m <- matrix(1:20, ncol = 4, dimnames = list(letters[1:5], LETTERS[1:4]))
+
+  obj <-
+    list(
+      charone = "a",
+      charmany = c("one", "two", "three"),
+      charnone = character(0),
+      logicalone = TRUE,
+      logicalnone = logical(0),
+      even = c(one = FALSE, two = TRUE, three = FALSE),
+      listone = list(a = 1, b = 2),
+      listtwo = list(mat = matrix(1:10, ncol = 2), df = data.frame(a = 1, b = c(1, 2)), null = NULL),
+      listmany = list(list(list())),
+      df = data.frame(a = letters[1:4], b = runif(4), c = c(T, F, T, T), d = 2L:5L),
+      mat = m,
+      spmat = Matrix::Matrix(m, sparse = TRUE),
+      null = NULL
+    )
+  class(obj) <- "tenten"
+
+  obj
+}
+
+test_h5_installation_write <- function(detailed = FALSE, obj = get_h5_test_data(), file = tempfile()) {
+  tryCatch(
+    write_h5(obj, file),
+    error = function(e) {
+      paste0("\u274C Unable to write hdf5 files\n") %>%
+        crayon::red() %>%
+        cat()
+      stop(e)
+    }
+  )
+  if (detailed) message(crayon::green("\u2714 HDF5 files can be written"))
+
+  file
+}
+
+test_h5_installation_read <- function(detailed = FALSE, file) {
+  obj2 <- tryCatch(
+    read_h5(file),
+    error = function(e) {
+      paste0("\u274C Unable to read hdf5 files\n") %>%
+        crayon::red() %>%
+        cat()
+      stop(e)
+    }
+  )
+  if (detailed) message(crayon::green("\u2714 HDF5 files can be read"))
+
+  obj2
+}
+
+
+test_h5_installation_equal <- function(detailed = FALSE, obj, obj2) {
+  if (!isTRUE(all.equal(obj2, obj, check.attributes = FALSE))) {
+    paste0("\u274C R objects written and read through hdf5 are not the same\n") %>%
+      crayon::red() %>%
+      cat()
+    stop()
+  }
+  if (detailed)
+    message(crayon::green("\u2714 An R object that is written and read with HDF5 is the same"))
+}
