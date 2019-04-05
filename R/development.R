@@ -9,7 +9,7 @@ switch_devel <- function(file = "DESCRIPTION", desc = desc::desc(file = file)) {
   # set version to 9000
   version <- as.character(desc$get_version())
   if (!endsWith(version, "9000")) {
-    version <- gsub("^([0-9]*.[0-9]*.[0-9]*).*", "\\1.9000", version)
+    version <- gsub("^([0-9]+\\.[0-9]+\\.[0-9]+)\\..*", "\\1.9000", version)
     desc$set_version(version)
   }
 
@@ -40,8 +40,8 @@ switch_devel <- function(file = "DESCRIPTION", desc = desc::desc(file = file)) {
 switch_master <- function(file = "DESCRIPTION", desc = desc::desc(file = file)) {
   # set version to 9000
   version <- as.character(desc$get_version())
-  if (!endsWith(version, "9000")) {
-    version <- gsub("^([0-9]*.[0-9]*.[0-9]*).*", "\\1", version)
+  if (endsWith(version, "9000")) {
+    version <- gsub("^([0-9]+\\.[0-9]+\\.[0-9]+)\\..*", "\\1", version)
     desc$set_version(version)
   }
 
@@ -70,7 +70,7 @@ switch_master <- function(file = "DESCRIPTION", desc = desc::desc(file = file)) 
 #' @rdname switch_devel
 switch_cran <- function(file = "DESCRIPTION", desc = desc::desc(file = file)) {
   # version should already be ok
-  assertthat::assert_that(grepl("^[0-9]*.[0-9]*.[0-9]$", version))
+  assertthat::assert_that(grepl("^[0-9]+\\.[0-9]+\\.[0-9]+$", version))
 
   # remove remotes
   desc$del_remotes()
