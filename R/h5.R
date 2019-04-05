@@ -110,8 +110,10 @@ read_h5_ <- function(file_h5) {
   } else {
     x <- file_h5[]
 
-    if (hdf5r::h5attr(file_h5, "is_logical") == "true") {
-        x <- ifelse(x == 2, NA, ifelse(x == 1, TRUE, FALSE))
+    # workaround for https://github.com/dynverse/dyno/issues/43
+    is_workaround <- is.integer(x) && "is_logical" %in% hdf5r::h5attr_names(file_h5) && hdf5r::h5attr(file_h5, "is_logical") == "true"
+    if (is_workaround) {
+      x <- ifelse(x == 2, NA, ifelse(x == 1, TRUE, FALSE))
     }
 
     x
