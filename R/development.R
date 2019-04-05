@@ -9,7 +9,7 @@ switch_devel <- function(file = "DESCRIPTION", desc = desc::desc(file = file)) {
   # set version to 9000
   version <- as.character(desc$get_version())
   if (!endsWith(version, "9000")) {
-    version <- gsub("^([0-9]+\\.[0-9]+\\.[0-9]+)\\..*", "\\1.9000", version)
+    version <- gsub("^([0-9]+\\.[0-9]+\\.[0-9]+).*", "\\1.9000", version)
     desc$set_version(version)
   }
 
