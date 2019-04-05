@@ -121,9 +121,13 @@ read_h5_ <- function(file_h5) {
 }
 
 .write_h5_vec <- function(x, file_h5, name) {
-  # workaround for https://github.com/dynverse/dyno/issues/43
+  # combined workaround for 118 and 43
   if (is.logical(x)) {
-    x <- ifelse(is.na(x), 2L, ifelse(x, 1L, 0L))
+    if (length(x) == 0) {
+      x <- integer(0)
+    } else {
+      x <- ifelse(is.na(x), 2L, ifelse(x, 1L, 0L))
+    }
   }
 
   file_h5[[name]] <- x
