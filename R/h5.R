@@ -25,7 +25,7 @@ read_h5_ <- function(file_h5) {
   ## VECTOR ##
   if (object_class == "null") {
     NULL
-  } else if (object_class == "vector" || object_class == "logical") {
+  } else if (object_class == "vector") {
     data_file <- file_h5[["data"]]
 
     # out <- data_file[]
@@ -113,7 +113,7 @@ read_h5_ <- function(file_h5) {
     # workaround for https://github.com/dynverse/dyno/issues/43
     is_workaround <- is.integer(x) && "is_logical" %in% hdf5r::h5attr_names(file_h5) && hdf5r::h5attr(file_h5, "is_logical") == "true"
     if (is_workaround) {
-      x <- ifelse(x == 2, NA, ifelse(x == 1, TRUE, FALSE))
+      x <- ifelse(x == 2L, NA, ifelse(x == 1L, TRUE, FALSE))
     }
 
     x
@@ -122,6 +122,7 @@ read_h5_ <- function(file_h5) {
 
 .write_h5_vec <- function(x, file_h5, name) {
   # workaround for https://github.com/dynverse/dyno/issues/43
+  was_logical <- is.logical(x)
   if (is.logical(x)) {
     if (length(x) == 0) {
       x <- integer(0)
@@ -134,7 +135,7 @@ read_h5_ <- function(file_h5) {
 
   # workaround for https://github.com/dynverse/dyno/issues/43
   subfile <- file_h5[[name]]
-  hdf5r::h5attr(subfile, "is_logical") <- ifelse(is.logical(x), "true", "false")
+  hdf5r::h5attr(subfile, "is_logical") <- ifelse(was_logical, "true", "false")
 
   return()
 }
