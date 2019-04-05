@@ -25,7 +25,7 @@ read_h5_ <- function(file_h5) {
   ## VECTOR ##
   if (object_class == "null") {
     NULL
-  } else if (object_class == "vector") {
+  } else if (object_class == "vector" || object_class == "logical") {
     data_file <- file_h5[["data"]]
 
     # out <- data_file[]
@@ -33,6 +33,12 @@ read_h5_ <- function(file_h5) {
 
     # workaround
     out <- .read_h5_vec(data_file)
+
+    # workaround 2
+    if (object_class == "logical") {
+      out <- ifelse(out == 2, NA, ifelse(out == 1, TRUE, FALSE))
+    }
+
     if ("names" %in% names(file_h5)) names(out) <- .read_h5_vec(file_h5[["names"]])
 
     out
@@ -162,9 +168,21 @@ write_h5_ <- function(x, file_h5, path) {
       subsubfile[[xn]] <- x[[xn]]
     }
   } else if (is.atomic(x)) {
-    hdf5r::h5attr(subfile, "object_class") <- "vector"
-    if (!is.null(names(x))) subfile[["names"]] <- names(x)
-    subfile[["data"]] <- x
+    # hdf5r::h5attr(subfile, "object_class") <- "vector"
+    # if (!is.null(names(x))) subfile[["names"]] <- names(x)
+    # subfile[["data"]] <- x
+
+    # workaround for https://github.com/dynverse/dyno/issues/43
+    if (is.logical(x)) {
+      hdf5r::h5attr(file_h5, "object_class") <- "logical"
+      if (!is.null(names(x))) file_h5[["names"]] <- names(x)
+      x <- ifelse(is.na(x), 2L, ifelse(x, 1L, 0L))
+      file_h5[["data"]] <- x
+    } else {
+      hdf5r::h5attr(file_h5, "object_class") <- "vector"
+      if (!is.null(names(x))) file_h5[["names"]] <- names(x)
+      file_h5[["data"]] <- x
+    }
   } else if (is.list(x)) {
     hdf5r::h5attr(subfile, "object_class") <- "list"
     subfile[["class"]] <- class(x)
