@@ -33,6 +33,8 @@ changes.
   - FUNCTIONALITY: Added `angular_distance()` and
     `list_distance_metrics()`.
 
+  - FIX: Added workaround for being able to read h5 files on Windows.
+
 ### Recent changes in dynutils 1.0.2 (2019-03-21)
 
   - BUG FIX: Fix generation of error messages in `%all_in%`.

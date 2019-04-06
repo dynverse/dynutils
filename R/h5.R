@@ -33,6 +33,7 @@ read_h5_ <- function(file_h5) {
 
     # workaround
     out <- .read_h5_vec(data_file)
+
     if ("names" %in% names(file_h5)) names(out) <- .read_h5_vec(file_h5[["names"]])
 
     out
@@ -107,8 +108,36 @@ read_h5_ <- function(file_h5) {
   if (file_h5$dims == 0 && "H5T_STRING" %in% class(file_h5$get_type())) {
     character(0)
   } else {
-    file_h5[]
+    x <- file_h5[]
+
+    # workaround for https://github.com/dynverse/dyno/issues/43
+    is_workaround <- is.integer(x) && "is_logical" %in% hdf5r::h5attr_names(file_h5) && hdf5r::h5attr(file_h5, "is_logical") == "true"
+    if (is_workaround) {
+      x <- ifelse(x == 2L, NA, ifelse(x == 1L, TRUE, FALSE))
+    }
+
+    x
   }
+}
+
+.write_h5_vec <- function(x, file_h5, name) {
+  # workaround for https://github.com/dynverse/dyno/issues/43
+  was_logical <- is.logical(x)
+  if (is.logical(x)) {
+    if (length(x) == 0) {
+      x <- integer(0)
+    } else {
+      x <- ifelse(is.na(x), 2L, ifelse(x, 1L, 0L))
+    }
+  }
+
+  file_h5[[name]] <- x
+
+  # workaround for https://github.com/dynverse/dyno/issues/43
+  subfile <- file_h5[[name]]
+  hdf5r::h5attr(subfile, "is_logical") <- ifelse(was_logical, "true", "false")
+
+  return()
 }
 
 #' @rdname read_h5
@@ -140,7 +169,9 @@ write_h5_ <- function(x, file_h5, path) {
     hdf5r::h5attr(subfile, "object_class") <- "sparse_matrix"
     subfile[["i"]] <- ipx@i
     subfile[["p"]] <- ipx@p
-    subfile[["x"]] <- ipx@x
+    # subfile[["x"]] <- ipx@x
+    # workaround
+    .write_h5_vec(ipx@x, subfile, "x")
     subfile[["dims"]] <- dim(ipx)
     if (!is.null(rownames(ipx))) {
       subfile[["rownames"]] <- rownames(ipx)
@@ -159,12 +190,19 @@ write_h5_ <- function(x, file_h5, path) {
     subfile[["colnames"]] <- colnames(x)
     subsubfile <- subfile$create_group("data")
     for (xn in names(x)) {
-      subsubfile[[xn]] <- x[[xn]]
+      # subsubfile[[xn]] <- x[[xn]]
+
+      # workaround
+      .write_h5_vec(x[[xn]], subsubfile, xn)
     }
   } else if (is.atomic(x)) {
     hdf5r::h5attr(subfile, "object_class") <- "vector"
     if (!is.null(names(x))) subfile[["names"]] <- names(x)
-    subfile[["data"]] <- x
+    # subfile[["data"]] <- x
+
+    # workaround
+    .write_h5_vec(x, subfile, "data")
+
   } else if (is.list(x)) {
     hdf5r::h5attr(subfile, "object_class") <- "list"
     subfile[["class"]] <- class(x)
