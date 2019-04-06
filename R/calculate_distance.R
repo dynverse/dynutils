@@ -1,7 +1,7 @@
 #' @importFrom testthat expect_is
 calculate_distance_preproc_x <- function(x) {
   assert_that(
-    is.matrix(x) || is.data.frame(x) || grepl("...Matrix", class(x)[[1]])
+    is.matrix(x) || is.data.frame(x) || is_sparse(x)
   )
   if (is.data.frame(x)) {
     x <- as.matrix(x)
@@ -112,7 +112,7 @@ manhattan_distance <- function(x, y = NULL) {
   y <- calculate_distance_preproc_y(x, y)
 
   # borrow from https://github.com/cran/wordspace/blob/master/src/wordspace.cpp
-  if (grepl("...Matrix", class(x)[[1]]) || grepl("...Matrix", class(y)[[1]])) {
+  if (is_sparse(x) || is_sparse(y)) {
     d <- matrix(NA, nrow = nrow(x), ncol = nrow(y))
     # for (i in seq_len(nrow(x))) {
     #   for (j in seq_len(nrow(y))) {
@@ -134,7 +134,7 @@ euclidean_distance <- function(x, y = NULL) {
   y <- calculate_distance_preproc_y(x, y)
 
   # borrow from https://github.com/cran/wordspace/blob/master/src/wordspace.cpp
-  if (grepl("...Matrix", class(x)[[1]]) || grepl("...Matrix", class(y)[[1]])) {
+  if (is_sparse(x) || is_sparse(y)) {
     d <- matrix(NA, nrow = nrow(x), ncol = nrow(y))
     # for (i in seq_len(nrow(x))) {
     #   for (j in seq_len(nrow(y))) {

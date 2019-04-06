@@ -164,7 +164,7 @@ write_h5_ <- function(x, file_h5, path) {
 
   if (is.null(x)) {
     hdf5r::h5attr(subfile, "object_class") <- "null"
-  } else if (any(grepl("^[dlniz]..Matrix$", class(x)))) {
+  } else if (is_sparse(x)) {
     ipx <- as(x, "dgCMatrix")
     hdf5r::h5attr(subfile, "object_class") <- "sparse_matrix"
     subfile[["i"]] <- ipx@i
