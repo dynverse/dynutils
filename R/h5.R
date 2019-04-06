@@ -223,26 +223,6 @@ write_h5_ <- function(x, file_h5, path) {
 
 
 
-#' Check if a matrix is sparse
-#'
-#' @param x A sparse or not sparse matrix
-#'
-#' @export
-#'
-#' @examples
-#' is_sparse(matrix(c(1:10)))
-#' is_sparse(Matrix::Matrix(matrix(c(1:10))))
-is_sparse <- function(x) {
-  any(grepl("[di]..Matrix", class(x)))
-}
-
-
-
-
-
-
-
-
 #' Tests whether hdf5 is correctly installed and can load/write data
 #'
 #' @param detailed Whether top do a detailed check

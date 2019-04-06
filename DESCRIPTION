@@ -75,4 +75,5 @@ Collate:
     'random_time_string.R'
     'safe_tempdir.R'
     'scaling.R'
+    'sparse_matrix.R'
     'tibble.R'
