@@ -71,22 +71,7 @@ angular_distance <- function(x, y = NULL) {
   bot1 <- sqrt(rowSums(x^2))
   bot2 <- sqrt(rowSums(y^2))
 
-  # optimisation of:
-  # div <- top %>% sweep(1, bot1, "/") %>% sweep(2, bot2, "/")
-  # https://stackoverflow.com/a/20596490/585801
-  bot1 <-
-    if (length(bot1) != 1) {
-      diag(1 / bot1)
-    } else {
-      1 / bot1
-    }
-  bot2 <-
-    if (length(bot2) != 1) {
-      diag(1 / bot2)
-    } else {
-      1 / bot2
-    }
-  div <- bot1 %*% top %*% bot2
+  div <- top %>% sweep(1, bot1, "/") %>% sweep(2, bot2, "/")
 
   # div should never be larger than 1, but sometimes is due to rounding errors
   div[div > 1] <- 1
