@@ -19,24 +19,28 @@ parse_remotes <- function(remotes) {
 #'
 #' @examples
 #' \dontrun{
-#' install_packages("SCORPIUS", package = "dynmethods", prompt = TRUE)
+#' install_packages("SCORPIUS")
 #' }
-install_packages <- function(..., package = NULL, prompt = FALSE) {
+install_packages <- function(..., is_interactive = interactive()) {
   dependencies <- unlist(list(...)) %>% discard(check_packages)
 
   if (length(dependencies) > 0) {
-    if (prompt) {
+    if (interactive()) {
       message(paste0(
         "Following packages have to be installed: ",
-        glue::glue_collapse(crayon::bold(dependencies), ", ", last = " and ")
+        glue::glue_collapse(crayon::bold(dependencies), ", ", last = " and "),
+        "\n",
+        "Do you want to install these packages? \n",
+        "1: Yes [default]",
+        "2: No"
       ))
       answer <- ifelse (
         is.null(getOption("dynutils_testmodepromptresponse")),
-        readline("Do you want to install these packages? (y/yes/1 or n/no/2): "),
+        readline(),
         getOption("dynutils_testmodepromptresponse")
       )
 
-      if (!answer %in% c("y", "yes", 1)) {
+      if (answer == "2") {
         stop("Installation was interrupted.")
       }
     }
