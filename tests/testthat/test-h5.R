@@ -25,10 +25,10 @@ test_that("test_h5_installation works", {
 test_that("is_sparse works", {
   expect_false(is_sparse(matrix(c(1:10))))
 
-  m <- Matrix::Matrix(matrix(c(1:10)))
-  expect_true(is_sparse(m))
+  m <- Matrix::Matrix(matrix(c(1:10)), sparse = FALSE)
+  expect_false(is_sparse(m))
   expect_true(is_sparse(as(m, "dgCMatrix")))
-  expect_true(is_sparse(as(m, "dgeMatrix")))
+  expect_false(is_sparse(as(m, "dgeMatrix")))
 })
 
 
