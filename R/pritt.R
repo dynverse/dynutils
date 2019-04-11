@@ -3,7 +3,7 @@
 #' Uses [glue], but removes the class from the output.
 #'
 #' @param ... `expressions`\cr Expressions string(s) to format, multiple inputs are concatenated together before formatting.
-#' @param .sep `character(1): \sQuote{""}`\cr Separator used to separate elements.
+#' @param .sep \[`character(1)`: \sQuote{""}]\cr Separator used to separate elements.
 #' @param .envir \[`environment`: `parent.frame()`]\cr Environment to evaluate each expression in. Expressions are
 #'   evaluated from left to right. If `.x` is an environment, the expressions are
 #'   evaluated in that environment and `.envir` is ignored.

@@ -10,7 +10,7 @@ pritt(..., .sep = "", .envir = parent.frame(), .open = "{",
 \arguments{
 \item{...}{\code{expressions}\cr Expressions string(s) to format, multiple inputs are concatenated together before formatting.}
 
-\item{.sep}{\code{character(1): \sQuote{""}}\cr Separator used to separate elements.}
+\item{.sep}{[\code{character(1)}: \sQuote{""}]\cr Separator used to separate elements.}
 
 \item{.envir}{[\code{environment}: \code{parent.frame()}]\cr Environment to evaluate each expression in. Expressions are
 evaluated from left to right. If \code{.x} is an environment, the expressions are
