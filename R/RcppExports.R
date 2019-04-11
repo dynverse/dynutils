@@ -29,3 +29,7 @@ project_to_segments <- function(x, segment_start, segment_end) {
     .Call('_dynutils_project_to_segments', PACKAGE = 'dynutils', x, segment_start, segment_end)
 }
 
+spearman_rank_sparse_rcpp <- function(x, p, nrow) {
+    .Call('_dynutils_spearman_rank_sparse_rcpp', PACKAGE = 'dynutils', x, p, nrow)
+}
+

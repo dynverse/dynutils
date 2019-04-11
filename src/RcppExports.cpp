@@ -18,9 +18,23 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// spearman_rank_sparse_rcpp
+NumericVector spearman_rank_sparse_rcpp(NumericVector& x, IntegerVector& p, int nrow);
+RcppExport SEXP _dynutils_spearman_rank_sparse_rcpp(SEXP xSEXP, SEXP pSEXP, SEXP nrowSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< IntegerVector& >::type p(pSEXP);
+    Rcpp::traits::input_parameter< int >::type nrow(nrowSEXP);
+    rcpp_result_gen = Rcpp::wrap(spearman_rank_sparse_rcpp(x, p, nrow));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_dynutils_project_to_segments", (DL_FUNC) &_dynutils_project_to_segments, 3},
+    {"_dynutils_spearman_rank_sparse_rcpp", (DL_FUNC) &_dynutils_spearman_rank_sparse_rcpp, 3},
     {NULL, NULL, 0}
 };
 
