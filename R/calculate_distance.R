@@ -141,3 +141,20 @@ semi_rank <- function(x) {
   mat
 }
 
+
+#' These functions will be removed soon
+#'
+#' Use [calculate_distance()] instead.
+#'
+#' @inheritParams calculate_distance
+#' @export
+#' @rdname deprecated
+euclidean_distance <- function(x, y) {
+  calculate_distance(x, y, metric = "euclidean")
+}
+
+#' @export
+#' @rdname deprecated
+correlation_distance <- function(x, y) {
+  calculate_distance(x, y, metric = "spearman")
+}
