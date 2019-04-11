@@ -6,7 +6,7 @@
 #'
 #' @examples
 #' is_sparse(matrix(1:10)) # FALSE
-#' is_sparse(Matrix::sparseMatrix(1, 1, 1)) # TRUE
+#' is_sparse(Matrix::rsparsematrix(100, 200, .01)) # TRUE
 is_sparse <- function(x) {
   is(x, "sparseMatrix")
 }
