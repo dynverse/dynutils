@@ -25,7 +25,7 @@
 calculate_distance <- function(
   x,
   y = NULL,
-  metric = c("cosine", "pearson", "spearman", "euclidean", "manhattan"),
+  metric = c("spearman", "pearson", "cosine", "euclidean", "manhattan"),
   margin = 1
 ) {
   metric <- match.arg(metric)
@@ -64,7 +64,7 @@ calculate_similarity <- function(
   x,
   y = NULL,
   margin = 1,
-  metric = c("cosine", "pearson", "spearman")
+  metric = c("spearman", "pearson", "cosine")
 ) {
   metric <- match.arg(metric)
   input <- .process_input_matrices(x = x, y = y, margin = margin)
