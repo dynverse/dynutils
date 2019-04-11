@@ -37,7 +37,9 @@ Imports:
   dplyr,
   glue,
   magrittr,
+  Matrix,
   methods,
+  proxyC,
   purrr,
   Rcpp,
   stringr,
@@ -48,13 +50,13 @@ Suggests:
   ggplot2,
   hdf5r,
   knitr,
-  Matrix,
   readr,
   rmarkdown
 LinkingTo:
   Rcpp
 Encoding: UTF-8
 VignetteBuilder: knitr
+Roxygen: list(markdown = TRUE)
 Collate: 
     'RcppExports.R'
     'add_class.R'
@@ -75,4 +77,5 @@ Collate:
     'random_time_string.R'
     'safe_tempdir.R'
     'scaling.R'
+    'sparse_matrix.R'
     'tibble.R'

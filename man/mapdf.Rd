@@ -41,18 +41,16 @@ If a formula, e.g. \code{~ .$a}, the \code{.} is a placeholder for the row as a 
 }
 \description{
 The mapdf functions transform their input by applying a function to each row of a data frame and returning a vector the same length as the input.
-These functions work a lot like purrr's \code{\link[purrr]{map}} functions.
+These functions work a lot like purrr's \code{\link[=map]{map()}} functions.
 }
 \details{
-* \code{mapdf()} always returns a list.
-
-* \code{mapdf_lgl()}, \code{mapdf_int()}, \code{mapdf_dbl()} and \code{mapdf_chr()} return vectors of the corresponding type (or die trying).
-
-* \code{mapdf_dfr()} and \code{mapdf_dfc()} return data frames created by row-binding and column-binding respectively. They require dplyr to be installed.
-
-* \code{mapdf_lat()} returns a tibble by transforming outputted lists to a tibble using \code{\link{list_as_tibble}}.
-
-* \code{walkdf()} calls .f for its side-effect and returns the input .x.
+\itemize{
+\item \code{mapdf()} always returns a list.
+\item \code{mapdf_lgl()}, \code{mapdf_int()}, \code{mapdf_dbl()} and \code{mapdf_chr()} return vectors of the corresponding type (or die trying).
+\item \code{mapdf_dfr()} and \code{mapdf_dfc()} return data frames created by row-binding and column-binding respectively. They require dplyr to be installed.
+\item \code{mapdf_lat()} returns a tibble by transforming outputted lists to a tibble using \link{list_as_tibble}.
+\item \code{walkdf()} calls .f for its side-effect and returns the input .x.
+}
 }
 \examples{
 library(dplyr)
