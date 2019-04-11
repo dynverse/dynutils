@@ -74,9 +74,9 @@ calculate_similarity <- function(
   # run metric
   if (metric %in% c("pearson", "spearman")) {
     if (metric == "spearman") {
-      x <- semi_rank(x)
+      x <- spearman_rank_sparse(x)
       if (!is.null(y)) {
-        y <- semi_rank(y)
+        y <- spearman_rank_sparse(y)
       }
     }
     metric <- "correlation"
@@ -99,26 +99,6 @@ calculate_similarity <- function(
 #' @rdname calculate_distance
 #' @export
 list_similarity_metrics <- function() eval(formals(calculate_similarity)$metric)
-
-# this should be turned into rcpp
-semi_rank <- function(x) {
-  for (i in seq_len(length(x@p) - 1)) {
-    pi <- x@p[[i]] + 1
-    pj <- x@p[[i + 1]]
-    vals <- x@x[pi:pj]
-    rvals <- rank(vals)
-    nnegs <- sum(vals < 0)
-    nposs <- pj - pi - nnegs
-    nzeros <- nrow(x) - pj + pi
-    new_vals <- ifelse(
-      vals < 0,
-      rvals - nnegs - nzeros / 2,
-      rvals - nnegs - 1 + nzeros / 2
-    )
-    x@x[pi:pj] <- new_vals
-  }
-  x
-}
 
 #' @importFrom Matrix t
 .process_input_matrices <- function(x, y, margin) {
