@@ -33,17 +33,24 @@ calculate_distance <- function(
   x <- input$x
   y <- input$y
 
-  if (metric %in% c("cosine", "pearson", "spearman")) {
-    sim <- calculate_similarity(x = x, y = y, metric = metric, margin = 2)
-    sim@x[sim@x > 1] <- 1 # due to rounding errors, x can be larger than 1
-    if (metric == "cosine") {
-      1 - 2 * acos(sim) / pi
+  dis <-
+    if (metric %in% c("cosine", "pearson", "spearman")) {
+      sim <- calculate_similarity(x = x, y = y, metric = metric, margin = 2)
+
+      if (metric == "cosine") {
+        1 - 2 * acos(sim) / pi
+      } else {
+        1 - (sim + 1) / 2
+      }
     } else {
-      1 - (sim + 1) / 2
+      proxyC::dist(x = x, y = y, method = metric, margin = 2)
     }
-  } else {
-    proxyC::dist(x = x, y = y, method = metric, margin = 2)
+
+  if (is.null(y)) {
+    diag(dis) <- 0
   }
+
+  dis
 }
 
 #' @rdname calculate_distance
@@ -75,7 +82,18 @@ calculate_similarity <- function(
     metric <- "correlation"
   }
 
-  proxyC::simil(x = x, y = y, method = metric, margin = 2)
+  sim <- proxyC::simil(x = x, y = y, method = metric, margin = 2)
+
+  # fixes due to rounding errors
+  if (metric %in% c("pearson", "spearman", "cosine")) {
+    sim@x[sim@x > 1] <- 1
+
+    if (is.null(y)) {
+      diag(sim) <- 1
+    }
+  }
+
+  sim
 }
 
 #' @rdname calculate_distance
@@ -149,12 +167,12 @@ semi_rank <- function(x) {
 #' @inheritParams calculate_distance
 #' @export
 #' @rdname deprecated
-euclidean_distance <- function(x, y) {
-  calculate_distance(x, y, metric = "euclidean")
+euclidean_distance <- function(x, y = NULL) {
+  as.matrix(calculate_distance(x, y, metric = "euclidean"))
 }
 
 #' @export
 #' @rdname deprecated
-correlation_distance <- function(x, y) {
-  calculate_distance(x, y, metric = "spearman")
+correlation_distance <- function(x, y = NULL) {
+  as.matrix(calculate_distance(x, y, metric = "spearman"))
 }

@@ -5,9 +5,9 @@
 \alias{correlation_distance}
 \title{These functions will be removed soon}
 \usage{
-euclidean_distance(x, y)
+euclidean_distance(x, y = NULL)
 
-correlation_distance(x, y)
+correlation_distance(x, y = NULL)
 }
 \arguments{
 \item{x}{A numeric matrix, dense or sparse.}
