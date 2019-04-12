@@ -21,7 +21,7 @@
  
  * FUNCTIONALITY: Moved `calculate_mean()` from dyneval to dynutils.
  
-# dynutils 1.0.1 (2019-02-04)
+# dynutils 1.0.1 (2019-02-04) 
 
  * DOCUMENTATION: Fixed functionality vignette not showing any code.
 

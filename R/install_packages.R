@@ -3,16 +3,12 @@ parse_remotes <- function(remotes) {
     set_names(remotes)
 }
 
-#' Install packages taking into account the remotes of another
-#'
-#' Useful for installing suggested packages with GitHub remotes.
+#' Install packages, but first ask if interactive
 #'
 #' @param ... The names of the packages to be installed
-#' @param package The package from which the remotes will be extracted. If used, this package does need to be installed.
-#' @param prompt Whether to ask the user first for installation
+#' @param is_interactive Whether running interactivly, which will prompt the user before installation
 #'
-#' @importFrom desc desc_get_remotes
-#' @importFrom devtools install_github install_cran
+#' @importFrom devtools install_cran
 #' @importFrom utils setRepositories
 #'
 #' @export
@@ -25,13 +21,13 @@ install_packages <- function(..., is_interactive = interactive()) {
   dependencies <- unlist(list(...)) %>% discard(check_packages)
 
   if (length(dependencies) > 0) {
-    if (interactive()) {
+    if (is_interactive) {
       message(paste0(
         "Following packages have to be installed: ",
         glue::glue_collapse(crayon::bold(dependencies), ", ", last = " and "),
         "\n",
         "Do you want to install these packages? \n",
-        "1: Yes [default]",
+        "1: Yes [default]\n",
         "2: No"
       ))
       answer <- ifelse (
@@ -40,7 +36,7 @@ install_packages <- function(..., is_interactive = interactive()) {
         getOption("dynutils_testmodepromptresponse")
       )
 
-      if (answer == "2") {
+      if (answer %in% c("no", "n", "2")) {
         stop("Installation was interrupted.")
       }
     }
@@ -50,24 +46,8 @@ install_packages <- function(..., is_interactive = interactive()) {
 
     message("Installing ", paste0(dependencies, collapse = ", "))
 
-    # if a package is provided, check the remotes
-    # to see whether to install the dependencies from given remotes
-    if (!is.null(package)) {
-      if (!check_packages(package)) {
-        stop("Package ", sQuote(package), " needs to have been installed first!")
-      }
-      remotes <-
-        find.package(package) %>%
-        desc::desc_get_remotes() %>%
-        parse_remotes()
-
-      devtools::install_github(remotes[dependencies[dependencies %in% names(remotes)]])
-    } else {
-      remotes <- character()
-    }
-
     # install other depencies from cran
-    devtools::install_cran(dependencies[!dependencies %in% names(remotes)], repos = "http://cran.rstudio.com")
+    devtools::install_cran(dependencies, repos = "http://cran.rstudio.com")
 
     # display message
     message("Installed ", paste0(dependencies, collapse = ", "))
