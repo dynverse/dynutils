@@ -17,13 +17,15 @@ calculate_arithmetic_mean(..., weights = NULL)
 }
 \arguments{
 \item{...}{Can be:
-- One numeric vector
-- A list containg numeric vectors
-- Numeric vectors given as separate inputs}
+\itemize{
+\item One numeric vector
+\item A list containg numeric vectors
+\item Numeric vectors given as separate inputs
+}}
 
-\item{method}{The aggregation function. Must be one of `"arithmetic"`, `"geometric"`, and `"harmonic"`.}
+\item{method}{The aggregation function. Must be one of \code{"arithmetic"}, \code{"geometric"}, and \code{"harmonic"}.}
 
-\item{weights}{Weights with the same length as `...`.}
+\item{weights}{Weights with the same length as \code{...}.}
 }
 \description{
 This function supports the arithmetic, geometric and harmonic mean.

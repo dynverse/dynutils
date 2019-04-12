@@ -5,30 +5,6 @@
 
 using namespace Rcpp;
 
-// manhattan_distance
-Rcpp::NumericMatrix manhattan_distance(const Rcpp::NumericMatrix& x, const Rcpp::NumericMatrix& y);
-RcppExport SEXP _dynutils_manhattan_distance(SEXP xSEXP, SEXP ySEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type x(xSEXP);
-    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type y(ySEXP);
-    rcpp_result_gen = Rcpp::wrap(manhattan_distance(x, y));
-    return rcpp_result_gen;
-END_RCPP
-}
-// euclidean_distance
-Rcpp::NumericMatrix euclidean_distance(const Rcpp::NumericMatrix& x, const Rcpp::NumericMatrix& y);
-RcppExport SEXP _dynutils_euclidean_distance(SEXP xSEXP, SEXP ySEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type x(xSEXP);
-    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type y(ySEXP);
-    rcpp_result_gen = Rcpp::wrap(euclidean_distance(x, y));
-    return rcpp_result_gen;
-END_RCPP
-}
 // project_to_segments
 List project_to_segments(NumericMatrix x, NumericMatrix segment_start, NumericMatrix segment_end);
 RcppExport SEXP _dynutils_project_to_segments(SEXP xSEXP, SEXP segment_startSEXP, SEXP segment_endSEXP) {
@@ -42,11 +18,23 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// spearman_rank_sparse_rcpp
+NumericVector spearman_rank_sparse_rcpp(NumericVector& x, IntegerVector& p, int nrow);
+RcppExport SEXP _dynutils_spearman_rank_sparse_rcpp(SEXP xSEXP, SEXP pSEXP, SEXP nrowSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< IntegerVector& >::type p(pSEXP);
+    Rcpp::traits::input_parameter< int >::type nrow(nrowSEXP);
+    rcpp_result_gen = Rcpp::wrap(spearman_rank_sparse_rcpp(x, p, nrow));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_dynutils_manhattan_distance", (DL_FUNC) &_dynutils_manhattan_distance, 2},
-    {"_dynutils_euclidean_distance", (DL_FUNC) &_dynutils_euclidean_distance, 2},
     {"_dynutils_project_to_segments", (DL_FUNC) &_dynutils_project_to_segments, 3},
+    {"_dynutils_spearman_rank_sparse_rcpp", (DL_FUNC) &_dynutils_spearman_rank_sparse_rcpp, 3},
     {NULL, NULL, 0}
 };
 

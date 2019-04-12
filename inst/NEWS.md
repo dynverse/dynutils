@@ -2,11 +2,12 @@
 
  * FUNCTIONALITY: Added `test_h5_installation()`.
  
- * FUNCTIONALITY: Added `angular_distance()` and `list_distance_metrics()`.
- 
  * FIX: Added workaround for being able to read h5 files on Windows.
  
  * SMALL CHANGE: Defenstrate Hmisch dependency
+ 
+ * FUNCTIONALITY: `calculate_distance()` and `calculate_similarity()` now support
+   sparse matrix calculation thanks to proxyC!`
 
 # dynutils 1.0.2 (2019-03-21)
 

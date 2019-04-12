@@ -7,7 +7,7 @@
 inherit_default_params(super_functions, fun)
 }
 \arguments{
-\item{super_functions}{A list of super functions of which \code{fun} needs to inherit the default parameters}
+\item{super_functions}{A list of super functions of which `fun`` needs to inherit the default parameters}
 
 \item{fun}{The function whose default parameters need to be overridden}
 }

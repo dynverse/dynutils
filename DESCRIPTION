@@ -37,7 +37,9 @@ Imports:
   dplyr,
   glue,
   magrittr,
+  Matrix,
   methods,
+  proxyC,
   purrr,
   Rcpp,
   stringr,
@@ -48,31 +50,10 @@ Suggests:
   ggplot2,
   hdf5r,
   knitr,
-  Matrix,
   readr,
   rmarkdown
 LinkingTo:
   Rcpp
 Encoding: UTF-8
 VignetteBuilder: knitr
-Collate: 
-    'RcppExports.R'
-    'add_class.R'
-    'assertions.R'
-    'inherit_default_params.R'
-    'calculate_distance.R'
-    'calculate_mean.R'
-    'check_packages.R'
-    'development.R'
-    'expand_matrix.R'
-    'extend_with.R'
-    'h5.R'
-    'install_packages.R'
-    'mapdf.R'
-    'news.R'
-    'package.R'
-    'pritt.R'
-    'random_time_string.R'
-    'safe_tempdir.R'
-    'scaling.R'
-    'tibble.R'
+Roxygen: list(markdown = TRUE)
