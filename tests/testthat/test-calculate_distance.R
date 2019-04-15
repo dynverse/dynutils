@@ -13,18 +13,18 @@ check_output <- function(x, y, o, e) {
   }
 }
 
-test_that("list_distance_metrics works", {
-  expect_true(all(list_distance_metrics() %in% c("euclidean", "manhattan", "cosine", "spearman", "pearson")))
+test_that("list_distance_methods works", {
+  expect_true(all(list_distance_methods() %in% c("euclidean", "manhattan", "cosine", "spearman", "pearson")))
 })
 
-metrics <- list_distance_metrics()
+methods <- list_distance_methods()
 
 test_that("calculate_distance and other functions return the correct format", {
   x <- matrix(c(1, 2, 5, 3), ncol = 2)
   y <- matrix(c(5, 6, 7, 8, 9, 10), ncol = 2)
 
-  for (metric in metrics) {
-    o <- calculate_distance(x, y, metric)
+  for (method in methods) {
+    o <- calculate_distance(x, y, method)
     check_output(x, y, o, e = NULL)
   }
 
@@ -32,8 +32,8 @@ test_that("calculate_distance and other functions return the correct format", {
   rownames(y) <- c("C", "D", "E")
   colnames(x) <- colnames(y) <- c("f1", "f2")
 
-  for (metric in metrics) {
-    o <- calculate_distance(x, y, metric)
+  for (method in methods) {
+    o <- calculate_distance(x, y, method)
     check_output(x, y, o, e = NULL)
   }
 })
@@ -42,16 +42,16 @@ test_that("calculate_distance works when y is NULL", {
   x <- matrix(c(1, 2, 5, 3), ncol = 2)
   y <- NULL
 
-  for (metric in metrics) {
-    o <- calculate_distance(x, y, metric)
+  for (method in methods) {
+    o <- calculate_distance(x, y, method)
     check_output(x, y, o, e = NULL)
   }
 
   rownames(x) <- c("A", "B")
   colnames(x) <- c("f1", "f2")
 
-  for (metric in metrics) {
-    o <- calculate_distance(x, y, metric)
+  for (method in methods) {
+    o <- calculate_distance(x, y, method)
     check_output(x, y, o, e = NULL)
   }
 })
@@ -72,7 +72,7 @@ test_that("calculate_distance returns correct solutions", {
   )
 
   observed <- sapply(names(expected), function(n) {
-    calculate_distance(x, y, metric = n)[1,1]
+    calculate_distance(x, y, method = n)[1,1]
   })
 
   expect_equivalent(observed, expected)
@@ -92,7 +92,7 @@ test_that("calculate_similarity returns correct solutions", {
   )
 
   observed <- sapply(names(expected), function(n) {
-    calculate_similarity(x, y, metric = n)[1,1]
+    calculate_similarity(x, y, method = n)[1,1]
   })
 
   expect_equivalent(observed, expected)
@@ -103,17 +103,17 @@ test_that("calculate_distance works on matrices, data frames and sparse matrices
   x <- Matrix::rsparsematrix(100, 10000, .01)
   y <- Matrix::rsparsematrix(2000, 10000, .01)
 
-  for (metric in metrics) {
-    out <- calculate_distance(x = x, y = y, metric = metric)
+  for (method in methods) {
+    out <- calculate_distance(x = x, y = y, method = method)
     expect_equal(nrow(out), nrow(x))
     expect_equal(ncol(out), nrow(y))
 
-    out2 <- calculate_distance(x = as.matrix(x), y = as.matrix(y), metric = metric)
+    out2 <- calculate_distance(x = as.matrix(x), y = as.matrix(y), method = method)
     expect_equal(nrow(out2), nrow(x))
     expect_equal(ncol(out2), nrow(y))
     expect_true(sum(abs(out2-out)) < 1e-10)
 
-    out3 <- calculate_distance(x = as.data.frame(as.matrix(x)), y = as.data.frame(as.matrix(y)), metric = metric)
+    out3 <- calculate_distance(x = as.data.frame(as.matrix(x)), y = as.data.frame(as.matrix(y)), method = method)
     expect_equal(nrow(out3), nrow(x))
     expect_equal(ncol(out3), nrow(y))
     expect_true(sum(abs(out3-out)) < 1e-10)

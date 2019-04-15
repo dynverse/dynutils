@@ -4,7 +4,7 @@
 #'
 #' @param x A numeric matrix, dense or sparse.
 #' @param y (Optional) a numeric matrix, dense or sparse, with `nrow(x) == nrow(y)`.
-#' @param metric Which distance metric to use. Options are: `"cosine"`, `"pearson"`, `"spearman"`, `"euclidean"`, and `"manhattan"`.
+#' @param method Which distance method to use. Options are: `"cosine"`, `"pearson"`, `"spearman"`, `"euclidean"`, and `"manhattan"`.
 #' @param margin Which margin to use for the pairwise comparison. 1 => rowwise, 2 => columnwise.
 #'
 #' @export
@@ -17,33 +17,33 @@
 #' x <- Matrix::rsparsematrix(50, 1000, .01)
 #' y <- Matrix::rsparsematrix(100, 1000, .01)
 #'
-#' dist_euclidean <- calculate_distance(x, y, metric = "euclidean")
-#' dist_manhattan <- calculate_distance(x, y, metric = "manhattan")
-#' dist_spearman <- calculate_distance(x, y, metric = "spearman")
-#' dist_pearson <- calculate_distance(x, y, metric = "pearson")
-#' dist_angular <- calculate_distance(x, y, metric = "cosine")
+#' dist_euclidean <- calculate_distance(x, y, method = "euclidean")
+#' dist_manhattan <- calculate_distance(x, y, method = "manhattan")
+#' dist_spearman <- calculate_distance(x, y, method = "spearman")
+#' dist_pearson <- calculate_distance(x, y, method = "pearson")
+#' dist_angular <- calculate_distance(x, y, method = "cosine")
 calculate_distance <- function(
   x,
   y = NULL,
-  metric = c("spearman", "pearson", "cosine", "euclidean", "manhattan"),
+  method = c("spearman", "pearson", "cosine", "euclidean", "manhattan"),
   margin = 1
 ) {
-  metric <- match.arg(metric)
+  method <- match.arg(method)
   input <- .process_input_matrices(x = x, y = y, margin = margin)
   x <- input$x
   y <- input$y
 
   dis <-
-    if (metric %in% c("cosine", "pearson", "spearman")) {
-      sim <- calculate_similarity(x = x, y = y, metric = metric, margin = 2)
+    if (method %in% c("cosine", "pearson", "spearman")) {
+      sim <- calculate_similarity(x = x, y = y, method = method, margin = 2)
 
-      if (metric == "cosine") {
+      if (method == "cosine") {
         1 - 2 * acos(sim) / pi
       } else {
         1 - (sim + 1) / 2
       }
     } else {
-      proxyC::dist(x = x, y = y, method = metric, margin = 2)
+      proxyC::dist(x = x, y = y, method = method, margin = 2)
     }
 
   if (is.null(y)) {
@@ -55,7 +55,7 @@ calculate_distance <- function(
 
 #' @rdname calculate_distance
 #' @export
-list_distance_metrics <- function() eval(formals(calculate_distance)$metric)
+list_distance_methods <- function() eval(formals(calculate_distance)$method)
 
 #' @rdname calculate_distance
 #' @export
@@ -64,28 +64,28 @@ calculate_similarity <- function(
   x,
   y = NULL,
   margin = 1,
-  metric = c("spearman", "pearson", "cosine")
+  method = c("spearman", "pearson", "cosine")
 ) {
-  metric <- match.arg(metric)
+  method <- match.arg(method)
   input <- .process_input_matrices(x = x, y = y, margin = margin)
   x <- input$x
   y <- input$y
 
-  # run metric
-  if (metric %in% c("pearson", "spearman")) {
-    if (metric == "spearman") {
+  # run method
+  if (method %in% c("pearson", "spearman")) {
+    if (method == "spearman") {
       x <- spearman_rank_sparse(x)
       if (!is.null(y)) {
         y <- spearman_rank_sparse(y)
       }
     }
-    metric <- "correlation"
+    method <- "correlation"
   }
 
-  sim <- proxyC::simil(x = x, y = y, method = metric, margin = 2)
+  sim <- proxyC::simil(x = x, y = y, method = method, margin = 2)
 
   # fixes due to rounding errors
-  if (metric %in% c("pearson", "spearman", "cosine")) {
+  if (method %in% c("pearson", "spearman", "cosine")) {
     sim@x[sim@x > 1] <- 1
 
     if (is.null(y)) {
@@ -98,7 +98,7 @@ calculate_similarity <- function(
 
 #' @rdname calculate_distance
 #' @export
-list_similarity_metrics <- function() eval(formals(calculate_similarity)$metric)
+list_similarity_methods <- function() eval(formals(calculate_similarity)$method)
 
 #' @importFrom Matrix t
 .process_input_matrices <- function(x, y, margin) {
@@ -148,11 +148,11 @@ list_similarity_metrics <- function() eval(formals(calculate_similarity)$metric)
 #' @export
 #' @rdname deprecated
 euclidean_distance <- function(x, y = NULL) {
-  as.matrix(calculate_distance(x, y, metric = "euclidean"))
+  as.matrix(calculate_distance(x, y, method = "euclidean"))
 }
 
 #' @export
 #' @rdname deprecated
 correlation_distance <- function(x, y = NULL) {
-  as.matrix(calculate_distance(x, y, metric = "spearman"))
+  as.matrix(calculate_distance(x, y, method = "spearman"))
 }

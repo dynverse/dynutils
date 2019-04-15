@@ -2,27 +2,27 @@
 % Please edit documentation in R/calculate_distance.R
 \name{calculate_distance}
 \alias{calculate_distance}
-\alias{list_distance_metrics}
+\alias{list_distance_methods}
 \alias{calculate_similarity}
-\alias{list_similarity_metrics}
+\alias{list_similarity_methods}
 \title{Calculate (column-wise) distances/similarity between two matrices}
 \usage{
-calculate_distance(x, y = NULL, metric = c("spearman", "pearson",
+calculate_distance(x, y = NULL, method = c("spearman", "pearson",
   "cosine", "euclidean", "manhattan"), margin = 1)
 
-list_distance_metrics()
+list_distance_methods()
 
-calculate_similarity(x, y = NULL, margin = 1, metric = c("spearman",
+calculate_similarity(x, y = NULL, margin = 1, method = c("spearman",
   "pearson", "cosine"))
 
-list_similarity_metrics()
+list_similarity_methods()
 }
 \arguments{
 \item{x}{A numeric matrix, dense or sparse.}
 
 \item{y}{(Optional) a numeric matrix, dense or sparse, with \code{nrow(x) == nrow(y)}.}
 
-\item{metric}{Which distance metric to use. Options are: \code{"cosine"}, \code{"pearson"}, \code{"spearman"}, \code{"euclidean"}, and \code{"manhattan"}.}
+\item{method}{Which distance method to use. Options are: \code{"cosine"}, \code{"pearson"}, \code{"spearman"}, \code{"euclidean"}, and \code{"manhattan"}.}
 
 \item{margin}{Which margin to use for the pairwise comparison. 1 => rowwise, 2 => columnwise.}
 }
@@ -35,9 +35,9 @@ library(Matrix)
 x <- Matrix::rsparsematrix(50, 1000, .01)
 y <- Matrix::rsparsematrix(100, 1000, .01)
 
-dist_euclidean <- calculate_distance(x, y, metric = "euclidean")
-dist_manhattan <- calculate_distance(x, y, metric = "manhattan")
-dist_spearman <- calculate_distance(x, y, metric = "spearman")
-dist_pearson <- calculate_distance(x, y, metric = "pearson")
-dist_angular <- calculate_distance(x, y, metric = "cosine")
+dist_euclidean <- calculate_distance(x, y, method = "euclidean")
+dist_manhattan <- calculate_distance(x, y, method = "manhattan")
+dist_spearman <- calculate_distance(x, y, method = "spearman")
+dist_pearson <- calculate_distance(x, y, method = "pearson")
+dist_angular <- calculate_distance(x, y, method = "cosine")
 }
