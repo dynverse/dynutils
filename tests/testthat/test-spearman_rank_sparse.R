@@ -25,6 +25,11 @@ r_control_implementation <- function(x, p, nr) {
   y
 }
 
+set_nas_to_two <- function(x) {
+  x[is.na(x)] <- 2
+  x
+}
+
 test_that("spearman_rank_sparse works as intended with small example", {
   i <- c(1L:2L, 1L:4L, 1L:3L, 1L)
   x <- c(
@@ -44,21 +49,64 @@ test_that("spearman_rank_sparse works as intended with small example", {
   expect_equivalent(out1, out2)
 })
 
-test_that("spearman_rank_sparse works as intended with larger example", {
+test_that("spearman_rank_sparse works as intended with another example", {
   x <- Matrix::rsparsematrix(10, 10, .3)
-  gold <- cor(as.matrix(x), method = "spearman")
+  gold <- cor(as.matrix(x), method = "spearman") %>% set_nas_to_two()
 
   x2 <- x
   x2@x <- r_control_implementation(x@x, x@p, x@Dim[[1]])
-  r_imp <- cor(as.matrix(x2), method = "pearson")
+  r_imp <- cor(as.matrix(x2), method = "pearson") %>% set_nas_to_two()
   expect_true(sum(abs(gold - r_imp)) < 1e-8)
 
   x3 <- x
   x3@x <- spearman_rank_sparse_rcpp(x@x, x@p, x@Dim[[1]])
-  rcpp_imp <- cor(as.matrix(x3), method = "pearson")
+  rcpp_imp <- cor(as.matrix(x3), method = "pearson") %>% set_nas_to_two()
   expect_true(sum(abs(gold - rcpp_imp)) < 1e-8)
 
   x4 <- spearman_rank_sparse(x)
-  rcpp_imp2 <- cor(as.matrix(x4), method = "pearson")
+  rcpp_imp2 <- cor(as.matrix(x4), method = "pearson") %>% set_nas_to_two()
+  expect_true(sum(abs(gold - rcpp_imp2)) < 1e-8)
+})
+
+
+test_that("spearman_rank_sparse works as intended with larger example", {
+  x <- Matrix::rsparsematrix(100, 100, .3)
+  gold <- cor(as.matrix(x), method = "spearman") %>% set_nas_to_two()
+
+  x2 <- x
+  x2@x <- r_control_implementation(x@x, x@p, x@Dim[[1]])
+  r_imp <- cor(as.matrix(x2), method = "pearson") %>% set_nas_to_two()
+  expect_true(sum(abs(gold - r_imp)) < 1e-8)
+
+  x3 <- x
+  x3@x <- spearman_rank_sparse_rcpp(x@x, x@p, x@Dim[[1]])
+  rcpp_imp <- cor(as.matrix(x3), method = "pearson") %>% set_nas_to_two()
+  expect_true(sum(abs(gold - rcpp_imp)) < 1e-8)
+
+  x4 <- spearman_rank_sparse(x)
+  rcpp_imp2 <- cor(as.matrix(x4), method = "pearson") %>% set_nas_to_two()
+  expect_true(sum(abs(gold - rcpp_imp2)) < 1e-8)
+})
+
+
+
+
+test_that("spearman_rank_sparse works with only positive integers", {
+  data <- crossing(i = seq_len(100), j = seq_len(100)) %>% sample_n(1000) %>% mutate(x = rbinom(n(), 30, .1) + 1)
+  x <- Matrix::sparseMatrix(i = data$i, j = data$j, x = data$x)
+  gold <- cor(as.matrix(x), method = "spearman") %>% set_nas_to_two()
+
+  x2 <- x
+  x2@x <- r_control_implementation(x@x, x@p, x@Dim[[1]])
+  r_imp <- cor(as.matrix(x2), method = "pearson") %>% set_nas_to_two()
+  expect_true(sum(abs(gold - r_imp)) < 1e-8)
+
+  x3 <- x
+  x3@x <- spearman_rank_sparse_rcpp(x@x, x@p, x@Dim[[1]])
+  rcpp_imp <- cor(as.matrix(x3), method = "pearson") %>% set_nas_to_two()
+  expect_true(sum(abs(gold - rcpp_imp)) < 1e-8)
+
+  x4 <- spearman_rank_sparse(x)
+  rcpp_imp2 <- cor(as.matrix(x4), method = "pearson") %>% set_nas_to_two()
   expect_true(sum(abs(gold - rcpp_imp2)) < 1e-8)
 })
