@@ -81,7 +81,7 @@ See `?calculate_distance` for the list of currently supported distances.
 ```{r calculate_distance}
 x <- matrix(runif(30), ncol = 10)
 y <- matrix(runif(50), ncol = 10)
-calculate_distance(x, y, metric = "euclidean")
+calculate_distance(x, y, method = "euclidean")
 ```
 
 For euclidean distances, this is similar to calculating:
