@@ -70,7 +70,7 @@ test_that("spearman_rank_sparse works as intended with another example", {
 
 
 test_that("spearman_rank_sparse works as intended with larger example", {
-  x <- Matrix::rsparsematrix(100, 100, .3)
+  x <- Matrix::rsparsematrix(101, 99, .3)
   gold <- cor(as.matrix(x), method = "spearman") %>% set_nas_to_two()
 
   x2 <- x
@@ -110,3 +110,6 @@ test_that("spearman_rank_sparse works with only positive integers", {
   rcpp_imp2 <- cor(as.matrix(x4), method = "pearson") %>% set_nas_to_two()
   expect_true(sum(abs(gold - rcpp_imp2)) < 1e-8)
 })
+
+
+
