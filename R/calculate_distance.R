@@ -50,7 +50,7 @@ calculate_distance <- function(
     diag(dis) <- 0
   }
 
-  dis
+  as.matrix(dis)
 }
 
 #' @rdname calculate_distance
@@ -93,7 +93,7 @@ calculate_similarity <- function(
     }
   }
 
-  sim
+  as.matrix(sim)
 }
 
 #' @rdname calculate_distance
