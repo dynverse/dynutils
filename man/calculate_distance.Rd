@@ -7,7 +7,7 @@
 \alias{list_similarity_methods}
 \title{Calculate (column-wise) distances/similarity between two matrices}
 \usage{
-calculate_distance(x, y = NULL, method = c("spearman", "pearson",
+calculate_distance(x, y = NULL, method = c("pearson", "spearman",
   "cosine", "euclidean", "manhattan"), margin = 1)
 
 list_distance_methods()

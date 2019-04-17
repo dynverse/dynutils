@@ -25,7 +25,7 @@
 calculate_distance <- function(
   x,
   y = NULL,
-  method = c("spearman", "pearson", "cosine", "euclidean", "manhattan"),
+  method = c("pearson", "spearman", "cosine", "euclidean", "manhattan"),
   margin = 1
 ) {
   method <- match.arg(method)
