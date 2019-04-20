@@ -24,7 +24,7 @@ install_packages <- function(..., is_interactive = interactive()) {
     if (is_interactive) {
       message(paste0(
         "Following packages have to be installed: ",
-        glue::glue_collapse(crayon::bold(dependencies), ", ", last = " and "),
+        paste(crayon::bold(dependencies), collapse = ", "),
         "\n",
         "Do you want to install these packages? \n",
         "1: Yes [default]\n",

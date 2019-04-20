@@ -62,7 +62,6 @@ For more information, check out \url{dynverse.org}.
 \section{Manipulation of character vectors}{
 
 \itemize{
-\item \code{\link[=pritt]{pritt()}}: A friendly version of \code{\link[=glue]{glue()}}
 \item \code{\link[=random_time_string]{random_time_string()}}: Generates a string very likely to be unique
 }
 }

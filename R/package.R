@@ -30,7 +30,6 @@
 #'   * [install_packages()]: Install packages taking into account the remotes of another
 #'
 #' @section Manipulation of character vectors:
-#'   * [pritt()]: A friendly version of [glue()]
 #'   * [random_time_string()]: Generates a string very likely to be unique
 #'
 #' @section Tibble helpers:
