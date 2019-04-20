@@ -65,15 +65,18 @@ process_news <- function(path = NULL, package = detect_package_name(path = path)
     find_news(path = path, package = package) %>%
     readr::read_lines()
 
-  ix <- which(str_detect(news_md, "^# "))
-  matches <- str_match(news_md[ix], c("\\# ([A-Za-z0-9]*) ([0-9\\.]*) \\((.*)\\)"))
+  start_ix <- which(str_detect(news_md, "^# "))
+  matches <- str_match(news_md[start_ix], c("\\# ([A-Za-z0-9]*) ([0-9\\.]*) \\((.*)\\)"))
   version <- matches[, 3]
   release_data <- matches[, 4]
-  items <- map2(ix, lead(ix - 1, default = length(news_md)), function(start, end) {
-    news_md[(start + 1):(end)]
+
+  end_ix <- c(start_ix[-1] - 1, length(news_md))
+
+  items <- map2(start_ix+1, end_ix, function(start, end) {
+    news_md[start:end]
   })
-  text <- map2(ix, lead(ix - 1, default = length(news_md)), function(start, end) {
-    news_md[(start):(end)]
+  text <- map2(start_ix, end_ix, function(start, end) {
+    news_md[start:end]
   })
 
   tibble(

@@ -6,6 +6,8 @@
 #' @return Function `fun`, but with the default parameters of the `super_functions`
 #' @export
 #'
+#' @importFrom methods formalArgs
+#'
 #' @examples
 #' fun1 <- function(a = 10, b = 7) runif(a, -b, b)
 #' fun2 <- function(c = 9) 2^c

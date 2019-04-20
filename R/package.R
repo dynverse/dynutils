@@ -51,10 +51,8 @@
 #'   * [update_news()]: Update the news based on the md file (assuming a certain format, see dynutils/inst/NEWS.md)
 #'   * [recent_news()]: Print the most recent news (assuming a certain format, see dynutils/inst/NEWS.md)
 #'
-#'
-#' @import dplyr
-#' @import methods
-#' @importFrom tibble tibble as_tibble
+#' @importFrom dplyr slice enquo n
+#' @importFrom tibble tibble as_tibble lst
 #' @importFrom purrr %>% %||% map map_df map_chr map_lgl map_int map_dbl keep discard set_names
 #' @importFrom magrittr %<>% %$% set_rownames set_colnames
 #' @importFrom assertthat assert_that on_failure<-

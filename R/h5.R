@@ -151,6 +151,7 @@ write_h5 <- function(x, path) {
 }
 
 #' @rdname read_h5
+#' @importFrom methods as
 #' @export
 write_h5_ <- function(x, file_h5, path) {
   requireNamespace("hdf5r")
