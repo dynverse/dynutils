@@ -8,7 +8,7 @@
  * FUNCTIONALITY: `calculate_distance()` and `calculate_similarity()` now support
    sparse matrix calculation thanks to proxyC!
  
- * SMALL CHANGES: Remove dependencies: glue, Hmisc, devtools, testthat.
+ * SMALL CHANGES: Remove dependencies: glue, Hmisc, devtools, testthat, tidyr.
 
 # dynutils 1.0.2 (2019-03-21)
 

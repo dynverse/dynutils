@@ -12,7 +12,7 @@ test_that("no messages are printed when packages are already installed", {
 })
 
 test_that("no messages are printed when packages are already installed, given a depending package", {
-  expect_message(out <- install_packages("tidyr", "dplyr", package = "dynutils"), NA)
+  expect_message(out <- install_packages("dplyr", package = "dynutils"), NA)
   expect_null(out)
 })
 

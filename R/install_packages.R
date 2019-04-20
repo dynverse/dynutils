@@ -1,3 +1,4 @@
+#' @importFrom stringr str_replace
 parse_remotes <- function(remotes) {
   str_replace(remotes, ".*/([:alpha:]*).*", "\\1") %>%
     set_names(remotes)

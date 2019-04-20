@@ -92,8 +92,7 @@ test_that("spearman_rank_sparse works as intended with larger example", {
 
 
 test_that("spearman_rank_sparse works with only positive integers", {
-  data <- crossing(i = seq_len(100), j = seq_len(100)) %>% sample_n(1000) %>% mutate(x = rbinom(n(), 30, .1) + 1)
-  x <- Matrix::sparseMatrix(i = data$i, j = data$j, x = data$x)
+  x <- Matrix::rsparsematrix(100, 99, .1) %>% abs()
   gold <- cor(as.matrix(x), method = "spearman") %>% set_nas_to_two()
 
   x2 <- x

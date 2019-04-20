@@ -42,8 +42,7 @@ Imports:
   Rcpp,
   remotes,
   stringr,
-  tibble,
-  tidyr
+  tibble
 Suggests:
   ggplot2,
   hdf5r,

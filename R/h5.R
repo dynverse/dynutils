@@ -238,7 +238,7 @@ test_h5_installation <- function(detailed = FALSE) {
   test_h5_installation_equal(detailed, obj, obj2)
 
   if (detailed)
-    message(crayon::green(crayon::bold(stringr::str_pad("\u2714 HDF5 test successful ", 90, side = "right", "-"))))
+    message(crayon::green(crayon::bold(str_pad("\u2714 HDF5 test successful ", 90, side = "right", "-"))))
 
   TRUE
 }

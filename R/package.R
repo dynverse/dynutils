@@ -53,10 +53,8 @@
 #'
 #'
 #' @import dplyr
-#' @import tidyr
 #' @import methods
-#' @import tibble
-#' @import stringr
+#' @importFrom tibble tibble as_tibble
 #' @importFrom purrr %>% %||% map map_df map_chr map_lgl map_int map_dbl keep discard set_names
 #' @importFrom magrittr %<>% %$% set_rownames set_colnames
 #' @importFrom assertthat assert_that on_failure<-
