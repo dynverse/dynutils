@@ -43,7 +43,6 @@ Imports:
   Rcpp,
   remotes,
   stringr,
-  testthat,
   tibble,
   tidyr
 Suggests:
@@ -51,7 +50,8 @@ Suggests:
   hdf5r,
   knitr,
   readr,
-  rmarkdown
+  rmarkdown,
+  testthat
 LinkingTo:
   Rcpp
 Encoding: UTF-8

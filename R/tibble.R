@@ -5,8 +5,6 @@
 #' @return A tibble with the same number of rows as there were elements in \code{list_of_rows}
 #' @export
 #'
-#' @importFrom testthat expect_equal
-#'
 #' @seealso tibble_as_list extract_row_to_list mapdf
 #'
 #' @examples
@@ -103,8 +101,6 @@ extract_row_to_list <- function(tib, row_id) {
 #'
 #' @return A list with the same number of lists as there were rows in \code{tib}
 #' @export
-#'
-#' @importFrom testthat expect_equal
 #'
 #' @seealso list_as_tibble extract_row_to_list mapdf
 #'
