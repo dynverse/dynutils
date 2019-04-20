@@ -15,7 +15,7 @@ test_that("write_h5 and read_h5 works", {
 
 test_that("test_h5_installation works", {
   expect_true(test_h5_installation())
-  expect_message(test_h5_installation(detailed = TRUE), ".*\u2714 HDF5 test successful*")
+  expect_message(test_h5_installation(detailed = TRUE), ".*\u2714 HDF5 test successful.*")
 
   expect_output(expect_error(test_h5_installation_write(detailed = TRUE, obj = list(x = print))))
   expect_output(expect_error(test_h5_installation_read(detailed = TRUE, file = tempfile())))
