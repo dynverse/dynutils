@@ -227,7 +227,6 @@ write_h5_ <- function(x, file_h5, path) {
 #'
 #' @param detailed Whether top do a detailed check
 #'
-#' @importFrom glue glue
 #' @importFrom crayon red green bold
 #' @importFrom stringr str_pad
 #'

@@ -13,7 +13,8 @@ rmarkdown::render("vignettes/functionality.Rmd", output_format = "github_documen
     [`extend_with`](functionality.md#extend_with-extend-list-with-more-data)
   - Calculations:
     [`calculate_distance`](functionality.md#calculate_distance-compute-pairwise-distances-between-two-matrices),
-    [`project_to_segments`](functionality.md#project_to_segments-project-a-set-of-points-to-to-set-of-segments)
+    [`project_to_segments`](functionality.md#project_to_segments-project-a-set-of-points-to-to-set-of-segments),
+    [`calculate_mean`](functionality.md#calculate_mean-calculate-a-weighted-mean-between-vectors-or-a-list-of-vectors-supports-the-arithmetic-geometric-and-harmonic-mean)
   - Manipulation of matrices:
     [`expand_matrix`](functionality.md#expand_matrix-add-rows-and-columns-to-a-matrix)
   - Scaling of matrices and vectors:
@@ -26,7 +27,6 @@ rmarkdown::render("vignettes/functionality.Rmd", output_format = "github_documen
     [`check_packages`](functionality.md#check_packages-easily-checking-whether-certain-packages-are-installed),
     [`install_packages`](functionality.md#install_packages-install-packages-taking-into-account-the-remotes-of-another)
   - Manipulation of character vectors:
-    [`pritt`](functionality.md#pritt-a-friendly-version-of-glueglue),
     [`random_time_string`](functionality.md#random_time_string-generates-a-string-very-likely-to-be-unique)
   - Tibble helpers:
     [`list_as_tibble`](functionality.md#list_as_tibble-convert-a-list-of-lists-to-a-tibble-whilst-retaining-class-information),
@@ -127,6 +127,32 @@ str(fit)
 #>  $ distance   : num [1:25] 0.0068 0.01605 0.12144 0.00587 0.12604 ...
 #>  $ segment    : int [1:25] 1 2 1 3 1 4 2 3 2 2 ...
 #>  $ progression: num [1:25] 1 0.108 0.297 0.802 0 ...
+```
+
+### `calculate_mean`: Calculate a (weighted) mean between vectors or a list of vectors; supports the arithmetic, geometric and harmonic mean
+
+``` r
+calculate_arithmetic_mean(0.1, 0.5, 0.9)
+#> [1] 0.5
+calculate_geometric_mean(0.1, 0.5, 0.9)
+#> [1] 0.3556893
+calculate_harmonic_mean(0.1, 0.5, 0.9)
+#> [1] 0.2288136
+calculate_mean(.1, .5, .9, method = "harmonic")
+#> [1] 0.2288136
+
+# example with multiple vectors
+calculate_arithmetic_mean(c(0.1, 0.9), c(0.2, 1))
+#> [1] 0.15 0.95
+
+# example with a list of vectors
+vectors <- list(c(0.1, 0.2), c(0.4, 0.5))
+calculate_geometric_mean(vectors)
+#> [1] 0.2000000 0.3162278
+
+# example of weighted means
+calculate_geometric_mean(c(0.1, 10), c(0.9, 20), c(0.5, 2), weights = c(1, 2, 5))
+#> [1] 0.4736057 4.3491186
 ```
 
 ## Manipulation of matrices
@@ -238,10 +264,10 @@ fun3
 ``` r
 check_packages("SCORPIUS", "dynutils", "wubbalubbadubdub")
 #>         SCORPIUS         dynutils wubbalubbadubdub 
-#>            FALSE             TRUE            FALSE
+#>             TRUE             TRUE            FALSE
 check_packages(c("princurve", "mlr", "tidyverse"))
 #> princurve       mlr tidyverse 
-#>     FALSE      TRUE      TRUE
+#>      TRUE      TRUE      TRUE
 ```
 
 ### `install_packages`: Install packages taking into account the remotes of another
@@ -265,31 +291,17 @@ install_packages("SCORPIUS", package = "dynmethods", prompt = TRUE)
 
 ## Manipulation of character vectors
 
-### `pritt`: A friendly version of `glue::glue`
-
-``` r
-a <- 10
-pritt("a: {a}")
-#> [1] "a: 10"
-
-comparison <- glue::glue("a: {a}")
-comparison            # glue::glue prints differently than base R
-#> a: 10
-class(comparison)     # glue::glue adds a class to the output
-#> [1] "glue"      "character"
-```
-
 ### `random_time_string`: Generates a string very likely to be unique
 
 ``` r
 random_time_string("test")
-#> [1] "20190103_164222__test__mMIwnRLQgq"
+#> [1] "20190420_055053__test__mMIwnRLQgq"
 
 random_time_string("test")
-#> [1] "20190103_164222__test__X7HCfj0o6f"
+#> [1] "20190420_055053__test__X7HCfj0o6f"
 
 random_time_string("test")
-#> [1] "20190103_164222__test__F9Y32SIQAy"
+#> [1] "20190420_055053__test__F9Y32SIQAy"
 ```
 
 ## Tibble helpers
@@ -417,7 +429,7 @@ tib %>% mapdf_dbl(~ .$a * 1.234)
 
 ``` r
 safe_tempdir("samson")
-#> [1] "/tmp/Rtmplxmqm6/file409453744e7f/samson"
+#> [1] "/tmp/RtmpdLXTtU/file186013d697c5/samson"
 ```
 
 ## Assertion helpers
@@ -427,22 +439,22 @@ safe_tempdir("samson")
 ``` r
 library(assertthat)
 assert_that(c(1, 2) %all_in% c(0, 1, 2, 3, 4))
-#> Error in c(1, 2) %all_in% c(0, 1, 2, 3, 4): could not find function "%all_in%"
+#> [1] TRUE
 assert_that("a" %all_in% letters)
-#> Error in "a" %all_in% letters: could not find function "%all_in%"
+#> [1] TRUE
 assert_that("A" %all_in% letters)
-#> Error in "A" %all_in% letters: could not find function "%all_in%"
+#> Error: "A" is missing 1 element from letters: "A"
 assert_that(1:10 %all_in% letters)
-#> Error in 1:10 %all_in% letters: could not find function "%all_in%"
+#> Error: 1:10 is missing 10 elements from letters: 1L, 2L, 3L, ...
 ```
 
 ### `%has_names%`: Check whether an object has certain names
 
 ``` r
 assert_that(li %has_names% "a")
-#> Error: li is missing 1 names from "a": "a"
+#> Error: li is missing 1 name from "a": "a"
 assert_that(li %has_names% "c")
-#> Error: li is missing 1 names from "c": "c"
+#> Error: li is missing 1 name from "c": "c"
 assert_that(li %has_names% letters)
 #> Error: li is missing 26 names from letters: "a", "b", "c", ...
 ```
