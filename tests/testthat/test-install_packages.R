@@ -4,7 +4,7 @@ r <- getOption("repos")
 r["CRAN"] <- "http://cran.r-project.org"
 options(repos = r)
 
-# skip_on_cran()
+skip_on_cran()
 
 test_that("no messages are printed when packages are already installed", {
   expect_message(out <- install_packages(c("dynutils", "dplyr")), NA)
