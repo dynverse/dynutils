@@ -32,7 +32,6 @@ Depends:
 Imports: 
   assertthat,
   crayon,
-  devtools,
   desc,
   dplyr,
   glue,
@@ -42,6 +41,7 @@ Imports:
   proxyC,
   purrr,
   Rcpp,
+  remotes,
   stringr,
   testthat,
   tibble,

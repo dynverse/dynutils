@@ -8,7 +8,7 @@ parse_remotes <- function(remotes) {
 #' @param ... The names of the packages to be installed
 #' @param is_interactive Whether running interactivly, which will prompt the user before installation
 #'
-#' @importFrom devtools install_cran
+#' @importFrom remotes install_cran
 #' @importFrom utils setRepositories
 #'
 #' @export
@@ -47,7 +47,7 @@ install_packages <- function(..., is_interactive = interactive()) {
     message("Installing ", paste0(dependencies, collapse = ", "))
 
     # install other depencies from cran
-    devtools::install_cran(dependencies, repos = "http://cran.rstudio.com")
+    remotes::install_cran(dependencies, repos = "http://cran.rstudio.com")
 
     # display message
     message("Installed ", paste0(dependencies, collapse = ", "))
