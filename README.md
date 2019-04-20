@@ -33,10 +33,11 @@ changes.
   - BUG FIX: Added compatibility workaround for being able to read hdf5
     1.10.4 files on a hdf5 1.8.14 Windows platform (hhoeflin/hdf5r\#60).
 
-  - SMALL CHANGE: Defenstrate Hmisc dependency
-
   - FUNCTIONALITY: `calculate_distance()` and `calculate_similarity()`
-    now support sparse matrix calculation thanks to proxyC\!\`
+    now support sparse matrix calculation thanks to proxyC\!
+
+  - SMALL CHANGES: Remove dependencies: glue, Hmisc, devtools, testthat,
+    tidyr.
 
 ### Recent changes in dynutils 1.0.2 (2019-03-21)
 
