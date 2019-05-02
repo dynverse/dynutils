@@ -1,163 +1,159 @@
-#' @importFrom testthat expect_is
-calculate_distance_preproc_x <- function(x) {
-  testthat::expect_is(x, c("matrix", "data.frame", "dgCMatrix"))
-  as.matrix(x)
-}
-
-#' @importFrom testthat expect_equal
-calculate_distance_preproc_y <- function(x, y) {
-  if (is.null(y)) y <- x
-  testthat::expect_equal(ncol(y), ncol(x))
-  calculate_distance_preproc_x(y)
-}
-
-calculate_distance_postproc_d <- function(x, y, d) {
-  dimnames(d) <- list(rownames(x), rownames(y))
-  d
-}
-
-#' @rdname calculate_distance
+#' Calculate (column-wise) distances/similarity between two matrices
 #'
-#' @inheritParams stats::cor
+#' These matrices can be dense or sparse.
 #'
-#' @importFrom stats cor
-#'
-#' @include inherit_default_params.R
+#' @param x A numeric matrix, dense or sparse.
+#' @param y (Optional) a numeric matrix, dense or sparse, with `nrow(x) == nrow(y)`.
+#' @param method Which distance method to use. Options are: `"cosine"`, `"pearson"`, `"spearman"`, `"euclidean"`, and `"manhattan"`.
+#' @param margin Which margin to use for the pairwise comparison. 1 => rowwise, 2 => columnwise.
 #'
 #' @export
-correlation_distance <- inherit_default_params(
-  list(stats::cor),
-  function(x, y, method, use) {
-    x <- calculate_distance_preproc_x(x)
-    y <- calculate_distance_preproc_y(x, y)
-
-    d <- 1 - (stats::cor(t(x), t(y), method = method, use = use) + 1) / 2
-
-    calculate_distance_postproc_d(x, y, d)
-  }
-)
-
-spearman_distance = inherit_default_params(
-  list(correlation_distance),
-  function(x, y, use) {
-    correlation_distance(x = x, y = y, method = "spearman", use = use)
-  }
-)
-
-pearson_distance = inherit_default_params(
-  list(correlation_distance),
-  function(x, y, use) {
-    correlation_distance(x = x, y = y, method = "pearson", use = use)
-  }
-)
-
-kendall_distance = inherit_default_params(
-  list(correlation_distance),
-  function(x, y, use) {
-    correlation_distance(x = x, y = y, method = "kendall", use = use)
-  }
-)
-
-#' @rdname calculate_distance
 #'
-#' @include inherit_default_params.R
-#'
-#' @export
-angular_distance <- function(x, y = NULL) {
-  x <- calculate_distance_preproc_x(x)
-  y <- calculate_distance_preproc_y(x, y)
-
-  top <- x %*% t(y)
-  bot1 <- sqrt(rowSums(x^2))
-  bot2 <- sqrt(rowSums(y^2))
-
-  div <- top %>% sweep(1, bot1, "/") %>% sweep(2, bot2, "/")
-
-  # div should never be larger than 1, but sometimes is due to rounding errors
-  div[div > 1] <- 1
-
-  d <- acos(div) * 2 / pi
-
-  calculate_distance_postproc_d(x, y, d)
-}
-
-#' @rdname calculate_distance
-#'
-#' @export
-manhattan_distance <- function(x, y = NULL) {
-  x <- calculate_distance_preproc_x(x)
-  y <- calculate_distance_preproc_y(x, y)
-
-  d <- .Call('_dynutils_manhattan_distance', PACKAGE = 'dynutils', x, y)
-
-  calculate_distance_postproc_d(x, y, d)
-}
-
-#' @rdname calculate_distance
-#'
-#' @export
-euclidean_distance <- function(x, y = NULL) {
-  x <- calculate_distance_preproc_x(x)
-  y <- calculate_distance_preproc_y(x, y)
-
-  d <- .Call('_dynutils_euclidean_distance', PACKAGE = 'dynutils', x, y)
-
-  calculate_distance_postproc_d(x, y, d)
-}
-
-#' @rdname calculate_distance
-#'
-#' @export
-list_distance_metrics <- function() {
-  list(
-    euclidean = euclidean_distance,
-    manhattan = manhattan_distance,
-    angular = angular_distance,
-    spearman = spearman_distance,
-    pearson = pearson_distance,
-    kendall = kendall_distance
-  )
-}
-
-#' Distance metrics
-#'
-#' Calculate (pairwise) distances between two matrices
-#'
-#' @param x A numeric matrix
-#' @param y (Optional) a numeric matrix, with \code{ncol(x) == ncol(y)}.
-#' @param method Distance method to use. Options are:
-#' \itemize{
-#'   \item euclidean: \code{\link{euclidean_distance}}
-#'   \item manhattan: \code{\link{manhattan_distance}}
-#'   \item spearman, pearson, or kendall: \code{\link{correlation_distance}}
-#'   \item angular: \code{\link{angular_distance}}
-#' }
-#'
-#' @rdname calculate_distance
-#'
-#' @export
+#' @importFrom proxyC dist
 #'
 #' @examples
 #' ## Generate two matrices with 50 and 100 samples
-#' x <- matrix(rnorm(50*10, mean = 0, sd = 1), ncol = 10)
-#' y <- matrix(rnorm(100*10, mean = 1, sd = 2), ncol = 10)
+#' library(Matrix)
+#' x <- Matrix::rsparsematrix(50, 1000, .01)
+#' y <- Matrix::rsparsematrix(100, 1000, .01)
 #'
 #' dist_euclidean <- calculate_distance(x, y, method = "euclidean")
 #' dist_manhattan <- calculate_distance(x, y, method = "manhattan")
 #' dist_spearman <- calculate_distance(x, y, method = "spearman")
 #' dist_pearson <- calculate_distance(x, y, method = "pearson")
-#' dist_kendall <- calculate_distance(x, y, method = "kendall")
-#' dist_angular <- calculate_distance(x, y, method = "angular")
+#' dist_angular <- calculate_distance(x, y, method = "cosine")
 calculate_distance <- function(
   x,
   y = NULL,
-  method = names(list_distance_metrics())
+  method = c("pearson", "spearman", "cosine", "euclidean", "manhattan"),
+  margin = 1
 ) {
   method <- match.arg(method)
+  input <- .process_input_matrices(x = x, y = y, margin = margin)
+  x <- input$x
+  y <- input$y
 
-  fun <- list_distance_metrics()[[method]]
-  fun(x = x, y = y)
+  dis <-
+    if (method %in% c("cosine", "pearson", "spearman")) {
+      sim <- calculate_similarity(x = x, y = y, method = method, margin = 2)
+
+      if (method == "cosine") {
+        1 - 2 * acos(sim) / pi
+      } else {
+        1 - (sim + 1) / 2
+      }
+    } else {
+      proxyC::dist(x = x, y = y, method = method, margin = 2)
+    }
+
+  if (is.null(y)) {
+    diag(dis) <- 0
+  }
+
+  as.matrix(dis)
 }
 
-# evaluate names of distance metrics
-formals(calculate_distance)$method <- names(list_distance_metrics())
+#' @rdname calculate_distance
+#' @export
+list_distance_methods <- function() eval(formals(calculate_distance)$method)
+
+#' @rdname calculate_distance
+#' @export
+#' @importFrom proxyC simil
+calculate_similarity <- function(
+  x,
+  y = NULL,
+  margin = 1,
+  method = c("spearman", "pearson", "cosine")
+) {
+  method <- match.arg(method)
+  input <- .process_input_matrices(x = x, y = y, margin = margin)
+  x <- input$x
+  y <- input$y
+
+  # run method
+  if (method %in% c("pearson", "spearman")) {
+    if (method == "spearman") {
+      x <- spearman_rank_sparse(x)
+      if (!is.null(y)) {
+        y <- spearman_rank_sparse(y)
+      }
+    }
+    method <- "correlation"
+  }
+
+  sim <- proxyC::simil(x = x, y = y, method = method, margin = 2)
+
+  # fixes due to rounding errors
+  if (method %in% c("pearson", "spearman", "cosine")) {
+    sim@x[sim@x > 1] <- 1
+
+    if (is.null(y)) {
+      diag(sim) <- 1
+    }
+  }
+
+  as.matrix(sim)
+}
+
+#' @rdname calculate_distance
+#' @export
+list_similarity_methods <- function() eval(formals(calculate_similarity)$method)
+
+#' @importFrom Matrix t
+#' @importFrom methods as
+.process_input_matrices <- function(x, y, margin) {
+  if (is.data.frame(x)) x <- as.matrix(x)
+  if (is.matrix(x)) x <- as(x, "dgCMatrix")
+
+  if (!is.null(y)) {
+    if (is.data.frame(y)) y <- as.matrix(y)
+    if (is.matrix(y)) y <- as(y, "dgCMatrix")
+  }
+
+  assert_that(
+    is_sparse(x),
+    is.null(y) || is_sparse(y)
+  )
+
+  if (margin == 1) {
+    if (!is.null(y)) {
+      assert_that(ncol(x) == ncol(y))
+      y <- Matrix::t(y)
+    }
+    x <- Matrix::t(x)
+  } else {
+    if (!is.null(y)) {
+      assert_that(nrow(x) == nrow(y))
+    }
+  }
+
+  list(x = x, y = y)
+}
+
+.process_pairwise_matrix <- function(mat, x, y) {
+  assert_that(
+    ncol(x) == nrow(mat),
+    ncol(y) == ncol(mat)
+  )
+  dimnames(mat) <- list(colnames(x), colnames(y))
+  mat
+}
+
+
+#' These functions will be removed soon
+#'
+#' Use [calculate_distance()] instead.
+#'
+#' @inheritParams calculate_distance
+#' @export
+#' @rdname deprecated
+euclidean_distance <- function(x, y = NULL) {
+  as.matrix(calculate_distance(x, y, method = "euclidean"))
+}
+
+#' @export
+#' @rdname deprecated
+correlation_distance <- function(x, y = NULL) {
+  as.matrix(calculate_distance(x, y, method = "spearman"))
+}

@@ -12,19 +12,14 @@ test_that("no messages are printed when packages are already installed", {
 })
 
 test_that("no messages are printed when packages are already installed, given a depending package", {
-  expect_message(out <- install_packages("tidyr", "dplyr", package = "dynutils"), NA)
+  expect_message(out <- install_packages("dplyr", package = "dynutils"), NA)
   expect_null(out)
-})
-
-test_that("error is produced when super package is not installed", {
-  if (check_packages("SCORPIUS")) remove.packages("SCORPIUS")
-  expect_error(install_packages("SCORPIUS", package = "wubbalubbadubdub"), "needs to have been installed first!")
 })
 
 test_that("dependencies can be installed", {
   is_present <- check_packages("whoami")
   if (is_present) remove.packages("whoami")
-  out <- install_packages("whoami", package = "desc")
+  out <- install_packages("whoami", is_interactive = FALSE)
   if (!is_present) remove.packages("whoami")
   expect_equal(out, "whoami")
 })
@@ -35,7 +30,7 @@ test_that("prompt works as expected", {
   options(dynutils_testmodepromptresponse = 2)
   expect_error(
     expect_message(
-      out <- install_packages("princurve", prompt = TRUE),
+      out <- install_packages("princurve", is_interactive = TRUE),
       "Following packages have to be installed"
     ),
     "Installation was interrupted"
@@ -43,7 +38,7 @@ test_that("prompt works as expected", {
 
   if (check_packages("princurve")) remove.packages("princurve")
   options(dynutils_testmodepromptresponse = 1)
-  expect_message(out <- install_packages("princurve", prompt = TRUE), "Following packages have to be installed")
+  expect_message(out <- install_packages("princurve", is_interactive = TRUE), "Following packages have to be installed")
   if (is_present) remove.packages("princurve")
   expect_equal(out, "princurve")
 

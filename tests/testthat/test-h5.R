@@ -15,7 +15,7 @@ test_that("write_h5 and read_h5 works", {
 
 test_that("test_h5_installation works", {
   expect_true(test_h5_installation())
-  expect_message(test_h5_installation(detailed = TRUE), "\u2714.*")
+  expect_message(test_h5_installation(detailed = TRUE), "HDF5 test successful")
 
   expect_output(expect_error(test_h5_installation_write(detailed = TRUE, obj = list(x = print))))
   expect_output(expect_error(test_h5_installation_read(detailed = TRUE, file = tempfile())))
@@ -25,10 +25,10 @@ test_that("test_h5_installation works", {
 test_that("is_sparse works", {
   expect_false(is_sparse(matrix(c(1:10))))
 
-  m <- Matrix::Matrix(matrix(c(1:10)))
-  expect_true(is_sparse(m))
-  expect_true(is_sparse(as(m, "dgCMatrix")))
-  expect_true(is_sparse(as(m, "dgeMatrix")))
+  m <- Matrix::Matrix(matrix(c(1:10)), sparse = FALSE)
+  expect_false(is_sparse(m))
+  expect_true(is_sparse(methods::as(m, "dgCMatrix")))
+  expect_false(is_sparse(methods::as(m, "dgeMatrix")))
 })
 
 

@@ -26,14 +26,18 @@ changes.
 
 <!-- This section gets automatically generated from inst/NEWS.md, and also generates inst/NEWS -->
 
-### Recent changes in dynutils 1.0.3 (unreleased)
+### Recent changes in dynutils 1.0.3 (2019-05-02)
 
   - FUNCTIONALITY: Added `test_h5_installation()`.
 
-  - FUNCTIONALITY: Added `angular_distance()` and
-    `list_distance_metrics()`.
+  - BUG FIX: Added compatibility workaround for being able to read hdf5
+    1.10.4 files on a hdf5 1.8.14 Windows platform (hhoeflin/hdf5r\#60).
 
-  - FIX: Added workaround for being able to read h5 files on Windows.
+  - FUNCTIONALITY: `calculate_distance()` and `calculate_similarity()`
+    now support sparse matrix calculation thanks to proxyC\!
+
+  - SMALL CHANGES: Remove dependencies: glue, Hmisc, devtools, testthat,
+    tidyr.
 
 ### Recent changes in dynutils 1.0.2 (2019-03-21)
 

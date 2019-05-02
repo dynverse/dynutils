@@ -1,10 +1,12 @@
 #' Inherit default parameters from a list of super functions
 #'
-#' @param super_functions A list of super functions of which \code{fun} needs to inherit the default parameters
+#' @param super_functions A list of super functions of which `fun`` needs to inherit the default parameters
 #' @param fun The function whose default parameters need to be overridden
 #'
-#' @return Function \code{fun}, but with the default parameters of the \code{super_functions}
+#' @return Function `fun`, but with the default parameters of the `super_functions`
 #' @export
+#'
+#' @importFrom methods formalArgs
 #'
 #' @examples
 #' fun1 <- function(a = 10, b = 7) runif(a, -b, b)

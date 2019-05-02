@@ -4,8 +4,6 @@
 #' @param .class_name A class name to add
 #' @param ... Extra information in the list
 #'
-#' @importFrom testthat expect_is expect_named expect_false
-#'
 #' @export
 #'
 #' @examples
@@ -21,8 +19,10 @@ extend_with <- function(
   .class_name,
   ...
 ) {
-  testthat::expect_is(object, "list")
-  testthat::expect_is(.class_name, "character")
+  assert_that(
+    is.list(object),
+    is.character(.class_name)
+  )
 
   extension <- list(...)
 
@@ -30,9 +30,11 @@ extend_with <- function(
     extension <- extension[[1]]
   }
 
-  testthat::expect_is(extension, "list")
-  testthat::expect_named(extension)
-  testthat::expect_false(any(names(extension) == ""))
+  assert_that(
+    is.list(extension),
+    !is.null(names(extension)),
+    all(names(extension) != "")
+  )
 
   object[names(extension)] <- extension
 

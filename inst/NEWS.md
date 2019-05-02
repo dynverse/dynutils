@@ -1,10 +1,14 @@
-# dynutils 1.0.3 (unreleased)
+# dynutils 1.0.3 (2019-05-02)
 
  * FUNCTIONALITY: Added `test_h5_installation()`.
  
- * FUNCTIONALITY: Added `angular_distance()` and `list_distance_metrics()`.
+ * BUG FIX: Added compatibility workaround for being able to read hdf5 1.10.4 files
+   on a hdf5 1.8.14 Windows platform (hhoeflin/hdf5r#60).
  
- * FIX: Added workaround for being able to read h5 files on Windows.
+ * FUNCTIONALITY: `calculate_distance()` and `calculate_similarity()` now support
+   sparse matrix calculation thanks to proxyC!
+ 
+ * SMALL CHANGES: Remove dependencies: glue, Hmisc, devtools, testthat, tidyr.
 
 # dynutils 1.0.2 (2019-03-21)
 
@@ -18,7 +22,7 @@
  
  * FUNCTIONALITY: Moved `calculate_mean()` from dyneval to dynutils.
  
-# dynutils 1.0.1 (2019-02-04)
+# dynutils 1.0.1 (2019-02-04) 
 
  * DOCUMENTATION: Fixed functionality vignette not showing any code.
 

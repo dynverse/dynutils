@@ -19,7 +19,6 @@ knitr::opts_chunk$set(comment = "#>", collapse = TRUE)
 library(dplyr)
 library(readr)
 library(purrr)
-library(tidyr)
 library(stringr)
 library(ggplot2)
 library(dynutils)
@@ -225,16 +224,6 @@ Installed SCORPIUS
 
 ## Manipulation of character vectors
 
-### `pritt`: A friendly version of `glue::glue`
-
-```{r pritt}
-a <- 10
-pritt("a: {a}")
-
-comparison <- glue::glue("a: {a}")
-comparison            # glue::glue prints differently than base R
-class(comparison)     # glue::glue adds a class to the output
-```
 
 ### `random_time_string`: Generates a string very likely to be unique
 ```{r random_time_string}

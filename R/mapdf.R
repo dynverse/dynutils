@@ -12,17 +12,17 @@ mapdf_fun <- function(purrrfun) {
 #' Apply a function to each row of a data frame
 #'
 #' The mapdf functions transform their input by applying a function to each row of a data frame and returning a vector the same length as the input.
-#' These functions work a lot like purrr's \code{\link[purrr]{map}} functions.
+#' These functions work a lot like purrr's [map()] functions.
 #'
-#'  * \code{mapdf()} always returns a list.
+#'  * `mapdf()` always returns a list.
 #'
-#'  * \code{mapdf_lgl()}, \code{mapdf_int()}, \code{mapdf_dbl()} and \code{mapdf_chr()} return vectors of the corresponding type (or die trying).
+#'  * `mapdf_lgl()`, `mapdf_int()`, `mapdf_dbl()` and `mapdf_chr()` return vectors of the corresponding type (or die trying).
 #'
-#'  * \code{mapdf_dfr()} and \code{mapdf_dfc()} return data frames created by row-binding and column-binding respectively. They require dplyr to be installed.
+#'  * `mapdf_dfr()` and `mapdf_dfc()` return data frames created by row-binding and column-binding respectively. They require dplyr to be installed.
 #'
-#'  * \code{mapdf_lat()} returns a tibble by transforming outputted lists to a tibble using \code{\link{list_as_tibble}}.
+#'  * `mapdf_lat()` returns a tibble by transforming outputted lists to a tibble using [list_as_tibble].
 #'
-#'  * \code{walkdf()} calls .f for its side-effect and returns the input .x.
+#'  * `walkdf()` calls .f for its side-effect and returns the input .x.
 #'
 #' @importFrom purrr map map_lgl map_chr map_int map_dbl map_dfr map_dfc walk map_if map_at
 #'
@@ -31,7 +31,7 @@ mapdf_fun <- function(purrrfun) {
 #' @param .x A data.frame, data_frame, or tibble.
 #' @param .f A function or formula.
 #'   If a function, the first argument will be the row as a list.
-#'   If a formula, e.g. \code{~ .$a}, the \code{.} is a placeholder for the row as a list.
+#'   If a formula, e.g. `~ .$a`, the `.` is a placeholder for the row as a list.
 #'
 #' @export
 #'

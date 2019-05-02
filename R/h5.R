@@ -151,6 +151,7 @@ write_h5 <- function(x, path) {
 }
 
 #' @rdname read_h5
+#' @importFrom methods as
 #' @export
 write_h5_ <- function(x, file_h5, path) {
   requireNamespace("hdf5r")
@@ -164,7 +165,7 @@ write_h5_ <- function(x, file_h5, path) {
 
   if (is.null(x)) {
     hdf5r::h5attr(subfile, "object_class") <- "null"
-  } else if (any(grepl("^[dlniz]..Matrix$", class(x)))) {
+  } else if (is_sparse(x)) {
     ipx <- as(x, "dgCMatrix")
     hdf5r::h5attr(subfile, "object_class") <- "sparse_matrix"
     subfile[["i"]] <- ipx@i
@@ -223,31 +224,10 @@ write_h5_ <- function(x, file_h5, path) {
 
 
 
-#' Check if a matrix is sparse
-#'
-#' @param x A sparse or not sparse matrix
-#'
-#' @export
-#'
-#' @examples
-#' is_sparse(matrix(c(1:10)))
-#' is_sparse(Matrix::Matrix(matrix(c(1:10))))
-is_sparse <- function(x) {
-  any(grepl("[di]..Matrix", class(x)))
-}
-
-
-
-
-
-
-
-
 #' Tests whether hdf5 is correctly installed and can load/write data
 #'
 #' @param detailed Whether top do a detailed check
 #'
-#' @importFrom glue glue
 #' @importFrom crayon red green bold
 #' @importFrom stringr str_pad
 #'
@@ -259,7 +239,7 @@ test_h5_installation <- function(detailed = FALSE) {
   test_h5_installation_equal(detailed, obj, obj2)
 
   if (detailed)
-    message(crayon::green(crayon::bold(stringr::str_pad("\u2714 HDF5 test successful ", 90, side = "right", "-"))))
+    message(crayon::green(crayon::bold(str_pad("\u2714 HDF5 test successful ", 90, side = "right", "-"))))
 
   TRUE
 }
