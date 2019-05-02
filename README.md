@@ -26,7 +26,7 @@ changes.
 
 <!-- This section gets automatically generated from inst/NEWS.md, and also generates inst/NEWS -->
 
-### Recent changes in dynutils 1.0.3 (2019-04-20)
+### Recent changes in dynutils 1.0.3 (2019-05-02)
 
   - FUNCTIONALITY: Added `test_h5_installation()`.
 
