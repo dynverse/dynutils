@@ -1,14 +1,14 @@
-# dynutils 1.0.2 (2019-03-21)
+# dynutils 1.0.3 (2019-05-02)
 
- * BUG FIX: Fix generation of error messages in `%all_in%`.
+ * FUNCTIONALITY: Added `test_h5_installation()`.
  
- * FUNCTIONALITY: Added `read_h5()` and `write_h5()` functions.
+ * BUG FIX: Added compatibility workaround for being able to read hdf5 1.10.4 files
+   on a hdf5 1.8.14 Windows platform (hhoeflin/hdf5r#60).
  
- * FUNCTIONALITY: Added `is_sparse()`.
+ * FUNCTIONALITY: `calculate_distance()` and `calculate_similarity()` now support
+   sparse matrix calculation thanks to proxyC!
  
- * FUNCTIONALITY: Added `update_news()` and `recent_news()`. So meta!
- 
- * FUNCTIONALITY: Moved `calculate_mean()` from dyneval to dynutils.
+ * SMALL CHANGES: Remove dependencies: glue, Hmisc, devtools, testthat, tidyr.
 
 ## Test environments
 * local Fedora 28 installation, R 3.5.0
@@ -18,7 +18,7 @@
 
 ## R CMD check results
 ```
-── R CMD check results ───────────────────────────────────── dynutils 1.0.1 ────
+── R CMD check results ───────────────────────────────────── dynutils 1.0.3 ────
 Duration: 38.2s
 
 0 errors ✔ | 0 warnings ✔ | 0 notes ✔
