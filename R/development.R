@@ -74,7 +74,7 @@ switch_cran <- function(file = "DESCRIPTION", desc = desc::desc(file = file)) {
   assertthat::assert_that(grepl("^[0-9]+\\.[0-9]+\\.[0-9]+$", version))
 
   # remove remotes
-  desc$del_remotes()
+  desc$del_remotes(".*")
 
   desc$write(file = file)
 }
