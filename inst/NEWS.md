@@ -1,3 +1,6 @@
+# dynutils 1.0.4 (unreleased)
+ * BUG FIX: Fix for news with subsections.
+
 # dynutils 1.0.3 (2019-05-02)
 
  * FUNCTIONALITY: Added `test_h5_installation()`.
