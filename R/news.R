@@ -103,6 +103,7 @@ recent_news <- function(path = NULL, package = detect_package_name(path = path),
 
   news$text %>%
     unlist() %>%
-    str_replace("^#", "### Recent changes in ") %>%
+    str_replace("^##(#*)", "####\\1") %>%
+    str_replace("^# ", "### Recent changes in ") %>%
     paste0(collapse = "\n")
 }
