@@ -30,8 +30,6 @@ changes.
 
   - BUG FIX: Fix for news with subsections.
 
-  - FUNCTIONALITY: Added `%ifna%` infix operator.
-
 ### Recent changes in dynutils 1.0.3 (2019-05-02)
 
   - FUNCTIONALITY: Added `test_h5_installation()`.

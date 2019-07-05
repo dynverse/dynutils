@@ -2,7 +2,6 @@
 
 export("%all_in%")
 export("%has_names%")
-export("%ifna%")
 export(add_class)
 export(all_in)
 export(apply_minmax_scale)

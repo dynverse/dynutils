@@ -62,7 +62,6 @@ For more information, check out \url{dynverse.org}.
 \section{Manipulation of vectors}{
 
 \itemize{
-\item \link{\%ifna\%}: Infix function for replacing \code{NA} values
 \item \code{\link[=random_time_string]{random_time_string()}}: Generates a string very likely to be unique
 }
 }

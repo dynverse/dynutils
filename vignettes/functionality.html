@@ -614,7 +614,7 @@ rmarkdown::render("vignettes/functionality.Rmd", output_format = "github_documen
 <li>Scaling of matrices and vectors: <a href="functionality.md#scale_uniform-rescale-data-to-have-a-certain-center-and-max-range"><code>scale_uniform</code></a>, <a href="functionality.md#scale_minmax-rescale-data-to-a---range"><code>scale_minmax</code></a>, <a href="functionality.md#scale_quantile-cut-off-outer-quantiles-and-rescale-to-a---range"><code>scale_quantile</code></a></li>
 <li>Manipulation of functions: <a href="functionality.md#inherit_default_params-have-one-function-inherit-the-default-parameters-from-other-functions"><code>inherit_default_params</code></a></li>
 <li>Manipulation of packages: <a href="functionality.md#check_packages-easily-checking-whether-certain-packages-are-installed"><code>check_packages</code></a>, <a href="functionality.md#install_packages-install-packages-taking-into-account-the-remotes-of-another"><code>install_packages</code></a></li>
-<li>Manipulation of vectors: <a href="functionality.md#ifna-infix-function-for-replacing-na-values"><code>%ifna%</code></a>, <a href="functionality.md#random_time_string-generates-a-string-very-likely-to-be-unique"><code>random_time_string</code></a></li>
+<li>Manipulation of vectors: <a href="functionality.md#random_time_string-generates-a-string-very-likely-to-be-unique"><code>random_time_string</code></a></li>
 <li>Tibble helpers: <a href="functionality.md#list_as_tibble-convert-a-list-of-lists-to-a-tibble-whilst-retaining-class-information"><code>list_as_tibble</code></a>, <a href="functionality.md#tibble_as_list-convert-a-tibble-back-to-a-list-of-lists-whilst-retaining-class-information"><code>tibble_as_list</code></a>, <a href="functionality.md#extract_row_to_list-extracts-one-row-from-a-tibble-and-converts-it-to-a-list"><code>extract_row_to_list</code></a>, <a href="functionality.md#mapdf-apply-a-function-to-each-row-of-a-data-frame"><code>mapdf</code></a></li>
 <li>File helpers: <a href="functionality.md#safe_tempdir-create-an-empty-temporary-directory-and-return-its-path"><code>safe_tempdir</code></a></li>
 <li>Assertion helpers: <a href="functionality.md#all_in-check-whether-a-vector-are-all-elements-of-another-vector"><code>%all_in%</code></a>, <a href="functionality.md#has_names-check-whether-an-object-has-certain-names"><code>%has_names%</code></a>, <a href="functionality.md#is_single_numeric-check-whether-a-value-is-a-single-numeric"><code>is_single_numeric</code></a>, <a href="functionality.md#is_bounded-check-whether-a-value-within-a-certain-interval"><code>is_bounded</code></a></li>
@@ -783,162 +783,155 @@ Installed SCORPIUS
 [1] &quot;SCORPIUS&quot;
 </code></pre>
 <h2 id="manipulation-of-vectors">Manipulation of vectors</h2>
-<h3 id="ifna-infix-function-for-replacing-na-values"><code>%ifna%</code>: Infix function for replacing <code>NA</code> values</h3>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="ot">NA</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="ot">NA</span>, <span class="dv">8</span>, <span class="ot">NA</span>, <span class="ot">NA</span>)</a>
-<a class="sourceLine" id="cb20-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb20-3" data-line-number="3">x <span class="op">%ifna%</span><span class="st"> </span><span class="dv">21</span><span class="op">:</span><span class="dv">30</span></a>
-<a class="sourceLine" id="cb20-4" data-line-number="4"><span class="co">#&gt;  [1]  1  2  3 24  5  6 27  8 29 30</span></a>
-<a class="sourceLine" id="cb20-5" data-line-number="5">x <span class="op">%ifna%</span><span class="st"> </span><span class="dv">0</span></a>
-<a class="sourceLine" id="cb20-6" data-line-number="6"><span class="co">#&gt;  [1] 1 2 3 0 5 6 0 8 0 0</span></a></code></pre></div>
 <h3 id="random_time_string-generates-a-string-very-likely-to-be-unique"><code>random_time_string</code>: Generates a string very likely to be unique</h3>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="kw">random_time_string</span>(<span class="st">&quot;test&quot;</span>)</a>
-<a class="sourceLine" id="cb21-2" data-line-number="2"><span class="co">#&gt; [1] &quot;20190705_102527__test__syYeN626jT&quot;</span></a>
-<a class="sourceLine" id="cb21-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb21-4" data-line-number="4"><span class="kw">random_time_string</span>(<span class="st">&quot;test&quot;</span>)</a>
-<a class="sourceLine" id="cb21-5" data-line-number="5"><span class="co">#&gt; [1] &quot;20190705_102527__test__e6MCnXcJM7&quot;</span></a>
-<a class="sourceLine" id="cb21-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb21-7" data-line-number="7"><span class="kw">random_time_string</span>(<span class="st">&quot;test&quot;</span>)</a>
-<a class="sourceLine" id="cb21-8" data-line-number="8"><span class="co">#&gt; [1] &quot;20190705_102527__test__9pFJ5mxS3R&quot;</span></a></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="kw">random_time_string</span>(<span class="st">&quot;test&quot;</span>)</a>
+<a class="sourceLine" id="cb20-2" data-line-number="2"><span class="co">#&gt; [1] &quot;20190705_115004__test__syYeN626jT&quot;</span></a>
+<a class="sourceLine" id="cb20-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb20-4" data-line-number="4"><span class="kw">random_time_string</span>(<span class="st">&quot;test&quot;</span>)</a>
+<a class="sourceLine" id="cb20-5" data-line-number="5"><span class="co">#&gt; [1] &quot;20190705_115004__test__e6MCnXcJM7&quot;</span></a>
+<a class="sourceLine" id="cb20-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb20-7" data-line-number="7"><span class="kw">random_time_string</span>(<span class="st">&quot;test&quot;</span>)</a>
+<a class="sourceLine" id="cb20-8" data-line-number="8"><span class="co">#&gt; [1] &quot;20190705_115004__test__9pFJ5mxS3R&quot;</span></a></code></pre></div>
 <h2 id="tibble-helpers">Tibble helpers</h2>
 <h3 id="list_as_tibble-convert-a-list-of-lists-to-a-tibble-whilst-retaining-class-information"><code>list_as_tibble</code>: Convert a list of lists to a tibble whilst retaining class information</h3>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">li &lt;-<span class="st"> </span><span class="kw">list</span>(</a>
-<a class="sourceLine" id="cb22-2" data-line-number="2">  <span class="kw">list</span>(<span class="dt">a =</span> <span class="dv">1</span>, <span class="dt">b =</span> log10, <span class="dt">c =</span> <span class="st">&quot;parrot&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_class</span>(<span class="st">&quot;myobject&quot;</span>), </a>
-<a class="sourceLine" id="cb22-3" data-line-number="3">  <span class="kw">list</span>(<span class="dt">a =</span> <span class="dv">2</span>, <span class="dt">b =</span> sqrt, <span class="dt">c =</span> <span class="st">&quot;quest&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_class</span>(<span class="st">&quot;yourobject&quot;</span>)</a>
-<a class="sourceLine" id="cb22-4" data-line-number="4">)</a>
-<a class="sourceLine" id="cb22-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb22-6" data-line-number="6">tib &lt;-<span class="st"> </span><span class="kw">list_as_tibble</span>(li)</a>
-<a class="sourceLine" id="cb22-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb22-8" data-line-number="8">tib</a>
-<a class="sourceLine" id="cb22-9" data-line-number="9"><span class="co">#&gt; # A tibble: 2 x 4</span></a>
-<a class="sourceLine" id="cb22-10" data-line-number="10"><span class="co">#&gt;       a b      c      .object_class</span></a>
-<a class="sourceLine" id="cb22-11" data-line-number="11"><span class="co">#&gt;   &lt;dbl&gt; &lt;list&gt; &lt;chr&gt;  &lt;list&gt;       </span></a>
-<a class="sourceLine" id="cb22-12" data-line-number="12"><span class="co">#&gt; 1     1 &lt;fn&gt;   parrot &lt;chr [2]&gt;    </span></a>
-<a class="sourceLine" id="cb22-13" data-line-number="13"><span class="co">#&gt; 2     2 &lt;fn&gt;   quest  &lt;chr [2]&gt;</span></a></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">li &lt;-<span class="st"> </span><span class="kw">list</span>(</a>
+<a class="sourceLine" id="cb21-2" data-line-number="2">  <span class="kw">list</span>(<span class="dt">a =</span> <span class="dv">1</span>, <span class="dt">b =</span> log10, <span class="dt">c =</span> <span class="st">&quot;parrot&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_class</span>(<span class="st">&quot;myobject&quot;</span>), </a>
+<a class="sourceLine" id="cb21-3" data-line-number="3">  <span class="kw">list</span>(<span class="dt">a =</span> <span class="dv">2</span>, <span class="dt">b =</span> sqrt, <span class="dt">c =</span> <span class="st">&quot;quest&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_class</span>(<span class="st">&quot;yourobject&quot;</span>)</a>
+<a class="sourceLine" id="cb21-4" data-line-number="4">)</a>
+<a class="sourceLine" id="cb21-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb21-6" data-line-number="6">tib &lt;-<span class="st"> </span><span class="kw">list_as_tibble</span>(li)</a>
+<a class="sourceLine" id="cb21-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb21-8" data-line-number="8">tib</a>
+<a class="sourceLine" id="cb21-9" data-line-number="9"><span class="co">#&gt; # A tibble: 2 x 4</span></a>
+<a class="sourceLine" id="cb21-10" data-line-number="10"><span class="co">#&gt;       a b      c      .object_class</span></a>
+<a class="sourceLine" id="cb21-11" data-line-number="11"><span class="co">#&gt;   &lt;dbl&gt; &lt;list&gt; &lt;chr&gt;  &lt;list&gt;       </span></a>
+<a class="sourceLine" id="cb21-12" data-line-number="12"><span class="co">#&gt; 1     1 &lt;fn&gt;   parrot &lt;chr [2]&gt;    </span></a>
+<a class="sourceLine" id="cb21-13" data-line-number="13"><span class="co">#&gt; 2     2 &lt;fn&gt;   quest  &lt;chr [2]&gt;</span></a></code></pre></div>
 <h3 id="tibble_as_list-convert-a-tibble-back-to-a-list-of-lists-whilst-retaining-class-information"><code>tibble_as_list</code>: Convert a tibble back to a list of lists whilst retaining class information</h3>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">li &lt;-<span class="st"> </span><span class="kw">tibble_as_list</span>(tib)</a>
-<a class="sourceLine" id="cb23-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb23-3" data-line-number="3">li</a>
-<a class="sourceLine" id="cb23-4" data-line-number="4"><span class="co">#&gt; [[1]]</span></a>
-<a class="sourceLine" id="cb23-5" data-line-number="5"><span class="co">#&gt; $a</span></a>
-<a class="sourceLine" id="cb23-6" data-line-number="6"><span class="co">#&gt; [1] 1</span></a>
-<a class="sourceLine" id="cb23-7" data-line-number="7"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb23-8" data-line-number="8"><span class="co">#&gt; $b</span></a>
-<a class="sourceLine" id="cb23-9" data-line-number="9"><span class="co">#&gt; function (x)  .Primitive(&quot;log10&quot;)</span></a>
-<a class="sourceLine" id="cb23-10" data-line-number="10"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb23-11" data-line-number="11"><span class="co">#&gt; $c</span></a>
-<a class="sourceLine" id="cb23-12" data-line-number="12"><span class="co">#&gt; [1] &quot;parrot&quot;</span></a>
-<a class="sourceLine" id="cb23-13" data-line-number="13"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb23-14" data-line-number="14"><span class="co">#&gt; attr(,&quot;class&quot;)</span></a>
-<a class="sourceLine" id="cb23-15" data-line-number="15"><span class="co">#&gt; [1] &quot;myobject&quot; &quot;list&quot;    </span></a>
-<a class="sourceLine" id="cb23-16" data-line-number="16"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb23-17" data-line-number="17"><span class="co">#&gt; [[2]]</span></a>
-<a class="sourceLine" id="cb23-18" data-line-number="18"><span class="co">#&gt; $a</span></a>
-<a class="sourceLine" id="cb23-19" data-line-number="19"><span class="co">#&gt; [1] 2</span></a>
-<a class="sourceLine" id="cb23-20" data-line-number="20"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb23-21" data-line-number="21"><span class="co">#&gt; $b</span></a>
-<a class="sourceLine" id="cb23-22" data-line-number="22"><span class="co">#&gt; function (x)  .Primitive(&quot;sqrt&quot;)</span></a>
-<a class="sourceLine" id="cb23-23" data-line-number="23"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb23-24" data-line-number="24"><span class="co">#&gt; $c</span></a>
-<a class="sourceLine" id="cb23-25" data-line-number="25"><span class="co">#&gt; [1] &quot;quest&quot;</span></a>
-<a class="sourceLine" id="cb23-26" data-line-number="26"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb23-27" data-line-number="27"><span class="co">#&gt; attr(,&quot;class&quot;)</span></a>
-<a class="sourceLine" id="cb23-28" data-line-number="28"><span class="co">#&gt; [1] &quot;yourobject&quot; &quot;list&quot;</span></a></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">li &lt;-<span class="st"> </span><span class="kw">tibble_as_list</span>(tib)</a>
+<a class="sourceLine" id="cb22-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb22-3" data-line-number="3">li</a>
+<a class="sourceLine" id="cb22-4" data-line-number="4"><span class="co">#&gt; [[1]]</span></a>
+<a class="sourceLine" id="cb22-5" data-line-number="5"><span class="co">#&gt; $a</span></a>
+<a class="sourceLine" id="cb22-6" data-line-number="6"><span class="co">#&gt; [1] 1</span></a>
+<a class="sourceLine" id="cb22-7" data-line-number="7"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb22-8" data-line-number="8"><span class="co">#&gt; $b</span></a>
+<a class="sourceLine" id="cb22-9" data-line-number="9"><span class="co">#&gt; function (x)  .Primitive(&quot;log10&quot;)</span></a>
+<a class="sourceLine" id="cb22-10" data-line-number="10"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb22-11" data-line-number="11"><span class="co">#&gt; $c</span></a>
+<a class="sourceLine" id="cb22-12" data-line-number="12"><span class="co">#&gt; [1] &quot;parrot&quot;</span></a>
+<a class="sourceLine" id="cb22-13" data-line-number="13"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb22-14" data-line-number="14"><span class="co">#&gt; attr(,&quot;class&quot;)</span></a>
+<a class="sourceLine" id="cb22-15" data-line-number="15"><span class="co">#&gt; [1] &quot;myobject&quot; &quot;list&quot;    </span></a>
+<a class="sourceLine" id="cb22-16" data-line-number="16"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb22-17" data-line-number="17"><span class="co">#&gt; [[2]]</span></a>
+<a class="sourceLine" id="cb22-18" data-line-number="18"><span class="co">#&gt; $a</span></a>
+<a class="sourceLine" id="cb22-19" data-line-number="19"><span class="co">#&gt; [1] 2</span></a>
+<a class="sourceLine" id="cb22-20" data-line-number="20"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb22-21" data-line-number="21"><span class="co">#&gt; $b</span></a>
+<a class="sourceLine" id="cb22-22" data-line-number="22"><span class="co">#&gt; function (x)  .Primitive(&quot;sqrt&quot;)</span></a>
+<a class="sourceLine" id="cb22-23" data-line-number="23"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb22-24" data-line-number="24"><span class="co">#&gt; $c</span></a>
+<a class="sourceLine" id="cb22-25" data-line-number="25"><span class="co">#&gt; [1] &quot;quest&quot;</span></a>
+<a class="sourceLine" id="cb22-26" data-line-number="26"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb22-27" data-line-number="27"><span class="co">#&gt; attr(,&quot;class&quot;)</span></a>
+<a class="sourceLine" id="cb22-28" data-line-number="28"><span class="co">#&gt; [1] &quot;yourobject&quot; &quot;list&quot;</span></a></code></pre></div>
 <h3 id="extract_row_to_list-extracts-one-row-from-a-tibble-and-converts-it-to-a-list"><code>extract_row_to_list</code>: Extracts one row from a tibble and converts it to a list</h3>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="kw">extract_row_to_list</span>(tib, <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb24-2" data-line-number="2"><span class="co">#&gt; $a</span></a>
-<a class="sourceLine" id="cb24-3" data-line-number="3"><span class="co">#&gt; [1] 2</span></a>
-<a class="sourceLine" id="cb24-4" data-line-number="4"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb24-5" data-line-number="5"><span class="co">#&gt; $b</span></a>
-<a class="sourceLine" id="cb24-6" data-line-number="6"><span class="co">#&gt; function (x)  .Primitive(&quot;sqrt&quot;)</span></a>
-<a class="sourceLine" id="cb24-7" data-line-number="7"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb24-8" data-line-number="8"><span class="co">#&gt; $c</span></a>
-<a class="sourceLine" id="cb24-9" data-line-number="9"><span class="co">#&gt; [1] &quot;quest&quot;</span></a>
-<a class="sourceLine" id="cb24-10" data-line-number="10"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb24-11" data-line-number="11"><span class="co">#&gt; attr(,&quot;class&quot;)</span></a>
-<a class="sourceLine" id="cb24-12" data-line-number="12"><span class="co">#&gt; [1] &quot;yourobject&quot; &quot;list&quot;</span></a></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="kw">extract_row_to_list</span>(tib, <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb23-2" data-line-number="2"><span class="co">#&gt; $a</span></a>
+<a class="sourceLine" id="cb23-3" data-line-number="3"><span class="co">#&gt; [1] 2</span></a>
+<a class="sourceLine" id="cb23-4" data-line-number="4"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb23-5" data-line-number="5"><span class="co">#&gt; $b</span></a>
+<a class="sourceLine" id="cb23-6" data-line-number="6"><span class="co">#&gt; function (x)  .Primitive(&quot;sqrt&quot;)</span></a>
+<a class="sourceLine" id="cb23-7" data-line-number="7"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb23-8" data-line-number="8"><span class="co">#&gt; $c</span></a>
+<a class="sourceLine" id="cb23-9" data-line-number="9"><span class="co">#&gt; [1] &quot;quest&quot;</span></a>
+<a class="sourceLine" id="cb23-10" data-line-number="10"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb23-11" data-line-number="11"><span class="co">#&gt; attr(,&quot;class&quot;)</span></a>
+<a class="sourceLine" id="cb23-12" data-line-number="12"><span class="co">#&gt; [1] &quot;yourobject&quot; &quot;list&quot;</span></a></code></pre></div>
 <h3 id="mapdf-apply-a-function-to-each-row-of-a-data-frame"><code>mapdf</code>: Apply a function to each row of a data frame</h3>
 <p>The <code>mapdf</code> functions apply a function on each row of a data frame. They are based heavily on purrr’s <code>map</code> functions.</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">tib <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mapdf</span>(class)</a>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1">tib <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mapdf</span>(class)</a>
+<a class="sourceLine" id="cb24-2" data-line-number="2"><span class="co">#&gt; [[1]]</span></a>
+<a class="sourceLine" id="cb24-3" data-line-number="3"><span class="co">#&gt; [1] &quot;myobject&quot; &quot;list&quot;    </span></a>
+<a class="sourceLine" id="cb24-4" data-line-number="4"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb24-5" data-line-number="5"><span class="co">#&gt; [[2]]</span></a>
+<a class="sourceLine" id="cb24-6" data-line-number="6"><span class="co">#&gt; [1] &quot;yourobject&quot; &quot;list&quot;</span></a></code></pre></div>
+<p>Or use an anonymous function.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">tib <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mapdf</span>(<span class="cf">function</span>(row) <span class="kw">paste0</span>(row<span class="op">$</span><span class="kw">b</span>(row<span class="op">$</span>a), <span class="st">&quot;_&quot;</span>, row<span class="op">$</span>c))</a>
 <a class="sourceLine" id="cb25-2" data-line-number="2"><span class="co">#&gt; [[1]]</span></a>
-<a class="sourceLine" id="cb25-3" data-line-number="3"><span class="co">#&gt; [1] &quot;myobject&quot; &quot;list&quot;    </span></a>
+<a class="sourceLine" id="cb25-3" data-line-number="3"><span class="co">#&gt; [1] &quot;0_parrot&quot;</span></a>
 <a class="sourceLine" id="cb25-4" data-line-number="4"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb25-5" data-line-number="5"><span class="co">#&gt; [[2]]</span></a>
-<a class="sourceLine" id="cb25-6" data-line-number="6"><span class="co">#&gt; [1] &quot;yourobject&quot; &quot;list&quot;</span></a></code></pre></div>
-<p>Or use an anonymous function.</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1">tib <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mapdf</span>(<span class="cf">function</span>(row) <span class="kw">paste0</span>(row<span class="op">$</span><span class="kw">b</span>(row<span class="op">$</span>a), <span class="st">&quot;_&quot;</span>, row<span class="op">$</span>c))</a>
+<a class="sourceLine" id="cb25-6" data-line-number="6"><span class="co">#&gt; [1] &quot;1.4142135623731_quest&quot;</span></a></code></pre></div>
+<p>Or even a formula.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1">tib <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mapdf</span>(<span class="op">~</span><span class="st"> </span>.<span class="op">$</span>b)</a>
 <a class="sourceLine" id="cb26-2" data-line-number="2"><span class="co">#&gt; [[1]]</span></a>
-<a class="sourceLine" id="cb26-3" data-line-number="3"><span class="co">#&gt; [1] &quot;0_parrot&quot;</span></a>
+<a class="sourceLine" id="cb26-3" data-line-number="3"><span class="co">#&gt; function (x)  .Primitive(&quot;log10&quot;)</span></a>
 <a class="sourceLine" id="cb26-4" data-line-number="4"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb26-5" data-line-number="5"><span class="co">#&gt; [[2]]</span></a>
-<a class="sourceLine" id="cb26-6" data-line-number="6"><span class="co">#&gt; [1] &quot;1.4142135623731_quest&quot;</span></a></code></pre></div>
-<p>Or even a formula.</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1">tib <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mapdf</span>(<span class="op">~</span><span class="st"> </span>.<span class="op">$</span>b)</a>
-<a class="sourceLine" id="cb27-2" data-line-number="2"><span class="co">#&gt; [[1]]</span></a>
-<a class="sourceLine" id="cb27-3" data-line-number="3"><span class="co">#&gt; function (x)  .Primitive(&quot;log10&quot;)</span></a>
-<a class="sourceLine" id="cb27-4" data-line-number="4"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb27-5" data-line-number="5"><span class="co">#&gt; [[2]]</span></a>
-<a class="sourceLine" id="cb27-6" data-line-number="6"><span class="co">#&gt; function (x)  .Primitive(&quot;sqrt&quot;)</span></a></code></pre></div>
+<a class="sourceLine" id="cb26-6" data-line-number="6"><span class="co">#&gt; function (x)  .Primitive(&quot;sqrt&quot;)</span></a></code></pre></div>
 <p>There are many more variations available. See <code>?mapdf</code> for more info.</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1">tib <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mapdf_lgl</span>(<span class="op">~</span><span class="st"> </span>.<span class="op">$</span>a <span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb28-2" data-line-number="2"><span class="co">#&gt; [1] FALSE  TRUE</span></a>
-<a class="sourceLine" id="cb28-3" data-line-number="3">tib <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mapdf_chr</span>(<span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;~&quot;</span>, .<span class="op">$</span>c, <span class="st">&quot;~&quot;</span>))</a>
-<a class="sourceLine" id="cb28-4" data-line-number="4"><span class="co">#&gt; [1] &quot;~parrot~&quot; &quot;~quest~&quot;</span></a>
-<a class="sourceLine" id="cb28-5" data-line-number="5">tib <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mapdf_int</span>(<span class="op">~</span><span class="st"> </span><span class="kw">nchar</span>(.<span class="op">$</span>c))</a>
-<a class="sourceLine" id="cb28-6" data-line-number="6"><span class="co">#&gt; [1] 6 5</span></a>
-<a class="sourceLine" id="cb28-7" data-line-number="7">tib <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mapdf_dbl</span>(<span class="op">~</span><span class="st"> </span>.<span class="op">$</span>a <span class="op">*</span><span class="st"> </span><span class="fl">1.234</span>)</a>
-<a class="sourceLine" id="cb28-8" data-line-number="8"><span class="co">#&gt; [1] 1.234 2.468</span></a></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1">tib <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mapdf_lgl</span>(<span class="op">~</span><span class="st"> </span>.<span class="op">$</span>a <span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb27-2" data-line-number="2"><span class="co">#&gt; [1] FALSE  TRUE</span></a>
+<a class="sourceLine" id="cb27-3" data-line-number="3">tib <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mapdf_chr</span>(<span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;~&quot;</span>, .<span class="op">$</span>c, <span class="st">&quot;~&quot;</span>))</a>
+<a class="sourceLine" id="cb27-4" data-line-number="4"><span class="co">#&gt; [1] &quot;~parrot~&quot; &quot;~quest~&quot;</span></a>
+<a class="sourceLine" id="cb27-5" data-line-number="5">tib <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mapdf_int</span>(<span class="op">~</span><span class="st"> </span><span class="kw">nchar</span>(.<span class="op">$</span>c))</a>
+<a class="sourceLine" id="cb27-6" data-line-number="6"><span class="co">#&gt; [1] 6 5</span></a>
+<a class="sourceLine" id="cb27-7" data-line-number="7">tib <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mapdf_dbl</span>(<span class="op">~</span><span class="st"> </span>.<span class="op">$</span>a <span class="op">*</span><span class="st"> </span><span class="fl">1.234</span>)</a>
+<a class="sourceLine" id="cb27-8" data-line-number="8"><span class="co">#&gt; [1] 1.234 2.468</span></a></code></pre></div>
 <h2 id="file-helpers">File helpers</h2>
 <h3 id="safe_tempdir-create-an-empty-temporary-directory-and-return-its-path"><code>safe_tempdir</code>: Create an empty temporary directory and return its path</h3>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1"><span class="kw">safe_tempdir</span>(<span class="st">&quot;samson&quot;</span>)</a>
-<a class="sourceLine" id="cb29-2" data-line-number="2"><span class="co">#&gt; [1] &quot;/tmp/RtmpY1qNiz/file332f54fe2814/samson&quot;</span></a></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1"><span class="kw">safe_tempdir</span>(<span class="st">&quot;samson&quot;</span>)</a>
+<a class="sourceLine" id="cb28-2" data-line-number="2"><span class="co">#&gt; [1] &quot;/tmp/RtmprpNY2K/file342b3ade3824/samson&quot;</span></a></code></pre></div>
 <h2 id="assertion-helpers">Assertion helpers</h2>
 <h3 id="all_in-check-whether-a-vector-are-all-elements-of-another-vector"><code>%all_in%</code>: Check whether a vector are all elements of another vector</h3>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1"><span class="kw">library</span>(assertthat)</a>
-<a class="sourceLine" id="cb30-2" data-line-number="2"><span class="kw">assert_that</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>) <span class="op">%all_in%</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>))</a>
-<a class="sourceLine" id="cb30-3" data-line-number="3"><span class="co">#&gt; [1] TRUE</span></a>
-<a class="sourceLine" id="cb30-4" data-line-number="4"><span class="kw">assert_that</span>(<span class="st">&quot;a&quot;</span> <span class="op">%all_in%</span><span class="st"> </span>letters)</a>
-<a class="sourceLine" id="cb30-5" data-line-number="5"><span class="co">#&gt; [1] TRUE</span></a>
-<a class="sourceLine" id="cb30-6" data-line-number="6"><span class="kw">assert_that</span>(<span class="st">&quot;A&quot;</span> <span class="op">%all_in%</span><span class="st"> </span>letters)</a>
-<a class="sourceLine" id="cb30-7" data-line-number="7"><span class="co">#&gt; Error: &quot;A&quot; is missing 1 element from letters: &quot;A&quot;</span></a>
-<a class="sourceLine" id="cb30-8" data-line-number="8"><span class="kw">assert_that</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span> <span class="op">%all_in%</span><span class="st"> </span>letters)</a>
-<a class="sourceLine" id="cb30-9" data-line-number="9"><span class="co">#&gt; Error: 1:10 is missing 10 elements from letters: 1L, 2L, 3L, ...</span></a></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1"><span class="kw">library</span>(assertthat)</a>
+<a class="sourceLine" id="cb29-2" data-line-number="2"><span class="kw">assert_that</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>) <span class="op">%all_in%</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>))</a>
+<a class="sourceLine" id="cb29-3" data-line-number="3"><span class="co">#&gt; [1] TRUE</span></a>
+<a class="sourceLine" id="cb29-4" data-line-number="4"><span class="kw">assert_that</span>(<span class="st">&quot;a&quot;</span> <span class="op">%all_in%</span><span class="st"> </span>letters)</a>
+<a class="sourceLine" id="cb29-5" data-line-number="5"><span class="co">#&gt; [1] TRUE</span></a>
+<a class="sourceLine" id="cb29-6" data-line-number="6"><span class="kw">assert_that</span>(<span class="st">&quot;A&quot;</span> <span class="op">%all_in%</span><span class="st"> </span>letters)</a>
+<a class="sourceLine" id="cb29-7" data-line-number="7"><span class="co">#&gt; Error: &quot;A&quot; is missing 1 element from letters: &quot;A&quot;</span></a>
+<a class="sourceLine" id="cb29-8" data-line-number="8"><span class="kw">assert_that</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span> <span class="op">%all_in%</span><span class="st"> </span>letters)</a>
+<a class="sourceLine" id="cb29-9" data-line-number="9"><span class="co">#&gt; Error: 1:10 is missing 10 elements from letters: 1L, 2L, 3L, ...</span></a></code></pre></div>
 <h3 id="has_names-check-whether-an-object-has-certain-names"><code>%has_names%</code>: Check whether an object has certain names</h3>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1"><span class="kw">assert_that</span>(li <span class="op">%has_names%</span><span class="st"> &quot;a&quot;</span>)</a>
-<a class="sourceLine" id="cb31-2" data-line-number="2"><span class="co">#&gt; Error: li is missing 1 name from &quot;a&quot;: &quot;a&quot;</span></a>
-<a class="sourceLine" id="cb31-3" data-line-number="3"><span class="kw">assert_that</span>(li <span class="op">%has_names%</span><span class="st"> &quot;c&quot;</span>)</a>
-<a class="sourceLine" id="cb31-4" data-line-number="4"><span class="co">#&gt; Error: li is missing 1 name from &quot;c&quot;: &quot;c&quot;</span></a>
-<a class="sourceLine" id="cb31-5" data-line-number="5"><span class="kw">assert_that</span>(li <span class="op">%has_names%</span><span class="st"> </span>letters)</a>
-<a class="sourceLine" id="cb31-6" data-line-number="6"><span class="co">#&gt; Error: li is missing 26 names from letters: &quot;a&quot;, &quot;b&quot;, &quot;c&quot;, ...</span></a></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1"><span class="kw">assert_that</span>(li <span class="op">%has_names%</span><span class="st"> &quot;a&quot;</span>)</a>
+<a class="sourceLine" id="cb30-2" data-line-number="2"><span class="co">#&gt; Error: li is missing 1 name from &quot;a&quot;: &quot;a&quot;</span></a>
+<a class="sourceLine" id="cb30-3" data-line-number="3"><span class="kw">assert_that</span>(li <span class="op">%has_names%</span><span class="st"> &quot;c&quot;</span>)</a>
+<a class="sourceLine" id="cb30-4" data-line-number="4"><span class="co">#&gt; Error: li is missing 1 name from &quot;c&quot;: &quot;c&quot;</span></a>
+<a class="sourceLine" id="cb30-5" data-line-number="5"><span class="kw">assert_that</span>(li <span class="op">%has_names%</span><span class="st"> </span>letters)</a>
+<a class="sourceLine" id="cb30-6" data-line-number="6"><span class="co">#&gt; Error: li is missing 26 names from letters: &quot;a&quot;, &quot;b&quot;, &quot;c&quot;, ...</span></a></code></pre></div>
 <h3 id="is_single_numeric-check-whether-a-value-is-a-single-numeric"><code>is_single_numeric</code>: Check whether a value is a single numeric</h3>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1"><span class="kw">assert_that</span>(<span class="kw">is_single_numeric</span>(<span class="dv">1</span>))</a>
-<a class="sourceLine" id="cb32-2" data-line-number="2"><span class="co">#&gt; [1] TRUE</span></a>
-<a class="sourceLine" id="cb32-3" data-line-number="3"><span class="kw">assert_that</span>(<span class="kw">is_single_numeric</span>(<span class="ot">Inf</span>))</a>
-<a class="sourceLine" id="cb32-4" data-line-number="4"><span class="co">#&gt; [1] TRUE</span></a>
-<a class="sourceLine" id="cb32-5" data-line-number="5"><span class="kw">assert_that</span>(<span class="kw">is_single_numeric</span>(<span class="fl">1.6</span>))</a>
-<a class="sourceLine" id="cb32-6" data-line-number="6"><span class="co">#&gt; [1] TRUE</span></a>
-<a class="sourceLine" id="cb32-7" data-line-number="7"><span class="kw">assert_that</span>(<span class="kw">is_single_numeric</span>(<span class="ot">NA</span>))</a>
-<a class="sourceLine" id="cb32-8" data-line-number="8"><span class="co">#&gt; Error: NA is not a single numeric value</span></a>
-<a class="sourceLine" id="cb32-9" data-line-number="9"><span class="kw">assert_that</span>(<span class="kw">is_single_numeric</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>))</a>
-<a class="sourceLine" id="cb32-10" data-line-number="10"><span class="co">#&gt; Error: 1:6 is not a single numeric value</span></a>
-<a class="sourceLine" id="cb32-11" data-line-number="11"><span class="kw">assert_that</span>(<span class="kw">is_single_numeric</span>(<span class="st">&quot;pie&quot;</span>))</a>
-<a class="sourceLine" id="cb32-12" data-line-number="12"><span class="co">#&gt; Error: &quot;pie&quot; is not a single numeric value</span></a></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1"><span class="kw">assert_that</span>(<span class="kw">is_single_numeric</span>(<span class="dv">1</span>))</a>
+<a class="sourceLine" id="cb31-2" data-line-number="2"><span class="co">#&gt; [1] TRUE</span></a>
+<a class="sourceLine" id="cb31-3" data-line-number="3"><span class="kw">assert_that</span>(<span class="kw">is_single_numeric</span>(<span class="ot">Inf</span>))</a>
+<a class="sourceLine" id="cb31-4" data-line-number="4"><span class="co">#&gt; [1] TRUE</span></a>
+<a class="sourceLine" id="cb31-5" data-line-number="5"><span class="kw">assert_that</span>(<span class="kw">is_single_numeric</span>(<span class="fl">1.6</span>))</a>
+<a class="sourceLine" id="cb31-6" data-line-number="6"><span class="co">#&gt; [1] TRUE</span></a>
+<a class="sourceLine" id="cb31-7" data-line-number="7"><span class="kw">assert_that</span>(<span class="kw">is_single_numeric</span>(<span class="ot">NA</span>))</a>
+<a class="sourceLine" id="cb31-8" data-line-number="8"><span class="co">#&gt; Error: NA is not a single numeric value</span></a>
+<a class="sourceLine" id="cb31-9" data-line-number="9"><span class="kw">assert_that</span>(<span class="kw">is_single_numeric</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>))</a>
+<a class="sourceLine" id="cb31-10" data-line-number="10"><span class="co">#&gt; Error: 1:6 is not a single numeric value</span></a>
+<a class="sourceLine" id="cb31-11" data-line-number="11"><span class="kw">assert_that</span>(<span class="kw">is_single_numeric</span>(<span class="st">&quot;pie&quot;</span>))</a>
+<a class="sourceLine" id="cb31-12" data-line-number="12"><span class="co">#&gt; Error: &quot;pie&quot; is not a single numeric value</span></a></code></pre></div>
 <h3 id="is_bounded-check-whether-a-value-within-a-certain-interval"><code>is_bounded</code>: Check whether a value within a certain interval</h3>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1"><span class="kw">assert_that</span>(<span class="kw">is_bounded</span>(<span class="dv">10</span>))</a>
-<a class="sourceLine" id="cb33-2" data-line-number="2"><span class="co">#&gt; [1] TRUE</span></a>
-<a class="sourceLine" id="cb33-3" data-line-number="3"><span class="kw">assert_that</span>(<span class="kw">is_bounded</span>(<span class="dv">10</span><span class="op">:</span><span class="dv">30</span>))</a>
-<a class="sourceLine" id="cb33-4" data-line-number="4"><span class="co">#&gt; [1] TRUE</span></a>
-<a class="sourceLine" id="cb33-5" data-line-number="5"><span class="kw">assert_that</span>(<span class="kw">is_bounded</span>(<span class="ot">Inf</span>))</a>
-<a class="sourceLine" id="cb33-6" data-line-number="6"><span class="co">#&gt; Error: Inf is not bounded by (-Inf,Inf)</span></a>
-<a class="sourceLine" id="cb33-7" data-line-number="7"><span class="kw">assert_that</span>(<span class="kw">is_bounded</span>(<span class="dv">10</span>, <span class="dt">lower_bound =</span> <span class="dv">20</span>))</a>
-<a class="sourceLine" id="cb33-8" data-line-number="8"><span class="co">#&gt; Error: 10 is not bounded by (20,Inf)</span></a>
-<a class="sourceLine" id="cb33-9" data-line-number="9"><span class="kw">assert_that</span>(<span class="kw">is_bounded</span>(</a>
-<a class="sourceLine" id="cb33-10" data-line-number="10">  <span class="dv">10</span>,</a>
-<a class="sourceLine" id="cb33-11" data-line-number="11">  <span class="dt">lower_bound =</span> <span class="dv">20</span>,</a>
-<a class="sourceLine" id="cb33-12" data-line-number="12">  <span class="dt">lower_closed =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb33-13" data-line-number="13">  <span class="dt">upper_bound =</span> <span class="dv">30</span>,</a>
-<a class="sourceLine" id="cb33-14" data-line-number="14">  <span class="dt">upper_closed =</span> <span class="ot">FALSE</span></a>
-<a class="sourceLine" id="cb33-15" data-line-number="15">))</a>
-<a class="sourceLine" id="cb33-16" data-line-number="16"><span class="co">#&gt; Error: 10 is not bounded by [20,30)</span></a></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1"><span class="kw">assert_that</span>(<span class="kw">is_bounded</span>(<span class="dv">10</span>))</a>
+<a class="sourceLine" id="cb32-2" data-line-number="2"><span class="co">#&gt; [1] TRUE</span></a>
+<a class="sourceLine" id="cb32-3" data-line-number="3"><span class="kw">assert_that</span>(<span class="kw">is_bounded</span>(<span class="dv">10</span><span class="op">:</span><span class="dv">30</span>))</a>
+<a class="sourceLine" id="cb32-4" data-line-number="4"><span class="co">#&gt; [1] TRUE</span></a>
+<a class="sourceLine" id="cb32-5" data-line-number="5"><span class="kw">assert_that</span>(<span class="kw">is_bounded</span>(<span class="ot">Inf</span>))</a>
+<a class="sourceLine" id="cb32-6" data-line-number="6"><span class="co">#&gt; Error: Inf is not bounded by (-Inf,Inf)</span></a>
+<a class="sourceLine" id="cb32-7" data-line-number="7"><span class="kw">assert_that</span>(<span class="kw">is_bounded</span>(<span class="dv">10</span>, <span class="dt">lower_bound =</span> <span class="dv">20</span>))</a>
+<a class="sourceLine" id="cb32-8" data-line-number="8"><span class="co">#&gt; Error: 10 is not bounded by (20,Inf)</span></a>
+<a class="sourceLine" id="cb32-9" data-line-number="9"><span class="kw">assert_that</span>(<span class="kw">is_bounded</span>(</a>
+<a class="sourceLine" id="cb32-10" data-line-number="10">  <span class="dv">10</span>,</a>
+<a class="sourceLine" id="cb32-11" data-line-number="11">  <span class="dt">lower_bound =</span> <span class="dv">20</span>,</a>
+<a class="sourceLine" id="cb32-12" data-line-number="12">  <span class="dt">lower_closed =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb32-13" data-line-number="13">  <span class="dt">upper_bound =</span> <span class="dv">30</span>,</a>
+<a class="sourceLine" id="cb32-14" data-line-number="14">  <span class="dt">upper_closed =</span> <span class="ot">FALSE</span></a>
+<a class="sourceLine" id="cb32-15" data-line-number="15">))</a>
+<a class="sourceLine" id="cb32-16" data-line-number="16"><span class="co">#&gt; Error: 10 is not bounded by [20,30)</span></a></code></pre></div>
 
 </body>
 </html>
