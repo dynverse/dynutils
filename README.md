@@ -26,6 +26,12 @@ changes.
 
 <!-- This section gets automatically generated from inst/NEWS.md, and also generates inst/NEWS -->
 
+### Recent changes in dynutils 1.0.4 (unreleased)
+
+  - BUG FIX: Fix for news with subsections.
+
+  - FUNCTIONALITY: Added `%ifna%` infix operator.
+
 ### Recent changes in dynutils 1.0.3 (2019-05-02)
 
   - FUNCTIONALITY: Added `test_h5_installation()`.
@@ -38,19 +44,6 @@ changes.
 
   - SMALL CHANGES: Remove dependencies: glue, Hmisc, devtools, testthat,
     tidyr.
-
-### Recent changes in dynutils 1.0.2 (2019-03-21)
-
-  - BUG FIX: Fix generation of error messages in `%all_in%`.
-
-  - FUNCTIONALITY: Added `read_h5()` and `write_h5()` functions.
-
-  - FUNCTIONALITY: Added `is_sparse()`.
-
-  - FUNCTIONALITY: Added `update_news()` and `recent_news()`. So meta\!
-
-  - FUNCTIONALITY: Moved `calculate_mean()` from dyneval to
-dynutils.
 
 ## Dynverse dependencies
 

@@ -1,5 +1,7 @@
 # dynutils 1.0.4 (unreleased)
  * BUG FIX: Fix for news with subsections.
+ 
+ * FUNCTIONALITY: Added `%ifna%` infix operator.
 
 # dynutils 1.0.3 (2019-05-02)
 

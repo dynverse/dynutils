@@ -26,7 +26,8 @@ rmarkdown::render("vignettes/functionality.Rmd", output_format = "github_documen
   - Manipulation of packages:
     [`check_packages`](functionality.md#check_packages-easily-checking-whether-certain-packages-are-installed),
     [`install_packages`](functionality.md#install_packages-install-packages-taking-into-account-the-remotes-of-another)
-  - Manipulation of character vectors:
+  - Manipulation of vectors:
+    [`%ifna%`](functionality.md#ifna-infix-function-for-replacing-na-values),
     [`random_time_string`](functionality.md#random_time_string-generates-a-string-very-likely-to-be-unique)
   - Tibble helpers:
     [`list_as_tibble`](functionality.md#list_as_tibble-convert-a-list-of-lists-to-a-tibble-whilst-retaining-class-information),
@@ -289,19 +290,30 @@ install_packages("SCORPIUS", package = "dynmethods", prompt = TRUE)
     Installed SCORPIUS
     [1] "SCORPIUS"
 
-## Manipulation of character vectors
+## Manipulation of vectors
+
+### `%ifna%`: Infix function for replacing `NA` values
+
+``` r
+x <- c(1, 2, 3, NA, 5, 6, NA, 8, NA, NA)
+
+x %ifna% 21:30
+#>  [1]  1  2  3 24  5  6 27  8 29 30
+x %ifna% 0
+#>  [1] 1 2 3 0 5 6 0 8 0 0
+```
 
 ### `random_time_string`: Generates a string very likely to be unique
 
 ``` r
 random_time_string("test")
-#> [1] "20190420_055053__test__mMIwnRLQgq"
+#> [1] "20190705_102527__test__syYeN626jT"
 
 random_time_string("test")
-#> [1] "20190420_055053__test__X7HCfj0o6f"
+#> [1] "20190705_102527__test__e6MCnXcJM7"
 
 random_time_string("test")
-#> [1] "20190420_055053__test__F9Y32SIQAy"
+#> [1] "20190705_102527__test__9pFJ5mxS3R"
 ```
 
 ## Tibble helpers
@@ -429,7 +441,7 @@ tib %>% mapdf_dbl(~ .$a * 1.234)
 
 ``` r
 safe_tempdir("samson")
-#> [1] "/tmp/RtmpdLXTtU/file186013d697c5/samson"
+#> [1] "/tmp/RtmpY1qNiz/file332f54fe2814/samson"
 ```
 
 ## Assertion helpers

@@ -29,7 +29,8 @@
 #'   * [check_packages()]: Easily checking whether certain packages are installed
 #'   * [install_packages()]: Install packages taking into account the remotes of another
 #'
-#' @section Manipulation of character vectors:
+#' @section Manipulation of vectors:
+#'   * [%ifna%]: Infix function for replacing `NA` values
 #'   * [random_time_string()]: Generates a string very likely to be unique
 #'
 #' @section Tibble helpers:
