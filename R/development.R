@@ -70,10 +70,11 @@ switch_master <- function(file = "DESCRIPTION", desc = desc::desc(file = file)) 
 #' @rdname switch_devel
 switch_cran <- function(file = "DESCRIPTION", desc = desc::desc(file = file)) {
   # version should already be ok
+  version <- as.character(desc$get_version())
   assertthat::assert_that(grepl("^[0-9]+\\.[0-9]+\\.[0-9]+$", version))
 
   # remove remotes
-  desc$del_remotes()
+  desc$del_remotes(".*")
 
   desc$write(file = file)
 }

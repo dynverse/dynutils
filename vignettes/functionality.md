@@ -26,7 +26,7 @@ rmarkdown::render("vignettes/functionality.Rmd", output_format = "github_documen
   - Manipulation of packages:
     [`check_packages`](functionality.md#check_packages-easily-checking-whether-certain-packages-are-installed),
     [`install_packages`](functionality.md#install_packages-install-packages-taking-into-account-the-remotes-of-another)
-  - Manipulation of character vectors:
+  - Manipulation of vectors:
     [`random_time_string`](functionality.md#random_time_string-generates-a-string-very-likely-to-be-unique)
   - Tibble helpers:
     [`list_as_tibble`](functionality.md#list_as_tibble-convert-a-list-of-lists-to-a-tibble-whilst-retaining-class-information),
@@ -289,19 +289,19 @@ install_packages("SCORPIUS", package = "dynmethods", prompt = TRUE)
     Installed SCORPIUS
     [1] "SCORPIUS"
 
-## Manipulation of character vectors
+## Manipulation of vectors
 
 ### `random_time_string`: Generates a string very likely to be unique
 
 ``` r
 random_time_string("test")
-#> [1] "20190420_055053__test__mMIwnRLQgq"
+#> [1] "20190705_115004__test__syYeN626jT"
 
 random_time_string("test")
-#> [1] "20190420_055053__test__X7HCfj0o6f"
+#> [1] "20190705_115004__test__e6MCnXcJM7"
 
 random_time_string("test")
-#> [1] "20190420_055053__test__F9Y32SIQAy"
+#> [1] "20190705_115004__test__9pFJ5mxS3R"
 ```
 
 ## Tibble helpers
@@ -429,7 +429,7 @@ tib %>% mapdf_dbl(~ .$a * 1.234)
 
 ``` r
 safe_tempdir("samson")
-#> [1] "/tmp/RtmpdLXTtU/file186013d697c5/samson"
+#> [1] "/tmp/RtmprpNY2K/file342b3ade3824/samson"
 ```
 
 ## Assertion helpers
