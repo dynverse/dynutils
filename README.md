@@ -20,16 +20,19 @@ check out [dynverse.org](dynverse.org).
 
 ## Latest changes
 
-Check out `news(package = "dynutils")` for a full list of
+Check out `news(package = "dynutils")` or [NEWS.md](NEWS.md) for a full
+list of
 changes.
 
 <!-- This section gets automatically generated from inst/NEWS.md, and also generates inst/NEWS -->
 
-### Recent changes in dynutils 1.0.4
+### Recent changes in dynutils 1.0.4 (development)
 
   - BUG FIX `recent_news()`: do not prepend subsections.
 
   - BUG FIX `switch_cran()`: add missing version variable.
+
+  - REMOVAL `update_news()` remove this function as R 3.6
 
 ### Recent changes in dynutils 1.0.3 (2019-05-02)
 

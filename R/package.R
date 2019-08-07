@@ -48,8 +48,7 @@
 #'   * [is_bounded()]: Check whether a value within a certain interval
 #'
 #' @section Package helpers:
-#'   * [update_news()]: Update the news based on the md file (assuming a certain format, see dynutils/inst/NEWS.md)
-#'   * [recent_news()]: Print the most recent news (assuming a certain format, see dynutils/inst/NEWS.md)
+#'   * [recent_news()]: Print the most recent news (assumes NEWS.md file as specified by [news()])
 #'
 #' @importFrom dplyr slice enquo n
 #' @importFrom tibble tibble as_tibble lst
