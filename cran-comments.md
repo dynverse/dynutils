@@ -26,14 +26,4 @@ R CMD check succeeded
 ## Reverse dependencies
 
 * I ran a `revdep_check()` on all downstream dependencies.
-  (Summary at [revdep/README.md](revdep/README.md)). 
-  
-```
-> revdepcheck::revdep_check(timeout = as.difftime(60, units = "mins"), num_workers = 8)
-── CHECK ───────────────────────────────────────────────────────────────────────────────────────────────────────────────── 1 packages ──
-✔ SCORPIUS 1.0.2                         ── E: 0     | W: 0     | N: 0                                                                  
-OK: 1                                                                                                                                 
-BROKEN: 0
-Total time: 7 min
-── REPORT ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-```
+  (Summary at [revdep/README.md](revdep/README.md)). No problems were found.
