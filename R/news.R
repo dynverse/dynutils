@@ -4,12 +4,14 @@ detect_package_folder <- function(path = NULL) {
 
   paths <- lst(
     description = paste0(path, "/DESCRIPTION"),
-    news_md = paste0(path, "/inst/NEWS.md"),
-    news = paste0(path, "/inst/NEWS")
+    news_md = paste0(path, "/inst/NEWS.md")
   )
 
   if (!file.exists(paths$description)) {
     stop("Could not find DESCRIPTION file, please specify the package manually.")
+  }
+  if (!file.exists(paths$news_md)) {
+    paths$news_md <- paste0(path, "/NEWS.md")
   }
 
   paths
@@ -31,30 +33,6 @@ find_news <- function(path = NULL, package = detect_package_name(path = path)) {
   }
 
   paths$news_md
-}
-
-#' Update the news based on the md file
-#'
-#' @param path The path of the description in which the package resides
-#' @param package The package name
-#' @param write Whether to overwrite news
-#'
-#' @export
-update_news <- function(path = NULL, package = detect_package_name(path = path), write = TRUE) {
-  paths <- detect_package_folder(path = path)
-
-  # Automatically update inst/NEWS
-  news_normal <-
-    find_news(path = path, package = package) %>%
-    readr::read_lines() %>%
-    str_replace_all(paste0("^# ", package), package) %>%
-    str_replace_all("\\[[^\\]]*\\]\\(([^\\)]*)\\)", "\\1")
-
-  if (write) {
-    readr::write_lines(news_normal, paths$news)
-  } else {
-    news_normal
-  }
 }
 
 # processes the news into tidy format
@@ -87,12 +65,11 @@ process_news <- function(path = NULL, package = detect_package_name(path = path)
   )
 }
 
-
-
 #' Print the most recent news
 #'
+#' @param path The path of the description in which the package resides
 #' @param n Number of recent news to print
-#' @inheritParams update_news
+#' @param package The package name
 #'
 #' @export
 #' @importFrom stringr str_replace

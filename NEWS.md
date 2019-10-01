@@ -1,10 +1,13 @@
-dynutils 1.0.4
+# dynutils 1.0.4 (development)
 
  * BUG FIX `recent_news()`: do not prepend subsections.
  
  * BUG FIX `switch_cran()`: add missing version variable.
  
-dynutils 1.0.3 (2019-05-02)
+ * REMOVAL `update_news()` remove this function as R 3.6 natively
+   supports markdown news format.
+ 
+# dynutils 1.0.3 (2019-05-02)
 
  * FUNCTIONALITY: Added `test_h5_installation()`.
  
@@ -16,7 +19,7 @@ dynutils 1.0.3 (2019-05-02)
  
  * SMALL CHANGES: Remove dependencies: glue, Hmisc, devtools, testthat, tidyr.
 
-dynutils 1.0.2 (2019-03-21)
+# dynutils 1.0.2 (2019-03-21)
 
  * BUG FIX: Fix generation of error messages in `%all_in%`.
  
@@ -28,7 +31,7 @@ dynutils 1.0.2 (2019-03-21)
  
  * FUNCTIONALITY: Moved `calculate_mean()` from dyneval to dynutils.
  
-dynutils 1.0.1 (2019-02-04) 
+# dynutils 1.0.1 (2019-02-04) 
 
  * DOCUMENTATION: Fixed functionality vignette not showing any code.
 
@@ -48,7 +51,7 @@ dynutils 1.0.1 (2019-02-04)
  * FUNCTIONALITY: Add helper assertion functions 
    `%all_in%`, `%has_names%`, `is_bounded()` and `is_single_numeric()`.
  
-dynutils 1.0.0 (2018-07-18)
+# dynutils 1.0.0 (2018-07-18)
  
  * REMOVED `run_until_exit()`: This functionality is already 
    sufficiently covered by the `processx` package.
@@ -71,7 +74,7 @@ dynutils 1.0.0 (2018-07-18)
    
  * DOCUMENTATION: Added `inst/NEWS.md` file.
  
-dynutils 0.1.0 (2018-06-24)
+# dynutils 0.1.0 (2018-06-24)
 
  * INITIAL RELEASE ON CRAN: 
    dynutils provides common functionality for the dynverse packages.

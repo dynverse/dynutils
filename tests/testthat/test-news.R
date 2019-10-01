@@ -6,8 +6,7 @@ dir.create(paste0(dir_loc, "/inst"))
 on.exit(unlink(dir_loc, recursive = TRUE))
 
 description <- paste0(dir_loc, "/DESCRIPTION")
-news <- paste0(dir_loc, "/inst/NEWS")
-news_md <- paste0(dir_loc, "/inst/NEWS.md")
+news_md <- paste0(dir_loc, "/NEWS.md")
 
 readr::write_lines(c("Package: testing"), description)
 
@@ -25,19 +24,6 @@ readr::write_lines(c(
 ), news_md)
 
 test_that("update_news works", {
-  news_normal <- update_news(path = dir_loc, write = FALSE)
-
-  expect_is(news_normal, "character")
-  expect_true(any(grepl("testing 0.1.1", news_normal)))
-  expect_false(file.exists(news))
-
-  news_normal <- update_news(path = dir_loc, write = TRUE)
-
-  expect_is(news_normal, "character")
-  expect_true(any(grepl("testing 0.1.1", news_normal)))
-  expect_true(file.exists(news))
-  expect_true(any(grepl("testing 0.1.1", readr::read_lines(news))))
-
   recent_news <- recent_news(path = dir_loc, 2)
 
   expect_is(recent_news, "character")
