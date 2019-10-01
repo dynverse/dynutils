@@ -1,4 +1,4 @@
-# dynutils 1.0.4 (development)
+# dynutils 1.0.4
 
  * BUG FIX `recent_news()`: do not prepend subsections.
  

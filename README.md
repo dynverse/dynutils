@@ -26,7 +26,7 @@ changes.
 
 <!-- This section gets automatically generated from inst/NEWS.md, and also generates inst/NEWS -->
 
-### Recent changes in dynutils 1.0.4 (development)
+### Recent changes in dynutils 1.0.4
 
   - BUG FIX `recent_news()`: do not prepend subsections.
 
