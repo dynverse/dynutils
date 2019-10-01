@@ -42,7 +42,7 @@ strs <- map_chr(seq_len(length(headings) - 1), function(i) {
       tolower() %>% 
       str_replace_all(" ", "-") %>%
       str_replace_all("[^a-z\\-_]", "") %>% 
-      str_replace("^-*", "functionality.md#")
+      str_replace("^-*", "#")
     
     paste0(
       gsub("## ", "* ", head), ": \n",
@@ -222,8 +222,7 @@ Installed SCORPIUS
 [1] "SCORPIUS"
 ```
 
-## Manipulation of character vectors
-
+## Manipulation of vectors
 
 ### `random_time_string`: Generates a string very likely to be unique
 ```{r random_time_string}

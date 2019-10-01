@@ -59,7 +59,7 @@ For more information, check out \url{dynverse.org}.
 }
 }
 
-\section{Manipulation of character vectors}{
+\section{Manipulation of vectors}{
 
 \itemize{
 \item \code{\link[=random_time_string]{random_time_string()}}: Generates a string very likely to be unique
@@ -96,8 +96,7 @@ For more information, check out \url{dynverse.org}.
 \section{Package helpers}{
 
 \itemize{
-\item \code{\link[=update_news]{update_news()}}: Update the news based on the md file (assuming a certain format, see dynutils/inst/NEWS.md)
-\item \code{\link[=recent_news]{recent_news()}}: Print the most recent news (assuming a certain format, see dynutils/inst/NEWS.md)
+\item \code{\link[=recent_news]{recent_news()}}: Print the most recent news (assumes NEWS.md file as specified by \code{\link[=news]{news()}})
 }
 }
 
