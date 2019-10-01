@@ -4,7 +4,8 @@
  
  * BUG FIX `switch_cran()`: add missing version variable.
  
- * REMOVAL `update_news()` remove this function as R 3.6 
+ * REMOVAL `update_news()` remove this function as R 3.6 natively
+   supports markdown news format.
  
 # dynutils 1.0.3 (2019-05-02)
 
