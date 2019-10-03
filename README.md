@@ -16,7 +16,7 @@ vignette](https://CRAN.R-project.org/package=dynutils/vignettes/functionality.ht
 
 dynverse is created to support the development, execution, and
 benchmarking of trajectory inference methods. For more information,
-check out [dynverse.org](dynverse.org).
+check out [dynverse.org](https://dynverse.org).
 
 ## Latest changes
 
