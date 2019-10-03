@@ -1,4 +1,4 @@
-# dynutils 1.0.4 (development)
+# dynutils 1.0.4
 
  * BUG FIX `recent_news()`: do not prepend subsections.
  
@@ -6,6 +6,9 @@
  
  * REMOVAL `update_news()` remove this function as R 3.6 natively
    supports markdown news format.
+
+Resubmission: 
+ * Added missing protocol to URLs.
    
 ## Test environments
 * local Fedora 30 installation, R 3.6.0

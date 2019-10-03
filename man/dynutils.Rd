@@ -8,7 +8,7 @@
 \description{
 Provides common functionality for the dynverse packages.
 dynverse is created to support the development, execution, and benchmarking of trajectory inference methods.
-For more information, check out \url{dynverse.org}.
+For more information, check out \href{https://dynverse.org}{dynverse.org}.
 }
 \section{Manipulation of lists}{
 

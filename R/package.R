@@ -2,7 +2,7 @@
 #'
 #' Provides common functionality for the dynverse packages.
 #' dynverse is created to support the development, execution, and benchmarking of trajectory inference methods.
-#' For more information, check out \url{dynverse.org}.
+#' For more information, check out [dynverse.org](https://dynverse.org).
 #'
 #' @section Manipulation of lists:
 #'   * [add_class()]: Add a class to an object
