@@ -23,7 +23,7 @@ Description:
   'dynverse' is created to support the development, execution, and benchmarking of trajectory inference methods.
   For more information, check out <https://dynverse.org>.
 License: GPL-3
-URL: http://github.com/dynverse/dynutils
+URL: https://github.com/dynverse/dynutils
 BugReports: https://github.com/dynverse/dynutils/issues
 LazyData: TRUE
 RoxygenNote: 6.1.1
