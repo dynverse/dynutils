@@ -4,8 +4,7 @@
 \alias{recent_news}
 \title{Print the most recent news}
 \usage{
-recent_news(path = NULL, package = detect_package_name(path = path),
-  n = 2)
+recent_news(path = NULL, package = detect_package_name(path = path), n = 2)
 }
 \arguments{
 \item{path}{The path of the description in which the package resides}

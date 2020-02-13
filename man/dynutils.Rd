@@ -3,7 +3,6 @@
 \docType{package}
 \name{dynutils}
 \alias{dynutils}
-\alias{dynutils-package}
 \title{Common functionality for the dynverse packages}
 \description{
 Provides common functionality for the dynverse packages.

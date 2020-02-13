@@ -4,8 +4,13 @@
 \alias{is_bounded}
 \title{Check whether a value within a certain interval}
 \usage{
-is_bounded(x, lower_bound = -Inf, lower_closed = FALSE,
-  upper_bound = Inf, upper_closed = FALSE)
+is_bounded(
+  x,
+  lower_bound = -Inf,
+  lower_closed = FALSE,
+  upper_bound = Inf,
+  upper_closed = FALSE
+)
 }
 \arguments{
 \item{x}{A value to be tested}
