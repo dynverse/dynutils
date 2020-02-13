@@ -10,3 +10,5 @@
 ^vignettes/.*\.md$
 ^vignettes/.*/.*\.png$
 ^LICENSE\.md$
+^LICENSE\.md$
+^LICENSE\.md$
