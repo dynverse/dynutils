@@ -4,10 +4,12 @@ parse_remotes <- function(remotes) {
     set_names(remotes)
 }
 
-#' Install packages, but first ask if interactive
+#' Check package availability
 #'
-#' @param ... The names of the packages to be installed
-#' @param is_interactive Whether running interactivly, which will prompt the user before installation
+#' If the session is interactive, prompt the user whether to install the packages.
+#'
+#' @param ... The names of the packages to be checked
+#' @param try_install Whether running interactivly, which will prompt the user before installation
 #'
 #' @importFrom remotes install_cran
 #' @importFrom utils setRepositories
@@ -18,11 +20,11 @@ parse_remotes <- function(remotes) {
 #' \dontrun{
 #' install_packages("SCORPIUS")
 #' }
-install_packages <- function(..., is_interactive = interactive()) {
+install_packages <- function(..., try_install = interactive()) {
   dependencies <- unlist(list(...)) %>% discard(check_packages)
 
   if (length(dependencies) > 0) {
-    if (is_interactive) {
+    if (try_install) {
       message(paste0(
         "Following packages have to be installed: ",
         paste(crayon::bold(dependencies), collapse = ", "),
@@ -40,6 +42,11 @@ install_packages <- function(..., is_interactive = interactive()) {
       if (answer %in% c("no", "n", "2")) {
         stop("Installation was interrupted.")
       }
+    } else {
+      stop(
+        "Please install the following packages: \n",
+        "  ", paste0("\"", dependencies, "\"", collapse = ",")
+      )
     }
 
     # set repositories to include bioconductor
@@ -48,7 +55,7 @@ install_packages <- function(..., is_interactive = interactive()) {
     message("Installing ", paste0(dependencies, collapse = ", "))
 
     # install other depencies from cran
-    remotes::install_cran(dependencies, repos = "http://cran.rstudio.com")
+    remotes::install_cran(dependencies)
 
     # display message
     message("Installed ", paste0(dependencies, collapse = ", "))
@@ -56,6 +63,6 @@ install_packages <- function(..., is_interactive = interactive()) {
     # return installed dependencies at the end
     dependencies
   } else {
-    NULL
+    invisible(NULL)
   }
 }
