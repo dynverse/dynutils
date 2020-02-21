@@ -1,4 +1,10 @@
-# dynutils 1.0.4
+# dynutils 1.0.5
+
+ * BUG FIX `install_packages()`: will not try to install packages when the session is not interactive.
+ 
+ * LICENSE: Change to MIT.
+
+# dynutils 1.0.4 (2019-10-03)
 
  * BUG FIX `recent_news()`: do not prepend subsections.
  

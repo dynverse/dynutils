@@ -11,6 +11,6 @@
 #' check_packages(c("princurve", "mlr", "tidyverse"))
 check_packages <- function(...) {
   packages <- unlist(list(...))
-  installed_packages <- rownames(utils::installed.packages())
-  set_names(packages %in% installed_packages, packages)
+  installed_packages <- map_lgl(packages, requireNamespace, quietly = TRUE)
+  set_names(installed_packages, packages)
 }

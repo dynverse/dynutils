@@ -26,27 +26,22 @@ changes.
 
 <!-- This section gets automatically generated from inst/NEWS.md, and also generates inst/NEWS -->
 
-### Recent changes in dynutils 1.0.4
+### Recent changes in dynutils 1.0.5
+
+  - BUG FIX `install_packages()`: will not try to install packages when
+    the session is not interactive.
+
+  - LICENSE: Change to MIT.
+
+### Recent changes in dynutils 1.0.4 (2019-10-03)
 
   - BUG FIX `recent_news()`: do not prepend subsections.
 
   - BUG FIX `switch_cran()`: add missing version variable.
 
   - REMOVAL `update_news()` remove this function as R 3.6 natively
-    supports markdown news format.
-
-### Recent changes in dynutils 1.0.3 (2019-05-02)
-
-  - FUNCTIONALITY: Added `test_h5_installation()`.
-
-  - BUG FIX: Added compatibility workaround for being able to read hdf5
-    1.10.4 files on a hdf5 1.8.14 Windows platform (hhoeflin/hdf5r\#60).
-
-  - FUNCTIONALITY: `calculate_distance()` and `calculate_similarity()`
-    now support sparse matrix calculation thanks to proxyC\!
-
-  - SMALL CHANGES: Remove dependencies: glue, Hmisc, devtools, testthat,
-    tidyr.
+    supports markdown news
+format.
 
 ## Dynverse dependencies
 

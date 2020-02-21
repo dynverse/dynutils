@@ -9,3 +9,4 @@
 ^vignettes/.*\.html$
 ^vignettes/.*\.md$
 ^vignettes/.*/.*\.png$
+^LICENSE\.md$

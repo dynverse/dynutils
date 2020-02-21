@@ -2,17 +2,17 @@
 % Please edit documentation in R/install_packages.R
 \name{install_packages}
 \alias{install_packages}
-\title{Install packages, but first ask if interactive}
+\title{Check package availability}
 \usage{
-install_packages(..., is_interactive = interactive())
+install_packages(..., try_install = interactive())
 }
 \arguments{
-\item{...}{The names of the packages to be installed}
+\item{...}{The names of the packages to be checked}
 
-\item{is_interactive}{Whether running interactivly, which will prompt the user before installation}
+\item{try_install}{Whether running interactivly, which will prompt the user before installation}
 }
 \description{
-Install packages, but first ask if interactive
+If the session is interactive, prompt the user whether to install the packages.
 }
 \examples{
 \dontrun{
