@@ -10,7 +10,8 @@
 calculate_distance(
   x,
   y = NULL,
-  method = c("pearson", "spearman", "cosine", "euclidean", "manhattan"),
+  method = c("pearson", "spearman", "cosine", "euclidean", "chisquared", "hamming",
+    "kullback", "manhattan", "maximum", "canberra", "minkowski"),
   margin = 1
 )
 

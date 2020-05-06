@@ -25,7 +25,8 @@
 calculate_distance <- function(
   x,
   y = NULL,
-  method = c("pearson", "spearman", "cosine", "euclidean", "manhattan"),
+  method = c("pearson", "spearman", "cosine", "euclidean", "chisquared",
+             "hamming", "kullback", "manhattan", "maximum", "canberra", "minkowski"),
   margin = 1
 ) {
   method <- match.arg(method)
@@ -149,11 +150,13 @@ list_similarity_methods <- function() eval(formals(calculate_similarity)$method)
 #' @export
 #' @rdname deprecated
 euclidean_distance <- function(x, y = NULL) {
+  .Deprecated("calculate_distance")
   as.matrix(calculate_distance(x, y, method = "euclidean"))
 }
 
 #' @export
 #' @rdname deprecated
 correlation_distance <- function(x, y = NULL) {
+  .Deprecated("calculate_distance")
   as.matrix(calculate_distance(x, y, method = "spearman"))
 }
