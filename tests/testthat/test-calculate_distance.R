@@ -9,12 +9,12 @@ check_output <- function(x, y, o, e) {
   expect_equal(colnames(o), rownames(y))
 
   if (!is.null(e)) {
-    expect_true(all(abs(as.vector(o) - e) < 1e-10))
+    expect_equal(as.vector(o), e, tolerance = 1e-10)
   }
 }
 
 test_that("list_distance_methods works", {
-  expect_true(all(list_distance_methods() %in% c("euclidean", "manhattan", "cosine", "spearman", "pearson")))
+  expect_true(all(c("euclidean", "manhattan", "cosine", "spearman", "pearson") %in% list_distance_methods()))
 })
 
 methods <- list_distance_methods()
