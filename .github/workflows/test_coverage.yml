@@ -40,6 +40,8 @@ jobs:
           Rscript -e "remotes::install_github('rcannood/sysreqs')"
           sysreqs=$(Rscript -e "cat(sysreqs:::sysreq_commands_pkgs(sysreqs:::get_cran_sysreqs(sysreqs:::get_cran_deps('covr'))))")
           sudo -s eval "$sysreqs"
+          sysreqs=$(Rscript -e "cat(sysreqs::sysreq_commands('DESCRIPTION'))")
+          sudo -s eval "$sysreqs"
 
       - name: Install dependencies
         run: |
