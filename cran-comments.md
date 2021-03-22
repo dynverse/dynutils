@@ -1,8 +1,8 @@
-# dynutils 1.0.5
+# dynutils 1.0.6
 
- * BUG FIX `install_packages()`: will not try to install packages when the session is not interactive.
- 
- * LICENSE: Change to MIT.
+* MINOR CHANGE `calculate_distance()`: Allow for many more distance measures.
+
+* BUG FIX: Import `desc::desc()` where needed.
    
 ## Test environments
 * local Fedora 31 installation, R 3.6.2
@@ -26,21 +26,24 @@ A reverse dependency check was run on all downstream dependencies.
 (Summary at [revdep/README.md](revdep/README.md)). No new problems were found.
 
 ```
-> revdepcheck::revdep_check(timeout = as.difftime(60, units = "mins"), num_workers = 8)
-── INSTALL ─────────────────────────────────────────────────────── 2 versions ──
+> revdepcheck::revdep_check(timeout = as.difftime(600, units = "mins"), num_workers = 30)
+── INIT ────────────────────────────────────────────────────────────────────────
+── INSTALL ─────────────────────────────────────────────────────────────────────
 Installing CRAN version of dynutils
+also installing the dependencies ‘cli’, ‘utf8’, ‘R6’, ‘rprojroot’, ‘ellipsis’, ‘generics’, ‘lifecycle’, ‘rlang’, ‘tidyselect’, ‘vctrs’, ‘RcppParallel’, ‘RcppArmadillo’, ‘fansi’, ‘pillar’, ‘pkgconfig’, ‘assertthat’, ‘crayon’, ‘desc’, ‘dplyr’, ‘proxyC’, ‘purrr’, ‘Rcpp’, ‘remotes’, ‘tibble’
+
 Installing DEV version of dynutils
-Installing 30 packages: assertthat, crayon, desc, dplyr, magrittr, proxyC, purrr, Rcpp, remotes, stringr, tibble, backports, rlang, cli, fansi, pillar, pkgconfig, glue, utf8, vctrs, ellipsis, digest, R6, rprojroot, tidyselect, BH, plogr, RcppParallel, RcppArmadillo, stringi
-── CHECK ───────────────────────────────────────────────────────── 6 packages ──
-✔ babelwhale 1.0.1                       ── E: 1     | W: 0     | N: 0          
-✔ lmds 0.1.0                             ── E: 0     | W: 0     | N: 1          
-✔ GillespieSSA2 0.2.5                    ── E: 0     | W: 0     | N: 1          
-✔ dynparam 1.0.0                         ── E: 0     | W: 0     | N: 1          
-I SCORPIUS 1.0.5                         ── E: 1     | W: 0     | N: 0          
-✔ dynwrap 1.1.4                          ── E: 1     | W: 0     | N: 0          
+Installing 26 packages: digest, assertthat, vctrs, utf8, rlang, lifecycle, fansi, ellipsis, crayon, cli, Rcpp, magrittr, purrr, pkgconfig, pillar, RcppArmadillo, RcppParallel, tidyselect, tibble, R6, generics, rprojroot, remotes, proxyC, dplyr, desc
+── CHECK ───────────────────────────────────────────────────────────────────────
+✓ babelwhale 1.0.1                       ── E: 1     | W: 0     | N: 0                                                                                                                                                                   
+✓ lmds 0.1.0                             ── E: 0     | W: 0     | N: 1                                                                                                                                                                   
+✓ dynparam 1.0.2                         ── E: 0     | W: 0     | N: 0                                                                                                                                                                   
+✓ dynwrap 1.2.1                          ── E: 1     | W: 0     | N: 2                                                                                                                                                                   
+✓ GillespieSSA2 0.2.7                    ── E: 0     | W: 0     | N: 1                                                                                                                                                                   
+✓ SCORPIUS 1.0.7                         ── E: 0     | W: 0     | N: 0                                                                                                                                                                   
 OK: 6                                                                         
 BROKEN: 0
-Total time: 27 min
+Total time: 6 min
 ── REPORT ──────────────────────────────────────────────────────────────────────
 Writing summary to 'revdep/README.md'
 Writing problems to 'revdep/problems.md'
