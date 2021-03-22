@@ -1,4 +1,10 @@
-# dynutils 1.0.5
+# dynutils 1.0.6
+
+* MINOR CHANGE `calculate_distance()`: Allow for many more distance measures.
+
+* BUG FIX: Import `desc::desc()` where needed.
+
+# dynutils 1.0.5 (2020-02-21)
 
  * BUG FIX `install_packages()`: will not try to install packages when the session is not interactive.
  

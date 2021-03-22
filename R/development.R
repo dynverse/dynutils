@@ -37,6 +37,7 @@ switch_devel <- function(file = "DESCRIPTION", desc = desc::desc(file = file)) {
 #' @export
 #' @rdname switch_devel
 #' @importFrom stringr str_replace_all str_subset str_detect
+#' @importFrom desc desc
 switch_master <- function(file = "DESCRIPTION", desc = desc::desc(file = file)) {
   # set version to 9000
   version <- as.character(desc$get_version())

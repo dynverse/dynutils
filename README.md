@@ -21,27 +21,21 @@ check out [dynverse.org](https://dynverse.org).
 ## Latest changes
 
 Check out `news(package = "dynutils")` or [NEWS.md](NEWS.md) for a full
-list of
-changes.
+list of changes.
 
 <!-- This section gets automatically generated from inst/NEWS.md, and also generates inst/NEWS -->
 
-### Recent changes in dynutils 1.0.5
+### Recent changes in dynutils 1.0.6
 
-  - BUG FIX `install_packages()`: will not try to install packages when
+-   MINOR CHANGE `calculate_distance()`: Allow for many more distance
+    measures.
+
+### Recent changes in dynutils 1.0.5 (2020-02-21)
+
+-   BUG FIX `install_packages()`: will not try to install packages when
     the session is not interactive.
 
-  - LICENSE: Change to MIT.
-
-### Recent changes in dynutils 1.0.4 (2019-10-03)
-
-  - BUG FIX `recent_news()`: do not prepend subsections.
-
-  - BUG FIX `switch_cran()`: add missing version variable.
-
-  - REMOVAL `update_news()` remove this function as R 3.6 natively
-    supports markdown news
-format.
+-   LICENSE: Change to MIT.
 
 ## Dynverse dependencies
 

@@ -10,3 +10,4 @@
 ^vignettes/.*\.md$
 ^vignettes/.*/.*\.png$
 ^LICENSE\.md$
+^\.github$
