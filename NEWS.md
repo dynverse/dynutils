@@ -1,3 +1,7 @@
+# dynutils 1.0.7
+
+* MINOR CHANGE `calculate_distance()`: Convert matrices to CsparseMatrix instead of dgCMatrix.
+
 # dynutils 1.0.6
 
 * MINOR CHANGE `calculate_distance()`: Allow for many more distance measures.

@@ -166,7 +166,7 @@ write_h5_ <- function(x, file_h5, path) {
   if (is.null(x)) {
     hdf5r::h5attr(subfile, "object_class") <- "null"
   } else if (is_sparse(x)) {
-    ipx <- as(x, "dgCMatrix")
+    ipx <- as(x, "CsparseMatrix")
     hdf5r::h5attr(subfile, "object_class") <- "sparse_matrix"
     subfile[["i"]] <- ipx@i
     subfile[["p"]] <- ipx@p

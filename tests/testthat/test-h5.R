@@ -27,7 +27,7 @@ test_that("is_sparse works", {
 
   m <- Matrix::Matrix(matrix(c(1:10)), sparse = FALSE)
   expect_false(is_sparse(m))
-  expect_true(is_sparse(methods::as(m, "dgCMatrix")))
+  expect_true(is_sparse(methods::as(m, "CsparseMatrix")))
   expect_false(is_sparse(methods::as(m, "dgeMatrix")))
 })
 

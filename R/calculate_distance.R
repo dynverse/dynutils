@@ -105,11 +105,11 @@ list_similarity_methods <- function() eval(formals(calculate_similarity)$method)
 #' @importFrom methods as
 .process_input_matrices <- function(x, y, margin) {
   if (is.data.frame(x)) x <- as.matrix(x)
-  if (is.matrix(x)) x <- as(x, "dgCMatrix")
+  if (is.matrix(x)) x <- as(x, "CsparseMatrix")
 
   if (!is.null(y)) {
     if (is.data.frame(y)) y <- as.matrix(y)
-    if (is.matrix(y)) y <- as(y, "dgCMatrix")
+    if (is.matrix(y)) y <- as(y, "CsparseMatrix")
   }
 
   assert_that(
