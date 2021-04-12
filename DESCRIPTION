@@ -44,6 +44,7 @@ Imports:
   stringr,
   tibble
 Suggests:
+  covr,
   ggplot2,
   hdf5r,
   knitr,
