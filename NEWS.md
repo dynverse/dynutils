@@ -2,6 +2,8 @@
 
 * MINOR CHANGE `calculate_distance()`: Convert matrices to CsparseMatrix instead of dgCMatrix.
 
+* MINOR CHANGE `calculate_distance()`: Pass through the `diag` argument to proxyC.
+
 # dynutils 1.0.6
 
 * MINOR CHANGE `calculate_distance()`: Allow for many more distance measures.
