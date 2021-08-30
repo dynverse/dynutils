@@ -25,7 +25,6 @@ Description:
 License: MIT + file LICENSE
 URL: https://github.com/dynverse/dynutils
 BugReports: https://github.com/dynverse/dynutils/issues
-LazyData: TRUE
 RoxygenNote: 7.1.1
 Depends:
   R (>= 3.0.0)
