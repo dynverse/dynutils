@@ -17,13 +17,7 @@ tib <- tibble(
 test_that("list_as_tibble works", {
   tib2 <- list_as_tibble(li)
 
-  expect_equal(attributes(tib2), attributes(tib))
-
-  expect_equal(tib2$a, tib$a)
-  expect_equal(tib2$b, tib$b)
-  expect_equal(tib2$c, tib$c)
-  expect_equal(tib2$d, tib$d)
-  expect_equal(tib2$.object_class, tib$.object_class)
+  expect_equal(tib, tib2)
 })
 
 test_that("tibble_as_list works", {
