@@ -5,6 +5,11 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // project_to_segments
 List project_to_segments(NumericMatrix x, NumericMatrix segment_start, NumericMatrix segment_end);
 RcppExport SEXP _dynutils_project_to_segments(SEXP xSEXP, SEXP segment_startSEXP, SEXP segment_endSEXP) {
