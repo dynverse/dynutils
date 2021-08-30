@@ -25,17 +25,22 @@ list of changes.
 
 <!-- This section gets automatically generated from inst/NEWS.md, and also generates inst/NEWS -->
 
+### Recent changes in dynutils 1.0.7
+
+-   MINOR CHANGE `calculate_distance()`: Convert matrices to
+    CsparseMatrix instead of dgCMatrix.
+
+-   MINOR CHANGE `calculate_distance()`: Pass through the `diag`
+    argument to proxyC.
+
+-   BUG FIX unit test: Order of attributes is not relevant.
+
 ### Recent changes in dynutils 1.0.6
 
 -   MINOR CHANGE `calculate_distance()`: Allow for many more distance
     measures.
 
-### Recent changes in dynutils 1.0.5 (2020-02-21)
-
--   BUG FIX `install_packages()`: will not try to install packages when
-    the session is not interactive.
-
--   LICENSE: Change to MIT.
+-   BUG FIX: Import `desc::desc()` where needed.
 
 ## Dynverse dependencies
 
