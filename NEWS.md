@@ -1,14 +1,16 @@
 # dynutils 1.0.7
 
-* MINOR CHANGE `calculate_distance()`: Convert matrices to CsparseMatrix instead of dgCMatrix.
+ * MINOR CHANGE `calculate_distance()`: Convert matrices to CsparseMatrix instead of dgCMatrix.
 
-* MINOR CHANGE `calculate_distance()`: Pass through the `diag` argument to proxyC.
+ * MINOR CHANGE `calculate_distance()`: Pass through the `diag` argument to proxyC.
+ 
+ * BUG FIX unit test: Order of attributes is not relevant.
 
 # dynutils 1.0.6
 
-* MINOR CHANGE `calculate_distance()`: Allow for many more distance measures.
+ * MINOR CHANGE `calculate_distance()`: Allow for many more distance measures.
 
-* BUG FIX: Import `desc::desc()` where needed.
+ * BUG FIX: Import `desc::desc()` where needed.
 
 # dynutils 1.0.5 (2020-02-21)
 
