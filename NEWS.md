@@ -1,3 +1,7 @@
+# dynutils 1.0.8
+
+ * BUG FIX unit test: Surround hdf5 unit tests by `if(require(.))`.
+
 # dynutils 1.0.7
 
  * MINOR CHANGE `calculate_distance()`: Convert matrices to CsparseMatrix instead of dgCMatrix.

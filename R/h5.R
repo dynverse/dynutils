@@ -104,6 +104,7 @@ read_h5_ <- function(file_h5) {
 }
 
 .read_h5_vec <- function(file_h5) {
+  requireNamespace("hdf5r")
   # workaround for https://github.com/hhoeflin/hdf5r/issues/118
   if (file_h5$dims == 0 && "H5T_STRING" %in% class(file_h5$get_type())) {
     character(0)
@@ -121,6 +122,7 @@ read_h5_ <- function(file_h5) {
 }
 
 .write_h5_vec <- function(x, file_h5, name) {
+  requireNamespace("hdf5r")
   # workaround for https://github.com/dynverse/dyno/issues/43
   was_logical <- is.logical(x)
   if (is.logical(x)) {
