@@ -10,13 +10,13 @@
 |collate  |en_GB.UTF-8                     |
 |ctype    |en_GB.UTF-8                     |
 |tz       |Europe/Brussels                 |
-|date     |2021-08-30                      |
+|date     |2021-09-20                      |
 
 # Dependencies
 
 |package       |old        |new        |Δ  |
 |:-------------|:----------|:----------|:--|
-|dynutils      |1.0.6      |1.0.7      |*  |
+|dynutils      |1.0.7      |1.0.8      |*  |
 |assertthat    |0.2.1      |0.2.1      |   |
 |cli           |3.0.1      |3.0.1      |   |
 |crayon        |1.4.1      |1.4.1      |   |
@@ -30,7 +30,7 @@
 |magrittr      |2.0.1      |2.0.1      |   |
 |pillar        |1.6.2      |1.6.2      |   |
 |pkgconfig     |2.0.3      |2.0.3      |   |
-|proxyC        |0.2.0      |0.2.0      |   |
+|proxyC        |0.2.1      |0.2.1      |   |
 |purrr         |0.3.4      |0.3.4      |   |
 |R6            |2.5.1      |2.5.1      |   |
 |Rcpp          |1.0.7      |1.0.7      |   |
