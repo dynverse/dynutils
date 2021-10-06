@@ -47,7 +47,6 @@ Suggests:
   ggplot2,
   hdf5r,
   knitr,
-  readr,
   rmarkdown,
   testthat
 LinkingTo:

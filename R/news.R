@@ -20,7 +20,7 @@ detect_package_folder <- function(path = NULL) {
 detect_package_name <- function(path = NULL) {
   paths <- detect_package_folder(path = path)
 
-  lines <- readr::read_lines(paths$description)
+  lines <- readLines(paths$description)
   lines <- lines[grepl("^Package: ", lines)]
   gsub("^Package: *", "", lines)
 }
@@ -41,7 +41,7 @@ find_news <- function(path = NULL, package = detect_package_name(path = path)) {
 process_news <- function(path = NULL, package = detect_package_name(path = path)) {
   news_md <-
     find_news(path = path, package = package) %>%
-    readr::read_lines()
+    readLines()
 
   start_ix <- which(str_detect(news_md, "^# "))
   matches <- str_match(news_md[start_ix], c("\\# ([A-Za-z0-9]*) ([0-9\\.]*) \\((.*)\\)"))

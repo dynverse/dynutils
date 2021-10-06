@@ -5,18 +5,22 @@
 #' @param file_h5 A H5 file to read from/write to.
 #' @export
 read_h5 <- function(path) {
-  requireNamespace("hdf5r")
-  file_h5 <- hdf5r::H5File$new(path, "r")
-  on.exit(file_h5$close_all())
+  if (requireNamespace("hdf5r", quietly = TRUE)) {
+    file_h5 <- hdf5r::H5File$new(path, "r")
+    on.exit(file_h5$close_all())
 
-  read_h5_(file_h5)
+    read_h5_(file_h5)
+  } else {
+    NULL
+  }
 }
 
 #' @rdname read_h5
+#' @importFrom Matrix sparseMatrix
 #' @export
 read_h5_ <- function(file_h5) {
-  requireNamespace("hdf5r")
-  requireNamespace("Matrix")
+  if (!requireNamespace("hdf5r", quietly = TRUE)) return(NULL)
+
   if (!"object_class" %in% hdf5r::h5attr_names(file_h5)) {
     stop("Object class not found (path=", file_h5$get_filename(), ", obj_name=", file_h5$get_obj_name())
   }
@@ -86,9 +90,6 @@ read_h5_ <- function(file_h5) {
     x <- file_h5[["x"]][]
     dims <- file_h5[["dims"]][]
 
-    # rn <- if ("rownames" %in% names(file_h5)) file_h5[["rownames"]][] else NULL
-    # cn <- if ("colnames" %in% names(file_h5)) file_h5[["colnames"]][] else NULL
-
     rn <- if ("rownames" %in% names(file_h5)) .read_h5_vec(file_h5[["rownames"]]) else NULL
     cn <- if ("colnames" %in% names(file_h5)) .read_h5_vec(file_h5[["colnames"]]) else NULL
 
@@ -104,7 +105,8 @@ read_h5_ <- function(file_h5) {
 }
 
 .read_h5_vec <- function(file_h5) {
-  requireNamespace("hdf5r")
+  if (!requireNamespace("hdf5r", quietly = TRUE)) return(NULL)
+
   # workaround for https://github.com/hhoeflin/hdf5r/issues/118
   if (file_h5$dims == 0 && "H5T_STRING" %in% class(file_h5$get_type())) {
     character(0)
@@ -122,7 +124,8 @@ read_h5_ <- function(file_h5) {
 }
 
 .write_h5_vec <- function(x, file_h5, name) {
-  requireNamespace("hdf5r")
+  if (!requireNamespace("hdf5r", quietly = TRUE)) return()
+
   # workaround for https://github.com/dynverse/dyno/issues/43
   was_logical <- is.logical(x)
   if (is.logical(x)) {
@@ -145,7 +148,8 @@ read_h5_ <- function(file_h5) {
 #' @rdname read_h5
 #' @export
 write_h5 <- function(x, path) {
-  requireNamespace("hdf5r")
+  if (!requireNamespace("hdf5r", quietly = TRUE)) return(NULL)
+
   file_h5 <- hdf5r::H5File$new(path, "w")
   on.exit(file_h5$close_all())
 
@@ -156,8 +160,7 @@ write_h5 <- function(x, path) {
 #' @importFrom methods as
 #' @export
 write_h5_ <- function(x, file_h5, path) {
-  requireNamespace("hdf5r")
-  requireNamespace("Matrix")
+  if (!requireNamespace("hdf5r", quietly = TRUE)) return(NULL)
 
   if (path == "") {
     subfile <- file_h5
@@ -248,6 +251,7 @@ test_h5_installation <- function(detailed = FALSE) {
 
 #' @rdname test_h5_installation
 #' @importFrom stats runif
+#' @importFrom Matrix Matrix
 #' @export
 get_h5_test_data <- function() {
   m <- matrix(1:20, ncol = 4, dimnames = list(letters[1:5], LETTERS[1:4]))
@@ -274,8 +278,11 @@ get_h5_test_data <- function() {
 }
 
 test_h5_installation_write <- function(detailed = FALSE, obj = get_h5_test_data(), file = tempfile()) {
-  tryCatch(
-    write_h5(obj, file),
+  if (!requireNamespace("hdf5r", quietly = TRUE)) stop("hdf5r is not installed")
+  tryCatch({
+      if (!requireNamespace("hdf5r", quietly = TRUE)) stop("hdf5r is not installed")
+      write_h5(obj, file)
+    },
     error = function(e) {
       paste0("\u274C Unable to write hdf5 files\n") %>%
         crayon::red() %>%
@@ -289,8 +296,10 @@ test_h5_installation_write <- function(detailed = FALSE, obj = get_h5_test_data(
 }
 
 test_h5_installation_read <- function(detailed = FALSE, file) {
-  obj2 <- tryCatch(
-    read_h5(file),
+  obj2 <- tryCatch({
+      if (!requireNamespace("hdf5r", quietly = TRUE)) stop("hdf5r is not installed")
+      read_h5(file)
+    },
     error = function(e) {
       paste0("\u274C Unable to read hdf5 files\n") %>%
         crayon::red() %>%

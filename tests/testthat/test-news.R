@@ -11,11 +11,11 @@ news_md <- paste0(dir_loc, "/NEWS.md")
 test_that("update_news works", {
   # check for description
   expect_error(detect_package_folder(path = dir_loc), regexp = "Could not find DESCRIPTION file")
-  readr::write_lines(c("Package: testing"), description)
+  writeLines(c("Package: testing"), description)
 
   # check for news
   expect_error(find_news(path = dir_loc), regexp = "does not have a NEWS.md")
-  readr::write_lines(c(
+  writeLines(c(
     "# testing 0.1.1 (2019-01-02)",
     " * BUG FIX: Fixing a lot of bugs!",
     "",

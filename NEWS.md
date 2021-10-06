@@ -1,6 +1,12 @@
+# dynutils 1.0.9
+
+ * BUG FIX `read_h5()` and `write_h5()`: Surround functionality with `if(require(.))`.
+ 
+ * Remove readr dependency.
+
 # dynutils 1.0.8
 
- * BUG FIX unit test: Surround hdf5 unit tests by `if(require(.))`.
+ * BUG FIX unit test: Surround hdf5 unit tests with `if(require(.))`.
 
 # dynutils 1.0.7
 
