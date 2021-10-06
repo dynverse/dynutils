@@ -1,6 +1,6 @@
 # dynutils 1.0.9
 
- * BUG FIX `read_h5()` and `write_h5()`: Surround functionality with `if(require(.))`.
+ * BUG FIX `read_h5()` and `write_h5()`: Surround functionality with `if(requireNamespace(., quietly = TRUE))`.
  
  * Remove readr dependency.
    
