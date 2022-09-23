@@ -13,6 +13,7 @@ is_sparse(x)
 Check if an object is a sparse matrix
 }
 \examples{
+library(Matrix)
 is_sparse(matrix(1:10)) # FALSE
 is_sparse(Matrix::rsparsematrix(100, 200, .01)) # TRUE
 }
