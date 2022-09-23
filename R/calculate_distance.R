@@ -5,9 +5,7 @@
 #' @param x A numeric matrix, dense or sparse.
 #' @param y (Optional) a numeric matrix, dense or sparse, with `nrow(x) == nrow(y)`.
 #' @param method Which distance method to use. Options are: `"cosine"`, `"pearson"`, `"spearman"`, `"euclidean"`, and `"manhattan"`.
-#' @param margin Which margin to use for the pairwise comparison. 1 => rowwise, 2 => columnwise.
-#' @param diag if `TRUE`, only compute diagonal elements of the similarity/distance matrix; useful when comparing corresponding rows or columns of 'x' and 'y'.
-#' @param drop0 if `TRUE`, zero values are removed regardless of min_simil or rank.
+#' @inheritParams proxyC::simil
 #'
 #' @export
 #'
@@ -31,7 +29,8 @@ calculate_distance <- function(
              "hamming", "kullback", "manhattan", "maximum", "canberra", "minkowski"),
   margin = 1,
   diag = FALSE,
-  drop0 = FALSE
+  drop0 = FALSE, 
+  use_nan = FALSE
 ) {
   method <- match.arg(method)
   input <- .process_input_matrices(x = x, y = y, margin = margin)
@@ -48,7 +47,7 @@ calculate_distance <- function(
         1 - (sim + 1) / 2
       }
     } else {
-      proxyC::dist(x = x, y = y, method = method, margin = 2, diag = diag, drop0 = drop0)
+      proxyC::dist(x = x, y = y, method = method, margin = 2, diag = diag, drop0 = drop0, use_nan = use_nan)
     }
 
   if (is.null(y)) {
@@ -71,7 +70,8 @@ calculate_similarity <- function(
   margin = 1,
   method = c("spearman", "pearson", "cosine"),
   diag = FALSE,
-  drop0 = FALSE
+  drop0 = FALSE,
+  use_nan = FALSE
 ) {
   method <- match.arg(method)
   input <- .process_input_matrices(x = x, y = y, margin = margin)
@@ -89,7 +89,7 @@ calculate_similarity <- function(
     method <- "correlation"
   }
 
-  sim <- proxyC::simil(x = x, y = y, method = method, margin = 2, diag = diag, drop0 = drop0)
+  sim <- proxyC::simil(x = x, y = y, method = method, margin = 2, diag = diag, drop0 = drop0, use_nan = use_nan)
 
   # fixes due to rounding errors
   if (method %in% c("pearson", "spearman", "cosine")) {

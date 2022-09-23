@@ -14,7 +14,8 @@ calculate_distance(
     "kullback", "manhattan", "maximum", "canberra", "minkowski"),
   margin = 1,
   diag = FALSE,
-  drop0 = FALSE
+  drop0 = FALSE,
+  use_nan = FALSE
 )
 
 list_distance_methods()
@@ -25,7 +26,8 @@ calculate_similarity(
   margin = 1,
   method = c("spearman", "pearson", "cosine"),
   diag = FALSE,
-  drop0 = FALSE
+  drop0 = FALSE,
+  use_nan = FALSE
 )
 
 list_similarity_methods()
@@ -37,11 +39,21 @@ list_similarity_methods()
 
 \item{method}{Which distance method to use. Options are: \code{"cosine"}, \code{"pearson"}, \code{"spearman"}, \code{"euclidean"}, and \code{"manhattan"}.}
 
-\item{margin}{Which margin to use for the pairwise comparison. 1 => rowwise, 2 => columnwise.}
+\item{margin}{integer indicating margin of similarity/distance computation. 1
+indicates rows or 2 indicates columns.}
 
-\item{diag}{if \code{TRUE}, only compute diagonal elements of the similarity/distance matrix; useful when comparing corresponding rows or columns of 'x' and 'y'.}
+\item{diag}{if \code{TRUE}, only compute diagonal elements of the
+similarity/distance matrix; useful when comparing corresponding rows or
+columns of `x` and `y`.}
 
-\item{drop0}{if \code{TRUE}, zero values are removed regardless of min_simil or rank.}
+\item{drop0}{if \code{TRUE}, zero values are removed regardless of
+\code{min_simil} or \code{rank}.}
+
+\item{use_nan}{if \code{TRUE}, return `NaN` if the standard deviation of a
+vector is zero when `method` is "correlation"; if all the values are zero
+in a vector when `method` is "cosine", "kullback", "jeffreys" or "chisquared".
+Note that use of `NaN` makes the similarity/distance matrix denser and
+therefore larger.}
 }
 \description{
 These matrices can be dense or sparse.

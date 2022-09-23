@@ -1,3 +1,7 @@
+# dynutils 1.0.10
+
+* MINOR CHANGE: Add `use_nan` passthrough argument for proxyC.
+
 # dynutils 1.0.9
 
  * BUG FIX `read_h5()` and `write_h5()`: Surround functionality with `if(requireNamespace(., quietly = TRUE))`.
