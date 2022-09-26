@@ -29,7 +29,7 @@ calculate_distance <- function(
              "hamming", "kullback", "manhattan", "maximum", "canberra", "minkowski"),
   margin = 1,
   diag = FALSE,
-  drop0 = FALSE, 
+  drop0 = FALSE,
   use_nan = FALSE
 ) {
   method <- match.arg(method)
@@ -39,7 +39,7 @@ calculate_distance <- function(
 
   dis <-
     if (method %in% c("cosine", "pearson", "spearman")) {
-      sim <- calculate_similarity(x = x, y = y, method = method, margin = 2, diag = diag, drop0 = drop0)
+      sim <- calculate_similarity(x = x, y = y, method = method, margin = 2, diag = diag, drop0 = drop0, use_nan = use_nan)
 
       if (method == "cosine") {
         1 - 2 * acos(sim) / pi

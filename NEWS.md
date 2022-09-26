@@ -1,6 +1,10 @@
+# dynutils 1.0.11
+
+* BUG FIX: Also pass `use_nan` from `calculate_distance()` to `calculate_similarity()`.
+
 # dynutils 1.0.10
 
-* MINOR CHANGE: Add `use_nan` passthrough argument for proxyC.
+* MINOR CHANGE: Add `use_nan` passthrough argument for `proxyC`.
 
 # dynutils 1.0.9
 
