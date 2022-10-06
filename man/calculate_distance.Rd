@@ -14,8 +14,7 @@ calculate_distance(
     "kullback", "manhattan", "maximum", "canberra", "minkowski"),
   margin = 1,
   diag = FALSE,
-  drop0 = FALSE,
-  use_nan = FALSE
+  drop0 = FALSE
 )
 
 list_distance_methods()
@@ -26,8 +25,7 @@ calculate_similarity(
   margin = 1,
   method = c("spearman", "pearson", "cosine"),
   diag = FALSE,
-  drop0 = FALSE,
-  use_nan = FALSE
+  drop0 = FALSE
 )
 
 list_similarity_methods()
@@ -44,16 +42,10 @@ indicates rows or 2 indicates columns.}
 
 \item{diag}{if \code{TRUE}, only compute diagonal elements of the
 similarity/distance matrix; useful when comparing corresponding rows or
-columns of `x` and `y`.}
+columns of \code{x} and \code{y}.}
 
 \item{drop0}{if \code{TRUE}, zero values are removed regardless of
 \code{min_simil} or \code{rank}.}
-
-\item{use_nan}{if \code{TRUE}, return `NaN` if the standard deviation of a
-vector is zero when `method` is "correlation"; if all the values are zero
-in a vector when `method` is "cosine", "chisquared", "kullback", "jeffreys"
-or "jensen". Note that use of `NaN` makes the similarity/distance matrix
-denser and therefore larger in RAM.}
 }
 \description{
 These matrices can be dense or sparse.

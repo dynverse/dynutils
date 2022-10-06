@@ -29,8 +29,7 @@ calculate_distance <- function(
              "hamming", "kullback", "manhattan", "maximum", "canberra", "minkowski"),
   margin = 1,
   diag = FALSE,
-  drop0 = FALSE,
-  use_nan = FALSE
+  drop0 = FALSE
 ) {
   method <- match.arg(method)
   input <- .process_input_matrices(x = x, y = y, margin = margin)
@@ -39,7 +38,7 @@ calculate_distance <- function(
 
   dis <-
     if (method %in% c("cosine", "pearson", "spearman")) {
-      sim <- calculate_similarity(x = x, y = y, method = method, margin = 2, diag = diag, drop0 = drop0, use_nan = use_nan)
+      sim <- calculate_similarity(x = x, y = y, method = method, margin = 2, diag = diag, drop0 = drop0)
 
       if (method == "cosine") {
         1 - 2 * acos(sim) / pi
@@ -47,7 +46,7 @@ calculate_distance <- function(
         1 - (sim + 1) / 2
       }
     } else {
-      proxyC::dist(x = x, y = y, method = method, margin = 2, diag = diag, drop0 = drop0, use_nan = use_nan)
+      proxyC::dist(x = x, y = y, method = method, margin = 2, diag = diag, drop0 = drop0, use_nan = FALSE)
     }
 
   if (is.null(y)) {
@@ -70,8 +69,7 @@ calculate_similarity <- function(
   margin = 1,
   method = c("spearman", "pearson", "cosine"),
   diag = FALSE,
-  drop0 = FALSE,
-  use_nan = FALSE
+  drop0 = FALSE
 ) {
   method <- match.arg(method)
   input <- .process_input_matrices(x = x, y = y, margin = margin)
@@ -89,7 +87,9 @@ calculate_similarity <- function(
     method <- "correlation"
   }
 
-  sim <- proxyC::simil(x = x, y = y, method = method, margin = 2, diag = diag, drop0 = drop0, use_nan = use_nan)
+  sim <- proxyC::simil(x = x, y = y, method = method, margin = 2, diag = diag, drop0 = drop0, use_nan = FALSE)
+  # set nans to 0
+  sim@x[is.nan(sim@x)] <- 0
 
   # fixes due to rounding errors
   if (method %in% c("pearson", "spearman", "cosine")) {

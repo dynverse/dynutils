@@ -111,11 +111,11 @@ test_that("calculate_distance works on matrices, data frames and sparse matrices
     out2 <- calculate_distance(x = as.matrix(x), y = as.matrix(y), method = method)
     expect_equal(nrow(out2), nrow(x))
     expect_equal(ncol(out2), nrow(y))
-    expect_true(sum(abs(out2-out)) < 1e-10)
+    expect_true(sum(abs(na.omit(out2-out))) < 1e-10)
 
     out3 <- calculate_distance(x = as.data.frame(as.matrix(x)), y = as.data.frame(as.matrix(y)), method = method)
     expect_equal(nrow(out3), nrow(x))
     expect_equal(ncol(out3), nrow(y))
-    expect_true(sum(abs(out3-out)) < 1e-10)
+    expect_true(sum(abs(na.omit(out3-out))) < 1e-10)
   }
 })

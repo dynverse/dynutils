@@ -1,6 +1,6 @@
 # dynutils 1.0.11
 
-* BUG FIX: Also pass `use_nan` from `calculate_distance()` to `calculate_similarity()`.
+* MINOR CHANGE: Always set `use_nan` to `TRUE`. Replace NaNs with 0 for `calculate_similarity()`.
 
 # dynutils 1.0.10
 
