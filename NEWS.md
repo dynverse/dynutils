@@ -1,3 +1,7 @@
+# dynutils 1.0.12
+
+* DOCUMENTATION: Fix roxygen docs.
+
 # dynutils 1.0.11
 
 * MINOR CHANGE: Always set `use_nan` to `TRUE`. Replace NaNs with 0 for `calculate_similarity()`.

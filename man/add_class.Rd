@@ -7,7 +7,7 @@
 add_class(x, class)
 }
 \arguments{
-\item{x}{a \R object}
+\item{x}{an \R object.}
 
 \item{class}{A character vector naming classes}
 }

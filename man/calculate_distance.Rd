@@ -44,8 +44,8 @@ indicates rows or 2 indicates columns.}
 similarity/distance matrix; useful when comparing corresponding rows or
 columns of \code{x} and \code{y}.}
 
-\item{drop0}{if \code{TRUE}, zero values are removed regardless of
-\code{min_simil} or \code{rank}.}
+\item{drop0}{if \code{TRUE}, removes zero values to make the
+similarity/distance matrix sparse. It has no effect when \code{dense = TRUE}.}
 }
 \description{
 These matrices can be dense or sparse.

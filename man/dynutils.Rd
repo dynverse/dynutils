@@ -2,6 +2,7 @@
 % Please edit documentation in R/package.R
 \docType{package}
 \name{dynutils}
+\alias{dynutils-package}
 \alias{dynutils}
 \title{Common functionality for the dynverse packages}
 \description{
@@ -99,3 +100,20 @@ For more information, check out \href{https://dynverse.org}{dynverse.org}.
 }
 }
 
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/dynverse/dynutils}
+  \item Report bugs at \url{https://github.com/dynverse/dynutils/issues}
+}
+
+}
+\author{
+\strong{Maintainer}: Robrecht Cannoodt \email{rcannood@gmail.com} (\href{https://orcid.org/0000-0003-3641-729X}{ORCID})
+
+Authors:
+\itemize{
+  \item Wouter Saelens \email{wouter.saelens@gmail.com} (\href{https://orcid.org/0000-0002-7114-6248}{ORCID})
+}
+
+}
