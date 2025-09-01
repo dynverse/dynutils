@@ -11,3 +11,4 @@
 ^vignettes/.*/.*\.png$
 ^LICENSE\.md$
 ^\.github$
+^CRAN-SUBMISSION$
