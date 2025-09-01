@@ -1,6 +1,6 @@
 # dynutils 1.0.12
 
-* DOCUMENTATION: Fix roxygen docs.
+* DOCUMENTATION: Fix roxygen docs (PR #36).
 
 # dynutils 1.0.11
 
