@@ -37,11 +37,23 @@ walkdf(.x, .f, ...)
 If a function, the first argument will be the row as a list.
 If a formula, e.g. \code{~ .$a}, the \code{.} is a placeholder for the row as a list.}
 
-\item{...}{Additional arguments passed on to the mapped function.}
+\item{...}{Additional arguments passed on to the mapped function.
+
+We now generally recommend against using \code{...} to pass additional
+(constant) arguments to \code{.f}. Instead use a shorthand anonymous function:
+
+\if{html}{\out{<div class="sourceCode R">}}\preformatted{# Instead of
+x |> map(f, 1, 2, collapse = ",")
+# do:
+x |> map(\\(x) f(x, 1, 2, collapse = ","))
+}\if{html}{\out{</div>}}
+
+This makes it easier to understand which arguments belong to which
+function and will tend to yield better error messages.}
 }
 \description{
 The mapdf functions transform their input by applying a function to each row of a data frame and returning a vector the same length as the input.
-These functions work a lot like purrr's \code{\link[=map]{map()}} functions.
+These functions work a lot like purrr's \code{map()} functions.
 }
 \details{
 \itemize{

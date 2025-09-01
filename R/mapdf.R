@@ -12,7 +12,7 @@ mapdf_fun <- function(purrrfun) {
 #' Apply a function to each row of a data frame
 #'
 #' The mapdf functions transform their input by applying a function to each row of a data frame and returning a vector the same length as the input.
-#' These functions work a lot like purrr's [map()] functions.
+#' These functions work a lot like purrr's `map()` functions.
 #'
 #'  * `mapdf()` always returns a list.
 #'

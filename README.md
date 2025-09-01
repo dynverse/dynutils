@@ -1,13 +1,10 @@
 
 # dynutils
 
-[![Build
-Status](https://travis-ci.org/dynverse/dynutils.svg?branch=master)](https://travis-ci.org/dynverse/dynutils)
-[![AppVeyor Build
-Status](https://ci.appveyor.com/api/projects/status/github/dynverse/dynutils?branch=master&svg=true)](https://ci.appveyor.com/project/dynverse/dynutils)
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/dynverse/dynutils/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/dynverse/dynutils/actions/workflows/R-CMD-check.yaml)
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/dynutils)](https://cran.r-project.org/package=dynutils)
-[![Coverage
-Status](https://app.codecov.io/gh/dynverse/dynutils/branch/master/graph/badge.svg)](https://app.codecov.io/gh/dynverse/dynutils?branch=master)
+<!-- badges: end -->
 
 Provides common functionality for the dynverse packages. An overview of
 this functionality is available using the `?dynutils` command or in the
