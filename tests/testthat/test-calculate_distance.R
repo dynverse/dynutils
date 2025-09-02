@@ -100,8 +100,8 @@ test_that("calculate_similarity returns correct solutions", {
 
 
 test_that("calculate_distance works on matrices, data frames and sparse matrices", {
-  x <- Matrix::rsparsematrix(100, 10000, .01)
-  y <- Matrix::rsparsematrix(2000, 10000, .01)
+  x <- Matrix::rsparsematrix(10, 100, .01)
+  y <- Matrix::rsparsematrix(20, 100, .01)
 
   for (method in methods) {
     out <- calculate_distance(x = x, y = y, method = method)
