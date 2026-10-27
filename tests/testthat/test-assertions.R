@@ -1,5 +1,3 @@
-context("test-assertions")
-
 test_that("is_single_numeric works", {
   expect_true(is_single_numeric(23))
   expect_true(is_single_numeric(182L))

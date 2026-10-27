@@ -1,5 +1,3 @@
-context("Testing calculate_distance")
-
 check_output <- function(x, y, o, e) {
   expect_equal(nrow(o), nrow(x))
   expect_equal(rownames(o), rownames(x))
@@ -75,7 +73,7 @@ test_that("calculate_distance returns correct solutions", {
     calculate_distance(x, y, method = n)[1,1]
   })
 
-  expect_equivalent(observed, expected)
+  expect_equal(observed, expected, ignore_attr = TRUE)
 })
 
 
@@ -95,7 +93,7 @@ test_that("calculate_similarity returns correct solutions", {
     calculate_similarity(x, y, method = n)[1,1]
   })
 
-  expect_equivalent(observed, expected)
+  expect_equal(observed, expected, ignore_attr = TRUE)
 })
 
 
@@ -188,7 +186,7 @@ test_that("calculate_distance gives the same result for every storage format and
 
 test_that(".as_column_vectors reuses the slots of a CSR matrix for margin 1", {
   x <- as(y_any, "RsparseMatrix")
-  expect_is(x, "dgRMatrix")
+  expect_s4_class(x, "dgRMatrix")
   expect_identical(.as_column_vectors(x, margin = 1), Matrix::t(as(x, "CsparseMatrix")))
   expect_identical(.as_column_vectors(x, margin = 2), as(x, "CsparseMatrix"))
 })

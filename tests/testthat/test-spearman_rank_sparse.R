@@ -1,5 +1,3 @@
-context("Testing spearman_rank_sparse()")
-
 r_control_implementation <- function(x, p, nr) {
   y <- x
   for (i in seq_len(length(p) - 1)) {
@@ -46,7 +44,7 @@ test_that("spearman_rank_sparse works as intended with small example", {
 
   out2 <- r_control_implementation(x, p, nr)
 
-  expect_equivalent(out1, out2)
+  expect_equal(out1, out2, ignore_attr = TRUE)
 })
 
 test_that("spearman_rank_sparse works as intended with another example", {

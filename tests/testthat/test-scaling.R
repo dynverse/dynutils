@@ -1,5 +1,3 @@
-context("Scaling")
-
 test_that("Testing scale_uniform", {
   # generate some random data
   num_samples <- 40
@@ -10,7 +8,7 @@ test_that("Testing scale_uniform", {
   data_sc <- scale_uniform(data, center = 0, max_range = 1)
   ranges <- apply(data_sc, 2, range)
 
-  expect_is( data_sc, "matrix" )
+  expect_true(is.matrix(data_sc))
   expect_equal( nrow(data_sc), nrow(data) )
   expect_equal( ncol(data_sc), ncol(data) )
   expect_equal(max(ranges[2,] - ranges[1,]), 1)
@@ -25,7 +23,7 @@ test_that("Testing scale_uniform", {
   data_sc <- scale_uniform(data, center = 10, max_range = 1000)
   ranges <- apply(data_sc, 2, range)
 
-  expect_is( data_sc, "matrix" )
+  expect_true(is.matrix(data_sc))
   expect_equal( nrow(data_sc), nrow(data) )
   expect_equal( ncol(data_sc), ncol(data) )
   expect_equal(max(ranges[2,] - ranges[1,]), 1000)
@@ -43,7 +41,7 @@ test_that("Testing scale_uniform with edge case", {
   data_sc <- scale_uniform(data, center = 0, max_range = 1)
   ranges <- apply(data_sc, 2, range)
 
-  expect_is( data_sc, "matrix" )
+  expect_true(is.matrix(data_sc))
   expect_equal( nrow(data_sc), nrow(data) )
   expect_equal( ncol(data_sc), ncol(data) )
   expect_equal(max(ranges[2,] - ranges[1,]), 0) # 0 because only 1 sample
@@ -57,7 +55,7 @@ test_that("Testing scale_uniform with edge case", {
   data_sc <- scale_uniform(data, center = 10, max_range = 1000)
   ranges <- apply(data_sc, 2, range)
 
-  expect_is( data_sc, "matrix" )
+  expect_true(is.matrix(data_sc))
   expect_equal( nrow(data_sc), nrow(data) )
   expect_equal( ncol(data_sc), ncol(data) )
   expect_equal(max(ranges[2,] - ranges[1,]), 0) # 0 because only 1 sample
@@ -73,7 +71,7 @@ test_that("Testing scale_uniform with another edge case", {
   data_sc <- scale_uniform(data, center = 0, max_range = 1)
   ranges <- apply(data_sc, 2, range)
 
-  expect_is( data_sc, "matrix" )
+  expect_true(is.matrix(data_sc))
   expect_equal( nrow(data_sc), nrow(data) )
   expect_equal( ncol(data_sc), ncol(data) )
   expect_equal(max(ranges[2,] - ranges[1,]), 1)
@@ -87,7 +85,7 @@ test_that("Testing scale_uniform with another edge case", {
   data_sc <- scale_uniform(data, center = 10, max_range = 1000)
   ranges <- apply(data_sc, 2, range)
 
-  expect_is( data_sc, "matrix" )
+  expect_true(is.matrix(data_sc))
   expect_equal( nrow(data_sc), nrow(data) )
   expect_equal( ncol(data_sc), ncol(data) )
   expect_equal(max(ranges[2,] - ranges[1,]), 1000)
@@ -102,7 +100,7 @@ test_that("Testing scale_uniform with vector", {
   data_sc <- scale_uniform(data, center = 0, max_range = 1)
   ranges <- range(data_sc)
 
-  expect_is( data_sc, "numeric" )
+  expect_type(data_sc, "double")
   expect_equal( length(data_sc), length(data) )
   expect_equal(max(ranges[[2]] - ranges[[1]]), 1)
   expect_equal(mean(ranges), 0)
@@ -115,7 +113,7 @@ test_that("Testing scale_uniform with vector", {
   data_sc <- scale_uniform(data, center = 10, max_range = 1000)
   ranges <- range(data_sc)
 
-  expect_is( data_sc, "numeric" )
+  expect_type(data_sc, "double")
   expect_equal( length(data_sc), length(data) )
   expect_equal(max(ranges[[2]] - ranges[[1]]), 1000)
   expect_equal(mean(ranges), 10)
@@ -136,7 +134,7 @@ test_that("Testing scale_quantile", {
   data_sc <- scale_quantile(data, outlier_cutoff = 0.05)
   ranges <- apply(data_sc, 2, range)
 
-  expect_is( data_sc, "matrix" )
+  expect_true(is.matrix(data_sc))
   expect_equal( nrow(data_sc), nrow(data) )
   expect_equal( ncol(data_sc), ncol(data) )
   expect_equal( ranges, matrix(rep(c(0, 1), num_dims), ncol = num_dims, dimnames = list(NULL, colnames(data))) )
@@ -150,7 +148,7 @@ test_that("Testing scale_quantile", {
   data_sc <- scale_quantile(data, outlier_cutoff = 0)
   ranges <- apply(data_sc, 2, range)
 
-  expect_is( data_sc, "matrix" )
+  expect_true(is.matrix(data_sc))
   expect_equal( nrow(data_sc), nrow(data) )
   expect_equal( ncol(data_sc), ncol(data) )
   expect_equal( ranges, matrix(rep(c(0, 1), num_dims), ncol = num_dims, dimnames = list(NULL, colnames(data))) )
@@ -168,7 +166,7 @@ test_that("Testing scale_quantile with edge case", {
   data_sc <- scale_quantile(data, outlier_cutoff = 0.05)
   ranges <- apply(data_sc, 2, range)
 
-  expect_is( data_sc, "matrix" )
+  expect_true(is.matrix(data_sc))
   expect_equal( nrow(data_sc), nrow(data) )
   expect_equal( ncol(data_sc), ncol(data) )
   expect_equal( ranges, matrix(rep(c(0, 0), num_dims), ncol = num_dims) )
@@ -181,7 +179,7 @@ test_that("Testing scale_quantile with edge case", {
   data_sc <- scale_quantile(data, outlier_cutoff = 0)
   ranges <- apply(data_sc, 2, range)
 
-  expect_is( data_sc, "matrix" )
+  expect_true(is.matrix(data_sc))
   expect_equal( nrow(data_sc), nrow(data) )
   expect_equal( ncol(data_sc), ncol(data) )
   expect_equal( ranges, matrix(rep(c(0, 0), num_dims), ncol = num_dims) )
@@ -199,7 +197,7 @@ test_that("Testing scale_quantile with another edge case", {
   data_sc <- scale_quantile(data, outlier_cutoff = 0.05)
   ranges <- apply(data_sc, 2, range)
 
-  expect_is( data_sc, "matrix" )
+  expect_true(is.matrix(data_sc))
   expect_equal( nrow(data_sc), nrow(data) )
   expect_equal( ncol(data_sc), ncol(data) )
   expect_equal( ranges, matrix(rep(c(0, 1), num_dims), ncol = num_dims) )
@@ -212,7 +210,7 @@ test_that("Testing scale_quantile with another edge case", {
   data_sc <- scale_quantile(data, outlier_cutoff = 0)
   ranges <- apply(data_sc, 2, range)
 
-  expect_is( data_sc, "matrix" )
+  expect_true(is.matrix(data_sc))
   expect_equal( nrow(data_sc), nrow(data) )
   expect_equal( ncol(data_sc), ncol(data) )
   expect_equal( ranges, matrix(rep(c(0, 1), num_dims), ncol = num_dims) )
@@ -230,7 +228,7 @@ test_that("Testing scale_quantile with a vector", {
   data_sc <- scale_quantile(data, outlier_cutoff = 0.05)
   ranges <- range(data_sc)
 
-  expect_is( data_sc, "numeric" )
+  expect_type(data_sc, "double")
   expect_equal( length(data_sc), length(data) )
   expect_equal( ranges, c(0, 1) )
 
@@ -242,7 +240,7 @@ test_that("Testing scale_quantile with a vector", {
   data_sc <- scale_quantile(data, outlier_cutoff = 0)
   ranges <- range(data_sc)
 
-  expect_is( data_sc, "numeric" )
+  expect_type(data_sc, "double")
   expect_equal( length(data_sc), length(data) )
   expect_equal( ranges, c(0, 1) )
 

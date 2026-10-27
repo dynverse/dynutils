@@ -1,5 +1,3 @@
-context("Testing inherit_default_params")
-
 fun1 <- function(a = 10, b = 7) {
   runif(a, -b, b)
 }

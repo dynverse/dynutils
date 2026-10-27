@@ -1,5 +1,3 @@
-context("Testing add_class")
-
 test_that("Test add_class", {
   add1 <- add_class(list(1), "banana")
   expect_equal(class(add1), c("banana", "list"))
