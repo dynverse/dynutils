@@ -1,5 +1,3 @@
-context("Testing mapdf functions")
-
 tib <- tibble(
   a = c(1, 2),
   b = list(log10, sqrt),

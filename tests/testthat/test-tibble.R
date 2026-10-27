@@ -1,5 +1,3 @@
-context("Testing tibble helpers")
-
 li <- list(
   list(a = 1, b = log10, c = "parrot", d = c(1L, 2L, 3L)) %>% add_class("myobject"),
   list(a = 2, b = sqrt, c = "quest", d = c("a", "b", "c")) %>% add_class("yourobject"),

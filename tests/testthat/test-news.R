@@ -1,5 +1,3 @@
-context("Testing news helpers")
-
 dir_loc <- tempfile()
 dir.create(dir_loc)
 dir.create(paste0(dir_loc, "/inst"))
@@ -32,7 +30,7 @@ test_that("update_news works", {
   recent_news <- recent_news(path = dir_loc, 2)
 
   # check contents
-  expect_is(recent_news, "character")
+  expect_type(recent_news, "character")
   expect_true(any(grepl("testing 0.1.1", recent_news)))
   expect_false(any(grepl("testing 0.0.1", recent_news)))
 })

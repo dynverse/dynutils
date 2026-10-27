@@ -1,5 +1,3 @@
-context("Testing safe_tempdir")
-
 test_that("safe_tempdir works correctly", {
   dir1 <- safe_tempdir("mydir")
   dir2 <- safe_tempdir("mydir")

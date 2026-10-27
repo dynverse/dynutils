@@ -1,5 +1,3 @@
-context("Testing expand_matrix")
-
 test_that("Test expand_matrix", {
   mat <- matrix(runif(12), nrow = 3, dimnames = list(letters[1:3], LETTERS[1:4]))
   mat2 <- expand_matrix(mat, rownames = letters[1:6], colnames = LETTERS[1:5], fill = 1)

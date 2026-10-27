@@ -1,5 +1,3 @@
-context("Test project_to_segments")
-
 segment_points <- cbind(
   c(0, 1, 2, 0, -2, -1, 0),
   c(1, 2, 1, -1, 1, 2, 1)

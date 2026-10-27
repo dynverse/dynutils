@@ -58,7 +58,4 @@
 #'
 #' @useDynLib dynutils
 #' @importFrom Rcpp evalCpp
-#'
-#' @docType package
-#' @name dynutils
-NULL
+"_PACKAGE"
