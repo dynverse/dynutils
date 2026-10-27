@@ -112,3 +112,19 @@ test_that("spearman_rank_sparse works with only positive integers", {
 
 
 
+test_that("spearman_rank_sparse ranks columns regardless of the storage format", {
+  x <- as.matrix(Matrix::forceSymmetric(Matrix::rsparsematrix(50, 50, .3)))
+  gold <- cor(x, method = "spearman") %>% set_nas_to_two()
+
+  formats <- list(
+    csc = as(x, "CsparseMatrix"),
+    csr = as(x, "RsparseMatrix"),
+    triplet = as(x, "TsparseMatrix"),
+    symmetric = Matrix::forceSymmetric(as(x, "CsparseMatrix"))
+  )
+  for (fmt in names(formats)) {
+    ranked <- spearman_rank_sparse(formats[[fmt]])
+    rcpp_imp <- cor(as.matrix(ranked), method = "pearson") %>% set_nas_to_two()
+    expect_true(sum(abs(gold - rcpp_imp)) < 1e-8, info = fmt)
+  }
+})

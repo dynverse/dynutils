@@ -119,3 +119,76 @@ test_that("calculate_distance works on matrices, data frames and sparse matrices
     expect_true(sum(abs(na.omit(out3-out))) < 1e-10)
   }
 })
+
+
+# the same data in every storage format that calculate_distance() and calculate_similarity() accept
+as_formats <- function(x) {
+  list(
+    dense = x,
+    data_frame = as.data.frame(x),
+    csc = as(x, "CsparseMatrix"),
+    csr = as(x, "RsparseMatrix"),
+    triplet = as(x, "TsparseMatrix"),
+    symmetric = Matrix::forceSymmetric(as(x, "CsparseMatrix"))
+  )
+}
+
+set.seed(1)
+x_sym <- as.matrix(Matrix::forceSymmetric(Matrix::rsparsematrix(8, 8, .5)))
+# forceSymmetric() symmetrises dimnames, so use the same row and column names
+dimnames(x_sym) <- list(paste0("c", 1:8), paste0("c", 1:8))
+y_any <- as.matrix(Matrix::rsparsematrix(8, 8, .5))
+dimnames(y_any) <- list(paste0("s", 1:8), paste0("d", 1:8))
+
+test_that("calculate_similarity gives the same result for every storage format and margin", {
+  for (margin in c(1, 2)) {
+    for (method in list_similarity_methods()) {
+      expected <- calculate_similarity(x_sym, y_any, margin = margin, method = method)
+
+      for (fmt in names(as_formats(x_sym))) {
+        x <- as_formats(x_sym)[[fmt]]
+        y <- as_formats(y_any)[[if (fmt == "symmetric") "csr" else fmt]]
+        observed <- calculate_similarity(x, y, margin = margin, method = method)
+        expect_equal(observed, expected, tolerance = 1e-10, info = paste(method, fmt, margin))
+      }
+    }
+  }
+})
+
+test_that("calculate_similarity computes the correct spearman correlation for every storage format and margin", {
+  for (margin in c(1, 2)) {
+    xd <- if (margin == 1) t(x_sym) else x_sym
+    yd <- if (margin == 1) t(y_any) else y_any
+    gold <- suppressWarnings(cor(xd, yd, method = "spearman"))
+    gold[is.na(gold)] <- 0
+
+    for (fmt in names(as_formats(x_sym))) {
+      x <- as_formats(x_sym)[[fmt]]
+      y <- as_formats(y_any)[[if (fmt == "symmetric") "csr" else fmt]]
+      observed <- calculate_similarity(x, y, margin = margin, method = "spearman")
+      expect_equal(observed, gold, tolerance = 1e-10, info = paste(fmt, margin))
+    }
+  }
+})
+
+test_that("calculate_distance gives the same result for every storage format and margin", {
+  for (margin in c(1, 2)) {
+    for (method in methods) {
+      expected <- calculate_distance(x_sym, y_any, margin = margin, method = method)
+
+      for (fmt in names(as_formats(x_sym))) {
+        x <- as_formats(x_sym)[[fmt]]
+        y <- as_formats(y_any)[[if (fmt == "symmetric") "csr" else fmt]]
+        observed <- calculate_distance(x, y, margin = margin, method = method)
+        expect_equal(observed, expected, tolerance = 1e-10, info = paste(method, fmt, margin))
+      }
+    }
+  }
+})
+
+test_that(".as_column_vectors reuses the slots of a CSR matrix for margin 1", {
+  x <- as(y_any, "RsparseMatrix")
+  expect_is(x, "dgRMatrix")
+  expect_identical(.as_column_vectors(x, margin = 1), Matrix::t(as(x, "CsparseMatrix")))
+  expect_identical(.as_column_vectors(x, margin = 2), as(x, "CsparseMatrix"))
+})

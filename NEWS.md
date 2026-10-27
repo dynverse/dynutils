@@ -1,3 +1,7 @@
+# dynutils 1.0.13
+
+* BUG FIX `calculate_similarity()`, `calculate_distance()`: Fix Spearman correlations of RsparseMatrix, TsparseMatrix and symmetric inputs (PR #37).
+
 # dynutils 1.0.12
 
 * DOCUMENTATION: Fix roxygen docs (PR #36).
