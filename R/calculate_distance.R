@@ -107,35 +107,36 @@ calculate_similarity <- function(
 #' @export
 list_similarity_methods <- function() eval(formals(calculate_similarity)$method)
 
-#' @importFrom Matrix t
-#' @importFrom methods as
 .process_input_matrices <- function(x, y, margin) {
-  if (is.data.frame(x)) x <- as.matrix(x)
-  if (is.matrix(x)) x <- as(x, "CsparseMatrix")
-
   if (!is.null(y)) {
-    if (is.data.frame(y)) y <- as.matrix(y)
-    if (is.matrix(y)) y <- as(y, "CsparseMatrix")
-  }
-
-  assert_that(
-    is_sparse(x),
-    is.null(y) || is_sparse(y)
-  )
-
-  if (margin == 1) {
-    if (!is.null(y)) {
+    if (margin == 1) {
       assert_that(ncol(x) == ncol(y))
-      y <- Matrix::t(y)
-    }
-    x <- Matrix::t(x)
-  } else {
-    if (!is.null(y)) {
+    } else {
       assert_that(nrow(x) == nrow(y))
     }
   }
 
+  x <- .as_column_vectors(x, margin = margin)
+  if (!is.null(y)) {
+    y <- .as_column_vectors(y, margin = margin)
+  }
+
   list(x = x, y = y)
+}
+
+# convert to a dgCMatrix whose columns are the vectors to compare
+#' @importFrom Matrix t
+#' @importFrom methods as is new
+.as_column_vectors <- function(x, margin) {
+  if (is.data.frame(x)) x <- as.matrix(x)
+
+  # a dgRMatrix holds the same slots as the dgCMatrix of its transpose
+  if (margin == 1 && is(x, "dgRMatrix")) {
+    return(new("dgCMatrix", i = x@j, p = x@p, x = x@x, Dim = rev(x@Dim), Dimnames = rev(x@Dimnames)))
+  }
+
+  x <- as(as(as(x, "CsparseMatrix"), "generalMatrix"), "dMatrix")
+  if (margin == 1) Matrix::t(x) else x
 }
 
 .process_pairwise_matrix <- function(mat, x, y) {
